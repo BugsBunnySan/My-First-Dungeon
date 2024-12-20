@@ -1,5 +1,5 @@
 function initLevel()
-    GameMode.setTimeOfDay(0.5)
+    GameMode.setTimeOfDay(1.5)
     local wizard = party.party:getChampion(4)
     wizard:trainSkill("concentration", 5, false)
     wizard:trainSkill("fire_magic", 5, false)
@@ -9,4 +9,5 @@ function initLevel()
     guard_personal_alcove.surface:addItem(guard_med_cab_note)
     local y = water_disciple_5_teleporter.teleporter.go:getWorldPositionY()
     water_disciple_5_teleporter.teleporter.go:setWorldPositionY(y+.1)
+    med_station_light.light:disable()
 end
