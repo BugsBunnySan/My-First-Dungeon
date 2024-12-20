@@ -20,6 +20,6 @@ function resurectDoctor()
         for _, i in ipairs(res_items) do
             i.go:destroyDelayed()
         end
-        spawn("mummy", ref.level, ref.x, ref.y, 0, ref.elevation)
+        spawn("doctor", ref.level, ref.x, ref.y, 0, ref.elevation)
     end
 end
