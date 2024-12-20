@@ -1,6 +1,5 @@
 
 function initLevel()
-    GameMode.setTimeOfDay(0.5)
     armCannon1(nil, true)
 end
 
