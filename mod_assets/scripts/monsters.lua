@@ -6,7 +6,9 @@ defineObject{
     components = {
         {
 			class = "Particle",
+            name = "crystal",
 			particleSystem = "crystal",
+            enabled = false
 		},
 		{
 			class = "Light",
@@ -18,13 +20,29 @@ defineObject{
 			staticShadows = true,
 		},
         {
+            class = "Timer",
+            name = "timer",
+            timerInterval = 120, -- this needs to sync with cooldown of the monsterattack (there is not onCooldownReset on the attack)
+            disableSelf = true,
+            enabled = false,
+            onActivate = function(self)
+                self.go.crystal:fadeIn(2.5)                       
+            end
+        },
+        {
             class = "MonsterAttack",
             name = "basicAttack",
             attackPower = 0,
-            cooldown = 10,
-            -- sound = "mummy_attack",
+            cooldown = 120,
+            --sound = "crystal_ambient",
             animationSpeed = 0.8,
             accuracy = 100,
+            onAttack = function(self)
+                self.go.crystal:fadeOut(2.5)
+                self.go.timer:setTimerInterval(120) -- this needs to sync with cooldown of the monsterattack (there is not onCooldownReset on the attack)
+                self.go.timer:start()
+                return true
+            end,
             onAttackHit = function(self, champion)
                 party.party:heal()
             end
@@ -46,7 +64,8 @@ defineObject{
                 self.state = "initial"                
                 self.auto_inserting = false
             end,
-			onInsertItem = function(self, item)                
+			onInsertItem = function(self, item)
+                hudPrint(self.state)
                 if self.auto_inserting then
                     self.auto_inserting = false
                     return
@@ -58,7 +77,8 @@ defineObject{
                                              item.go:destroyDelayed()
                                              local water_flask = spawn("water_flask").item
                                              self.auto_inserting = true
-                                             self:addItem(water_flask)                                             
+                                             self:addItem(water_flask)                                              
+                                             water_disciple_5.walltrigger:enable()                                           
                                         end,
                             ["new_state"] = "given_task",
                             ["message"] = "One of my disciples has lost their way, deal with them"
@@ -66,7 +86,7 @@ defineObject{
                         ["water_flask"] = {
                             ["action"] = nil,
                             ["new_state"] = "initial",
-                            ["message"] = "To the very wise, words of wisdom are like drops of water in the ocean"
+                            ["message"] = "To the very wise, words of wisdom are like drops of water in the ocean",
                         }
                     },
                     ["given_task"] = {
@@ -75,16 +95,40 @@ defineObject{
                                              item.go:destroyDelayed()
                                              local water_flask = spawn("water_flask").item
                                              self.auto_inserting = true
-                                             self:addItem(water_flask)                                             
+                                             self:addItem(water_flask) 
                                         end,
                             ["new_state"] = "given_task",
-                            ["message"] = ""
+                            ["message"] = "To the foolish, a single word of wisdom is like the ocean"
                         },
                         ["water_flask"] = {
                             ["action"] = nil,
                             ["new_state"] = "given_task",
                             ["message"] = "To the foolish, a single word of wisdom is like the ocean"
+                        },
+                        ["essence_water"] = {
+                            ["action"] = function(self, item)
+                                sage_of_water_1_text.walltext:setWallText("Water is fluid, soft, and yielding.\nBut water will wear away rock, which is rigid and cannot yield.\nAs a rule, whatever is fluid, soft, and yielding\n will overcome whatever is rigid and hard")
+                            end,
+                            ["new_state"] = "task_complete",
+                            ["message"] = nil
                         }
+                    },
+                    ["task_complete"] = {
+                        ["flask"] = {
+                            ["action"] = function(self, item)
+                                             item.go:destroyDelayed()
+                                             local water_flask = spawn("water_flask").item
+                                             self.auto_inserting = true
+                                             self:addItem(water_flask)                                             
+                                        end,
+                            ["new_state"] = "task_complete",
+                            ["message"] = "Be like water my friend"
+                        },
+                        ["water_flask"] = {
+                            ["action"] = nil,
+                            ["new_state"] = "task_complete",
+                            ["message"] = "To the very wise, words of wisdom are like drops of water in the ocean"
+                        }                        
                     }
                 }
                 local state = state_table[self.state]
@@ -93,9 +137,12 @@ defineObject{
                     if trans["action"] ~= nil then
                         trans["action"](self, item)
                     end
-                    hudPrint(trans["message"])
+                    if trans["message"] ~= nil then
+                        hudPrint(trans["message"])
+                    end
                     self.state = trans["new_state"]
-                end
+                end                
+                hudPrint(self.state)
 			end,
 			--debugDraw = true,
 		},
@@ -106,14 +153,34 @@ defineObject{
     name = "disciple_of_water_trigger",
     baseObject = "beacon_furnace_head",
     components = {
+        {
+			class = "Particle",
+            name = "splash",
+			particleSystem = "frostbolt_hit",
+            offset = vec(0, 1, 0),
+            enabled = false
+		},
 		{
 			class = "WallTrigger",
+            name = "walltrigger",
+            enabled = false,
 			onActivate = function(self, entity)
-                if entity.name == "water_flask" then                
-                    hudPrint("keep it")
+                if entity.name == "water_flask" then
+                    self:disable()
                     entity:destroyDelayed()
-                else
-                    hudPrint("throw it back")
+                    playSoundAt("water_hit_large", self.go.level, self.go.x, self.go.y)
+                    playSoundAt("gun_shot_cannon", self.go.level, self.go.x, self.go.y)
+                    spawn("mine_floor_sandpile", self.go.level, self.go.x-1, self.go.y, self.go.facing, self.go.elevation)                    
+                    spawn("invisible_wall", self.go.level, self.go.x-1, self.go.y, self.go.facing, self.go.elevation)
+                    self.go.model:disable()
+                    self.go.eyesModel:disable()
+                    self.go.leftEyeLight:disable()
+                    self.go.rightEyeLight:disable()
+                    self.go.splash:enable()
+                    water_disciple_5_teleporter.teleporter:disable()
+                    water_disciple_5_sepll_teleporter.teleporter:disable()
+                    local essence_of_water = spawn("essence_water").item
+                    sage_of_water.socket:addItem(essence_of_water)
                 end
             end
 		},

@@ -20,6 +20,18 @@ function resurectDoctor()
         for _, i in ipairs(res_items) do
             i.go:destroyDelayed()
         end
-        spawn("doctor", ref.level, ref.x, ref.y, 0, ref.elevation)
+        local doctor_ref = findEntity("doctor_spawn")
+        spawn("doctor", doctor_ref.level, doctor_ref.x, doctor_ref.y, doctor_ref.facing, doctor_ref.elevation, "doctor")
     end
+end
+
+function onDoctorSpawned()
+    local doctor = findEntity("doctor")
+    doctor.move:disable()
+    doctor.turn:disable()  
+    doctor.crystal:enable()
+    doctor.crystal:fadeIn(2.5)
+    doctor.timer:enable()
+    doctor.timer:stop()    
+    hudPrint("The Doctor will see you now")
 end
