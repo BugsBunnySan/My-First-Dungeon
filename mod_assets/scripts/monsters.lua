@@ -65,11 +65,15 @@ defineObject{
                 self.auto_inserting = false
             end,
 			onInsertItem = function(self, item)
-                hudPrint(self.state)
                 if self.auto_inserting then
                     self.auto_inserting = false
                     return
                 end
+                local messages = {["give_task"] = "One of my disciples has lost their way, deal with them and be rewarded.\nRemember what one of the elders said:\n",
+                                 ["foolish"]   = "To the foolish, a single word of wisdom is like a trsunami",
+                                 ["wise"]      = "To the very wise, words of wisdom are like drops of water in the ocean",
+                                 ["essence"]   = "Water is fluid, soft, and yielding.\nBut water will wear away rock, which is rigid and cannot yield.\nAs a rule, whatever is fluid, soft, and yielding\n will overcome whatever  is rigid and hard."}
+                local words_of_wisdom = {"Be like water making its way through cracks. Do not be assertive, but adjust to the object, and you shall find a way around or through it.", messages["essence"], "Be water, my friend."}
                 local state_table = {
                     ["initial"] = {
                         ["flask"] = {
@@ -78,15 +82,16 @@ defineObject{
                                              local water_flask = spawn("water_flask").item
                                              self.auto_inserting = true
                                              self:addItem(water_flask)                                              
-                                             water_disciple_5.walltrigger:enable()                                           
+                                             water_disciple_5.walltrigger:enable()    
+                                             sage_of_water_1_text.walltext:setWallText(messages["give_task"] .. messages["foolish"])
                                         end,
                             ["new_state"] = "given_task",
-                            ["message"] = "One of my disciples has lost their way, deal with them"
+                            ["message"] = messages["give_task"] .. messages["foolish"]
                         },
                         ["water_flask"] = {
                             ["action"] = nil,
                             ["new_state"] = "initial",
-                            ["message"] = "To the very wise, words of wisdom are like drops of water in the ocean",
+                            ["message"] = messages["wise"]
                         }
                     },
                     ["given_task"] = {
@@ -98,16 +103,16 @@ defineObject{
                                              self:addItem(water_flask) 
                                         end,
                             ["new_state"] = "given_task",
-                            ["message"] = "To the foolish, a single word of wisdom is like the ocean"
+                            ["message"] = "Remember:\n" .. messages["foolish"]
                         },
                         ["water_flask"] = {
                             ["action"] = nil,
                             ["new_state"] = "given_task",
-                            ["message"] = "To the foolish, a single word of wisdom is like the ocean"
+                            ["message"] = messages["wise"]
                         },
                         ["essence_water"] = {
                             ["action"] = function(self, item)
-                                sage_of_water_1_text.walltext:setWallText("Water is fluid, soft, and yielding.\nBut water will wear away rock, which is rigid and cannot yield.\nAs a rule, whatever is fluid, soft, and yielding\n will overcome whatever is rigid and hard")
+                                sage_of_water_1_text.walltext:setWallText(messages["essence"])
                             end,
                             ["new_state"] = "task_complete",
                             ["message"] = nil
@@ -119,10 +124,14 @@ defineObject{
                                              item.go:destroyDelayed()
                                              local water_flask = spawn("water_flask").item
                                              self.auto_inserting = true
-                                             self:addItem(water_flask)                                             
+                                             self:addItem(water_flask)
+                                             local i = math.random(#words_of_wisdom)
+                                             local message = words_of_wisdom[i]
+                                             sage_of_water_1_text.walltext:setWallText(message)
+                                             hudPrint(message)
                                         end,
                             ["new_state"] = "task_complete",
-                            ["message"] = "Be like water my friend"
+                            ["message"] = nil
                         },
                         ["water_flask"] = {
                             ["action"] = nil,
@@ -141,8 +150,7 @@ defineObject{
                         hudPrint(trans["message"])
                     end
                     self.state = trans["new_state"]
-                end                
-                hudPrint(self.state)
+                end               
 			end,
 			--debugDraw = true,
 		},

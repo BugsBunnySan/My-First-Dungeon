@@ -1,5 +1,5 @@
 function initLevel()
-    GameMode.setTimeOfDay(0.5)
+    GameMode.setTimeOfDay(1.5)
     local wizard = party.party:getChampion(4)
     wizard:trainSkill("concentration", 5, false)
     wizard:trainSkill("fire_magic", 5, false)

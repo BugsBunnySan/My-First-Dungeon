@@ -9,10 +9,9 @@ newMap{
 	levelCoord = {0,0,0},
 	ambientTrack = "dungeon",
 	tiles = {
-		"beach_ground",
-		"beach_ground_water",
 		"castle_arena_floor",
 		"castle_floor",
+		"castle_wall",
 		"forest_underwater",
 	}
 }
@@ -31,9 +30,9 @@ loadLayer("floor_elevation", {
 	1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 	1,0,-1,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 	1,0,-1,-1,0,0,0,0,0,1,1,0,1,1,1,0,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	1,0,-1,-1,-1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	1,0,-1,-1,-1,-1,-1,0,0,1,1,1,1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
-	1,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	1,0,-1,-1,-1,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	1,0,-1,-1,-1,-1,-1,0,0,1,1,1,1,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	1,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 	1,0,-1,-1,-1,-1,-1,0,0,1,1,1,1,0,0,0,0,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 	1,0,-1,-1,-1,0,0,0,0,1,1,0,0,0,0,0,0,0,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 	1,0,-1,-1,0,0,0,0,0,1,1,0,1,1,1,1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
@@ -53,73 +52,38 @@ loadLayer("floor_elevation", {
 })
 
 loadLayer("ceiling_elevation", {
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,1,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,2,1,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,1,2,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,
-})
-
-loadLayer("heightmap", {
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-3,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-3,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-3,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-2,-2,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-2,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-2,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-3,-3,-3,-3,-3,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-3,-3,-3,-3,-3,-3,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 })
 
 loadLayer("reflection", {
@@ -158,38 +122,38 @@ loadLayer("reflection", {
 })
 
 loadLayer("tiles", {
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,2,2,2,2,2,2,2,2,
-	3,3,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,2,2,2,2,2,2,
-	3,3,5,5,3,3,3,3,3,3,3,3,3,3,3,4,3,3,3,1,1,1,1,1,1,1,1,2,2,2,2,2,
-	3,3,5,5,5,3,3,3,3,3,4,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,2,2,2,2,2,
-	3,3,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,4,3,1,1,1,1,1,1,1,2,2,2,2,2,
-	3,3,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,2,2,2,2,2,
-	3,3,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,1,1,2,2,2,2,2,2,
-	3,3,5,5,5,3,3,3,3,3,3,4,4,3,3,3,3,3,3,1,1,1,1,1,1,2,2,2,2,2,2,2,
-	3,3,5,5,3,3,3,3,3,3,3,4,3,3,3,3,3,3,3,1,1,1,1,1,1,2,2,2,2,2,2,2,
-	3,3,5,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,3,1,1,1,1,1,1,1,2,2,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,3,1,1,1,1,1,1,1,1,1,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,1,1,1,3,4,4,4,4,3,1,1,1,1,1,1,1,1,1,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,1,1,1,3,4,4,4,4,3,1,1,1,1,1,1,1,1,1,2,2,2,2,
-	3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,1,1,1,1,1,1,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,1,1,1,1,1,1,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,1,1,1,1,1,1,3,3,2,2,2,2,2,2,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,1,1,1,1,1,3,3,2,3,3,3,2,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,4,1,1,1,1,3,2,2,2,1,1,1,1,1,3,3,3,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,4,4,4,1,1,3,3,3,3,1,1,1,1,1,2,2,2,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,4,4,4,1,1,1,1,1,2,1,1,1,1,1,3,3,3,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,4,4,4,1,1,3,3,3,3,1,1,1,1,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,4,1,1,1,1,3,3,2,2,1,1,1,1,1,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,4,1,1,1,1,1,3,3,2,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,4,1,1,1,1,1,1,3,3,2,2,2,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,1,1,1,1,1,1,1,3,3,3,3,3,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,1,1,1,1,1,1,1,3,4,4,4,3,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,1,1,1,1,1,1,1,1,3,4,4,4,3,2,2,2,2,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,3,3,3,3,3,3,3,3,3,4,4,4,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 })
 
 spawn("forest_heightmap",18,11,0,0,"forest_heightmap_1")
@@ -253,36 +217,24 @@ cannon_daemon_1.turn:disable()
 cannon_daemon_1.turnAttack:disable()
 cannon_daemon_1.muzzleFlash:enable()
 cannon_daemon_1.muzzleFlashLight:enable()
-spawn("forest_bridge",20,14,1,0,"forest_bridge_1")
 spawn("forest_bridge",21,14,3,0,"forest_bridge_2")
 spawn("forest_bridge",22,14,1,0,"forest_bridge_3")
 spawn("barrel_crate_block",17,13,2,0,"barrel_crate_block_1")
 spawn("forest_bridge",23,14,1,0,"forest_bridge_4")
-spawn("forest_bridge_pillar",20,15,1,-1,"forest_bridge_pillar_1")
-spawn("forest_bridge_pillar",21,15,1,-1,"forest_bridge_pillar_2")
 spawn("forest_bridge_pillar",23,15,1,-1,"forest_bridge_pillar_3")
 spawn("forest_bridge_pillar",22,15,1,-1,"forest_bridge_pillar_4")
 spawn("forest_bridge_pillar",22,14,3,-1,"forest_bridge_pillar_5")
 spawn("forest_bridge_pillar",23,14,3,-1,"forest_bridge_pillar_6")
-spawn("forest_bridge_pillar",20,14,3,-1,"forest_bridge_pillar_7")
-spawn("forest_bridge_pillar",21,14,3,-1,"forest_bridge_pillar_8")
 spawn("forest_seaweed_pillar",24,15,2,-1,"forest_seaweed_pillar_1")
 spawn("forest_seaweed_pillar",24,14,2,-1,"forest_seaweed_pillar_2")
 spawn("castle_pillar_01",24,15,2,-1,"castle_pillar_01_1")
 spawn("castle_pillar_01",24,14,2,-1,"castle_pillar_01_2")
 spawn("castle_pillar_tall_01",18,13,0,-3,"castle_pillar_tall_01_1")
 spawn("castle_pillar_tall_01",13,13,0,-3,"castle_pillar_tall_01_2")
-spawn("castle_pillar_tall_01",13,18,0,-3,"castle_pillar_tall_01_3")
-spawn("castle_pillar_tall_01",18,18,0,-3,"castle_pillar_tall_01_4")
 spawn("ladder",24,14,3,-1,"ladder_1")
-spawn("dungeon_wall_01",20,14,3,-1,"dungeon_wall_01_24")
-spawn("dungeon_wall_01",19,15,0,-1,"dungeon_wall_01_21")
-spawn("dungeon_wall_01",19,13,2,-1,"dungeon_wall_01_22")
 spawn("castle_wall_outside_01",19,15,3,0,"castle_wall_outside_01_1")
 spawn("dungeon_wall_01",19,15,3,-1,"dungeon_wall_01_25")
-spawn("castle_wall_outside_01",18,15,0,1,"castle_wall_outside_01_21")
 spawn("starting_location",23,14,3,0,"starting_location_1")
-spawn("castle_wall_outside_01",11,18,1,0,"castle_wall_outside_01_30")
 spawn("castle_wall_outside_01",13,16,3,0,"castle_wall_outside_01_34")
 spawn("castle_wall_grating_ornament",13,16,3,0,"castle_wall_grating_ornament_1")
 spawn("castle_wall_outside_01",17,16,1,0,"castle_wall_outside_01_37")
@@ -305,37 +257,24 @@ spawn("castle_wall_outside_01",14,23,2,0,"castle_wall_outside_01_26")
 spawn("dungeon_wall_01",14,24,0,-1,"dungeon_wall_01_31")
 spawn("castle_wall_outside_01",13,23,2,0,"castle_wall_outside_01_27")
 spawn("dungeon_wall_01",13,24,0,-1,"dungeon_wall_01_32")
-spawn("castle_wall_outside_01",12,18,2,0,"castle_wall_outside_01_29")
-spawn("castle_wall_outside_01",11,16,0,0,"castle_wall_outside_01_8")
+spawn("castle_wall_outside_01",11,15,2,0,"castle_wall_outside_01_8")
 spawn("castle_wall_outside_01",19,12,3,0,"castle_wall_outside_01_40")
 spawn("dungeon_wall_01",19,12,3,-1,"dungeon_wall_01_45")
-spawn("castle_wall_outside_01",18,14,0,0,"castle_wall_outside_01_48")
 spawn("dungeon_wall_broken_02",15,17,2,0,"dungeon_wall_broken_02_1")
 spawn("dungeon_cave_in",15,16,2,-2,"dungeon_cave_in_1")
-spawn("castle_pillar_tall_01",16,18,0,-3,"castle_pillar_tall_01_5")
-spawn("castle_pillar_tall_01",15,18,0,-3,"castle_pillar_tall_01_6")
-spawn("castle_pillar_tall_01",14,18,0,-3,"castle_pillar_tall_01_7")
 spawn("castle_pillar_tall_01",14,13,0,-3,"castle_pillar_tall_01_8")
 spawn("castle_pillar_tall_01",15,13,0,-3,"castle_pillar_tall_01_9")
 spawn("castle_pillar_tall_01",17,13,0,-3,"castle_pillar_tall_01_10")
 spawn("castle_pillar_tall_01",16,13,0,-3,"castle_pillar_tall_01_11")
-spawn("castle_pillar_tall_01",17,18,0,-3,"castle_pillar_tall_01_12")
 spawn("castle_pillar_tall_01",13,17,0,-3,"castle_pillar_tall_01_13")
 spawn("castle_pillar_tall_01",13,15,0,-3,"castle_pillar_tall_01_14")
 spawn("castle_pillar_tall_01",13,16,0,-3,"castle_pillar_tall_01_15")
 spawn("castle_pillar_tall_01",13,14,0,-3,"castle_pillar_tall_01_16")
-spawn("castle_pillar_tall_01",18,17,0,-3,"castle_pillar_tall_01_17")
-spawn("castle_pillar_tall_01",18,16,0,-3,"castle_pillar_tall_01_18")
-spawn("castle_pillar_tall_01",18,15,0,-3,"castle_pillar_tall_01_19")
-spawn("castle_pillar_tall_01",18,14,0,-3,"castle_pillar_tall_01_20")
 spawn("skeleton_trooper",10,13,1,0,"castle_courtyard_guard")
 castle_courtyard_guard.monster:setHealth(1)
 spawn("iron_key",10,13,1,0,"iron_key_1")
 castle_courtyard_guard.monster:addItem(iron_key_1.item)
 spawn("castle_wall_outside_01",8,16,1,0,"castle_wall_outside_01_10")
-spawn("dungeon_wall_01",8,16,1,-1,"dungeon_wall_01_9")
-spawn("castle_wall_outside_01",9,15,0,0,"castle_wall_outside_01_13")
-spawn("dungeon_wall_01",9,15,0,-1,"dungeon_wall_01_13")
 spawn("castle_wall_outside_01",8,14,1,0,"castle_wall_outside_01_33")
 spawn("dungeon_wall_01",8,14,1,-1,"dungeon_wall_01_20")
 spawn("castle_wall_outside_01",8,13,1,0,"castle_wall_outside_01_35")
@@ -370,14 +309,13 @@ spawn("dungeon_wall_01",19,10,3,-1,"dungeon_wall_01_63")
 spawn("castle_wall_outside_01",19,10,3,0,"castle_wall_outside_01_62")
 spawn("castle_wall_outside_01",19,11,3,0,"castle_wall_outside_01_63")
 spawn("dungeon_wall_01",19,11,3,-1,"dungeon_wall_01_64")
-spawn("castle_wall_outside_01",10,16,0,0,"castle_wall_outside_01_9")
+spawn("castle_wall_outside_01",10,15,2,0,"castle_wall_outside_01_9")
 spawn("castle_wall_01",10,13,3,0,"castle_wall_01_4")
 spawn("castle_wall_01",11,12,3,0,"castle_wall_01_5")
 spawn("castle_wall_01",11,11,3,0,"castle_wall_01_6")
 spawn("castle_wall_01",10,13,2,0,"castle_wall_01_7")
 spawn("castle_wall_01",10,13,0,0,"castle_wall_01_8")
 spawn("castle_wall_02",12,13,2,0,"castle_wall_02_2")
-spawn("castle_pillar_01",12,14,3,0,"castle_pillar_01_3")
 spawn("castle_wall_01",11,11,0,0,"castle_wall_01_1")
 spawn("castle_wall_01",12,11,0,0,"castle_wall_01_2")
 spawn("castle_wall_01",13,11,0,0,"castle_wall_01_9")
@@ -390,10 +328,6 @@ spawn("castle_wall_01",13,11,2,0,"castle_wall_01_16")
 spawn("castle_wall_01",14,11,2,0,"castle_wall_01_17")
 spawn("castle_wall_01",16,11,2,0,"castle_wall_01_19")
 spawn("castle_wall_01",11,12,1,0,"castle_wall_01_18")
-spawn("castle_pillar_01",11,14,3,0,"castle_pillar_01_5")
-spawn("castle_pillar_01",10,14,3,0,"castle_pillar_01_6")
-spawn("castle_pillar_01",10,13,3,0,"castle_pillar_01_7")
-spawn("castle_pillar_01",11,13,3,0,"castle_pillar_01_8")
 spawn("castle_pillar_01",11,12,3,0,"castle_pillar_01_9")
 spawn("castle_pillar_01",11,11,3,0,"castle_pillar_01_10")
 spawn("castle_pillar_01",12,11,3,0,"castle_pillar_01_11")
@@ -408,7 +342,6 @@ spawn("castle_pillar_01",16,12,3,0,"castle_pillar_01_21")
 spawn("castle_pillar_01",14,12,3,0,"castle_pillar_01_22")
 spawn("castle_pillar_01",13,12,3,0,"castle_pillar_01_23")
 spawn("castle_pillar_01",12,12,3,0,"castle_pillar_01_24")
-spawn("castle_pillar_01",12,13,3,0,"castle_pillar_01_25")
 spawn("castle_ceiling_light",10,13,2,0,"castle_ceiling_light_1")
 spawn("chest",16,11,3,0,"chest_1")
 spawn("cannon_ball",16,11,3,0,"cannon_ball_1")
@@ -420,16 +353,6 @@ chest_1.surface:addItem(cannon_ball_2.item)
 spawn("fire_bomb",16,11,3,0,"fire_bomb_1")
 fire_bomb_1.item:setStackSize(2)
 chest_1.surface:addItem(fire_bomb_1.item)
-spawn("castle_ceiling_1111",12,13,3,0,"castle_ceiling_1111_2")
-spawn("castle_ceiling_1111",11,13,3,0,"castle_ceiling_1111_3")
-spawn("castle_ceiling_1111",10,13,3,0,"castle_ceiling_1111_4")
-spawn("castle_ceiling_1111",11,12,3,0,"castle_ceiling_1111_5")
-spawn("castle_ceiling_1111",11,11,3,0,"castle_ceiling_1111_6")
-spawn("castle_ceiling_1111",12,11,3,0,"castle_ceiling_1111_7")
-spawn("castle_ceiling_1111",14,11,3,0,"castle_ceiling_1111_8")
-spawn("castle_ceiling_1111",13,11,3,0,"castle_ceiling_1111_9")
-spawn("castle_ceiling_1111",16,11,3,0,"castle_ceiling_1111_10")
-spawn("castle_ceiling_1111",15,11,3,0,"castle_ceiling_1111_12")
 spawn("dungeon_door_iron",15,12,0,0,"dungeon_door_iron_1")
 spawn("castle_wall_outside_01",15,11,2,1,"castle_wall_outside_01_31")
 spawn("castle_wall_outside_01",16,11,2,1,"castle_wall_outside_01_41")
@@ -449,36 +372,26 @@ To Check Your Invitations And\
 Deactivate The Security System")
 castle_wall_text_1.light:disable()
 spawn("castle_wall_01",12,13,0,0,"castle_wall_01_3")
-spawn("ceiling_witch_lantern",18,14,0,0,"ceiling_witch_lantern_1")
 spawn("crow",17,14,2,1,"crow_1")
 spawn("crow",13,15,2,1,"crow_2")
 spawn("castle_wall_cloth",15,12,2,0,"castle_wall_cloth_1")
 castle_wall_cloth_1.health:disable()
-spawn("dungeon_door_wooden_double",13,13,3,0,"dungeon_door_wooden_double_1")
-dungeon_door_wooden_double_1.frame:disable()
 spawn("castle_wall_arch",13,13,3,0,"castle_wall_arch_1")
 spawn("castle_wall_button",18,14,0,0,"castle_wall_button_1")
 castle_wall_button_1.button:setDisableSelf(false)
-castle_wall_button_1.button:addConnector("onActivate", "dungeon_door_wooden_double_1", "open")
+castle_wall_button_1.button:addConnector("onActivate", "castle_door_wood_2", "open")
 spawn("dungeon_wall_text",14,11,2,0,"dungeon_wall_text_1")
 dungeon_wall_text_1.walltext:setWallText("Trained Personal Only")
 spawn("cannon_daemon_pilot_light",15,12,2,0,"cannon_daemon_1_pilot_light")
-spawn("castle_wall_outside_01",11,16,2,0,"castle_wall_outside_01_7")
-spawn("dungeon_wall_01",11,17,0,-1,"dungeon_wall_01_1")
-spawn("castle_wall_outside_01",10,16,2,0,"castle_wall_outside_01_32")
-spawn("dungeon_wall_01",10,17,0,-1,"dungeon_wall_01_4")
-spawn("castle_wall_outside_01",12,16,0,0,"castle_wall_outside_01_44")
-spawn("castle_wall_outside_01",11,14,2,0,"castle_wall_outside_01_45")
-spawn("castle_wall_outside_01",10,14,2,0,"castle_wall_outside_01_46")
-spawn("castle_wall_outside_01",12,14,2,0,"castle_wall_outside_01_47")
+spawn("castle_wall_outside_01",12,15,2,0,"castle_wall_outside_01_44")
+spawn("castle_wall_outside_01",11,15,0,0,"castle_wall_outside_01_45")
+spawn("castle_wall_outside_01",10,15,0,0,"castle_wall_outside_01_46")
+spawn("castle_wall_outside_01",12,15,0,0,"castle_wall_outside_01_47")
 spawn("castle_door_wood",13,15,3,0,"castle_door_wood_1")
 spawn("castle_wall_lever",10,13,2,0,"castle_wall_lever_2")
 castle_wall_lever_2.lever:setDisableSelf(false)
 castle_wall_lever_2.lever:addConnector("onActivate", "castle_door_wood_1", "open")
 castle_wall_lever_2.lever:addConnector("onDeactivate", "castle_door_wood_1", "close")
-spawn("castle_wall_outside_01",18,13,2,1,"castle_wall_outside_01_64")
-spawn("castle_wall_outside_01",18,14,1,1,"castle_wall_outside_01_65")
-spawn("castle_wall_outside_01",18,14,3,1,"castle_wall_outside_01_66")
 spawn("castle_arena_sky",18,10,2,0,"castle_arena_sky_1")
 spawn("castle_wall_outside_01",18,23,2,0,"castle_wall_outside_01_67")
 spawn("dungeon_wall_01",18,24,0,-1,"dungeon_wall_01_6")
@@ -501,7 +414,6 @@ spawn("castle_wall_outside_01",12,22,1,0,"castle_wall_outside_01_81")
 spawn("dungeon_wall_01",12,23,1,-1,"dungeon_wall_01_36")
 spawn("castle_wall_outside_01",12,23,1,0,"castle_wall_outside_01_82")
 spawn("castle_wall_02",14,21,2,0,"castle_wall_02_3")
-spawn("castle_pillar_tall_01",15,18,0,-3,"castle_pillar_tall_01_21")
 spawn("castle_pillar_01",15,22,2,0,"castle_pillar_01_4")
 spawn("castle_ceiling_light",16,22,3,0,"med_station_light")
 spawn("beacon_furnace_head",14,21,3,0,"beacon_furnace_head_1")
@@ -513,16 +425,13 @@ lock_1.lock:setOpenedBy("iron_key")
 lock_1.lock:addConnector("onActivate", "mine_door_spear_2", "open")
 spawn("beach_ocean",15,15,3,0,"beach_ocean_1")
 beach_ocean_1.bottom:disable()
-spawn("castle_wall_outside_01",9,16,0,0,"castle_wall_outside_01_11")
+spawn("castle_wall_outside_01",9,15,2,0,"castle_wall_outside_01_11")
 spawn("castle_wall_outside_01",8,21,1,0,"castle_wall_outside_01_23")
 spawn("dungeon_wall_01",8,21,1,-1,"dungeon_wall_01_33")
 spawn("castle_wall_outside_01",8,20,1,0,"castle_wall_outside_01_28")
 spawn("dungeon_wall_01",8,20,1,-1,"dungeon_wall_01_37")
 spawn("castle_wall_outside_01",8,19,1,0,"castle_wall_outside_01_69")
-spawn("dungeon_wall_01",8,19,1,-1,"dungeon_wall_01_38")
 spawn("castle_wall_outside_01",8,18,1,0,"castle_wall_outside_01_70")
-spawn("dungeon_wall_01",8,18,1,-1,"dungeon_wall_01_41")
-spawn("dungeon_wall_01",8,17,1,-1,"dungeon_wall_01_42")
 spawn("castle_wall_outside_01",8,17,1,0,"castle_wall_outside_01_83")
 spawn("castle_wall_outside_01",8,9,1,0,"castle_wall_outside_01_84")
 spawn("dungeon_wall_01",8,9,1,-1,"dungeon_wall_01_43")
@@ -718,3 +627,136 @@ floor_trigger_2.floortrigger:setDisableSelf(false)
 floor_trigger_2.floortrigger:addConnector("onActivate", "script_entity_3", "onDoctorSpawned")
 spawn("castle_wall_01",1,16,0,0,"castle_wall_01_23")
 spawn("castle_wall_01",1,16,2,0,"castle_wall_01_24")
+spawn("flask",3,16,1,0,"flask_4")
+spawn("flask",3,16,1,0,"flask_5")
+spawn("castle_wall_outside_01",20,12,2,0,"castle_wall_outside_01_21")
+spawn("castle_wall_outside_01",19,12,2,0,"castle_wall_outside_01_48")
+spawn("castle_wall_outside_01",19,16,0,0,"castle_wall_outside_01_64")
+spawn("castle_wall_outside_01",20,16,0,0,"castle_wall_outside_01_65")
+spawn("castle_wall_outside_01",21,15,3,0,"castle_wall_outside_01_66")
+spawn("dungeon_wall_01",21,14,3,-1,"dungeon_wall_01_8")
+spawn("dungeon_wall_01",21,15,3,-1,"dungeon_wall_01_16")
+spawn("dungeon_wall_01",20,16,0,-1,"dungeon_wall_01_17")
+spawn("dungeon_wall_01",19,16,0,-1,"dungeon_wall_01_18")
+spawn("dungeon_wall_01",19,12,2,-1,"dungeon_wall_01_21")
+spawn("dungeon_wall_01",20,12,2,-1,"dungeon_wall_01_22")
+spawn("castle_wall_outside_01",21,13,3,0,"castle_wall_outside_01_71")
+spawn("dungeon_wall_01",21,13,3,-1,"dungeon_wall_01_5")
+spawn("castle_door_portcullis",21,14,3,0,"castle_door_portcullis_1")
+castle_door_portcullis_1.door:setDoorState("open")
+castle_door_portcullis_1.controller:disable()
+castle_door_portcullis_1.model:disable()
+spawn("ceiling_witch_lantern",19,14,1,0,"ceiling_witch_lantern_1")
+spawn("castle_door_portcullis",17,14,1,0,"castle_door_portcullis_2")
+castle_door_portcullis_2.door:setDoorState("open")
+castle_door_portcullis_2.controller:disable()
+castle_door_portcullis_2.model:disable()
+spawn("castle_pillar_01",21,16,0,-1,"castle_pillar_01_32")
+spawn("castle_pillar_01",21,13,0,0,"castle_pillar_01_33")
+spawn("castle_pillar_01",21,16,0,0,"castle_pillar_01_34")
+spawn("castle_pillar_01",21,15,0,1,"castle_pillar_01_35")
+spawn("castle_pillar_01",21,14,0,1,"castle_pillar_01_36")
+spawn("castle_pillar_01",16,18,3,0,"castle_pillar_01_37")
+spawn("castle_pillar_01",15,18,3,0,"castle_pillar_01_38")
+spawn("castle_pillar_01",17,18,3,0,"castle_pillar_01_39")
+spawn("castle_pillar_01",14,18,2,0,"castle_pillar_01_40")
+spawn("castle_pillar_01",18,18,3,0,"castle_pillar_01_41")
+spawn("castle_pillar_01",18,17,1,0,"castle_pillar_01_42")
+spawn("castle_pillar_01",18,16,0,0,"castle_pillar_01_43")
+spawn("castle_pillar_01",18,15,3,0,"castle_pillar_01_44")
+spawn("castle_pillar_01",18,14,1,0,"castle_pillar_01_45")
+spawn("castle_pillar_01",13,18,0,0,"castle_pillar_01_46")
+spawn("castle_wall_outside_01",17,19,0,1,"castle_wall_outside_01_7")
+spawn("castle_wall_outside_01",16,19,0,1,"castle_wall_outside_01_29")
+spawn("castle_wall_outside_01",14,19,0,1,"castle_wall_outside_01_30")
+spawn("castle_wall_outside_01",15,19,0,1,"castle_wall_outside_01_32")
+spawn("castle_wall_outside_01",12,19,0,1,"castle_wall_outside_01_77")
+spawn("castle_wall_outside_01",13,19,0,1,"castle_wall_outside_01_78")
+spawn("castle_wall_01",15,18,3,0,"castle_wall_01_33")
+spawn("castle_wall_01",15,18,1,0,"castle_wall_01_34")
+spawn("castle_wall_outside_01",17,19,1,1,"castle_wall_outside_01_79")
+spawn("castle_wall_outside_01",17,20,1,1,"castle_wall_outside_01_102")
+spawn("castle_wall_outside_01",17,22,1,1,"castle_wall_outside_01_118")
+spawn("castle_wall_outside_01",17,21,1,1,"castle_wall_outside_01_119")
+spawn("castle_wall_outside_01",17,22,2,1,"castle_wall_outside_01_120")
+spawn("castle_wall_outside_01",16,22,2,1,"castle_wall_outside_01_121")
+spawn("castle_wall_outside_01",14,22,2,1,"castle_wall_outside_01_122")
+spawn("castle_wall_outside_01",15,22,2,1,"castle_wall_outside_01_123")
+spawn("castle_wall_outside_01",14,22,3,1,"castle_wall_outside_01_124")
+spawn("castle_wall_outside_01",14,21,3,1,"castle_wall_outside_01_125")
+spawn("castle_wall_outside_01",14,20,3,1,"castle_wall_outside_01_126")
+spawn("castle_door_wood",13,13,3,0,"castle_door_wood_2")
+spawn("castle_door_wood",13,17,3,0,"castle_door_wood_3")
+castle_door_wood_3.door:setDoorState("open")
+spawn("castle_wall_outside_corner_01",9,16,0,0,"castle_wall_outside_corner_01_1")
+spawn("castle_pillar_01",9,15,2,0,"castle_pillar_01_3")
+spawn("castle_pillar_01",9,16,2,0,"castle_pillar_01_5")
+spawn("castle_wall_outside_01",9,15,0,0,"castle_wall_outside_01_13")
+spawn("castle_wall_outside_corner_01",9,14,3,0,"castle_wall_outside_corner_01_2")
+spawn("castle_pillar_01",9,8,2,0,"castle_pillar_01_6")
+spawn("castle_pillar_01",1,8,2,0,"castle_pillar_01_7")
+spawn("castle_pillar_01",1,23,2,0,"castle_pillar_01_8")
+spawn("castle_pillar_01",9,23,2,0,"castle_pillar_01_25")
+spawn("castle_door_wood",11,15,1,0,"castle_door_wood_4")
+castle_door_wood_4.door:setDoorState("open")
+castle_door_wood_4.model:disable()
+spawn("castle_wall_arch",13,15,3,1,"castle_wall_arch_2")
+spawn("castle_wall_arch",13,13,3,1,"castle_wall_arch_3")
+spawn("castle_wall_arch",13,17,3,1,"castle_wall_arch_4")
+spawn("castle_wall_arch",12,16,0,1,"castle_wall_arch_5")
+spawn("castle_wall_arch",11,15,1,1,"castle_wall_arch_6")
+spawn("castle_wall_arch",12,14,2,1,"castle_wall_arch_7")
+spawn("castle_wall_arch",18,13,2,1,"castle_wall_arch_8")
+spawn("castle_wall_arch",19,13,2,1,"castle_wall_arch_9")
+spawn("castle_wall_arch",20,13,2,1,"castle_wall_arch_10")
+spawn("castle_wall_arch",20,15,0,1,"castle_wall_arch_11")
+spawn("castle_wall_arch",19,15,0,1,"castle_wall_arch_12")
+spawn("castle_wall_arch",18,15,0,1,"castle_wall_arch_13")
+spawn("castle_wall_arch",21,14,3,1,"castle_wall_arch_14")
+spawn("castle_wall_arch",17,14,1,1,"castle_wall_arch_15")
+spawn("castle_wall_arch",12,12,2,1,"castle_wall_arch_16")
+spawn("castle_wall_arch",12,13,2,1,"castle_wall_arch_17")
+spawn("castle_wall_arch",12,13,3,1,"castle_wall_arch_18")
+spawn("castle_wall_arch",12,17,3,1,"castle_wall_arch_19")
+spawn("castle_wall_arch",12,17,0,1,"castle_wall_arch_20")
+spawn("castle_wall_arch",12,18,0,1,"castle_wall_arch_21")
+spawn("ceiling_witch_lantern",12,15,1,0,"ceiling_witch_lantern_2")
+spawn("ceiling_witch_lantern",12,17,1,0,"ceiling_witch_lantern_3")
+spawn("dungeon_wall_01",10,9,3,-1,"dungeon_wall_01_1")
+spawn("dungeon_wall_01",10,8,3,-1,"dungeon_wall_01_4")
+spawn("dungeon_wall_01",10,7,3,-1,"dungeon_wall_01_9")
+spawn("dungeon_wall_01",8,6,2,-1,"dungeon_wall_01_13")
+spawn("castle_wall_outside_01",7,6,2,0,"castle_wall_outside_01_127")
+spawn("dungeon_wall_01",7,6,2,-1,"dungeon_wall_01_24")
+spawn("dungeon_wall_01",6,6,2,-1,"dungeon_wall_01_34")
+spawn("castle_wall_outside_01",5,6,2,0,"castle_wall_outside_01_128")
+spawn("dungeon_wall_01",5,6,2,-1,"dungeon_wall_01_35")
+spawn("dungeon_wall_01",4,6,2,-1,"dungeon_wall_01_38")
+spawn("castle_wall_outside_01",3,6,2,0,"castle_wall_outside_01_129")
+spawn("dungeon_wall_01",3,6,2,-1,"dungeon_wall_01_41")
+spawn("dungeon_wall_01",2,6,2,-1,"dungeon_wall_01_42")
+spawn("castle_wall_outside_01",1,6,2,0,"castle_wall_outside_01_130")
+spawn("dungeon_wall_01",1,6,2,-1,"dungeon_wall_01_47")
+spawn("dungeon_wall_01",0,6,2,-1,"dungeon_wall_01_48")
+spawn("castle_wall_outside_01",9,24,0,0,"castle_wall_outside_01_131")
+spawn("dungeon_wall_01",9,24,0,-1,"dungeon_wall_01_49")
+spawn("dungeon_wall_01",8,24,0,-1,"dungeon_wall_01_50")
+spawn("castle_wall_outside_01",7,24,0,0,"castle_wall_outside_01_132")
+spawn("dungeon_wall_01",7,24,0,-1,"dungeon_wall_01_51")
+spawn("dungeon_wall_01",6,24,0,-1,"dungeon_wall_01_52")
+spawn("castle_wall_outside_01",5,24,0,0,"castle_wall_outside_01_133")
+spawn("dungeon_wall_01",5,24,0,-1,"dungeon_wall_01_65")
+spawn("dungeon_wall_01",4,24,0,-1,"dungeon_wall_01_66")
+spawn("castle_wall_outside_01",3,24,0,0,"castle_wall_outside_01_134")
+spawn("dungeon_wall_01",3,24,0,-1,"dungeon_wall_01_67")
+spawn("dungeon_wall_01",2,24,0,-1,"dungeon_wall_01_68")
+spawn("castle_wall_outside_01",1,24,0,0,"castle_wall_outside_01_135")
+spawn("dungeon_wall_01",1,24,0,-1,"dungeon_wall_01_74")
+spawn("dungeon_wall_01",0,24,0,-1,"dungeon_wall_01_76")
+spawn("dungeon_wall_01",10,23,3,-1,"dungeon_wall_01_77")
+spawn("dungeon_wall_01",10,22,3,-1,"dungeon_wall_01_79")
+spawn("dungeon_wall_01",10,21,3,-1,"dungeon_wall_01_80")
+spawn("dungeon_wall_01",12,21,0,-1,"dungeon_wall_01_81")
+spawn("castle_wall_outside_01",11,21,0,0,"castle_wall_outside_01_136")
+spawn("dungeon_wall_01",11,21,0,-1,"dungeon_wall_01_82")
+spawn("dungeon_wall_01",10,21,0,-1,"dungeon_wall_01_83")

@@ -4,7 +4,7 @@ function resurectDoctor()
     spawn("lightning_bolt_greater_blast", ref.level,ref.x, ref.y, 0, ref.elevation+1)
     spawn("lightning_bolt", ref.level,ref.x, ref.y, 0, ref.elevation+1)
     spawn("lightning_bolt_blast", ref.level,ref.x, ref.y, 0, ref.elevation)
-    local res_items_needed = {["figure_skeleton"] = 1, ["potion_greater_healing"] = 1, ["lightning_rod"] = 1, ["embalmers_robe"] = 1}
+    local res_items_needed = {["figure_skeleton"] = 1, ["crystal_shard_healing"] = 1, ["lightning_rod"] = 1, ["embalmers_robe"] = 1}
     local res_items_count = 4
     local res_items = {}
     local med_station_altar = findEntity("med_station_altar")
