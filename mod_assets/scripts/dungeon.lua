@@ -3,11 +3,11 @@
 --- level 1 ---
 
 newMap{
-	name = "Unnamed",
+	name = "Castle of Water",
 	width = 32,
 	height = 32,
 	levelCoord = {0,0,0},
-	ambientTrack = "dungeon",
+	ambientTrack = "underwater",
 	tiles = {
 		"castle_arena_floor",
 		"castle_floor",
@@ -202,7 +202,7 @@ initializer.timer:setDisableSelf(true)
 initializer.timer:setTriggerOnStart(true)
 initializer.timer:setCurrentLevelOnly(false)
 initializer.timer:addConnector("onActivate", "cannon_daemon_script_entity", "initLevel")
-initializer.timer:addConnector("onActivate", "script_entity_2", "initLevel")
+initializer.timer:addConnector("onActivate", "script_entity_2", "initDungeon")
 spawn("castle_wall_outside_01",15,13,0,0,"castle_wall_outside_01_16")
 spawn("castle_door_portcullis",15,13,0,0,"cannon_daemon_1_gunport")
 cannon_daemon_1_gunport.door:setDoorState("open")
@@ -234,7 +234,6 @@ spawn("castle_pillar_tall_01",13,13,0,-3,"castle_pillar_tall_01_2")
 spawn("ladder",24,14,3,-1,"ladder_1")
 spawn("castle_wall_outside_01",19,15,3,0,"castle_wall_outside_01_1")
 spawn("dungeon_wall_01",19,15,3,-1,"dungeon_wall_01_25")
-spawn("starting_location",23,14,3,0,"starting_location_1")
 spawn("castle_wall_outside_01",13,16,3,0,"castle_wall_outside_01_34")
 spawn("castle_wall_grating_ornament",13,16,3,0,"castle_wall_grating_ornament_1")
 spawn("castle_wall_outside_01",17,16,1,0,"castle_wall_outside_01_37")
@@ -760,3 +759,415 @@ spawn("dungeon_wall_01",12,21,0,-1,"dungeon_wall_01_81")
 spawn("castle_wall_outside_01",11,21,0,0,"castle_wall_outside_01_136")
 spawn("dungeon_wall_01",11,21,0,-1,"dungeon_wall_01_82")
 spawn("dungeon_wall_01",10,21,0,-1,"dungeon_wall_01_83")
+
+--- level 2 ---
+
+newMap{
+	name = "Moist Catacombs",
+	width = 32,
+	height = 32,
+	levelCoord = {1,0,0},
+	ambientTrack = "swamp",
+	tiles = {
+		"dungeon_floor",
+		"dungeon_floor_tiles",
+		"dungeon_floor_water",
+		"dungeon_wall",
+		"forest_underwater",
+	}
+}
+
+loadLayer("floor_elevation", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,-1,-1,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
+loadLayer("tiles", {
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,4,2,2,2,2,3,5,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,2,3,3,3,3,5,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,2,2,2,2,3,5,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4,2,4,4,4,4,5,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,2,4,4,4,4,4,5,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+})
+
+spawn("ladder",26,4,0,-1,"ladder_2")
+spawn("boat_small",30,5,1,0,"boat_small_1")
+spawn("water_surface_underground",31,0,3,0,"water_surface_underground_1")
+spawn("forest_day_sky",30,0,1,0,"forest_day_sky")
+forest_day_sky.model:disable()
+forest_day_sky.light:disable()
+forest_day_sky.ambient:disable()
+forest_day_sky.sky:disable()
+forest_day_sky.lensflare:disable()
+spawn("cemetery_sky",28,0,3,0,"cemetery_sky")
+cemetery_sky.model:disable()
+cemetery_sky.nightSky:disable()
+cemetery_sky.stars:disable()
+cemetery_sky.light:disable()
+cemetery_sky.ambient:disable()
+cemetery_sky.lensflare:disable()
+spawn("floor_trigger",23,6,0,0,"floor_trigger_3")
+floor_trigger_3.floortrigger:setTriggeredByParty(true)
+floor_trigger_3.floortrigger:setTriggeredByMonster(false)
+floor_trigger_3.floortrigger:setTriggeredByItem(false)
+floor_trigger_3.floortrigger:setTriggeredByDigging(false)
+floor_trigger_3.floortrigger:setDisableSelf(false)
+floor_trigger_3.floortrigger:addConnector("onActivate", "script_entity_4", "dungeonSidePlate")
+spawn("floor_trigger",23,5,3,0,"floor_trigger_4")
+floor_trigger_4.floortrigger:setTriggeredByParty(true)
+floor_trigger_4.floortrigger:setTriggeredByMonster(false)
+floor_trigger_4.floortrigger:setTriggeredByItem(false)
+floor_trigger_4.floortrigger:setTriggeredByDigging(false)
+floor_trigger_4.floortrigger:setDisableSelf(false)
+floor_trigger_4.floortrigger:addConnector("onActivate", "script_entity_4", "dungeonInSidePlate")
+spawn("floor_trigger",25,5,0,0,"floor_trigger_5")
+floor_trigger_5.floortrigger:setTriggeredByParty(true)
+floor_trigger_5.floortrigger:setTriggeredByMonster(false)
+floor_trigger_5.floortrigger:setTriggeredByItem(false)
+floor_trigger_5.floortrigger:setTriggeredByDigging(false)
+floor_trigger_5.floortrigger:setDisableSelf(false)
+floor_trigger_5.floortrigger:addConnector("onActivate", "script_entity_4", "dockOutSidePlate")
+spawn("floor_trigger",25,7,3,0,"floor_trigger_6")
+floor_trigger_6.floortrigger:setTriggeredByParty(true)
+floor_trigger_6.floortrigger:setTriggeredByMonster(false)
+floor_trigger_6.floortrigger:setTriggeredByItem(false)
+floor_trigger_6.floortrigger:setTriggeredByDigging(false)
+floor_trigger_6.floortrigger:setDisableSelf(false)
+floor_trigger_6.floortrigger:addConnector("onActivate", "script_entity_4", "dockSidePlate")
+spawn("script_entity",24,6,3,0,"script_entity_4")
+script_entity_4.script:loadFile("mod_assets/scripts/moist_catacombs.lua")
+spawn("floor_trigger",24,7,0,0,"floor_trigger_7")
+floor_trigger_7.floortrigger:setTriggeredByParty(true)
+floor_trigger_7.floortrigger:setTriggeredByMonster(false)
+floor_trigger_7.floortrigger:setTriggeredByItem(false)
+floor_trigger_7.floortrigger:setTriggeredByDigging(false)
+floor_trigger_7.floortrigger:setDisableSelf(false)
+floor_trigger_7.floortrigger:addConnector("onActivate", "script_entity_4", "dockInSidePlate")
+spawn("floor_trigger",23,7,3,0,"floor_trigger_8")
+floor_trigger_8.floortrigger:setTriggeredByParty(true)
+floor_trigger_8.floortrigger:setTriggeredByMonster(false)
+floor_trigger_8.floortrigger:setTriggeredByItem(false)
+floor_trigger_8.floortrigger:setTriggeredByDigging(false)
+floor_trigger_8.floortrigger:setDisableSelf(false)
+floor_trigger_8.floortrigger:addConnector("onActivate", "script_entity_4", "dungeonOutSidePlate")
+spawn("ladder_metal",22,3,1,-1,"ladder_metal_4")
+spawn("forest_seaweed_wall_decoration_02",23,3,1,0,"forest_seaweed_wall_decoration_02_1")
+spawn("forest_seaweed_wall_decoration_02",23,4,3,0,"forest_seaweed_wall_decoration_02_2")
+spawn("swamp_wall_ivy_01",26,5,2,0,"swamp_wall_ivy_01_1")
+spawn("terracotta_jars_block",28,3,3,0,"terracotta_jars_block_1")
+spawn("swamp_wall_ivy_01",25,5,3,0,"swamp_wall_ivy_01_2")
+spawn("terracotta_jars_block",27,3,2,0,"terracotta_jars_block_2")
+spawn("terracotta_jars_block",26,3,3,0,"terracotta_jars_block_3")
+spawn("swamp_wall_ivy_01",25,3,3,0,"swamp_wall_ivy_01_4")
+spawn("swamp_wall_ivy_01",27,3,0,0,"swamp_wall_ivy_01_5")
+spawn("swamp_wall_ivy_01",26,3,0,0,"swamp_wall_ivy_01_6")
+spawn("swamp_wall_ivy_02",25,4,3,0,"swamp_wall_ivy_02_1")
+spawn("swamp_wall_ivy_02",28,5,2,0,"swamp_wall_ivy_02_2")
+spawn("forest_underwater_plankton",22,3,1,0,"forest_underwater_plankton_2")
+
+--- level 3 ---
+
+newMap{
+	name = "Cloister",
+	width = 32,
+	height = 32,
+	levelCoord = {5,0,0},
+	ambientTrack = "fortress",
+	tiles = {
+		"forest_ground",
+		"forest_trail",
+		"forest_trees",
+	}
+}
+
+loadLayer("ceiling_elevation", {
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+})
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+spawn("starting_location",14,21,0,0,"starting_location_1")
+spawn("forest_day_sky",31,0,2,0,"forest_day_sky_1")
+spawn("castle_arena_floor",2,2,3,0,"castle_arena_floor_1")
+spawn("castle_arena_floor",6,2,2,0,"castle_arena_floor_2")
+spawn("castle_arena_floor",10,2,2,0,"castle_arena_floor_3")
+spawn("castle_arena_floor",14,2,2,0,"castle_arena_floor_4")
+spawn("castle_arena_floor",18,2,1,0,"castle_arena_floor_5")
+spawn("castle_arena_floor",22,2,1,0,"castle_arena_floor_6")
+spawn("castle_arena_floor",26,2,2,0,"castle_arena_floor_7")
+spawn("castle_arena_floor",30,2,3,0,"castle_arena_floor_8")
+spawn("castle_arena_floor",2,5,3,0,"castle_arena_floor_9")
+spawn("castle_arena_floor",6,5,2,0,"castle_arena_floor_10")
+spawn("castle_arena_floor",10,5,2,0,"castle_arena_floor_11")
+spawn("castle_arena_floor",14,5,2,0,"castle_arena_floor_12")
+spawn("castle_arena_floor",18,5,1,0,"castle_arena_floor_13")
+spawn("castle_arena_floor",22,5,1,0,"castle_arena_floor_14")
+spawn("castle_arena_floor",26,5,3,0,"castle_arena_floor_15")
+spawn("castle_arena_floor",30,5,3,0,"castle_arena_floor_16")
+spawn("castle_arena_floor",2,8,3,0,"castle_arena_floor_17")
+spawn("castle_arena_floor",6,8,2,0,"castle_arena_floor_18")
+spawn("castle_arena_floor",10,8,2,0,"castle_arena_floor_19")
+spawn("castle_arena_floor",14,8,2,0,"castle_arena_floor_20")
+spawn("castle_arena_floor",18,8,1,0,"castle_arena_floor_21")
+spawn("castle_arena_floor",22,8,1,0,"castle_arena_floor_22")
+spawn("castle_arena_floor",26,8,2,0,"castle_arena_floor_23")
+spawn("castle_arena_floor",30,8,3,0,"castle_arena_floor_24")
+spawn("castle_arena_floor",2,12,3,0,"castle_arena_floor_25")
+spawn("castle_arena_floor",6,12,2,0,"castle_arena_floor_26")
+spawn("castle_arena_floor",10,12,2,0,"castle_arena_floor_27")
+spawn("castle_arena_floor",14,12,2,0,"castle_arena_floor_28")
+spawn("castle_arena_floor",18,12,1,0,"castle_arena_floor_29")
+spawn("castle_arena_floor",22,12,1,0,"castle_arena_floor_30")
+spawn("castle_arena_floor",26,12,2,0,"castle_arena_floor_31")
+spawn("castle_arena_floor",30,12,3,0,"castle_arena_floor_32")
+spawn("castle_arena_floor",2,15,3,0,"castle_arena_floor_33")
+spawn("castle_arena_floor",6,15,2,0,"castle_arena_floor_34")
+spawn("castle_arena_floor",10,15,2,0,"castle_arena_floor_35")
+spawn("castle_arena_floor",14,15,2,0,"castle_arena_floor_36")
+spawn("castle_arena_floor",18,15,1,0,"castle_arena_floor_37")
+spawn("castle_arena_floor",22,15,1,0,"castle_arena_floor_38")
+spawn("castle_arena_floor",26,15,2,0,"castle_arena_floor_39")
+spawn("castle_arena_floor",30,15,3,0,"castle_arena_floor_40")
+spawn("castle_arena_floor",2,18,3,0,"castle_arena_floor_41")
+spawn("castle_arena_floor",6,18,2,0,"castle_arena_floor_42")
+spawn("castle_arena_floor",10,18,2,0,"castle_arena_floor_43")
+spawn("castle_arena_floor",14,18,2,0,"castle_arena_floor_44")
+spawn("castle_arena_floor",22,18,1,0,"castle_arena_floor_46")
+spawn("castle_arena_floor",26,18,2,0,"castle_arena_floor_47")
+spawn("castle_arena_floor",30,18,3,0,"castle_arena_floor_48")
+spawn("castle_arena_floor",2,22,3,0,"castle_arena_floor_49")
+spawn("castle_arena_floor",6,22,2,0,"castle_arena_floor_50")
+spawn("castle_arena_floor",10,22,2,0,"castle_arena_floor_51")
+spawn("castle_arena_floor",14,22,2,0,"castle_arena_floor_52")
+spawn("castle_arena_floor",18,22,1,0,"castle_arena_floor_53")
+spawn("castle_arena_floor",22,22,1,0,"castle_arena_floor_54")
+spawn("castle_arena_floor",26,22,2,0,"castle_arena_floor_55")
+spawn("castle_arena_floor",30,22,3,0,"castle_arena_floor_56")
+spawn("castle_arena_floor",2,25,3,0,"castle_arena_floor_57")
+spawn("castle_arena_floor",6,25,2,0,"castle_arena_floor_58")
+spawn("castle_arena_floor",10,25,2,0,"castle_arena_floor_59")
+spawn("castle_arena_floor",14,25,2,0,"castle_arena_floor_60")
+spawn("castle_arena_floor",18,25,1,0,"castle_arena_floor_61")
+spawn("castle_arena_floor",22,25,1,0,"castle_arena_floor_62")
+spawn("castle_arena_floor",26,25,2,0,"castle_arena_floor_63")
+spawn("castle_arena_floor",30,25,3,0,"castle_arena_floor_64")
+spawn("castle_arena_floor",2,28,3,0,"castle_arena_floor_65")
+spawn("castle_arena_floor",6,28,2,0,"castle_arena_floor_66")
+spawn("castle_arena_floor",10,28,2,0,"castle_arena_floor_67")
+spawn("castle_arena_floor",14,28,2,0,"castle_arena_floor_68")
+spawn("castle_arena_floor",18,28,1,0,"castle_arena_floor_69")
+spawn("castle_arena_floor",22,28,1,0,"castle_arena_floor_70")
+spawn("castle_arena_floor",26,28,2,0,"castle_arena_floor_71")
+spawn("castle_arena_floor",30,28,3,0,"castle_arena_floor_72")
+spawn("forest_seaweed_floor_01",15,20,0,0,"forest_seaweed_floor_01_1")
+spawn("forest_seaweed_floor_01",14,19,0,0,"forest_seaweed_floor_01_2")
+spawn("forest_seaweed_floor_01",15,18,0,0,"forest_seaweed_floor_01_3")
+spawn("forest_seaweed_floor_01",15,16,1,0,"forest_seaweed_floor_01_4")
+spawn("forest_seaweed_floor_01",12,16,2,0,"forest_seaweed_floor_01_5")
+spawn("forest_seaweed_floor_01",12,13,3,0,"forest_seaweed_floor_01_6")
+spawn("forest_seaweed_floor_01",9,8,2,0,"forest_seaweed_floor_01_7")
+spawn("forest_seaweed_floor_01",3,4,3,0,"forest_seaweed_floor_01_8")
+spawn("forest_seaweed_floor_01",10,3,2,0,"forest_seaweed_floor_01_9")
+spawn("forest_seaweed_floor_01",18,3,3,0,"forest_seaweed_floor_01_10")
+spawn("forest_seaweed_floor_01",25,4,3,0,"forest_seaweed_floor_01_11")
+spawn("forest_seaweed_floor_01",20,6,2,0,"forest_seaweed_floor_01_12")
+spawn("forest_seaweed_floor_01",12,4,2,0,"forest_seaweed_floor_01_13")
+spawn("forest_seaweed_floor_01",25,5,0,0,"forest_seaweed_floor_01_14")
+spawn("forest_seaweed_floor_01",28,3,1,0,"forest_seaweed_floor_01_15")
+spawn("forest_seaweed_floor_01",10,2,1,0,"forest_seaweed_floor_01_16")
+spawn("forest_seaweed_floor_01",3,1,0,0,"forest_seaweed_floor_01_17")
+spawn("forest_seaweed_floor_01",3,3,3,0,"forest_seaweed_floor_01_18")
+spawn("forest_seaweed_floor_01",8,7,3,0,"forest_seaweed_floor_01_19")
+spawn("forest_seaweed_floor_01",5,5,0,0,"forest_seaweed_floor_01_20")
+spawn("forest_seaweed_floor_01",1,10,0,0,"forest_seaweed_floor_01_21")
+spawn("forest_seaweed_floor_01",5,18,1,0,"forest_seaweed_floor_01_22")
+spawn("forest_seaweed_floor_01",7,13,3,0,"forest_seaweed_floor_01_23")
+spawn("forest_seaweed_floor_01",3,12,1,0,"forest_seaweed_floor_01_24")
+spawn("forest_seaweed_floor_01",8,15,3,0,"forest_seaweed_floor_01_25")
+spawn("forest_seaweed_floor_01",6,19,0,0,"forest_seaweed_floor_01_26")
+spawn("forest_seaweed_floor_01",7,25,0,0,"forest_seaweed_floor_01_27")
+spawn("forest_seaweed_floor_01",7,28,1,0,"forest_seaweed_floor_01_28")
+spawn("forest_seaweed_floor_01",21,28,0,0,"forest_seaweed_floor_01_29")
+spawn("forest_seaweed_floor_01",9,27,2,0,"forest_seaweed_floor_01_30")
+spawn("forest_seaweed_floor_01",10,22,1,0,"forest_seaweed_floor_01_31")
+spawn("forest_seaweed_floor_01",21,23,0,0,"forest_seaweed_floor_01_32")
+spawn("forest_seaweed_floor_01",23,25,3,0,"forest_seaweed_floor_01_33")
+spawn("forest_seaweed_floor_01",27,23,1,0,"forest_seaweed_floor_01_34")
+spawn("forest_seaweed_floor_01",27,16,0,0,"forest_seaweed_floor_01_35")
+spawn("forest_seaweed_floor_01",21,16,3,0,"forest_seaweed_floor_01_36")
+spawn("forest_seaweed_floor_01",26,17,3,0,"forest_seaweed_floor_01_37")
+spawn("forest_seaweed_floor_01",19,13,0,0,"forest_seaweed_floor_01_38")
+spawn("forest_seaweed_floor_01",19,10,1,0,"forest_seaweed_floor_01_39")
+spawn("forest_seaweed_floor_01",26,9,0,0,"forest_seaweed_floor_01_40")
+spawn("forest_seaweed_floor_01",15,9,3,0,"forest_seaweed_floor_01_41")
+spawn("forest_seaweed_floor_01",19,10,3,0,"forest_seaweed_floor_01_42")
+spawn("forest_seaweed_floor_01",18,8,3,0,"forest_seaweed_floor_01_43")
+spawn("forest_seaweed_floor_01",26,5,3,0,"forest_seaweed_floor_01_44")
+spawn("forest_seaweed_floor_01",28,2,3,0,"forest_seaweed_floor_01_45")
+spawn("forest_seaweed_floor_01",30,0,1,0,"forest_seaweed_floor_01_46")
+spawn("forest_seaweed_floor_01",29,0,0,0,"forest_seaweed_floor_01_47")
+spawn("forest_seaweed_floor_01",18,0,2,0,"forest_seaweed_floor_01_48")
+spawn("forest_seaweed_floor_01",6,0,2,0,"forest_seaweed_floor_01_49")
+spawn("forest_seaweed_floor_01",1,4,0,0,"forest_seaweed_floor_01_50")
+spawn("forest_seaweed_floor_01",3,17,2,0,"forest_seaweed_floor_01_51")
+spawn("forest_seaweed_floor_01",0,21,0,0,"forest_seaweed_floor_01_52")
+spawn("forest_seaweed_floor_01",0,24,0,0,"forest_seaweed_floor_01_53")
+spawn("forest_seaweed_floor_01",0,29,1,0,"forest_seaweed_floor_01_54")
+spawn("forest_seaweed_floor_01",7,30,3,0,"forest_seaweed_floor_01_55")
+spawn("forest_seaweed_floor_01",3,30,3,0,"forest_seaweed_floor_01_56")
+spawn("forest_seaweed_floor_01",14,31,0,0,"forest_seaweed_floor_01_57")
+spawn("forest_seaweed_floor_01",25,30,1,0,"forest_seaweed_floor_01_58")
+spawn("forest_seaweed_floor_01",28,30,0,0,"forest_seaweed_floor_01_59")
+spawn("forest_seaweed_floor_01",13,27,0,0,"forest_seaweed_floor_01_60")
+spawn("forest_seaweed_floor_01",21,23,2,0,"forest_seaweed_floor_01_61")
+spawn("forest_seaweed_floor_01",12,21,0,0,"forest_seaweed_floor_01_62")
+spawn("forest_seaweed_floor_01",3,19,3,0,"forest_seaweed_floor_01_63")
+spawn("forest_seaweed_floor_01",6,15,3,0,"forest_seaweed_floor_01_64")
+spawn("forest_seaweed_floor_01",5,10,2,0,"forest_seaweed_floor_01_65")
+spawn("forest_seaweed_floor_01",14,8,2,0,"forest_seaweed_floor_01_66")
+spawn("forest_seaweed_floor_01",25,12,0,0,"forest_seaweed_floor_01_67")
+spawn("forest_seaweed_floor_01",28,17,0,0,"forest_seaweed_floor_01_68")
+spawn("forest_seaweed_floor_01",26,21,0,0,"forest_seaweed_floor_01_69")
+spawn("forest_seaweed_floor_01",24,11,2,0,"forest_seaweed_floor_01_70")
+spawn("forest_seaweed_floor_01",27,9,3,0,"forest_seaweed_floor_01_71")
+spawn("forest_seaweed_floor_01",26,6,2,0,"forest_seaweed_floor_01_72")
+spawn("forest_seaweed_floor_01",12,4,2,0,"forest_seaweed_floor_01_73")
+spawn("forest_seaweed_floor_01",9,11,1,0,"forest_seaweed_floor_01_74")
+spawn("forest_seaweed_floor_01",14,23,0,0,"forest_seaweed_floor_01_75")
+spawn("forest_seaweed_floor_01",21,24,2,0,"forest_seaweed_floor_01_76")
+spawn("forest_seaweed_floor_01",17,27,3,0,"forest_seaweed_floor_01_77")
+spawn("forest_seaweed_floor_01",20,27,1,0,"forest_seaweed_floor_01_78")
+spawn("background_hill_01",9,0,0,0,"background_hill_01_1")
+spawn("background_hill_01",23,0,0,0,"background_hill_01_2")
+spawn("cemetery_sky",28,0,3,0,"cemetery_sky_1")
+cemetery_sky_1.model:disable()
+cemetery_sky_1.nightSky:disable()
+cemetery_sky_1.stars:disable()
+cemetery_sky_1.light:disable()
+cemetery_sky_1.ambient:disable()
+cemetery_sky_1.lensflare:disable()
+spawn("forest_falling_leaves",14,17,1,0,"forest_falling_leaves_1")
+spawn("forest_fireflies",17,13,0,0,"forest_fireflies_1")
+spawn("forest_willow",1,16,3,0,"forest_willow_1")
+spawn("forest_blocker_stone",12,17,3,0,"forest_blocker_stone_1")
