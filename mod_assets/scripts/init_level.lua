@@ -39,4 +39,6 @@ end
 
 function initCloister()      
     GameMode.setTimeOfDay(0.0)
+    local essence_of_air = spawn("essence_air").item
+    beacon_air.socket:addItem(essence_of_air)
 end
