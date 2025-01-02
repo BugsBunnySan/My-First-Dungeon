@@ -884,7 +884,7 @@ floor_trigger_5.floortrigger:setTriggeredByItem(false)
 floor_trigger_5.floortrigger:setTriggeredByDigging(false)
 floor_trigger_5.floortrigger:setDisableSelf(false)
 floor_trigger_5.floortrigger:addConnector("onActivate", "script_entity_4", "dockOutSidePlate")
-spawn("floor_trigger",25,7,3,0,"floor_trigger_6")
+spawn("floor_trigger",25,6,3,0,"floor_trigger_6")
 floor_trigger_6.floortrigger:setTriggeredByParty(true)
 floor_trigger_6.floortrigger:setTriggeredByMonster(false)
 floor_trigger_6.floortrigger:setTriggeredByItem(false)
@@ -893,7 +893,7 @@ floor_trigger_6.floortrigger:setDisableSelf(false)
 floor_trigger_6.floortrigger:addConnector("onActivate", "script_entity_4", "dockSidePlate")
 spawn("script_entity",24,6,3,0,"script_entity_4")
 script_entity_4.script:loadFile("mod_assets/scripts/moist_catacombs.lua")
-spawn("floor_trigger",24,7,0,0,"floor_trigger_7")
+spawn("floor_trigger",25,7,0,0,"floor_trigger_7")
 floor_trigger_7.floortrigger:setTriggeredByParty(true)
 floor_trigger_7.floortrigger:setTriggeredByMonster(false)
 floor_trigger_7.floortrigger:setTriggeredByItem(false)
@@ -1080,7 +1080,6 @@ loadLayer("tiles", {
 	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 })
 
-spawn("starting_location",14,21,0,0,"starting_location_1")
 spawn("forest_day_sky",31,0,2,0,"forest_day_sky_1")
 spawn("forest_seaweed_floor_01",15,16,1,0,"forest_seaweed_floor_01_4")
 spawn("forest_seaweed_floor_01",12,16,2,0,"forest_seaweed_floor_01_5")
@@ -2109,5 +2108,533 @@ castle_wall_01_138.model:disable()
 spawn("castle_wall_grating",13,20,1,0,"castle_wall_grating_44")
 castle_wall_grating_44.model:disable()
 castle_wall_grating_44.frame:disable()
-spawn("air_elemental",15,20,3,0,"air_elemental_1")
-air_elemental_1.monster:setAIState("guard")
+
+--- level 4 ---
+
+newMap{
+	name = "Beach of Beginnings",
+	width = 32,
+	height = 32,
+	levelCoord = {7,0,0},
+	ambientTrack = "beach",
+	tiles = {
+		"beach_ground",
+		"beach_ground_grass",
+		"forest_underwater",
+	}
+}
+
+loadLayer("floor_elevation", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+})
+
+loadLayer("ceiling_elevation", {
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+})
+
+loadLayer("heightmap", {
+	0,0,0,-1,0,-1,-1,0,0,0,0,0,0,0,-1,0,0,0,-1,-1,0,-1,0,0,0,0,0,0,0,0,0,0,
+	0,-1,0,-1,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,
+	0,-1,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,0,0,0,0,0,-1,-1,0,0,-1,0,0,-1,-1,0,0,
+	0,0,0,-1,0,0,-1,-1,0,0,0,-1,0,-1,0,0,0,0,0,-1,-1,0,0,0,0,0,0,-1,0,0,0,0,
+	0,0,0,0,-1,0,0,0,0,0,0,-1,-1,0,0,-1,0,0,-1,-1,0,0,0,0,-1,0,0,0,-1,-1,0,0,
+	0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,-1,0,-1,-1,0,0,0,0,0,0,0,0,0,0,-1,0,
+	0,0,-1,0,0,0,0,-1,0,0,-1,-1,-1,0,0,0,-1,-1,0,-1,0,0,-1,0,-1,-1,0,0,-1,-1,0,0,
+	-1,-1,0,0,0,-1,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,-1,0,-1,0,0,-1,-1,0,0,0,0,0,0,
+	0,-1,0,-1,0,0,0,-1,0,0,0,-1,-1,-1,0,0,-1,0,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,-1,0,-1,-1,0,0,0,-1,0,0,0,-1,-1,0,0,0,0,
+	0,-1,-1,-1,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-1,0,-1,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,0,-1,-1,-1,0,0,-1,-1,-1,0,-1,0,0,0,0,
+	0,-1,0,-1,-1,0,0,-1,-1,-1,0,-1,-1,-1,-1,-1,0,0,0,-1,0,0,0,-1,-1,-1,0,0,0,0,-1,0,
+	0,0,-1,-1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,-1,
+	0,0,0,0,0,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,0,-1,-1,0,0,0,0,0,-1,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,-1,0,0,0,0,0,-1,-1,0,0,0,0,-1,0,0,
+	0,0,-1,0,-1,0,0,0,0,-1,0,-1,0,-1,0,0,0,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,0,0,
+	0,0,0,0,0,-1,0,0,-1,0,0,0,0,-1,0,-1,0,-1,0,0,-1,-1,0,-1,-1,0,0,0,-1,0,0,0,
+	-1,0,-1,0,0,0,0,-1,0,0,-1,-1,0,0,0,0,0,-1,-1,-1,0,-1,-1,-1,0,0,0,0,0,-1,0,0,
+	0,0,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-1,-1,0,0,-1,0,0,0,0,
+	-1,-1,0,0,0,-1,0,0,0,0,0,0,0,0,0,-1,0,-1,0,-1,-1,0,0,-1,-1,0,-1,0,0,0,0,0,
+	0,-1,0,0,0,0,0,-1,0,0,-1,-1,0,0,-1,0,-1,-1,0,0,-1,-1,0,-1,-1,0,-1,0,0,0,0,0,
+	0,0,0,-1,-1,0,0,0,0,-1,0,0,0,0,0,0,0,-1,-1,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,
+	0,0,-1,0,0,0,-1,-1,0,-1,0,-1,0,-1,0,0,0,0,0,0,0,-1,0,0,0,0,-1,0,0,-1,-1,0,
+	0,0,-1,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,0,0,0,-1,0,-1,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,-1,-1,0,0,-1,0,-1,0,0,0,-1,-1,-1,-1,-1,0,-1,-1,0,0,0,0,0,-1,
+	-1,0,-1,0,0,0,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,0,0,0,-1,0,0,-1,0,0,0,0,0,0,0,0,
+	-1,0,0,0,0,0,-1,-1,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,0,0,-1,0,0,0,0,0,0,
+	-1,-1,0,0,-1,0,-1,-1,0,-1,0,-1,-1,-1,-1,0,-1,0,0,0,-1,-1,-1,0,-1,-1,0,-1,0,-1,0,-1,
+	0,-1,-1,0,0,0,0,0,0,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,
+	-1,0,-1,0,-1,0,0,-1,0,0,0,0,0,0,0,0,0,-1,0,0,0,-1,0,0,0,0,-1,0,-1,0,-1,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+})
+
+spawn("branch",12,28,3,0,"branch_1")
+spawn("dagger",12,27,2,0,"dagger_1")
+spawn("forest_day_sky",11,24,2,0,"forest_day_sky_2")
+spawn("forest_heightmap",10,24,0,0,"forest_heightmap_3")
+spawn("water_surface",9,24,1,0,"water_surface_2")
+spawn("dungeon_fire_pit",12,28,2,1,"dungeon_fire_pit_1")
+dungeon_fire_pit_1.light:disable()
+dungeon_fire_pit_1.particle:disable()
+dungeon_fire_pit_1.sound:disable()
+spawn("branch",12,28,3,0,"branch_2")
+spawn("branch",11,28,1,0,"branch_3")
+spawn("turtle_steak",12,29,0,0,"turtle_steak_1")
+spawn("turtle_steak",12,29,0,0,"turtle_steak_2")
+spawn("turtle_steak",12,29,0,0,"turtle_steak_3")
+spawn("turtle_eggs",12,28,1,0,"turtle_eggs_1")
+spawn("turtle_eggs",12,28,0,0,"turtle_eggs_2")
+spawn("floor_corpse",13,27,2,1,"floor_corpse_4")
+spawn("floor_dirt",12,27,2,1,"floor_dirt_1")
+spawn("rat_swarm",10,28,1,0,"rat_swarm_1")
+rat_swarm_1.brain:disable()
+spawn("forest_stairs_down",10,28,3,1,"forest_stairs_down_1")
+forest_stairs_down_1.stairs:setTeleportTarget(5,27,21,1)
+spawn("note",13,27,2,0,"diary_day7")
+diary_day7.scrollitem:setScrollText("Diary of Merchant Of East\
+Day #7 of exploring the cavern, I think I'm getting somehwere, found a way around the blockage, caught some kind of fever though, hope it will pass.")
+spawn("beach_rock_2x1",10,29,3,1,"beach_rock_2x1_1")
+spawn("beach_rock_3x1",10,27,3,0,"beach_rock_3x1_1")
+spawn("beach_rock_3x2",12,30,3,0,"beach_rock_3x2_1")
+spawn("beach_ocean",16,31,1,0,"beach_ocean_2")
+spawn("beach_ocean",31,31,1,0,"beach_ocean_3")
+spawn("beach_ocean",0,31,1,0,"beach_ocean_4")
+spawn("ladder",14,31,0,-1,"ladder_3")
+spawn("ladder",14,31,0,-2,"ladder_4")
+spawn("ladder",14,31,0,-3,"ladder_5")
+spawn("ladder",14,31,0,-4,"ladder_6")
+spawn("ladder",14,31,0,0,"ladder_7")
+spawn("ladder",14,31,0,-5,"ladder_8")
+spawn("ladder",14,31,0,-6,"ladder_9")
+spawn("ladder",14,31,0,-7,"ladder_10")
+spawn("invisible_wall",31,30,0,1,"invisible_wall_7")
+invisible_wall_7.projectilecollider:disable()
+spawn("invisible_wall",30,30,0,1,"invisible_wall_8")
+invisible_wall_8.projectilecollider:disable()
+spawn("invisible_wall",29,30,0,1,"invisible_wall_9")
+invisible_wall_9.projectilecollider:disable()
+spawn("invisible_wall",28,30,0,1,"invisible_wall_10")
+invisible_wall_10.projectilecollider:disable()
+spawn("invisible_wall",27,30,0,1,"invisible_wall_11")
+invisible_wall_11.projectilecollider:disable()
+spawn("invisible_wall",26,30,0,1,"invisible_wall_12")
+invisible_wall_12.projectilecollider:disable()
+spawn("invisible_wall",25,31,0,1,"invisible_wall_13")
+invisible_wall_13.projectilecollider:disable()
+spawn("invisible_wall",24,31,0,1,"invisible_wall_14")
+invisible_wall_14.projectilecollider:disable()
+spawn("invisible_wall",23,31,0,1,"invisible_wall_15")
+invisible_wall_15.projectilecollider:disable()
+spawn("invisible_wall",22,30,0,1,"invisible_wall_16")
+invisible_wall_16.projectilecollider:disable()
+spawn("invisible_wall",21,30,0,1,"invisible_wall_17")
+invisible_wall_17.projectilecollider:disable()
+spawn("invisible_wall",20,30,0,1,"invisible_wall_18")
+invisible_wall_18.projectilecollider:disable()
+spawn("invisible_wall",19,30,0,1,"invisible_wall_19")
+invisible_wall_19.projectilecollider:disable()
+spawn("invisible_wall",18,30,0,1,"invisible_wall_20")
+invisible_wall_20.projectilecollider:disable()
+spawn("invisible_wall",17,30,0,1,"invisible_wall_21")
+invisible_wall_21.projectilecollider:disable()
+spawn("invisible_wall",16,30,0,1,"invisible_wall_22")
+invisible_wall_22.projectilecollider:disable()
+spawn("invisible_wall",15,30,0,1,"invisible_wall_23")
+invisible_wall_23.projectilecollider:disable()
+spawn("invisible_wall",14,31,0,1,"invisible_wall_24")
+invisible_wall_24.projectilecollider:disable()
+spawn("invisible_wall",13,31,0,1,"invisible_wall_25")
+invisible_wall_25.projectilecollider:disable()
+spawn("invisible_wall",12,31,0,1,"invisible_wall_26")
+invisible_wall_26.projectilecollider:disable()
+spawn("invisible_wall",11,31,0,1,"invisible_wall_27")
+invisible_wall_27.projectilecollider:disable()
+spawn("invisible_wall",10,31,0,1,"invisible_wall_28")
+invisible_wall_28.projectilecollider:disable()
+spawn("invisible_wall",9,30,0,1,"invisible_wall_29")
+invisible_wall_29.projectilecollider:disable()
+spawn("invisible_wall",8,30,0,1,"invisible_wall_30")
+invisible_wall_30.projectilecollider:disable()
+spawn("invisible_wall",7,30,0,1,"invisible_wall_31")
+invisible_wall_31.projectilecollider:disable()
+spawn("invisible_wall",6,30,0,1,"invisible_wall_32")
+invisible_wall_32.projectilecollider:disable()
+spawn("invisible_wall",5,30,0,1,"invisible_wall_33")
+invisible_wall_33.projectilecollider:disable()
+spawn("invisible_wall",4,30,0,1,"invisible_wall_34")
+invisible_wall_34.projectilecollider:disable()
+spawn("invisible_wall",3,30,0,1,"invisible_wall_35")
+invisible_wall_35.projectilecollider:disable()
+spawn("invisible_wall",2,30,0,1,"invisible_wall_36")
+invisible_wall_36.projectilecollider:disable()
+spawn("invisible_wall",1,30,0,1,"invisible_wall_37")
+invisible_wall_37.projectilecollider:disable()
+spawn("invisible_wall",0,30,0,1,"invisible_wall_38")
+invisible_wall_38.projectilecollider:disable()
+spawn("beach_rock_border",14,29,2,1,"beach_rock_border_1")
+spawn("beach_rock_3x1",17,30,3,0,"beach_rock_3x1_2")
+spawn("beach_rock_1x1_low",18,30,1,1,"beach_rock_1x1_low_1")
+spawn("beach_rock_blocker_02",9,30,1,1,"beach_rock_blocker_02_1")
+spawn("beach_cattail_blocker",10,30,1,1,"beach_cattail_blocker_1")
+spawn("rock",10,30,3,0,"rock_2")
+spawn("rock",10,30,3,0,"rock_3")
+spawn("turtle",24,6,2,0,"turtle_1")
+turtle_1.brain:disable()
+spawn("beach_rock_arch_small",19,30,1,0,"beach_rock_arch_small_1")
+spawn("beach_rock_1x1",22,30,3,1,"beach_rock_1x1_1")
+spawn("beach_rock_outside_wall_high",26,31,3,0,"beach_rock_outside_wall_high_1")
+spawn("beach_rock_outside_wall_low",28,30,3,1,"beach_rock_outside_wall_low_1")
+spawn("beach_rock_arch",29,30,1,0,"beach_rock_arch_1")
+spawn("beach_rock_2x1",31,30,3,1,"beach_rock_2x1_2")
+spawn("beach_rock_2x1",29,30,3,1,"beach_rock_2x1_3")
+spawn("invisible_wall",31,29,0,1,"invisible_wall_39")
+invisible_wall_39.projectilecollider:disable()
+spawn("invisible_wall",31,28,0,1,"invisible_wall_40")
+invisible_wall_40.projectilecollider:disable()
+spawn("invisible_wall",31,27,0,1,"invisible_wall_41")
+invisible_wall_41.projectilecollider:disable()
+spawn("invisible_wall",31,26,0,1,"invisible_wall_42")
+invisible_wall_42.projectilecollider:disable()
+spawn("note",13,27,3,0,"diary_day2")
+diary_day2.scrollitem:setScrollText("Diary of Merchants Of East\
+Day #2\
+Initial survey suggest all the aging workings are falling apart. We hope it'll maintain function until we get the loot.")
+spawn("wooden_box",10,30,0,0,"wooden_box_1")
+spawn("beach_rock_shore",15,25,0,1,"beach_rock_shore_1")
+
+--- level 5 ---
+
+newMap{
+	name = "Beach Dungeon1",
+	width = 32,
+	height = 32,
+	levelCoord = {7,-1,0},
+	ambientTrack = "dungeon",
+	tiles = {
+		"dungeon_floor",
+		"dungeon_floor_water",
+		"dungeon_wall",
+		"mine_floor",
+		"mine_wall",
+	}
+}
+
+loadLayer("floor_elevation", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,0,-1,0,0,0,0,0,0,0,1,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
+loadLayer("ceiling_elevation", {
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,0,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+})
+
+loadLayer("tiles", {
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,2,1,1,1,3,1,1,1,1,1,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,2,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,4,4,1,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,4,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+})
+
+spawn("dungeon_stairs_up",28,21,1,1,"dungeon_stairs_up_1")
+dungeon_stairs_up_1.stairs:setTeleportTarget(4,11,28,1)
+spawn("ladder_metal",26,21,1,0,"ladder_metal_5")
+spawn("dungeon_alcove",27,21,0,1,"dungeon_alcove_1")
+spawn("torch",27,21,0,1,"torch_1")
+dungeon_alcove_1.surface:addItem(torch_1.item)
+spawn("torch",27,21,0,1,"torch_2")
+dungeon_alcove_1.surface:addItem(torch_2.item)
+spawn("castle_bridge_grating",25,21,2,1,"castle_bridge_grating_9")
+spawn("green_slime",25,21,1,1,"green_slime_1")
+green_slime_1.monster:setHealth(100)
+green_slime_1.move:disable()
+green_slime_1.turn:disable()
+spawn("dungeon_door_wooden",26,21,3,1,"dungeon_door_wooden_1")
+spawn("lever",27,21,2,1,"blob_door_lever")
+blob_door_lever.lever:setState("activated")
+blob_door_lever.lever:setDisableSelf(false)
+blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_1", "open")
+blob_door_lever.lever:addConnector("onActivate", "script_entity_6", "levelBreaks")
+spawn("dungeon_wall_01",24,21,1,1,"dungeon_wall_01_84")
+spawn("script_entity",26,22,1,0,"script_entity_6")
+script_entity_6.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
+spawn("dungeon_cave_in",24,20,0,0,"dungeon_cave_in_2")
+spawn("dungeon_door_wooden",23,22,3,0,"dungeon_door_wooden_2")
+dungeon_door_wooden_2.door:setPullChain(true)
+spawn("forest_ruins_secret_door",21,21,0,0,"forest_ruins_secret_door_1")
+spawn("forest_ruins_secret_door",20,21,0,0,"forest_ruins_secret_door_2")
+spawn("forest_ruins_secret_door",22,21,0,0,"forest_ruins_secret_door_3")
+spawn("rat_swarm",20,26,1,0,"rat_swarm_2")
+spawn("dungeon_pressure_plate",19,21,1,-1,"dungeon_pressure_plate_1")
+dungeon_pressure_plate_1.floortrigger:setTriggeredByParty(true)
+dungeon_pressure_plate_1.floortrigger:setTriggeredByMonster(false)
+dungeon_pressure_plate_1.floortrigger:setTriggeredByItem(true)
+dungeon_pressure_plate_1.floortrigger:setTriggeredByDigging(false)
+dungeon_pressure_plate_1.floortrigger:setDisableSelf(false)
+dungeon_pressure_plate_1.floortrigger:addConnector("onActivate", "forest_ruins_secret_door_1", "open")
+dungeon_pressure_plate_1.floortrigger:addConnector("onActivate", "forest_ruins_secret_door_2", "open")
+dungeon_pressure_plate_1.floortrigger:addConnector("onActivate", "forest_ruins_secret_door_3", "open")
+spawn("dungeon_wall_height_difference",20,21,3,0,"dungeon_wall_height_difference_1")
+spawn("dungeon_wall_01",20,21,3,1,"dungeon_wall_01_85")
+spawn("dungeon_iron_gate",20,22,3,0,"dungeon_iron_gate_2")
+dungeon_iron_gate_2.controller:disable()
+dungeon_iron_gate_2.cbox1:disable()
+dungeon_iron_gate_2.cbox2:disable()
+dungeon_iron_gate_2.model:disable()
+spawn("dungeon_iron_gate",20,23,3,0,"dungeon_iron_gate_3")
+dungeon_iron_gate_3.controller:disable()
+dungeon_iron_gate_3.cbox1:disable()
+dungeon_iron_gate_3.cbox2:disable()
+dungeon_iron_gate_3.model:disable()
+spawn("dungeon_iron_gate",20,24,2,0,"dungeon_iron_gate_4")
+dungeon_iron_gate_4.controller:disable()
+dungeon_iron_gate_4.cbox1:disable()
+dungeon_iron_gate_4.cbox2:disable()
+dungeon_iron_gate_4.model:disable()
+spawn("dungeon_iron_gate",21,24,2,0,"dungeon_iron_gate_5")
+dungeon_iron_gate_5.controller:disable()
+dungeon_iron_gate_5.cbox1:disable()
+dungeon_iron_gate_5.cbox2:disable()
+dungeon_iron_gate_5.model:disable()
+spawn("dungeon_iron_gate",22,24,2,0,"dungeon_iron_gate_6")
+dungeon_iron_gate_6.controller:disable()
+dungeon_iron_gate_6.cbox1:disable()
+dungeon_iron_gate_6.cbox2:disable()
+dungeon_iron_gate_6.model:disable()
+spawn("dungeon_iron_gate",22,24,1,0,"dungeon_iron_gate_7")
+dungeon_iron_gate_7.controller:disable()
+dungeon_iron_gate_7.cbox1:disable()
+dungeon_iron_gate_7.cbox2:disable()
+dungeon_iron_gate_7.model:disable()
+spawn("dungeon_iron_gate",22,23,1,0,"dungeon_iron_gate_8")
+dungeon_iron_gate_8.controller:disable()
+dungeon_iron_gate_8.cbox1:disable()
+dungeon_iron_gate_8.cbox2:disable()
+dungeon_iron_gate_8.model:disable()
+spawn("dungeon_iron_gate",22,21,1,0,"dungeon_iron_gate_9")
+dungeon_iron_gate_9.controller:disable()
+dungeon_iron_gate_9.cbox1:disable()
+dungeon_iron_gate_9.cbox2:disable()
+dungeon_iron_gate_9.model:disable()
+spawn("dungeon_wall_grating",20,21,3,0,"dungeon_wall_grating_1")
+dungeon_wall_grating_1.model:disable()
+spawn("rat_swarm",20,20,2,0,"rat_swarm_3")
+spawn("rat_swarm",22,20,2,0,"rat_swarm_4")
+spawn("dungeon_wall_height_difference",20,23,3,0,"dungeon_wall_height_difference_2")
+spawn("dungeon_wall_height_difference",20,22,3,0,"dungeon_wall_height_difference_3")
+spawn("dungeon_wall_01",19,22,2,0,"dungeon_wall_01_86")
+spawn("swamp_water",28,23,2,0,"swamp_water_1")
+spawn("ladder",19,26,1,-1,"ladder_11")
+spawn("dungeon_wall_01",19,22,0,0,"dungeon_wall_01_90")
+spawn("dungeon_wall_01",19,21,2,0,"dungeon_wall_01_89")
+spawn("dungeon_wall_01",20,22,3,1,"dungeon_wall_01_91")
+spawn("dungeon_wall_01",20,23,3,1,"dungeon_wall_01_92")
+spawn("ladder",17,22,2,-1,"ladder_12")
+spawn("beach_rock_border",17,24,0,0,"beach_rock_border_2")
+spawn("dungeon_floor_01",17,24,1,0,"dungeon_floor_01_1")
+spawn("beach_rock_3x1",16,24,1,0,"beach_rock_3x1_3")
+spawn("mine_support_ceiling_01",17,23,1,0,"mine_support_ceiling_01_1")
+spawn("mine_support_ceiling_01",17,22,1,0,"mine_support_ceiling_01_2")
+spawn("beach_door_wood",17,23,3,0,"beach_door_wood_1")
+beach_door_wood_1.door:setDoorState("open")
+spawn("beach_door_wood",17,23,3,-1,"beach_door_wood_2")
+spawn("starting_location",17,23,3,1,"starting_location_1")
+spawn("beach_door_wood",17,21,3,0,"beach_door_wood_3")
+beach_door_wood_3.door:disable()
+beach_door_wood_3.controller:disable()
+beach_door_wood_3.cbox1:disable()
+beach_door_wood_3.cbox2:disable()
+beach_door_wood_3.model:disable()
+spawn("beach_door_wood",17,21,3,-1,"beach_door_wood_4")
+spawn("beach_door_wood",17,19,3,0,"beach_door_wood_5")
+beach_door_wood_5.door:disable()
+beach_door_wood_5.controller:disable()
+beach_door_wood_5.cbox1:disable()
+beach_door_wood_5.cbox2:disable()
+beach_door_wood_5.model:disable()
+spawn("beach_door_wood",17,19,3,-1,"beach_door_wood_6")
+spawn("forest_ruins_arch",16,23,1,0,"forest_ruins_arch_2")

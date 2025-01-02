@@ -4,6 +4,8 @@ function initDungeon()
     initCastleOfWater()
     initMoistCatacombs()
     initCloister()
+    initBeach()
+    initBeginningDungeon()
 end
 
 function initParty()
@@ -41,4 +43,15 @@ function initCloister()
     GameMode.setTimeOfDay(0.0)
     local essence_of_air = spawn("essence_air").item
     beacon_air.socket:addItem(essence_of_air)
+end
+
+function initBeach()
+end
+
+function initBeginningDungeon()
+    -- fix the utter stupidity which is the offset of this door model, like WTactualF
+    beach_door_wood_3.frame.go:setSubtileOffset(-1.5, -1)
+    beach_door_wood_4.frame.go:setSubtileOffset(-1.5, -1)
+    beach_door_wood_5.frame.go:setSubtileOffset(-1.5, -2)
+    beach_door_wood_6.frame.go:setSubtileOffset(-1.5, -2)
 end
