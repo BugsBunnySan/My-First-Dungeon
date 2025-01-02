@@ -2431,10 +2431,10 @@ loadLayer("floor_elevation", {
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,-1,-1,-1,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,0,-1,0,0,0,0,0,0,0,1,1,0,0,0,
@@ -2466,13 +2466,13 @@ loadLayer("ceiling_elevation", {
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,0,1,0,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,1,1,2,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,1,1,1,1,2,1,1,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,0,1,1,1,2,1,2,2,2,2,2,2,2,
@@ -2501,11 +2501,11 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,1,1,1,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,1,1,1,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,2,1,1,1,3,1,1,1,1,1,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,2,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
@@ -2528,21 +2528,6 @@ spawn("torch",27,21,0,1,"torch_1")
 dungeon_alcove_1.surface:addItem(torch_1.item)
 spawn("torch",27,21,0,1,"torch_2")
 dungeon_alcove_1.surface:addItem(torch_2.item)
-spawn("castle_bridge_grating",25,21,2,1,"castle_bridge_grating_9")
-spawn("green_slime",25,21,1,1,"green_slime_1")
-green_slime_1.monster:setHealth(100)
-green_slime_1.move:disable()
-green_slime_1.turn:disable()
-spawn("dungeon_door_wooden",26,21,3,1,"dungeon_door_wooden_1")
-spawn("lever",27,21,2,1,"blob_door_lever")
-blob_door_lever.lever:setState("activated")
-blob_door_lever.lever:setDisableSelf(false)
-blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_1", "open")
-blob_door_lever.lever:addConnector("onActivate", "script_entity_6", "levelBreaks")
-spawn("dungeon_wall_01",24,21,1,1,"dungeon_wall_01_84")
-spawn("script_entity",26,22,1,0,"script_entity_6")
-script_entity_6.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
-spawn("dungeon_cave_in",24,20,0,0,"dungeon_cave_in_2")
 spawn("dungeon_door_wooden",23,22,3,0,"dungeon_door_wooden_2")
 dungeon_door_wooden_2.door:setPullChain(true)
 spawn("forest_ruins_secret_door",21,21,0,0,"forest_ruins_secret_door_1")
@@ -2603,7 +2588,9 @@ dungeon_iron_gate_9.model:disable()
 spawn("dungeon_wall_grating",20,21,3,0,"dungeon_wall_grating_1")
 dungeon_wall_grating_1.model:disable()
 spawn("rat_swarm",20,20,2,0,"rat_swarm_3")
+rat_swarm_3.brain:disable()
 spawn("rat_swarm",22,20,2,0,"rat_swarm_4")
+rat_swarm_4.brain:disable()
 spawn("dungeon_wall_height_difference",20,23,3,0,"dungeon_wall_height_difference_2")
 spawn("dungeon_wall_height_difference",20,22,3,0,"dungeon_wall_height_difference_3")
 spawn("dungeon_wall_01",19,22,2,0,"dungeon_wall_01_86")
@@ -2622,7 +2609,7 @@ spawn("mine_support_ceiling_01",17,22,1,0,"mine_support_ceiling_01_2")
 spawn("beach_door_wood",17,23,3,0,"beach_door_wood_1")
 beach_door_wood_1.door:setDoorState("open")
 spawn("beach_door_wood",17,23,3,-1,"beach_door_wood_2")
-spawn("starting_location",17,23,3,1,"starting_location_1")
+spawn("starting_location",24,18,2,1,"starting_location_1")
 spawn("beach_door_wood",17,21,3,0,"beach_door_wood_3")
 beach_door_wood_3.door:disable()
 beach_door_wood_3.controller:disable()
@@ -2638,3 +2625,37 @@ beach_door_wood_5.cbox2:disable()
 beach_door_wood_5.model:disable()
 spawn("beach_door_wood",17,19,3,-1,"beach_door_wood_6")
 spawn("forest_ruins_arch",16,23,1,0,"forest_ruins_arch_2")
+spawn("lever",21,17,3,-1,"blob_door_lever")
+blob_door_lever.lever:setState("activated")
+blob_door_lever.lever:setDisableSelf(false)
+blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_1", "open")
+blob_door_lever.lever:addConnector("onActivate", "script_entity_6", "leverBreaks")
+blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_3", "open")
+spawn("script_entity",20,17,0,0,"script_entity_6")
+script_entity_6.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
+spawn("dungeon_door_wooden",21,18,0,0,"dungeon_door_wooden_1")
+spawn("castle_bridge_grating",21,17,3,0,"castle_bridge_grating_9")
+spawn("green_slime",21,17,2,0,"green_slime_1")
+green_slime_1.monster:setHealth(100)
+green_slime_1.move:disable()
+green_slime_1.turn:disable()
+spawn("dungeon_wall_01",21,16,2,0,"dungeon_wall_01_84")
+spawn("ladder_metal",21,18,2,-1,"ladder_metal_6")
+spawn("dungeon_door_wooden",21,17,0,-1,"dungeon_door_wooden_3")
+spawn("ladder_metal",24,17,2,-1,"ladder_metal_7")
+spawn("pickaxe",24,18,3,0,"pickaxe_1")
+spawn("pedestal",24,16,1,-1,"pedestal_1")
+spawn("script_entity",25,19,2,0,"script_entity_7")
+script_entity_7.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
+spawn("pedestal",24,21,0,0,"rubble_pedestal_1")
+rubble_pedestal_1.model:disable()
+rubble_pedestal_1.surface:addConnector("onInsertItem", "script_entity_7", "clearRubble")
+rubble_pedestal_1.door:disable()
+rubble_pedestal_1.itemconstrainbox:disable()
+spawn("dungeon_cave_in",24,19,2,0,"rubble_2")
+spawn("dungeon_cave_in",24,20,0,0,"rubble_1")
+spawn("pedestal",24,18,2,0,"rubble_pedestal_2")
+rubble_pedestal_2.model:disable()
+rubble_pedestal_2.surface:addConnector("onInsertItem", "script_entity_7", "clearRubble")
+rubble_pedestal_2.door:disable()
+rubble_pedestal_2.itemconstrainbox:disable()
