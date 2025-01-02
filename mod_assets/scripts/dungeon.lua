@@ -2200,9 +2200,9 @@ loadLayer("heightmap", {
 	0,-1,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,0,0,0,0,0,-1,-1,0,0,-1,0,0,-1,-1,0,0,
 	0,0,0,-1,0,0,-1,-1,0,0,0,-1,0,-1,0,0,0,0,0,-1,-1,0,0,0,0,0,0,-1,0,0,0,0,
 	0,0,0,0,-1,0,0,0,0,0,0,-1,-1,0,0,-1,0,0,-1,-1,0,0,0,0,-1,0,0,0,-1,-1,0,0,
-	0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,-1,0,-1,-1,0,0,0,0,0,0,0,0,0,0,-1,0,
-	0,0,-1,0,0,0,0,-1,0,0,-1,-1,-1,0,0,0,-1,-1,0,-1,0,0,-1,0,-1,-1,0,0,-1,-1,0,0,
-	-1,-1,0,0,0,-1,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,-1,0,-1,0,0,-1,-1,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,-1,0,-1,-1,0,0,0,-1,-1,-1,0,0,0,0,-1,0,
+	0,0,-1,0,0,0,0,-1,0,0,-1,-1,-1,0,0,0,-1,-1,0,-1,0,0,-1,-1,-1,-1,0,0,-1,-1,0,0,
+	-1,-1,0,0,0,-1,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,-1,0,-1,0,-1,-1,-1,0,0,0,0,0,0,
 	0,-1,0,-1,0,0,0,-1,0,0,0,-1,-1,-1,0,0,-1,0,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,-1,0,-1,-1,0,0,0,-1,0,0,0,-1,-1,0,0,0,0,
 	0,-1,-1,-1,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-1,0,-1,0,0,0,0,0,0,0,
@@ -2210,10 +2210,10 @@ loadLayer("heightmap", {
 	0,-1,0,-1,-1,0,0,-1,-1,-1,0,-1,-1,-1,-1,-1,0,0,0,-1,0,0,0,-1,-1,-1,0,0,0,0,-1,0,
 	0,0,-1,-1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,-1,
 	0,0,0,0,0,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,0,-1,-1,0,0,0,0,0,-1,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,-1,0,0,0,0,0,-1,-1,0,0,0,0,-1,0,0,
+	0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,-1,0,0,0,0,0,-1,-1,0,0,0,0,-1,0,0,
 	0,0,-1,0,-1,0,0,0,0,-1,0,-1,0,-1,0,0,0,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,0,0,
 	0,0,0,0,0,-1,0,0,-1,0,0,0,0,-1,0,-1,0,-1,0,0,-1,-1,0,-1,-1,0,0,0,-1,0,0,0,
-	-1,0,-1,0,0,0,0,-1,0,0,-1,-1,0,0,0,0,0,-1,-1,-1,0,-1,-1,-1,0,0,0,0,0,-1,0,0,
+	-1,0,-1,0,0,0,0,-1,0,0,-1,0,0,0,0,0,0,-1,-1,-1,0,-1,-1,-1,0,0,0,0,0,-1,0,0,
 	0,0,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-1,-1,0,0,-1,0,0,0,0,
 	-1,-1,0,0,0,-1,0,0,0,0,0,0,0,0,0,-1,0,-1,0,-1,-1,0,0,-1,-1,0,-1,0,0,0,0,0,
 	0,-1,0,0,0,0,0,-1,0,0,-1,-1,0,0,-1,0,-1,-1,0,0,-1,-1,0,-1,-1,0,-1,0,0,0,0,0,
@@ -2396,7 +2396,35 @@ diary_day2.scrollitem:setScrollText("Diary of Merchants Of East\
 Day #2\
 Initial survey suggest all the aging workings are falling apart. We hope it'll maintain function until we get the loot.")
 spawn("wooden_box",10,30,0,0,"wooden_box_1")
-spawn("beach_rock_shore",15,25,0,1,"beach_rock_shore_1")
+spawn("beach_rock_shore",12,27,0,1,"beach_rock_shore_1")
+spawn("script_entity",15,31,3,0,"global_scripts")
+global_scripts.script:loadFile("mod_assets/scripts/globals.lua")
+spawn("note",10,27,0,0,"note_2")
+note_2.scrollitem:setScrollText("Dairy of Mechants of East\
+Day #6\
+I've found the lock! But now I've lost the map I made of the key while trying to clear the rubble. This is not awesome.")
+spawn("invisible_rocky_wall",19,4,3,1,"invisible_rocky_wall_27")
+spawn("invisible_rocky_wall",19,5,0,1,"invisible_rocky_wall_28")
+spawn("invisible_rocky_wall",18,4,0,1,"invisible_rocky_wall_29")
+spawn("invisible_rocky_wall",19,3,3,1,"invisible_rocky_wall_30")
+spawn("invisible_rocky_wall",18,3,3,1,"invisible_rocky_wall_31")
+spawn("invisible_rocky_wall",18,5,0,1,"invisible_rocky_wall_32")
+spawn("invisible_rocky_wall",19,12,0,1,"invisible_rocky_wall_33")
+spawn("invisible_rocky_wall",19,13,0,1,"invisible_rocky_wall_34")
+spawn("invisible_rocky_wall",20,13,0,1,"invisible_rocky_wall_35")
+spawn("invisible_rocky_wall",20,12,0,1,"invisible_rocky_wall_36")
+spawn("invisible_rocky_wall",14,14,0,1,"invisible_rocky_wall_37")
+spawn("invisible_rocky_wall",13,15,0,1,"invisible_rocky_wall_38")
+spawn("invisible_rocky_wall",12,16,0,1,"invisible_rocky_wall_39")
+spawn("invisible_rocky_wall",11,16,0,1,"invisible_rocky_wall_40")
+spawn("invisible_rocky_wall",12,17,0,1,"invisible_rocky_wall_41")
+spawn("invisible_rocky_wall",13,17,0,1,"invisible_rocky_wall_42")
+spawn("invisible_rocky_wall",13,16,0,1,"invisible_rocky_wall_43")
+spawn("turtle_nest",24,6,1,1,"turtle_nest_1")
+spawn("beach_rock_1x1_low",23,6,1,1,"beach_rock_1x1_low_2")
+spawn("beach_rock_2x1",24,5,3,1,"beach_rock_2x1_4")
+spawn("beach_rock_spire",24,7,3,0,"beach_rock_spire_1")
+spawn("chest",27,11,0,0,"chest_3")
 
 --- level 5 ---
 
@@ -2540,9 +2568,9 @@ dungeon_pressure_plate_1.floortrigger:setTriggeredByMonster(false)
 dungeon_pressure_plate_1.floortrigger:setTriggeredByItem(true)
 dungeon_pressure_plate_1.floortrigger:setTriggeredByDigging(false)
 dungeon_pressure_plate_1.floortrigger:setDisableSelf(false)
-dungeon_pressure_plate_1.floortrigger:addConnector("onActivate", "forest_ruins_secret_door_1", "open")
-dungeon_pressure_plate_1.floortrigger:addConnector("onActivate", "forest_ruins_secret_door_2", "open")
-dungeon_pressure_plate_1.floortrigger:addConnector("onActivate", "forest_ruins_secret_door_3", "open")
+dungeon_pressure_plate_1.floortrigger:addConnector("onToggle", "forest_ruins_secret_door_1", "toggle")
+dungeon_pressure_plate_1.floortrigger:addConnector("onToggle", "forest_ruins_secret_door_2", "toggle")
+dungeon_pressure_plate_1.floortrigger:addConnector("onToggle", "forest_ruins_secret_door_3", "toggle")
 spawn("dungeon_wall_height_difference",20,21,3,0,"dungeon_wall_height_difference_1")
 spawn("dungeon_wall_01",20,21,3,1,"dungeon_wall_01_85")
 spawn("dungeon_iron_gate",20,22,3,0,"dungeon_iron_gate_2")
@@ -2607,7 +2635,6 @@ spawn("beach_rock_3x1",16,24,1,0,"beach_rock_3x1_3")
 spawn("mine_support_ceiling_01",17,23,1,0,"mine_support_ceiling_01_1")
 spawn("mine_support_ceiling_01",17,22,1,0,"mine_support_ceiling_01_2")
 spawn("beach_door_wood",17,23,3,0,"beach_door_wood_1")
-beach_door_wood_1.door:setDoorState("open")
 spawn("beach_door_wood",17,23,3,-1,"beach_door_wood_2")
 spawn("starting_location",24,18,2,1,"starting_location_1")
 spawn("beach_door_wood",17,21,3,0,"beach_door_wood_3")
@@ -2617,6 +2644,11 @@ beach_door_wood_3.cbox1:disable()
 beach_door_wood_3.cbox2:disable()
 beach_door_wood_3.model:disable()
 spawn("beach_door_wood",17,21,3,-1,"beach_door_wood_4")
+beach_door_wood_4.door:disable()
+beach_door_wood_4.controller:disable()
+beach_door_wood_4.cbox1:disable()
+beach_door_wood_4.cbox2:disable()
+beach_door_wood_4.model:disable()
 spawn("beach_door_wood",17,19,3,0,"beach_door_wood_5")
 beach_door_wood_5.door:disable()
 beach_door_wood_5.controller:disable()
@@ -2624,6 +2656,11 @@ beach_door_wood_5.cbox1:disable()
 beach_door_wood_5.cbox2:disable()
 beach_door_wood_5.model:disable()
 spawn("beach_door_wood",17,19,3,-1,"beach_door_wood_6")
+beach_door_wood_6.door:disable()
+beach_door_wood_6.controller:disable()
+beach_door_wood_6.cbox1:disable()
+beach_door_wood_6.cbox2:disable()
+beach_door_wood_6.model:disable()
 spawn("forest_ruins_arch",16,23,1,0,"forest_ruins_arch_2")
 spawn("lever",21,17,3,-1,"blob_door_lever")
 blob_door_lever.lever:setState("activated")
@@ -2649,13 +2686,21 @@ spawn("script_entity",25,19,2,0,"script_entity_7")
 script_entity_7.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
 spawn("pedestal",24,21,0,0,"rubble_pedestal_1")
 rubble_pedestal_1.model:disable()
-rubble_pedestal_1.surface:addConnector("onInsertItem", "script_entity_7", "clearRubble")
+rubble_pedestal_1.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
 rubble_pedestal_1.door:disable()
 rubble_pedestal_1.itemconstrainbox:disable()
 spawn("dungeon_cave_in",24,19,2,0,"rubble_2")
 spawn("dungeon_cave_in",24,20,0,0,"rubble_1")
 spawn("pedestal",24,18,2,0,"rubble_pedestal_2")
 rubble_pedestal_2.model:disable()
-rubble_pedestal_2.surface:addConnector("onInsertItem", "script_entity_7", "clearRubble")
+rubble_pedestal_2.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
 rubble_pedestal_2.door:disable()
 rubble_pedestal_2.itemconstrainbox:disable()
+spawn("mine_lock",17,23,1,0,"mine_lock_1")
+mine_lock_1.lock:setOpenedBy("")
+spawn("note",20,20,0,0,"note_1")
+note_1.scrollitem:setScrollText("Diary of Merchants of East\
+Day #5\
+I have found a small key, these rats must've dragged it here, they like shiny things. Haven't found the lock it fits yet. Best to keep it hidden. I've burried it in the sands and made a map.")
+spawn("note",24,19,2,0,"note_3")
+note_3.scrollitem:setScrollText("Three steps towards the dawn from turtle bay, turn with the sun until noon, go forth 4 steps.")
