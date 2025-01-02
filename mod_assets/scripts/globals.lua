@@ -10,11 +10,15 @@ rubble_pedestals = {["rubble_pedestal_2"] = {["rubble"] = {"rubble_2"},
                    }
 
 function clearRubble(pedestal, item)
+    if item ~= nil and item.go.name ~= "pickaxe" then
+        return
+    end
     if pedestal.go ~= nil then
         pedestal = pedestal.go
     end
     for _, rubble_n in ipairs(rubble_pedestals[pedestal.id]["rubble"]) do
         local rubble = findEntity(rubble_n)
+        playSound("mining")
         rubble:destroyDelayed()
     end
     if item ~= nil then
@@ -26,7 +30,7 @@ function clearRubble(pedestal, item)
         end
     end
     party_consume_food({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["food"])
-    party_gain_xp({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["xp"])
+    party_gain_xp({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["xp"])    
     pedestal:destroyDelayed()
 end
 

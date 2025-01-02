@@ -2265,7 +2265,7 @@ loadLayer("tiles", {
 })
 
 spawn("branch",12,28,3,0,"branch_1")
-spawn("dagger",12,27,2,0,"dagger_1")
+spawn("dagger",13,27,1,0,"dagger_1")
 spawn("forest_day_sky",11,24,2,0,"forest_day_sky_2")
 spawn("forest_heightmap",10,24,0,0,"forest_heightmap_3")
 spawn("water_surface",9,24,1,0,"water_surface_2")
@@ -2424,7 +2424,17 @@ spawn("turtle_nest",24,6,1,1,"turtle_nest_1")
 spawn("beach_rock_1x1_low",23,6,1,1,"beach_rock_1x1_low_2")
 spawn("beach_rock_2x1",24,5,3,1,"beach_rock_2x1_4")
 spawn("beach_rock_spire",24,7,3,0,"beach_rock_spire_1")
-spawn("chest",27,11,0,0,"chest_3")
+spawn("chest",27,11,0,0,"burried_chest")
+spawn("mine_key",27,11,0,0,"mine_key_1")
+burried_chest.surface:addItem(mine_key_1.item)
+spawn("turtle_eggs",24,6,3,0,"turtle_eggs_3")
+spawn("turtle_eggs",24,6,2,0,"turtle_eggs_4")
+spawn("note",9,26,3,0,"note_4")
+note_4.scrollitem:setScrollText("Diary of Merchants of East\
+Day #4\
+Louis took our shovel out into the desert, to take care of business... never returned")
+spawn("peasant_breeches",13,27,3,0,"peasant_breeches_1")
+spawn("starting_location",14,30,0,1,"starting_location_1")
 
 --- level 5 ---
 
@@ -2458,10 +2468,10 @@ loadLayer("floor_elevation", {
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,-1,-1,-1,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -2493,10 +2503,10 @@ loadLayer("ceiling_elevation", {
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,0,1,0,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,0,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,1,1,2,1,2,2,2,2,2,2,2,
@@ -2528,10 +2538,10 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,1,1,1,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,1,1,1,3,1,3,3,3,3,3,3,3,
@@ -2636,7 +2646,6 @@ spawn("mine_support_ceiling_01",17,23,1,0,"mine_support_ceiling_01_1")
 spawn("mine_support_ceiling_01",17,22,1,0,"mine_support_ceiling_01_2")
 spawn("beach_door_wood",17,23,3,0,"beach_door_wood_1")
 spawn("beach_door_wood",17,23,3,-1,"beach_door_wood_2")
-spawn("starting_location",24,18,2,1,"starting_location_1")
 spawn("beach_door_wood",17,21,3,0,"beach_door_wood_3")
 beach_door_wood_3.door:disable()
 beach_door_wood_3.controller:disable()
@@ -2679,23 +2688,12 @@ green_slime_1.turn:disable()
 spawn("dungeon_wall_01",21,16,2,0,"dungeon_wall_01_84")
 spawn("ladder_metal",21,18,2,-1,"ladder_metal_6")
 spawn("dungeon_door_wooden",21,17,0,-1,"dungeon_door_wooden_3")
-spawn("ladder_metal",24,17,2,-1,"ladder_metal_7")
-spawn("pickaxe",24,18,3,0,"pickaxe_1")
-spawn("pedestal",24,16,1,-1,"pedestal_1")
+spawn("ladder_metal",24,16,2,-1,"ladder_metal_7")
+spawn("pickaxe",17,23,2,0,"pickaxe_1")
 spawn("script_entity",25,19,2,0,"script_entity_7")
 script_entity_7.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
-spawn("pedestal",24,21,0,0,"rubble_pedestal_1")
-rubble_pedestal_1.model:disable()
-rubble_pedestal_1.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
-rubble_pedestal_1.door:disable()
-rubble_pedestal_1.itemconstrainbox:disable()
-spawn("dungeon_cave_in",24,19,2,0,"rubble_2")
+spawn("dungeon_cave_in",24,18,2,0,"rubble_2")
 spawn("dungeon_cave_in",24,20,0,0,"rubble_1")
-spawn("pedestal",24,18,2,0,"rubble_pedestal_2")
-rubble_pedestal_2.model:disable()
-rubble_pedestal_2.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
-rubble_pedestal_2.door:disable()
-rubble_pedestal_2.itemconstrainbox:disable()
 spawn("mine_lock",17,23,1,0,"mine_lock_1")
 mine_lock_1.lock:setOpenedBy("")
 spawn("note",20,20,0,0,"note_1")
@@ -2703,4 +2701,14 @@ note_1.scrollitem:setScrollText("Diary of Merchants of East\
 Day #5\
 I have found a small key, these rats must've dragged it here, they like shiny things. Haven't found the lock it fits yet. Best to keep it hidden. I've burried it in the sands and made a map.")
 spawn("note",24,19,2,0,"note_3")
-note_3.scrollitem:setScrollText("Three steps towards the dawn from turtle bay, turn with the sun until noon, go forth 4 steps.")
+note_3.scrollitem:setScrollText("Docked at turtle bay, sail three days out towards the dawn, turn into the sun until noon, drop anchor four days out.")
+spawn("rubble_pedestal",24,18,0,0,"rubble_pedestal_1")
+rubble_pedestal_1.model:disable()
+rubble_pedestal_1.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
+rubble_pedestal_1.door:disable()
+rubble_pedestal_1.itemconstrainbox:disable()
+spawn("rubble_pedestal",24,20,2,0,"rubble_pedestal_2")
+rubble_pedestal_2.model:disable()
+rubble_pedestal_2.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
+rubble_pedestal_2.door:disable()
+rubble_pedestal_2.itemconstrainbox:disable()

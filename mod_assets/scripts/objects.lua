@@ -15,3 +15,18 @@ defineObject{
 	editorIcon = 108,
 	minimalSaveState = true,
 }
+
+defineObject{
+    name = "rubble_pedestal",
+    baseObject = "pedestal",
+    components = {
+        {
+            class = "Surface",			
+            offset = vec(0, 0.85, 0),
+			size = vec(1, 0.65),			
+            onAcceptItem = function(self, item)
+                return (self:count() == 0 and item.go.name == "pickaxe")
+            end
+        }
+    }
+}
