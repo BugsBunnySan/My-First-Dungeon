@@ -54,4 +54,8 @@ function initBeginningDungeon()
     beach_door_wood_4.frame.go:setSubtileOffset(-1.5, -1)
     beach_door_wood_5.frame.go:setSubtileOffset(-1.5, -2)
     beach_door_wood_6.frame.go:setSubtileOffset(-1.5, -2)
+    
+    timer_1.timer:stop()
+    timer_2.timer:stop()
+    timer_3.timer:stop()
 end

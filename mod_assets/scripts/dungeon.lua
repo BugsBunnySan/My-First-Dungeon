@@ -1019,7 +1019,7 @@ loadLayer("heightmap", {
 	1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1468,8 +1468,6 @@ spawn("castle_pillar_candle_holder",18,13,0,0,"castle_pillar_candle_holder_64")
 spawn("castle_pillar_candle_holder",14,12,1,0,"castle_pillar_candle_holder_66")
 spawn("castle_pillar_candle_holder",14,11,1,0,"castle_pillar_candle_holder_78")
 spawn("castle_pillar_candle_holder",14,10,1,0,"castle_pillar_candle_holder_79")
-spawn("castle_pillar_candle_holder",14,9,1,0,"castle_pillar_candle_holder_80")
-spawn("castle_pillar_candle_holder",14,8,1,0,"castle_pillar_candle_holder_81")
 spawn("castle_pillar_candle_holder",14,7,1,0,"castle_pillar_candle_holder_82")
 spawn("castle_pillar_candle_holder",14,6,1,0,"castle_pillar_candle_holder_83")
 spawn("castle_pillar_candle_holder",14,5,1,0,"castle_pillar_candle_holder_85")
@@ -1738,10 +1736,8 @@ spawn("castle_pillar_tall_01",18,8,1,0,"castle_pillar_tall_01_4")
 spawn("castle_pillar_tall_01",19,8,0,0,"castle_pillar_tall_01_5")
 spawn("castle_pillar_tall_01",19,9,3,0,"castle_pillar_tall_01_6")
 spawn("invisible_rocky_wall",18,8,0,0,"invisible_rocky_wall_22")
-spawn("castle_pillar_tall_01",18,9,0,5,"castle_pillar_tall_01_7")
 spawn("castle_pillar_tall_01",19,9,0,5,"castle_pillar_tall_01_12")
 spawn("castle_pillar_tall_01",19,8,0,5,"castle_pillar_tall_01_17")
-spawn("castle_pillar_tall_01",18,8,0,5,"castle_pillar_tall_01_18")
 spawn("dungeon_wall_broken_02",24,8,3,-1,"dungeon_wall_broken_02_2")
 spawn("water_surface_underground",25,0,2,0,"water_surface_underground_2")
 spawn("castle_pillar_01",18,9,1,-1,"castle_pillar_01_156")
@@ -1777,10 +1773,6 @@ spawn("castle_gate_outside",23,10,1,0,"castle_gate_outside_7")
 spawn("castle_gate_outside",23,9,1,0,"castle_gate_outside_8")
 spawn("castle_gate_outside",23,13,1,0,"castle_gate_outside_9")
 spawn("castle_gate_outside",23,13,2,0,"castle_gate_outside_10")
-spawn("invisible_rocky_wall",23,8,0,1,"invisible_rocky_wall_23")
-spawn("invisible_rocky_wall",13,8,0,1,"invisible_rocky_wall_24")
-spawn("invisible_rocky_wall",18,13,0,1,"invisible_rocky_wall_25")
-spawn("invisible_rocky_wall",18,3,0,1,"invisible_rocky_wall_26")
 spawn("castle_gate_outside",23,7,1,0,"castle_gate_outside_11")
 spawn("castle_gate_outside",23,6,1,0,"castle_gate_outside_12")
 spawn("castle_gate_outside",23,5,1,0,"castle_gate_outside_13")
@@ -1970,16 +1962,11 @@ spawn("castle_wall_01",13,12,3,0,"castle_wall_01_113")
 spawn("castle_bridge",20,10,1,2,"castle_bridge_83")
 spawn("castle_bridge",19,9,0,3,"castle_bridge_84")
 spawn("dungeon_wall_broken_02",18,14,0,-1,"dungeon_wall_broken_02_3")
-spawn("dungeon_wall_broken_02",12,8,1,-1,"dungeon_wall_broken_02_4")
-spawn("dungeon_wall_broken_02",18,3,2,-1,"dungeon_wall_broken_02_5")
+spawn("dungeon_wall_broken_02",18,3,0,-1,"dungeon_wall_broken_02_5")
 spawn("castle_wall_01",14,7,3,0,"castle_wall_01_84")
 spawn("castle_wall_grating",23,12,3,1,"castle_wall_grating_25")
 castle_wall_grating_25.model:disable()
 castle_wall_grating_25.frame:disable()
-spawn("force_field",23,8,3,0,"force_field_east")
-spawn("force_field",18,3,3,0,"force_field_north")
-spawn("force_field",13,8,3,0,"force_field_west")
-spawn("force_field",18,13,3,0,"force_field_south")
 spawn("castle_pillar_light",16,21,1,0,"castle_pillar_light_1")
 spawn("castle_pillar_light",16,20,3,0,"castle_pillar_light_2")
 spawn("castle_pillar_light",16,19,3,0,"castle_pillar_light_3")
@@ -2108,6 +2095,41 @@ castle_wall_01_138.model:disable()
 spawn("castle_wall_grating",13,20,1,0,"castle_wall_grating_44")
 castle_wall_grating_44.model:disable()
 castle_wall_grating_44.frame:disable()
+spawn("portal",18,13,0,0,"portal_5")
+portal_5.portal:disable()
+portal_5.light:disable()
+portal_5.particle:disable()
+portal_5.particle2:disable()
+portal_5.shipSymbol:disable()
+portal_5.portalBeam:disable()
+portal_5.planeModel:disable()
+portal_5.controller:disable()
+spawn("portal",18,3,2,0,"portal_2")
+portal_2.portal:disable()
+portal_2.light:disable()
+portal_2.particle:disable()
+portal_2.particle2:disable()
+portal_2.shipSymbol:disable()
+portal_2.portalBeam:disable()
+portal_2.planeModel:disable()
+portal_2.controller:disable()
+spawn("portal",23,8,3,0,"portal_3")
+portal_3.portal:disable()
+portal_3.light:disable()
+portal_3.particle:disable()
+portal_3.particle2:disable()
+portal_3.shipSymbol:disable()
+portal_3.portalBeam:disable()
+portal_3.planeModel:disable()
+portal_3.controller:disable()
+spawn("portal",13,8,1,0,"portal_4")
+portal_4.portal:disable()
+portal_4.shipSymbol:disable()
+portal_4.controller:disable()
+spawn("forest_ruins_arch",14,8,3,0,"forest_ruins_arch_4")
+spawn("forest_ruins_wall_02",13,8,3,0,"forest_ruins_wall_02_6")
+spawn("castle_pillar_01",18,8,1,5,"castle_pillar_01_172")
+spawn("castle_pillar_01",18,9,1,5,"castle_pillar_01_173")
 
 --- level 4 ---
 
@@ -2203,13 +2225,13 @@ loadLayer("heightmap", {
 	0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,-1,0,-1,-1,0,0,0,-1,-1,-1,0,0,0,0,-1,0,
 	0,0,-1,0,0,0,0,-1,0,0,-1,-1,-1,0,0,0,-1,-1,0,-1,0,0,-1,-1,-1,-1,0,0,-1,-1,0,0,
 	-1,-1,0,0,0,-1,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,-1,0,-1,0,-1,-1,-1,0,0,0,0,0,0,
-	0,-1,0,-1,0,0,0,-1,0,0,0,-1,-1,-1,0,0,-1,0,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,-1,0,-1,-1,0,0,0,-1,0,0,0,-1,-1,0,0,0,0,
+	0,-1,0,-1,-1,-1,0,-1,0,0,0,-1,-1,-1,0,0,-1,0,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,
+	0,0,0,-1,-1,-1,0,0,0,0,-1,0,-1,0,0,-1,0,-1,-1,0,0,0,-1,0,0,0,-1,-1,0,0,0,0,
 	0,-1,-1,-1,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,-1,0,-1,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,0,-1,-1,-1,0,0,-1,-1,-1,0,-1,0,0,0,0,
 	0,-1,0,-1,-1,0,0,-1,-1,-1,0,-1,-1,-1,-1,-1,0,0,0,-1,0,0,0,-1,-1,-1,0,0,0,0,-1,0,
 	0,0,-1,-1,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,0,0,0,0,0,0,0,0,-1,
-	0,0,0,0,0,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,0,-1,-1,0,0,0,0,0,-1,0,
+	0,0,0,0,0,0,-1,-1,-1,-1,0,-1,-1,0,-1,-1,-1,0,0,0,-1,-1,0,-1,-1,0,0,0,0,0,-1,0,
 	0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,-1,0,0,0,0,0,-1,-1,0,0,0,0,-1,0,0,
 	0,0,-1,0,-1,0,0,0,0,-1,0,-1,0,-1,0,0,0,0,0,0,0,0,0,-1,-1,0,0,0,-1,-1,0,0,
 	0,0,0,0,0,-1,0,0,-1,0,0,0,0,-1,0,-1,0,-1,0,0,-1,-1,0,-1,-1,0,0,0,-1,0,0,0,
@@ -2221,11 +2243,11 @@ loadLayer("heightmap", {
 	0,0,-1,0,0,0,-1,-1,0,-1,0,-1,0,-1,0,0,0,0,0,0,0,-1,0,0,0,0,-1,0,0,-1,-1,0,
 	0,0,-1,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,0,0,0,-1,0,-1,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,-1,-1,0,0,-1,0,-1,0,0,0,-1,-1,-1,-1,-1,0,-1,-1,0,0,0,0,0,-1,
-	-1,0,-1,0,0,0,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,0,0,0,-1,0,0,-1,0,0,0,0,0,0,0,0,
+	-1,0,-1,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,0,0,-1,0,0,0,0,0,0,0,0,
 	-1,0,0,0,0,0,-1,-1,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,0,0,-1,0,0,0,0,0,0,
 	-1,-1,0,0,-1,0,-1,-1,0,-1,0,-1,-1,-1,-1,0,-1,0,0,0,-1,-1,-1,0,-1,-1,0,-1,0,-1,0,-1,
 	0,-1,-1,0,0,0,0,0,0,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,
-	-1,0,-1,0,-1,0,0,-1,0,0,0,0,0,0,0,0,0,-1,0,0,0,-1,0,0,0,0,-1,0,-1,0,-1,0,
+	-1,0,-1,0,-1,0,0,-1,0,0,0,0,0,0,0,0,0,-1,0,0,0,-1,0,0,0,0,0,0,-1,0,-1,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 })
 
@@ -2264,26 +2286,20 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 })
 
-spawn("branch",12,28,3,0,"branch_1")
+spawn("branch",12,27,2,0,"branch_1")
 spawn("dagger",13,27,1,0,"dagger_1")
 spawn("forest_day_sky",11,24,2,0,"forest_day_sky_2")
 spawn("forest_heightmap",10,24,0,0,"forest_heightmap_3")
-spawn("water_surface",9,24,1,0,"water_surface_2")
-spawn("dungeon_fire_pit",12,28,2,1,"dungeon_fire_pit_1")
-dungeon_fire_pit_1.light:disable()
-dungeon_fire_pit_1.particle:disable()
-dungeon_fire_pit_1.sound:disable()
-spawn("branch",12,28,3,0,"branch_2")
-spawn("branch",11,28,1,0,"branch_3")
-spawn("turtle_steak",12,29,0,0,"turtle_steak_1")
-spawn("turtle_steak",12,29,0,0,"turtle_steak_2")
-spawn("turtle_steak",12,29,0,0,"turtle_steak_3")
-spawn("turtle_eggs",12,28,1,0,"turtle_eggs_1")
-spawn("turtle_eggs",12,28,0,0,"turtle_eggs_2")
+spawn("branch",12,27,2,0,"branch_2")
+spawn("branch",12,27,2,0,"branch_3")
+spawn("turtle_steak",12,27,3,0,"turtle_steak_1")
+spawn("turtle_steak",12,27,3,0,"turtle_steak_2")
+spawn("turtle_steak",12,27,3,0,"turtle_steak_3")
+spawn("turtle_eggs",12,27,1,0,"turtle_eggs_1")
+spawn("turtle_eggs",12,27,2,0,"turtle_eggs_2")
 spawn("floor_corpse",13,27,2,1,"floor_corpse_4")
 spawn("floor_dirt",12,27,2,1,"floor_dirt_1")
 spawn("rat_swarm",10,28,1,0,"rat_swarm_1")
-rat_swarm_1.brain:disable()
 spawn("forest_stairs_down",10,28,3,1,"forest_stairs_down_1")
 forest_stairs_down_1.stairs:setTeleportTarget(5,27,21,1)
 spawn("note",13,27,2,0,"diary_day7")
@@ -2292,9 +2308,10 @@ Day #7 of exploring the cavern, I think I'm getting somehwere, found a way aroun
 spawn("beach_rock_2x1",10,29,3,1,"beach_rock_2x1_1")
 spawn("beach_rock_3x1",10,27,3,0,"beach_rock_3x1_1")
 spawn("beach_rock_3x2",12,30,3,0,"beach_rock_3x2_1")
-spawn("beach_ocean",16,31,1,0,"beach_ocean_2")
-spawn("beach_ocean",31,31,1,0,"beach_ocean_3")
-spawn("beach_ocean",0,31,1,0,"beach_ocean_4")
+spawn("beach_ocean",15,31,0,0,"beach_ocean_3")
+beach_ocean_3.bottom:disable()
+spawn("beach_ocean",0,15,1,0,"beach_ocean_4")
+beach_ocean_4.bottom:disable()
 spawn("ladder",14,31,0,-1,"ladder_3")
 spawn("ladder",14,31,0,-2,"ladder_4")
 spawn("ladder",14,31,0,-3,"ladder_5")
@@ -2367,7 +2384,7 @@ spawn("invisible_wall",1,30,0,1,"invisible_wall_37")
 invisible_wall_37.projectilecollider:disable()
 spawn("invisible_wall",0,30,0,1,"invisible_wall_38")
 invisible_wall_38.projectilecollider:disable()
-spawn("beach_rock_border",14,29,2,1,"beach_rock_border_1")
+spawn("beach_rock_border",13,31,0,1,"beach_rock_border_1")
 spawn("beach_rock_3x1",17,30,3,0,"beach_rock_3x1_2")
 spawn("beach_rock_1x1_low",18,30,1,1,"beach_rock_1x1_low_1")
 spawn("beach_rock_blocker_02",9,30,1,1,"beach_rock_blocker_02_1")
@@ -2375,7 +2392,6 @@ spawn("beach_cattail_blocker",10,30,1,1,"beach_cattail_blocker_1")
 spawn("rock",10,30,3,0,"rock_2")
 spawn("rock",10,30,3,0,"rock_3")
 spawn("turtle",24,6,2,0,"turtle_1")
-turtle_1.brain:disable()
 spawn("beach_rock_arch_small",19,30,1,0,"beach_rock_arch_small_1")
 spawn("beach_rock_1x1",22,30,3,1,"beach_rock_1x1_1")
 spawn("beach_rock_outside_wall_high",26,31,3,0,"beach_rock_outside_wall_high_1")
@@ -2391,15 +2407,15 @@ spawn("invisible_wall",31,27,0,1,"invisible_wall_41")
 invisible_wall_41.projectilecollider:disable()
 spawn("invisible_wall",31,26,0,1,"invisible_wall_42")
 invisible_wall_42.projectilecollider:disable()
-spawn("note",13,27,3,0,"diary_day2")
+spawn("note",12,26,3,0,"diary_day2")
 diary_day2.scrollitem:setScrollText("Diary of Merchants Of East\
 Day #2\
 Initial survey suggest all the aging workings are falling apart. We hope it'll maintain function until we get the loot.")
-spawn("wooden_box",10,30,0,0,"wooden_box_1")
+spawn("wooden_box",13,26,1,0,"wooden_box_1")
 spawn("beach_rock_shore",12,27,0,1,"beach_rock_shore_1")
 spawn("script_entity",15,31,3,0,"global_scripts")
 global_scripts.script:loadFile("mod_assets/scripts/globals.lua")
-spawn("note",10,27,0,0,"note_2")
+spawn("note",10,27,1,0,"note_2")
 note_2.scrollitem:setScrollText("Dairy of Mechants of East\
 Day #6\
 I've found the lock! But now I've lost the map I made of the key while trying to clear the rubble. This is not awesome.")
@@ -2431,10 +2447,59 @@ spawn("turtle_eggs",24,6,3,0,"turtle_eggs_3")
 spawn("turtle_eggs",24,6,2,0,"turtle_eggs_4")
 spawn("note",9,26,3,0,"note_4")
 note_4.scrollitem:setScrollText("Diary of Merchants of East\
-Day #4\
-Louis took our shovel out into the desert, to take care of business... never returned")
+Day #8\
+Louis took our shovel out into the desert, \
+to take care of business... never returned.\
+Too tired and sick to go look for him.")
 spawn("peasant_breeches",13,27,3,0,"peasant_breeches_1")
-spawn("starting_location",14,30,0,1,"starting_location_1")
+spawn("invisible_rocky_wall",24,7,0,1,"invisible_rocky_wall_44")
+spawn("shovel",4,9,0,0,"shovel_1")
+spawn("floor_corpse",4,9,1,1,"floor_corpse_5")
+spawn("beach_boulder",4,9,3,1,"beach_boulder_1")
+spawn("invisible_rocky_wall",5,9,0,1,"invisible_rocky_wall_45")
+spawn("invisible_rocky_wall",4,10,0,1,"invisible_rocky_wall_46")
+spawn("invisible_rocky_wall",3,10,0,1,"invisible_rocky_wall_47")
+spawn("invisible_rocky_wall",3,11,0,1,"invisible_rocky_wall_48")
+spawn("invisible_rocky_wall",4,11,0,1,"invisible_rocky_wall_49")
+spawn("invisible_rocky_wall",5,11,0,1,"invisible_rocky_wall_50")
+spawn("invisible_rocky_wall",5,10,0,1,"invisible_rocky_wall_51")
+spawn("invisible_rocky_wall",6,9,0,1,"invisible_rocky_wall_52")
+spawn("invisible_rocky_wall",6,10,0,1,"invisible_rocky_wall_53")
+spawn("skull",4,9,0,0,"skull_1")
+spawn("beach_rock_outside_wall_high",31,28,2,0,"beach_rock_outside_wall_high_2")
+spawn("mine_support_ceiling_01",12,26,3,1,"mine_support_ceiling_01_3")
+spawn("mine_support_ceiling_01",13,26,3,1,"mine_support_ceiling_01_4")
+spawn("cemetery_sky",12,24,1,0,"cemetery_sky_2")
+cemetery_sky_2.model:disable()
+cemetery_sky_2.nightSky:disable()
+cemetery_sky_2.stars:disable()
+cemetery_sky_2.light:disable()
+cemetery_sky_2.ambient:disable()
+cemetery_sky_2.sky:disable()
+cemetery_sky_2.lensflare:disable()
+cemetery_sky_2.fogparticles:disable()
+spawn("invisible_rocky_wall",11,3,0,1,"invisible_rocky_wall_54")
+spawn("invisible_rocky_wall",11,2,0,1,"invisible_rocky_wall_55")
+spawn("invisible_rocky_wall",9,1,0,1,"invisible_rocky_wall_56")
+spawn("invisible_rocky_wall",8,1,0,1,"invisible_rocky_wall_57")
+spawn("invisible_rocky_wall",8,2,0,1,"invisible_rocky_wall_58")
+spawn("beach_ocean",15,0,2,0,"beach_ocean_5")
+beach_ocean_5.bottom:disable()
+spawn("beach_ocean",31,15,3,0,"beach_ocean_6")
+beach_ocean_6.bottom:disable()
+spawn("invisible_rocky_wall",10,27,0,1,"invisible_rocky_wall_59")
+spawn("invisible_rocky_wall",9,27,0,1,"invisible_rocky_wall_60")
+spawn("invisible_rocky_wall",8,27,0,1,"invisible_rocky_wall_61")
+spawn("mine_support_beam_01",13,26,3,1,"mine_support_beam_01_1")
+spawn("forest_oak_stump",20,30,2,1,"forest_oak_stump_1")
+spawn("forest_ruins_wall_02",13,25,2,1,"forest_ruins_wall_02_1")
+spawn("forest_ruins_wall_02",12,25,2,1,"forest_ruins_wall_02_2")
+spawn("forest_ruins_wall_02",12,26,3,1,"forest_ruins_wall_02_3")
+spawn("forest_ruins_wall_02",14,26,3,1,"forest_ruins_wall_02_4")
+spawn("forest_ruins_wall_02",13,27,0,1,"forest_ruins_wall_02_5")
+spawn("beach_stone_ring",12,27,0,1,"beach_stone_ring_1")
+spawn("barrel_crate_block_broken",12,26,3,1,"barrel_crate_block_broken_1")
+spawn("turtle",25,5,2,0,"turtle_2")
 
 --- level 5 ---
 
@@ -2475,7 +2540,7 @@ loadLayer("floor_elevation", {
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,0,-1,0,0,0,0,0,0,0,1,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,0,1,1,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -2511,10 +2576,10 @@ loadLayer("ceiling_elevation", {
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,1,1,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,1,1,1,1,2,1,1,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,0,1,1,1,2,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,2,2,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,0,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,2,2,2,2,0,2,2,2,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
@@ -2545,12 +2610,12 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,1,1,1,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,2,1,1,1,3,1,1,1,1,1,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,2,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,4,4,1,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,4,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,2,3,2,1,1,1,3,1,1,1,1,1,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,5,4,4,4,4,5,5,2,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,4,1,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,5,4,4,4,4,5,5,4,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,5,4,4,4,4,5,5,3,3,2,3,3,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,3,3,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
@@ -2695,11 +2760,12 @@ script_entity_7.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
 spawn("dungeon_cave_in",24,18,2,0,"rubble_2")
 spawn("dungeon_cave_in",24,20,0,0,"rubble_1")
 spawn("mine_lock",17,23,1,0,"mine_lock_1")
-mine_lock_1.lock:setOpenedBy("")
+mine_lock_1.lock:setOpenedBy("mine_key")
+mine_lock_1.lock:addConnector("onActivate", "beach_door_wood_1", "open")
 spawn("note",20,20,0,0,"note_1")
 note_1.scrollitem:setScrollText("Diary of Merchants of East\
 Day #5\
-I have found a small key, these rats must've dragged it here, they like shiny things. Haven't found the lock it fits yet. Best to keep it hidden. I've burried it in the sands and made a map.")
+I have found a small key, these rats must've dragged it here, they like shiny things. Haven't found the lock it fits yet. Best to keep it hidden from the others. I've burried it in the sands and made a map.")
 spawn("note",24,19,2,0,"note_3")
 note_3.scrollitem:setScrollText("Docked at turtle bay, sail three days out towards the dawn, turn into the sun until noon, drop anchor four days out.")
 spawn("rubble_pedestal",24,18,0,0,"rubble_pedestal_1")
@@ -2712,3 +2778,164 @@ rubble_pedestal_2.model:disable()
 rubble_pedestal_2.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
 rubble_pedestal_2.door:disable()
 rubble_pedestal_2.itemconstrainbox:disable()
+spawn("mine_ceiling_pit_light_bright",14,23,1,0,"mine_ceiling_pit_light_bright_1")
+spawn("pushable_block_floor_trigger",12,22,1,0,"pushable_block_floor_trigger_1")
+pushable_block_floor_trigger_1.floortrigger:setTriggeredByParty(false)
+pushable_block_floor_trigger_1.floortrigger:setTriggeredByMonster(false)
+pushable_block_floor_trigger_1.floortrigger:setTriggeredByItem(false)
+pushable_block_floor_trigger_1.floortrigger:setTriggeredByDigging(false)
+pushable_block_floor_trigger_1.floortrigger:setDisableSelf(false)
+pushable_block_floor_trigger_1.floortrigger:addConnector("onActivate", "safety_gate_2", "open")
+pushable_block_floor_trigger_1.floortrigger:addConnector("onActivate", "teleporter_9", "activate")
+spawn("pullchain",14,24,3,0,"pullchain_1")
+pullchain_1.button:setDisableSelf(false)
+pullchain_1.button:addConnector("onActivate", "script_entity_7", "shootProjectile")
+spawn("pushable_block_floor",13,24,2,0,"pushable_block_floor_2")
+spawn("wall_button",14,22,3,0,"wall_button_1")
+wall_button_1.button:setDisableSelf(false)
+wall_button_1.button:addConnector("onActivate", "script_entity_7", "maybeActivateFloor")
+spawn("mine_door_support",13,23,1,0,"safety_gate")
+safety_gate.door:setDoorState("open")
+spawn("timer",13,21,2,0,"timer_1")
+timer_1.timer:setTimerInterval(9999999999)
+timer_1.timer:setDisableSelf(true)
+timer_1.timer:setTriggerOnStart(false)
+timer_1.timer:setCurrentLevelOnly(true)
+timer_1.timer:addConnector("onActivate", "script_entity_7", "deactivateFloor")
+spawn("scroll",14,24,2,0,"scroll_2")
+scroll_2.scrollitem:setScrollText("1. Close Safety Gate\
+2. Activate Magic Launch CIrcuit\
+3. Fire Bolt\
+\
+(is that so hard to remember?)")
+spawn("mine_spell_launcher_support",13,23,0,0,"mine_spell_launcher_support_1")
+mine_spell_launcher_support_1.door:disable()
+spawn("mine_spell_receptor_support",13,23,2,0,"mine_spell_receptor_support_1")
+mine_spell_receptor_support_1.walltrigger:setEntityType("lightning_bolt")
+mine_spell_receptor_support_1.walltrigger:addConnector("onActivate", "script_entity_7", "activateReceptorFloor")
+mine_spell_receptor_support_1.door:disable()
+mine_spell_receptor_support_1.itemconstrainbox:disable()
+spawn("timer",13,26,2,0,"timer_2")
+timer_2.timer:setTimerInterval(9999999999)
+timer_2.timer:setDisableSelf(true)
+timer_2.timer:setTriggerOnStart(false)
+timer_2.timer:setCurrentLevelOnly(true)
+timer_2.timer:addConnector("onActivate", "script_entity_7", "deactivateReceptorFloor")
+spawn("pushable_block_floor",12,24,2,0,"pushable_block_floor_4")
+spawn("pushable_block",13,24,2,0,"pushable_block_1")
+spawn("mine_support_wall_button",14,22,3,0,"mine_support_wall_button_1")
+spawn("teleportation_effect",13,22,3,0,"blob_power_cell")
+blob_power_cell.particle:disable()
+spawn("pushable_block_floor",13,22,2,0,"pushable_block_floor_1")
+spawn("mine_lever",14,22,0,0,"safety_gate_lever")
+safety_gate_lever.clickable:disable()
+safety_gate_lever.lever:setDisableSelf(false)
+safety_gate_lever.lever:addConnector("onActivate", "script_entity_7", "closeSafetyGate")
+safety_gate_lever.lever:addConnector("onActivate", "pushable_block_floor_trigger_1", "activate")
+safety_gate_lever.lever:addConnector("onDeactivate", "script_entity_7", "safetyGateLeverBreaks")
+safety_gate_lever.lever:disable()
+spawn("portal",11,23,1,0,"portal_1")
+portal_1.frame:disable()
+portal_1.portal:disable()
+portal_1.light:disable()
+portal_1.particle:disable()
+portal_1.particle2:disable()
+portal_1.shipSymbol:disable()
+portal_1.portalBeam:disable()
+portal_1.planeModel:disable()
+portal_1.controller:disable()
+spawn("pushable_block_floor",12,23,2,0,"pushable_block_floor_3")
+spawn("mine_door_support",12,23,1,0,"safety_gate_2")
+safety_gate_2.door:setDoorState("open")
+spawn("teleporter",13,23,3,0,"teleporter_9")
+teleporter_9.teleporter:setTeleportTarget(5,13,23,0)
+teleporter_9.teleporter:setSpin("west")
+teleporter_9.teleporter:setTriggeredByParty(false)
+teleporter_9.teleporter:setTriggeredByMonster(false)
+teleporter_9.teleporter:setTriggeredByItem(false)
+teleporter_9.teleporter:setTriggeredBySpell(true)
+teleporter_9.controller:setInitialState("deactivate")
+spawn("mine_spell_receptor",11,23,3,0,"mine_spell_receptor_1")
+mine_spell_receptor_1.walltrigger:setEntityType("lightning_bolt")
+mine_spell_receptor_1.walltrigger:addConnector("onActivate", "script_entity_7", "activatePortal")
+spawn("pushable_block_floor",11,23,2,0,"pushable_block_floor_5")
+spawn("invisible_teleporter",11,23,2,0,"portal_teleporter")
+portal_teleporter.teleporter:setTeleportTarget(3,17,8,-1)
+portal_teleporter.teleporter:setSpin("east")
+portal_teleporter.teleporter:setTriggeredByParty(true)
+portal_teleporter.teleporter:setTriggeredByMonster(false)
+portal_teleporter.teleporter:setTriggeredByItem(false)
+portal_teleporter.teleporter:setTriggeredBySpell(false)
+portal_teleporter.controller:setInitialState("deactivate")
+spawn("timer",10,23,2,0,"timer_3")
+timer_3.timer:setTimerInterval(9999999999)
+timer_3.timer:setDisableSelf(true)
+timer_3.timer:setTriggerOnStart(false)
+timer_3.timer:setCurrentLevelOnly(true)
+timer_3.timer:addConnector("onActivate", "script_entity_7", "deactivatePortal")
+spawn("starting_location",15,23,3,0,"starting_location_1")
+spawn("lock_gear",14,22,0,0,"lock_gear_1")
+lock_gear_1.lock:setOpenedBy("gear_key")
+lock_gear_1.lock:addConnector("onActivate", "script_entity_7", "activateSafetyGateLever")
+spawn("gear_key",15,23,3,0,"gear_key_1")
+spawn("tomb_wall_01",11,24,0,0,"tomb_wall_01_1")
+spawn("tomb_wall_01",11,22,2,0,"tomb_wall_01_2")
+spawn("tomb_wall_01",11,23,0,0,"tomb_wall_01_3")
+spawn("tomb_wall_01",11,23,2,0,"tomb_wall_01_4")
+spawn("tomb_ceiling_01",11,23,2,0,"tomb_ceiling_01_1")
+spawn("tomb_pillar",12,24,1,0,"tomb_pillar_1")
+spawn("tomb_pillar",12,23,3,0,"tomb_pillar_2")
+spawn("tomb_door_stone",12,23,3,0,"tomb_door_stone_1")
+tomb_door_stone_1.door:disable()
+tomb_door_stone_1.controller:disable()
+tomb_door_stone_1.cbox1:disable()
+tomb_door_stone_1.cbox2:disable()
+spawn("tomb_door_stone",12,23,0,0,"tomb_door_stone_2")
+tomb_door_stone_2.door:disable()
+tomb_door_stone_2.controller:disable()
+tomb_door_stone_2.cbox1:disable()
+tomb_door_stone_2.cbox2:disable()
+tomb_door_stone_2.model:disable()
+spawn("tomb_door_stone",12,22,1,0,"tomb_door_stone_3")
+tomb_door_stone_3.controller:disable()
+spawn("tomb_door_stone",12,22,3,0,"tomb_door_stone_4")
+tomb_door_stone_4.controller:disable()
+spawn("tomb_door_stone",12,22,0,0,"tomb_door_stone_5")
+tomb_door_stone_5.door:disable()
+tomb_door_stone_5.controller:disable()
+spawn("tomb_door_stone",12,23,2,0,"tomb_door_stone_6")
+tomb_door_stone_6.door:disable()
+tomb_door_stone_6.controller:disable()
+tomb_door_stone_6.cbox1:disable()
+tomb_door_stone_6.cbox2:disable()
+tomb_door_stone_6.model:disable()
+spawn("tomb_door_stone",12,24,2,0,"tomb_door_stone_7")
+tomb_door_stone_7.door:disable()
+tomb_door_stone_7.controller:disable()
+tomb_door_stone_7.cbox1:disable()
+tomb_door_stone_7.cbox2:disable()
+tomb_door_stone_7.model:disable()
+spawn("tomb_door_stone",12,24,3,0,"tomb_door_stone_8")
+tomb_door_stone_8.door:disable()
+tomb_door_stone_8.controller:disable()
+tomb_door_stone_8.cbox1:disable()
+tomb_door_stone_8.cbox2:disable()
+tomb_door_stone_8.model:disable()
+spawn("tomb_door_stone",13,24,3,0,"tomb_door_stone_9")
+tomb_door_stone_9.door:disable()
+tomb_door_stone_9.controller:disable()
+tomb_door_stone_9.cbox1:disable()
+tomb_door_stone_9.cbox2:disable()
+tomb_door_stone_9.model:disable()
+spawn("tomb_door_stone",14,24,3,0,"tomb_door_stone_10")
+tomb_door_stone_10.door:disable()
+tomb_door_stone_10.controller:disable()
+tomb_door_stone_10.cbox1:disable()
+tomb_door_stone_10.cbox2:disable()
+tomb_door_stone_10.model:disable()
+spawn("tomb_door_stone",13,25,0,0,"tomb_door_stone_11")
+tomb_door_stone_11.door:disable()
+tomb_door_stone_11.controller:disable()
+tomb_door_stone_11.cbox1:disable()
+tomb_door_stone_11.cbox2:disable()
+tomb_door_stone_11.model:disable()

@@ -51,3 +51,32 @@ function party_gain_xp(champions, amount)
         end
     end
 end
+
+function shootProjectile(projectile, ref_object, facing, offset_x, offset_y, offset_elevation)
+    if ref_object.go ~= nil then
+        ref_object = ref_object.go
+    end
+    if facing == nil then
+        facing = ref_object.facing
+    end
+    local x = ref_object.x
+    local y = ref_object.y
+    local elevation = ref_object.elevation
+    if offset_x ~= nil then
+        x = x + offset_x
+    end
+    if offset_y ~= nil then
+        y = y + offset_y
+    end
+    if offset_elevation ~= nil then
+        elevation = elevation + offset_elevation
+    end
+    spawn(projectile, ref_object.level, x, y, facing, elevation)
+end
+
+function playSoundAtObject(sound, ref_object)
+     if ref_object.go ~= nil then
+        ref_object = ref_object.go
+    end
+    playSoundAt(sound, ref_object.level, ref_object.x, ref_object.y)
+end
