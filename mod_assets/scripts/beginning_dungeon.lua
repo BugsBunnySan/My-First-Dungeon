@@ -20,6 +20,10 @@ end
 function closeSafetyGate()
     safety_gate.door:close()
     safety_gate_2.door:close()
+    for i=1,6 do
+        local fc = findEntity(string.format("floor_circuit_trigger_%d", i))
+        fc.controller:activate()
+    end    
 end
 
 function maybeActivateFloor()
@@ -36,24 +40,39 @@ end
 
 function shootProjectile()
     if pushable_block_floor_1.light:isEnabled() and safety_gate.door:isClosed() then
-        global_scripts.script.shootProjectile("lightning_bolt", mine_spell_launcher_support_1, 2)
+        global_scripts.script.spawnAtObject("lightning_bolt", mine_spell_launcher_support_1, 2)
     end
 end
 
 function activateReceptorFloor()
     local active_time = math.random(5)   
     timer_2.timer:setTimerInterval(active_time)
-    pushable_block_floor_2.controller:activate() 
-    pushable_block_floor_3.controller:activate()    
-    pushable_block_floor_4.controller:activate()
+    for i=1,10 do
+        local fc = findEntity(string.format("floor_circuit_%d", i))
+        fc.controller:activate()
+    end
     timer_2.timer:start()    
 end
 
 function deactivateReceptorFloor()
-    pushable_block_floor_2.controller:deactivate() 
-    pushable_block_floor_3.controller:deactivate()    
-    pushable_block_floor_4.controller:deactivate()
-    global_scripts.script.playSoundAtObject("lightning_bolt_hit_small", pushable_block_floor_2.model)
+    global_scripts.script.playSoundAtObject("lightning_bolt_hit_small", floor_circuit_2.model)
+    for i=1,10 do
+        local fc = findEntity(string.format("floor_circuit_%d", i))
+        fc.controller:deactivate()
+    end
+end
+
+function resetBlocks()
+    for i=1,6 do
+        local block = findEntity(string.format("pushable_block_%d", i))
+        local start_position = findEntity(string.format("floor_circuit_trigger_%d", i))
+        block:setPosition(start_position.x+1, start_position.y, start_position.facing, start_position.elevation, start_position.level)
+    end
+end
+
+function activatePortalCircuit()
+    safety_gate_2.door:open()
+    teleporter_9.controller:activate()
 end
 
 function activatePortal()
@@ -77,5 +96,5 @@ function deactivatePortal()
     portal_1.planeModel:disable()
     pushable_block_floor_5.controller:deactivate()
     portal_teleporter.controller:deactivate()    
-    global_scripts.script.playSoundAtObject("lightning_bolt_hit_small", pushable_block_floor_2.model)
+    global_scripts.script.playSoundAtObject("lightning_bolt_hit_small", pushable_block_floor_5.model)
 end

@@ -6,6 +6,7 @@ function initDungeon()
     initCloister()
     initBeach()
     initBeginningDungeon()
+    initFieldOfHerbs()
 end
 
 function initParty()
@@ -24,6 +25,9 @@ function initCastleOfWater()
     local y = water_disciple_5_teleporter.teleporter.go:getWorldPositionY()
     water_disciple_5_teleporter.teleporter.go:setWorldPositionY(y+.1)
     med_station_light.light:disable()
+    
+    fish_timer.timer:start()
+    energy_pool_timer.timer:disable()
 end
 
 function initMoistCatacombs()
@@ -39,8 +43,7 @@ function initMoistCatacombs()
     forest_day_sky.ambient:disable()
 end
 
-function initCloister()      
-    GameMode.setTimeOfDay(0.0)
+function initCloister()    
     local essence_of_air = spawn("essence_air").item
     beacon_air.socket:addItem(essence_of_air)
 end
@@ -58,4 +61,8 @@ function initBeginningDungeon()
     timer_1.timer:stop()
     timer_2.timer:stop()
     timer_3.timer:stop()
+end
+
+function initFieldOfHerbs()    
+    main_gate.door:setOpenVelocity(0.1)
 end

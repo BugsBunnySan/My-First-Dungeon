@@ -52,7 +52,44 @@ function party_gain_xp(champions, amount)
     end
 end
 
-function shootProjectile(projectile, ref_object, facing, offset_x, offset_y, offset_elevation)
+function party_gain_energy(champions, amount)
+    for _, i in ipairs(champions) do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            champion:regainEnergy(amount)
+        end
+    end
+end
+
+function party_wears_item(champions, item_slot, item_class)    
+    local wearing_champions = {}
+    for _, i in ipairs(champions) do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            local worn_item = champion:getItem(item_slot)
+            if worn_item and worn_item.name == item_class then
+                wearing_champions[i] = item
+            end
+        end
+    end
+    return wearing_champions
+end
+
+function party_conditions(champions, add_conditions, remove_conditions)
+    for _, i in ipairs(champions) do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            for _, condition in ipairs(add_conditions) do
+                champion:setCondition(condition)
+            end
+            for _, condition in ipairs(remove_conditions) do
+                champion:removeCondition(condition)
+            end
+        end
+    end
+end
+
+function spawnAtObject(projectile, ref_object, facing, offset_x, offset_y, offset_elevation)
     if ref_object.go ~= nil then
         ref_object = ref_object.go
     end
@@ -79,4 +116,18 @@ function playSoundAtObject(sound, ref_object)
         ref_object = ref_object.go
     end
     playSoundAt(sound, ref_object.level, ref_object.x, ref_object.y)
+end
+
+function findEntities(class, level)    
+    local entities = {}
+    for entity in Dungeon.getMap(level):allEntities() do        
+        if entity.name == class then
+            table.insert(entities, entity)
+        end
+    end
+    return entities
+end
+
+function findMapTiles(types, number, rand)
+    
 end
