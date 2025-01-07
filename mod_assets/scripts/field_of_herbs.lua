@@ -41,7 +41,6 @@ function raisePlants()
         local plant = findEntity(string.format("forest_plant_cluster_01_%d", i))
         w_pos = raiseObject(plant, vec(0, math.random()*global_scripts.script.herbs_raise_step, 0))        
     end
-    hudPrint(tostring(w_pos.y))
     if w_pos.y >= global_scripts.script.herbs_to_raise then
         herb_raiser_timer.timer:disable()
         forest_statue_pillar_03_1.model.go:spawn("blob")
@@ -53,22 +52,36 @@ function activateEarthAltar(altar, item)
     if item.go.name == "essence_earth" then
         herb_raiser_timer.timer:start()
         herb_timer.timer:start()
+        spawnHerb()
+        last_herb_spawn = Time.systemTime()
     end
 end
 
+last_herb_spawn = 0
+herb_spawn_interval = 59
+herb_spawn_timer_onsite = 30
+herb_spawn_timer_offsite = 0.5-- timers run approximately 41-45 or even more times slower on levels the party is not on, depending on factors unknown
+
 function onExitLevel()
-    local offsite_interval = 600 / 43 -- timers run approximately 41-45 times slower on levels the party is not on   
     local interval = herb_timer.timer:getTimerInterval(0)    
-    if interval > offsite_interval then
-        herb_timer.timer:setTimerInterval(offsite_interval)
+    if interval > herb_spawn_timer_offsite then
+        herb_timer.timer:setTimerInterval(herb_spawn_timer_offsite)
     end
 end
 
 function onEnterLevel()
-    local onsite_interval = 600       
     local interval = herb_timer.timer:getTimerInterval(0)
-    if interval < onsite_interval then
-        herb_timer.timer:setTimerInterval(onsite_interval)
+    if interval < herb_spawn_timer_onsite then
+        herb_timer.timer:setTimerInterval(herb_spawn_timer_onsite)
+    end
+end
+
+function maybeSpawnHerb()
+    local now = Time.systemTime()
+    if now - last_herb_spawn > herb_spawn_interval then
+        hudPrint("Spawn Herb after "..tostring(now - last_herb_spawn).." seconds")
+        spawnHerb()
+        last_herb_spawn = now
     end
 end
 
