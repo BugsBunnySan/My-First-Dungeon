@@ -52,6 +52,23 @@ end
 function activateEarthAltar(altar, item)
     if item.go.name == "essence_earth" then
         herb_raiser_timer.timer:start()
+        herb_timer.timer:start()
+    end
+end
+
+function onExitLevel()
+    local offsite_interval = 600 / 43 -- timers run approximately 41-45 times slower on levels the party is not on   
+    local interval = herb_timer.timer:getTimerInterval(0)    
+    if interval > offsite_interval then
+        herb_timer.timer:setTimerInterval(offsite_interval)
+    end
+end
+
+function onEnterLevel()
+    local onsite_interval = 600       
+    local interval = herb_timer.timer:getTimerInterval(0)
+    if interval < onsite_interval then
+        herb_timer.timer:setTimerInterval(onsite_interval)
     end
 end
 
