@@ -46,6 +46,7 @@ end
 function initCloister()    
     local essence_of_air = spawn("essence_air").item
     beacon_air.socket:addItem(essence_of_air)
+    timer_4.timer:start()
 end
 
 function initBeach()
@@ -61,8 +62,14 @@ function initBeginningDungeon()
     timer_1.timer:stop()
     timer_2.timer:stop()
     timer_3.timer:stop()
+    
+    local w_pos = small_key_lock:getWorldPosition()
+    w_pos = w_pos + vec(-0.2, -0.05, 1.55)    
+    small_key_lock:setWorldPosition(w_pos)
 end
 
-function initFieldOfHerbs()    
-    main_gate.door:setOpenVelocity(0.1)
+function initFieldOfHerbs()
+    --herb_timer.timer:disable()
+    herb_raiser_timer.timer:disable()
+    --main_gate.door:setOpenVelocity(0.1)
 end

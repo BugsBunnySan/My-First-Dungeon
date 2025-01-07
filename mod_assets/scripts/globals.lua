@@ -1,4 +1,5 @@
 
+-- Beginning Dungeon
 rubble_pedestals = {["rubble_pedestal_2"] = {["rubble"] = {"rubble_2"},
                                             ["kin"] = {"rubble_pedestal_1"},
                                             ["food"] = 250,
@@ -34,6 +35,10 @@ function clearRubble(pedestal, item)
     pedestal:destroyDelayed()
 end
 
+-- Fields Of Herbs
+herbs_to_raise = .33
+herbs_raise_step = 0.02
+
 function party_consume_food(champions, amount)
     for _, i in ipairs(champions) do
         local champion = party.party:getChampion(i)
@@ -62,13 +67,14 @@ function party_gain_energy(champions, amount)
 end
 
 function party_wears_item(champions, item_slot, item_class)    
-    local wearing_champions = {}
+    local wearing_champions = {count = 0}
     for _, i in ipairs(champions) do
         local champion = party.party:getChampion(i)
         if champion ~= nil then
             local worn_item = champion:getItem(item_slot)
-            if worn_item and worn_item.name == item_class then
+            if worn_item ~= nil and worn_item.go.name == item_class then
                 wearing_champions[i] = item
+                wearing_champions.count = wearing_champions.count + 1 
             end
         end
     end
@@ -128,6 +134,54 @@ function findEntities(class, level)
     return entities
 end
 
-function findMapTiles(types, number, rand)
-    
+function shuffle(tbl)
+    for i = #tbl, 2, -1 do
+        local j = math.random(i)
+        tbl[i], tbl[j] = tbl[j], tbl[i]
+    end
+    return tbl
+end
+
+north = 0
+east  = 1
+south = 2
+west  = 3
+
+-- return the empty facing sports on location, free of occupation
+function getEmptyFacings(location, occupiers)
+    local facings = {[north] = true, [east] = true, [south] = true, [west] = true}
+    local empty_facings = {}
+    for entity in Dungeon.getMap(location.level):entitiesAt(location.x, location.y) do                    
+        if occupiers == nil or occupiers[entity.name] ~= nil then
+            facings[entity.facing] = false            
+        end        
+    end
+    for _, facing in ipairs({north, east, south, west}) do        
+        if facings[facing] then
+            table.insert(empty_facings, facing)
+        end
+    end        
+    return empty_facings
+end
+
+-- find a location amongst locations (must be an array), that are free of anything (occupiers == nil)
+-- or free of any of the item classes listed in occupiers (which must be a table with the class names as keys)
+function findEmptySpot(locations, occupiers)
+    local empty_spot = {x = nil, y = nil, elevation = nil, level = nil, facing = nil, id = nil}
+    for _, location in ipairs(locations) do
+        if location.go ~= nil then
+            location = location.go
+        end
+        local empty_facings = getEmptyFacings(location, occupiers)        
+        if #empty_facings ~= 0 then
+            empty_spot.x = location.x
+            empty_spot.y = location.y
+            empty_spot.elevation = location.elevation
+            empty_spot.level = location.level
+            empty_spot.id = location.id
+            empty_spot.facing = empty_facings[math.random(#empty_facings)]
+            break
+        end
+    end
+    return empty_spot
 end

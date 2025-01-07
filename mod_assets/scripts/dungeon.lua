@@ -795,6 +795,16 @@ script_entity_8.script:loadFile("mod_assets/scripts/castle_of_water.lua")
 spawn("castle_alcove",10,23,3,0,"castle_alcove_1")
 spawn("castle_alcove",10,22,3,0,"castle_alcove_2")
 spawn("castle_alcove",10,21,3,0,"castle_alcove_3")
+spawn("note",10,21,3,0,"note_5")
+note_5.scrollitem:setScrollText("Erica, my love,\
+meet me in the Herb Garden tonight.\
+I've left you a spare necklace,\
+wear it when you come see me\
+XXX\
+CLaus")
+castle_alcove_3.surface:addItem(note_5.item)
+spawn("runestone_necklace",10,21,3,0,"runestone_necklace_3")
+castle_alcove_3.surface:addItem(runestone_necklace_3.item)
 spawn("castle_alcove",10,21,0,0,"castle_alcove_4")
 spawn("castle_alcove",12,21,0,0,"castle_alcove_5")
 spawn("castle_alcove",12,21,1,0,"castle_alcove_6")
@@ -2442,6 +2452,19 @@ invisible_teleporter_2.teleporter:setTriggeredByParty(true)
 invisible_teleporter_2.teleporter:setTriggeredByMonster(true)
 invisible_teleporter_2.teleporter:setTriggeredByItem(true)
 invisible_teleporter_2.teleporter:setTriggeredBySpell(true)
+spawn("timer",24,18,3,0,"timer_4")
+timer_4.timer:setTimerInterval(1)
+timer_4.timer:setDisableSelf(false)
+timer_4.timer:setTriggerOnStart(false)
+timer_4.timer:setCurrentLevelOnly(false)
+timer_4.timer:addConnector("onActivate", "script_entity_5", "tick")
+spawn("teleporter",15,24,2,0,"teleporter_22")
+teleporter_22.teleporter:setTeleportTarget(6,15,22,0)
+teleporter_22.teleporter:setSpin("none")
+teleporter_22.teleporter:setTriggeredByParty(true)
+teleporter_22.teleporter:setTriggeredByMonster(true)
+teleporter_22.teleporter:setTriggeredByItem(true)
+teleporter_22.teleporter:setTriggeredBySpell(true)
 
 --- level 4 ---
 
@@ -2812,7 +2835,6 @@ spawn("forest_ruins_wall_02",13,27,0,1,"forest_ruins_wall_02_5")
 spawn("beach_stone_ring",12,27,0,1,"beach_stone_ring_1")
 spawn("barrel_crate_block_broken",12,26,3,1,"barrel_crate_block_broken_1")
 spawn("turtle",25,5,2,0,"turtle_2")
-spawn("starting_location",14,30,0,1,"starting_location_1")
 
 --- level 5 ---
 
@@ -2884,10 +2906,10 @@ loadLayer("ceiling_elevation", {
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,0,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,1,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,1,1,1,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,2,2,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1,2,2,1,2,1,1,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1,2,2,1,1,1,1,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,1,1,1,1,2,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,2,1,1,1,1,2,1,1,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,2,1,1,1,1,2,1,2,2,2,2,2,2,2,
@@ -2919,19 +2941,19 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,1,3,3,1,3,1,1,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,3,1,3,3,1,1,1,1,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,1,1,1,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,2,3,2,1,1,1,3,1,1,1,1,1,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,5,5,2,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,1,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,5,5,4,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,5,5,3,3,2,3,3,3,3,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,5,3,3,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,2,3,2,1,1,1,3,1,1,1,1,1,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,5,5,2,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,4,4,1,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,5,5,4,3,2,1,1,1,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,5,5,3,3,2,3,3,3,3,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,5,3,3,3,2,1,1,1,1,1,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,4,4,4,4,4,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 })
@@ -2950,6 +2972,7 @@ spawn("forest_ruins_secret_door",21,21,0,0,"forest_ruins_secret_door_1")
 spawn("forest_ruins_secret_door",20,21,0,0,"forest_ruins_secret_door_2")
 spawn("forest_ruins_secret_door",22,21,0,0,"forest_ruins_secret_door_3")
 spawn("rat_swarm",20,26,1,0,"rat_swarm_2")
+rat_swarm_2.brain:disable()
 spawn("dungeon_pressure_plate",19,21,1,-1,"dungeon_pressure_plate_1")
 dungeon_pressure_plate_1.floortrigger:setTriggeredByParty(true)
 dungeon_pressure_plate_1.floortrigger:setTriggeredByMonster(false)
@@ -2958,7 +2981,6 @@ dungeon_pressure_plate_1.floortrigger:setTriggeredByDigging(false)
 dungeon_pressure_plate_1.floortrigger:setDisableSelf(false)
 dungeon_pressure_plate_1.floortrigger:addConnector("onToggle", "forest_ruins_secret_door_1", "toggle")
 dungeon_pressure_plate_1.floortrigger:addConnector("onToggle", "forest_ruins_secret_door_2", "toggle")
-dungeon_pressure_plate_1.floortrigger:addConnector("onToggle", "forest_ruins_secret_door_3", "toggle")
 spawn("dungeon_wall_height_difference",20,21,3,0,"dungeon_wall_height_difference_1")
 spawn("dungeon_wall_01",20,21,3,1,"dungeon_wall_01_85")
 spawn("dungeon_iron_gate",20,22,3,0,"dungeon_iron_gate_2")
@@ -3049,7 +3071,7 @@ beach_door_wood_6.cbox1:disable()
 beach_door_wood_6.cbox2:disable()
 beach_door_wood_6.model:disable()
 spawn("forest_ruins_arch",16,23,1,0,"forest_ruins_arch_2")
-spawn("lever",21,17,3,-1,"blob_door_lever")
+spawn("lever",21,18,3,-1,"blob_door_lever")
 blob_door_lever.lever:setState("activated")
 blob_door_lever.lever:setDisableSelf(false)
 blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_1", "open")
@@ -3063,12 +3085,11 @@ spawn("green_slime",21,17,2,0,"green_slime_1")
 green_slime_1.monster:setHealth(100)
 green_slime_1.move:disable()
 green_slime_1.turn:disable()
-spawn("dungeon_wall_01",21,16,2,0,"dungeon_wall_01_84")
 spawn("ladder_metal",21,18,2,-1,"ladder_metal_6")
 spawn("dungeon_door_wooden",21,17,0,-1,"dungeon_door_wooden_3")
 spawn("ladder_metal",24,16,2,-1,"ladder_metal_7")
 spawn("pickaxe",17,23,2,0,"pickaxe_1")
-spawn("script_entity",25,19,2,0,"script_entity_7")
+spawn("script_entity",23,19,2,0,"script_entity_7")
 script_entity_7.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
 spawn("dungeon_cave_in",24,18,2,0,"rubble_2")
 spawn("dungeon_cave_in",24,20,0,0,"rubble_1")
@@ -3278,6 +3299,16 @@ P.S.: I've locked the saftey gate lever,\
 I suspect Luis of intending mutiny and\
 leaving without us.")
 spawn("floor_corpse",24,19,0,0,"floor_corpse_6")
+spawn("pickaxe",25,21,3,0,"pickaxe_2")
+spawn("dungeon_door_wooden",24,19,1,0,"dungeon_door_wooden_4")
+spawn("lock",24,20,1,0,"small_key_lock")
+small_key_lock.lock:setOpenedBy("brass_key")
+small_key_lock.lock:addConnector("onActivate", "dungeon_door_wooden_4", "open")
+spawn("dungeon_pillar",22,17,1,0,"dungeon_pillar_1")
+spawn("ladder_metal",19,20,0,-1,"ladder_metal_11")
+spawn("dungeon_secret_door",20,20,3,0,"dungeon_secret_door_2")
+spawn("dungeon_secret_door",19,21,0,0,"dungeon_secret_door_3")
+spawn("barrel_crate_block",22,24,0,0,"barrel_crate_block_2")
 
 --- level 6 ---
 
@@ -3289,7 +3320,9 @@ newMap{
 	ambientTrack = "forest",
 	tiles = {
 		"forest_ground",
+		"forest_trees",
 		"mine_wall_crystal",
+		"swamp_ground",
 		"tomb_floor",
 	}
 }
@@ -3364,42 +3397,79 @@ loadLayer("ceiling_elevation", {
 	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,2,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
 })
 
+loadLayer("heightmap", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
 loadLayer("tiles", {
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,4,4,4,4,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,4,4,4,4,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,2,2,2,2,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,5,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 })
 
 spawn("medusa",14,29,1,1,"medusa_left")
+medusa_left.monster:setLevel(5)
+medusa_left.monster:setHealth(50000000)
 medusa_left.brain:disable()
 medusa_left.move:disable()
 medusa_left.turn:disable()
@@ -3491,8 +3561,6 @@ tomb_door_stone_12.controller:disable()
 tomb_door_stone_12.cbox1:disable()
 tomb_door_stone_12.cbox2:disable()
 tomb_door_stone_12.model:disable()
-spawn("castle_bridge",14,29,0,1,"castle_bridge_105")
-spawn("castle_bridge",16,29,0,1,"castle_bridge_106")
 spawn("castle_bridge",15,30,0,1,"castle_bridge_107")
 spawn("castle_bridge",15,29,0,1,"castle_bridge_108")
 spawn("tomb_door_portcullis",15,29,0,1,"tomb_door_portcullis_1")
@@ -3555,15 +3623,15 @@ back_gate_timer.timer:setTriggerOnStart(false)
 back_gate_timer.timer:setCurrentLevelOnly(false)
 back_gate_timer.timer:addConnector("onActivate", "script_entity_9", "openBackGate")
 spawn("ladder_metal",15,28,2,0,"ladder_metal_9")
-spawn("timer",22,31,1,0,"herb_timer")
-herb_timer.timer:setTimerInterval(6)
+spawn("timer",13,24,1,0,"herb_timer")
+herb_timer.timer:setTimerInterval(1)
 herb_timer.timer:setDisableSelf(false)
 herb_timer.timer:setTriggerOnStart(false)
 herb_timer.timer:setCurrentLevelOnly(false)
 herb_timer.timer:addConnector("onActivate", "script_entity_9", "spawnHerb")
-spawn("invisible_wall",15,27,0,0,"herb_spawn")
-herb_spawn.obstacle:disable()
-herb_spawn.projectilecollider:disable()
+spawn("invisible_wall",8,22,0,0,"herb_spawn_ref")
+herb_spawn_ref.obstacle:disable()
+herb_spawn_ref.projectilecollider:disable()
 spawn("floor_trigger",15,30,1,1,"floor_trigger_19")
 floor_trigger_19.floortrigger:setTriggeredByParty(true)
 floor_trigger_19.floortrigger:setTriggeredByMonster(false)
@@ -3571,3 +3639,182 @@ floor_trigger_19.floortrigger:setTriggeredByItem(false)
 floor_trigger_19.floortrigger:setTriggeredByDigging(false)
 floor_trigger_19.floortrigger:setDisableSelf(false)
 floor_trigger_19.floortrigger:addConnector("onActivate", "script_entity_8", "disablePoolOfEnergy")
+spawn("forest_ruins_dome",16,29,2,1,"forest_ruins_dome_3")
+spawn("forest_ruins_dome",14,29,2,1,"forest_ruins_dome_4")
+spawn("mudwort",9,24,0,0,"mudwort_9")
+spawn("mudwort",10,24,0,0,"mudwort_15")
+spawn("mudwort",9,22,2,0,"mudwort_17")
+spawn("mudwort",10,22,2,0,"mudwort_18")
+spawn("mudwort",11,22,2,0,"mudwort_19")
+spawn("mudwort",12,22,2,0,"mudwort_20")
+spawn("castle_bridge",12,23,3,0,"castle_bridge_105")
+spawn("castle_bridge",11,23,3,0,"castle_bridge_106")
+spawn("castle_bridge",10,23,3,0,"castle_bridge_110")
+spawn("castle_bridge",9,23,3,0,"castle_bridge_111")
+spawn("forest_statue_pillar_02",13,23,2,0,"forest_statue_pillar_02_1")
+spawn("forest_statue_pillar_03",13,24,0,0,"forest_statue_pillar_03_1")
+spawn("forest_statue_1",14,16,3,0,"forest_statue_1_1")
+spawn("forest_statue_2",10,17,3,0,"forest_statue_2_1")
+spawn("forest_statue_3",12,15,2,0,"forest_statue_3_1")
+spawn("castle_wall_grating_ornament",12,25,0,-1,"castle_wall_grating_ornament_58")
+castle_wall_grating_ornament_58.door:disable()
+spawn("castle_wall_grating",12,25,0,0,"castle_wall_grating_27")
+castle_wall_grating_27.model:disable()
+castle_wall_grating_27.frame:disable()
+spawn("castle_wall_grating_ornament",11,25,0,-1,"castle_wall_grating_ornament_59")
+castle_wall_grating_ornament_59.door:disable()
+spawn("castle_wall_grating",11,25,0,0,"castle_wall_grating_28")
+castle_wall_grating_28.model:disable()
+castle_wall_grating_28.frame:disable()
+spawn("castle_wall_grating_ornament",9,25,0,-1,"castle_wall_grating_ornament_60")
+castle_wall_grating_ornament_60.door:disable()
+spawn("castle_wall_grating",9,25,0,0,"castle_wall_grating_29")
+castle_wall_grating_29.model:disable()
+castle_wall_grating_29.frame:disable()
+spawn("castle_wall_grating_ornament",10,25,0,-1,"castle_wall_grating_ornament_61")
+castle_wall_grating_ornament_61.door:disable()
+spawn("castle_wall_grating",10,25,0,0,"castle_wall_grating_30")
+castle_wall_grating_30.model:disable()
+castle_wall_grating_30.frame:disable()
+spawn("castle_wall_grating_ornament",12,24,1,-1,"castle_wall_grating_ornament_62")
+castle_wall_grating_ornament_62.door:disable()
+spawn("castle_wall_grating",12,24,1,0,"castle_wall_grating_31")
+castle_wall_grating_31.model:disable()
+castle_wall_grating_31.frame:disable()
+spawn("castle_wall_grating_ornament",8,22,1,-1,"castle_wall_grating_ornament_67")
+castle_wall_grating_ornament_67.door:disable()
+spawn("castle_wall_grating",8,22,1,0,"castle_wall_grating_36")
+castle_wall_grating_36.model:disable()
+castle_wall_grating_36.frame:disable()
+spawn("castle_wall_grating_ornament",8,23,1,-1,"castle_wall_grating_ornament_68")
+castle_wall_grating_ornament_68.door:disable()
+spawn("castle_wall_grating",8,23,1,0,"castle_wall_grating_37")
+castle_wall_grating_37.model:disable()
+castle_wall_grating_37.frame:disable()
+spawn("castle_wall_grating_ornament",8,24,1,-1,"castle_wall_grating_ornament_69")
+castle_wall_grating_ornament_69.door:disable()
+spawn("castle_wall_grating",8,24,1,0,"castle_wall_grating_38")
+castle_wall_grating_38.model:disable()
+castle_wall_grating_38.frame:disable()
+spawn("castle_pillar_01",9,24,2,-1,"castle_pillar_01_176")
+spawn("castle_pillar_01",10,22,2,-1,"castle_pillar_01_177")
+spawn("castle_pillar_01",9,25,2,-1,"castle_pillar_01_178")
+spawn("castle_pillar_01",9,23,2,-1,"castle_pillar_01_179")
+spawn("castle_pillar_01",10,25,2,-1,"castle_pillar_01_180")
+spawn("castle_pillar_01",13,22,2,-1,"castle_pillar_01_181")
+spawn("castle_pillar_01",12,22,2,-1,"castle_pillar_01_182")
+spawn("castle_pillar_01",9,22,3,-1,"castle_pillar_01_185")
+spawn("castle_pillar_01",11,25,2,-1,"castle_pillar_01_186")
+spawn("castle_pillar_01",12,25,2,-1,"castle_pillar_01_187")
+spawn("forest_ruins_arch",8,23,3,0,"forest_ruins_arch_5")
+spawn("forest_plant_cluster_01",12,24,3,-1,"forest_plant_cluster_01_1")
+forest_plant_cluster_01_1.obstacle:disable()
+forest_plant_cluster_01_1.projectilecollider:disable()
+spawn("forest_plant_cluster_01",10,24,0,-1,"forest_plant_cluster_01_2")
+forest_plant_cluster_01_2.obstacle:disable()
+forest_plant_cluster_01_2.projectilecollider:disable()
+spawn("forest_plant_cluster_01",11,24,1,-1,"forest_plant_cluster_01_3")
+forest_plant_cluster_01_3.obstacle:disable()
+forest_plant_cluster_01_3.projectilecollider:disable()
+spawn("forest_plant_cluster_01",9,24,3,-1,"forest_plant_cluster_01_4")
+forest_plant_cluster_01_4.obstacle:disable()
+forest_plant_cluster_01_4.projectilecollider:disable()
+spawn("forest_plant_cluster_01",12,22,2,-1,"forest_plant_cluster_01_5")
+forest_plant_cluster_01_5.obstacle:disable()
+forest_plant_cluster_01_5.projectilecollider:disable()
+spawn("forest_plant_cluster_01",11,22,3,-1,"forest_plant_cluster_01_6")
+forest_plant_cluster_01_6.obstacle:disable()
+forest_plant_cluster_01_6.projectilecollider:disable()
+spawn("forest_plant_cluster_01",10,22,0,-1,"forest_plant_cluster_01_7")
+forest_plant_cluster_01_7.obstacle:disable()
+forest_plant_cluster_01_7.projectilecollider:disable()
+spawn("forest_plant_cluster_01",9,22,2,-1,"forest_plant_cluster_01_8")
+forest_plant_cluster_01_8.obstacle:disable()
+forest_plant_cluster_01_8.projectilecollider:disable()
+spawn("castle_bridge",15,27,0,0,"castle_bridge_112")
+spawn("castle_bridge",15,26,0,0,"castle_bridge_113")
+spawn("castle_bridge",15,24,0,0,"castle_bridge_114")
+spawn("castle_bridge",14,23,3,0,"castle_bridge_115")
+spawn("castle_bridge",15,28,0,0,"castle_bridge_116")
+spawn("castle_bridge",13,23,3,0,"castle_bridge_117")
+spawn("castle_bridge",15,25,0,0,"castle_bridge_119")
+spawn("castle_wall_grating_ornament",13,22,3,-1,"castle_wall_grating_ornament_57")
+castle_wall_grating_ornament_57.door:disable()
+spawn("castle_wall_grating",13,22,3,0,"castle_wall_grating_26")
+castle_wall_grating_26.model:disable()
+castle_wall_grating_26.frame:disable()
+spawn("castle_pillar_01",11,22,2,-1,"castle_pillar_01_183")
+spawn("castle_pillar_01",13,25,2,-1,"castle_pillar_01_184")
+spawn("castle_wall_grating_ornament",12,22,0,-1,"castle_wall_grating_ornament_63")
+castle_wall_grating_ornament_63.door:disable()
+spawn("castle_wall_grating",12,22,0,0,"castle_wall_grating_32")
+castle_wall_grating_32.model:disable()
+castle_wall_grating_32.frame:disable()
+spawn("castle_wall_grating_ornament",11,22,0,-1,"castle_wall_grating_ornament_64")
+castle_wall_grating_ornament_64.door:disable()
+spawn("castle_wall_grating",11,22,0,0,"castle_wall_grating_33")
+castle_wall_grating_33.model:disable()
+castle_wall_grating_33.frame:disable()
+spawn("castle_wall_grating_ornament",10,22,0,-1,"castle_wall_grating_ornament_65")
+castle_wall_grating_ornament_65.door:disable()
+spawn("castle_wall_grating",10,22,0,0,"castle_wall_grating_34")
+castle_wall_grating_34.model:disable()
+castle_wall_grating_34.frame:disable()
+spawn("castle_wall_grating_ornament",9,22,0,-1,"castle_wall_grating_ornament_66")
+castle_wall_grating_ornament_66.door:disable()
+spawn("castle_wall_grating",9,22,0,0,"castle_wall_grating_35")
+castle_wall_grating_35.model:disable()
+castle_wall_grating_35.frame:disable()
+spawn("castle_bridge",15,23,0,0,"castle_bridge_118")
+spawn("forest_altar",17,23,3,0,"forest_altar_1")
+forest_altar_1.surface:addConnector("onInsertItem", "script_entity_9", "activateEarthAltar")
+spawn("forest_fireflies",17,23,3,0,"forest_fireflies_2")
+spawn("forest_fountain",14,20,0,0,"forest_fountain_1")
+spawn("castle_bridge",16,23,3,0,"castle_bridge_120")
+spawn("timer",8,24,3,0,"herb_raiser_timer")
+herb_raiser_timer.timer:setTimerInterval(0.1)
+herb_raiser_timer.timer:setDisableSelf(false)
+herb_raiser_timer.timer:setTriggerOnStart(false)
+herb_raiser_timer.timer:setCurrentLevelOnly(false)
+herb_raiser_timer.timer:addConnector("onActivate", "script_entity_9", "raisePlants")
+spawn("essence_earth",16,23,1,0,"essence_earth_1")
+spawn("forest_oak_cluster",13,22,1,0,"forest_oak_cluster_1")
+spawn("invisible_wall",15,20,1,0,"invisible_wall_52")
+spawn("invisible_wall",15,19,1,0,"invisible_wall_59")
+spawn("invisible_wall",14,19,0,0,"invisible_wall_60")
+spawn("castle_wall_text",13,23,0,0,"castle_wall_text_4")
+castle_wall_text_4.walltext:setWallText("Gentle Travellers,\
+Hear our tale of woe,\
+Two lovers met one night,\
+ages ago.\
+Their families, adversarios,\
+since the time of our ancenstors,\
+Their love did not approve.\
+As punishment turned to stone,\
+We remain like this,\
+In eternal longing so close")
+spawn("invisible_wall",9,22,0,0,"herb_garden_1")
+herb_garden_1.obstacle:disable()
+herb_garden_1.projectilecollider:disable()
+spawn("invisible_wall",10,22,0,0,"herb_garden_2")
+herb_garden_2.obstacle:disable()
+herb_garden_2.projectilecollider:disable()
+spawn("invisible_wall",11,22,0,0,"herb_garden_3")
+herb_garden_3.obstacle:disable()
+herb_garden_3.projectilecollider:disable()
+spawn("invisible_wall",12,22,0,0,"herb_garden_4")
+herb_garden_4.obstacle:disable()
+herb_garden_4.projectilecollider:disable()
+spawn("invisible_wall",12,24,0,0,"herb_garden_8")
+herb_garden_8.obstacle:disable()
+herb_garden_8.projectilecollider:disable()
+spawn("invisible_wall",11,24,0,0,"herb_garden_7")
+herb_garden_7.obstacle:disable()
+herb_garden_7.projectilecollider:disable()
+spawn("invisible_wall",10,24,0,0,"herb_garden_6")
+herb_garden_6.obstacle:disable()
+herb_garden_6.projectilecollider:disable()
+spawn("invisible_wall",9,24,0,0,"herb_garden_5")
+herb_garden_5.obstacle:disable()
+herb_garden_5.projectilecollider:disable()
+spawn("starting_location",15,23,3,1,"starting_location_1")
