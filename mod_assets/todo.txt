@@ -1,0 +1,20 @@
+
+2. Fix Cannon Daemon - it should activate further than 4 or 5 tiles away
+3. Fiux DOctors Glowy Cristal efect timer (needs to be adjusted to work like the herb timer)
+
+5. Hide the runestone necklace somewhere else, that tells more of the story
+6. Add firefly effect to earth essence altar and herb garden activation
+11. Add some more equipment to the starting location, maybe in crates/barrels/boxes, maybe some taken into holes by the dungeon rats
+
+
+7. Investigate keeping the garden dark, while the rest of the dungeons keep the normal time
+8. Add sunflower fire altar, which enables the sun to rise in the garden
+9. Visit the sport clinic doctor
+10. 
+
+
+
+
+X1. Fix Cannon Daemon - turn off brain so it doesn't alarm when turned off
+X12. Merge castle of water scripts
+4. Add Woman's cloth to the runestone necklace alcove - added silk hose

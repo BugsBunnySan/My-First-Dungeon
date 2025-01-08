@@ -28,6 +28,8 @@ function initCastleOfWater()
     
     fish_timer.timer:start()
     energy_pool_timer.timer:disable()
+    
+    castle_of_water_script_entity.script.armCannon1(nil, true)
 end
 
 function initMoistCatacombs()
