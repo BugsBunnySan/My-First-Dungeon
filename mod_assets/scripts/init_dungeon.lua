@@ -26,10 +26,13 @@ function initCastleOfWater()
     water_disciple_5_teleporter.teleporter.go:setWorldPositionY(y+.1)
     med_station_light.light:disable()
     
-    fish_timer.timer:start()
+    fish_timer.timer:start()   
     energy_pool_timer.timer:disable()
+    energy_pool_timer.timer:setTimerInterval(1)
     
-    castle_of_water_script_entity.script.armCannon1(nil, true)
+    castle_of_water_script_entity.script.armCannon1(nil, true)       
+
+    sg_power_timer.timer:disable()    
 end
 
 function initMoistCatacombs()

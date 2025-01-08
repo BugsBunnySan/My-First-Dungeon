@@ -4,8 +4,8 @@
 
 5. Hide the runestone necklace somewhere else, that tells more of the story
 6. Add firefly effect to earth essence altar and herb garden activation
-11. Add some more equipment to the starting location, maybe in crates/barrels/boxes, maybe some taken into holes by the dungeon rats
-
+11. Add some more equipment to the starting location, maybe in crates/barrels/boxes, maybe some taken into holes by the dungeon rats, also in the little key room of the colapse
+13. Beautify and fill and border the beach of beginnings, elaborate the story a bit
 
 7. Investigate keeping the garden dark, while the rest of the dungeons keep the normal time
 8. Add sunflower fire altar, which enables the sun to rise in the garden
@@ -17,4 +17,4 @@
 
 X1. Fix Cannon Daemon - turn off brain so it doesn't alarm when turned off
 X12. Merge castle of water scripts
-4. Add Woman's cloth to the runestone necklace alcove - added silk hose
+X4. Add Woman's cloth to the runestone necklace alcove - added silk hose

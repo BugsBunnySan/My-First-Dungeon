@@ -51,6 +51,7 @@ function disablePoolOfEnergy()
 end
 
 function poolOfEnergy()
-    global_scripts.script.party_gain_energy({1, 2, 3, 4}, 15)
+    global_scripts.script.party_gain_energy({1, 2, 3, 4}, 15)  
+    global_scripts.script.party_gain_health({1, 2, 3, 4}, 15)
     global_scripts.script.party_conditions({1, 2, 3, 4}, {"water_breathing"}, {})
 end

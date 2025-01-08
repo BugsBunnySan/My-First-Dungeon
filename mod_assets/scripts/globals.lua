@@ -66,6 +66,15 @@ function party_gain_energy(champions, amount)
     end
 end
 
+function party_gain_health(champions, amount)
+    for _, i in ipairs(champions) do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            champion:regainHealth(amount)
+        end
+    end
+end
+
 function party_wears_item(champions, item_slot, item_class)    
     local wearing_champions = {count = 0}
     for _, i in ipairs(champions) do
@@ -147,6 +156,8 @@ east  = 1
 south = 2
 west  = 3
 
+facing_names = {[0] = "north", [1] = "east", [2] = "south", [3] = "west"}
+
 -- return the empty facing sports on location, free of occupation
 function getEmptyFacings(location, occupiers)
     local facings = {[north] = true, [east] = true, [south] = true, [west] = true}
@@ -162,6 +173,14 @@ function getEmptyFacings(location, occupiers)
         end
     end        
     return empty_facings
+end
+
+function getGO(entity)
+    if entity.go ~= nil then
+        return entity.go
+    else
+        return entity
+    end
 end
 
 -- find a location amongst locations (must be an array), that are free of anything (occupiers == nil)
@@ -184,4 +203,23 @@ function findEmptySpot(locations, occupiers)
         end
     end
     return empty_spot
+end
+
+function activatePortal(portal)
+    hudPrint(portal.id)
+    local portal = getGO(portal)
+    portal.light:enable()
+    portal.particle:enable()
+    portal.particle2:enable()
+    portal.portalBeam:enable()
+    portal.planeModel:enable()
+end
+
+function deactivatePortal(portal) 
+    local portal = getGO(portal)   
+    portal.light:disable()
+    portal.particle:disable()
+    portal.particle2:disable()
+    portal.portalBeam:disable()
+    portal.planeModel:disable()
 end
