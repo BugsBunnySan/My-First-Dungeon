@@ -6,6 +6,8 @@
 6. Add firefly effect to earth essence altar and herb garden activation
 11. Add some more equipment to the starting location, maybe in crates/barrels/boxes, maybe some taken into holes by the dungeon rats, also in the little key room of the colapse
 13. Beautify and fill and border the beach of beginnings, elaborate the story a bit
+14. add Security System sponsored by grand mage sylor
+15. "Make yourself an empty vesel"
 
 7. Investigate keeping the garden dark, while the rest of the dungeons keep the normal time
 8. Add sunflower fire altar, which enables the sun to rise in the garden
