@@ -69,7 +69,7 @@ defineObject{
                     self.auto_inserting = false
                     return
                 end
-                local messages = {["give_task"] = "One of my disciples has lost their way, deal with them and be rewarded.\nRemember what one of the elders said:\n",
+                local messages = {["give_task"] = "One of my disciples has lost their way, no longer does he reflect as is proper\nDeal with them and be rewarded.\nRemember what one of the elders said:\n",
                                  ["foolish"]   = "To the foolish, a single word of wisdom is like a trsunami",
                                  ["wise"]      = "To the very wise, words of wisdom are like drops of water in the ocean",
                                  ["essence"]   = "Water is fluid, soft, and yielding.\nBut water will wear away rock, which is rigid and cannot yield.\nAs a rule, whatever is fluid, soft, and yielding\n will overcome whatever  is rigid and hard."}
