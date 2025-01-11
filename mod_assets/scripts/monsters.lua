@@ -61,86 +61,18 @@ defineObject{
 				return self:count() == 0
 			end,
             onInit = function(self)
-                self.state = "initial"                
-                self.auto_inserting = false
+                local sage_of_water_quest = seven_disciples_script.script.sage_of_water_quest
+                sage_of_water_quest.state = "initial"
+                sage_of_water_quest.auto_inserting = false
             end,
 			onInsertItem = function(self, item)
-                if self.auto_inserting then
-                    self.auto_inserting = false
+                local sage_of_water_quest = seven_disciples_script.script.sage_of_water_quest
+                if sage_of_water_quest.auto_inserting then
+                    sage_of_water_quest.auto_inserting = false
                     return
                 end
-                local messages = {["give_task"] = "One of my disciples has lost their way, no longer does he reflect as is proper\nDeal with them and be rewarded.\nRemember what one of the elders said:\n",
-                                 ["foolish"]   = "To the foolish, a single word of wisdom is like a trsunami",
-                                 ["wise"]      = "To the very wise, words of wisdom are like drops of water in the ocean",
-                                 ["essence"]   = "Water is fluid, soft, and yielding.\nBut water will wear away rock, which is rigid and cannot yield.\nAs a rule, whatever is fluid, soft, and yielding\n will overcome whatever  is rigid and hard."}
-                local words_of_wisdom = {"Be like water making its way through cracks. Do not be assertive, but adjust to the object, and you shall find a way around or through it.", messages["essence"], "Be water, my friend."}
-                local state_table = {
-                    ["initial"] = {
-                        ["flask"] = {
-                            ["action"] = function(self, item)
-                                             item.go:destroyDelayed()
-                                             local water_flask = spawn("water_flask").item
-                                             self.auto_inserting = true
-                                             self:addItem(water_flask)                                              
-                                             water_disciple_5.walltrigger:enable()    
-                                             sage_of_water_1_text.walltext:setWallText(messages["give_task"] .. messages["foolish"])
-                                        end,
-                            ["new_state"] = "given_task",
-                            ["message"] = messages["give_task"] .. messages["foolish"]
-                        },
-                        ["water_flask"] = {
-                            ["action"] = nil,
-                            ["new_state"] = "initial",
-                            ["message"] = messages["wise"]
-                        }
-                    },
-                    ["given_task"] = {
-                        ["flask"] = {
-                            ["action"] = function(self, item)
-                                             item.go:destroyDelayed()
-                                             local water_flask = spawn("water_flask").item
-                                             self.auto_inserting = true
-                                             self:addItem(water_flask) 
-                                        end,
-                            ["new_state"] = "given_task",
-                            ["message"] = "Remember:\n" .. messages["foolish"]
-                        },
-                        ["water_flask"] = {
-                            ["action"] = nil,
-                            ["new_state"] = "given_task",
-                            ["message"] = messages["wise"]
-                        },
-                        ["essence_water"] = {
-                            ["action"] = function(self, item)
-                                sage_of_water_1_text.walltext:setWallText(messages["essence"])
-                            end,
-                            ["new_state"] = "task_complete",
-                            ["message"] = nil
-                        }
-                    },
-                    ["task_complete"] = {
-                        ["flask"] = {
-                            ["action"] = function(self, item)
-                                             item.go:destroyDelayed()
-                                             local water_flask = spawn("water_flask").item
-                                             self.auto_inserting = true
-                                             self:addItem(water_flask)
-                                             local i = math.random(#words_of_wisdom)
-                                             local message = words_of_wisdom[i]
-                                             sage_of_water_1_text.walltext:setWallText(message)
-                                             hudPrint(message)
-                                        end,
-                            ["new_state"] = "task_complete",
-                            ["message"] = nil
-                        },
-                        ["water_flask"] = {
-                            ["action"] = nil,
-                            ["new_state"] = "task_complete",
-                            ["message"] = "To the very wise, words of wisdom are like drops of water in the ocean"
-                        }                        
-                    }
-                }
-                local state = state_table[self.state]
+                print(seven_disciples_script.script.sage_of_water_quest.state)
+                local state = sage_of_water_quest.state_table[sage_of_water_quest.state]
                 local trans = state[item.go.name]
                 if trans ~= nil then
                     if trans["action"] ~= nil then
@@ -149,7 +81,7 @@ defineObject{
                     if trans["message"] ~= nil then
                         hudPrint(trans["message"])
                     end
-                    self.state = trans["new_state"]
+                    sage_of_water_quest.state = trans["new_state"]
                 end               
 			end,
 			--debugDraw = true,
@@ -186,7 +118,7 @@ defineObject{
                     self.go.rightEyeLight:disable()
                     self.go.splash:enable()
                     water_disciple_5_teleporter.teleporter:disable()
-                    water_disciple_5_sepll_teleporter.teleporter:disable()
+                    water_disciple_5_spell_teleporter.teleporter:disable()
                     local essence_of_water = spawn("essence_water").item
                     sage_of_water.socket:addItem(essence_of_water)
                 end

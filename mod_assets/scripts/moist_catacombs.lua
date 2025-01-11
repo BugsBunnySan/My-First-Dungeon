@@ -1,31 +1,33 @@
 
+-- seems like there could be a serialization issue with this script, trying to save while animation is running crashes the game...
+
 function startMoveLadder(ladder, lever, stop, delta_vec, delta_x, checkLadderStop)
-    local animation = {func=moveLadder, on_finish=finishMoveLadder, step=0.1, duration=2, elapsed=0, last_called=-1, ladder=ladder, lever=lever, stop=stop}    
-    animation.start_pos = animation.ladder:getWorldPosition()
+    local animation = {func=moveLadder, on_finish=finishMoveLadder, step=0.1, duration=2, elapsed=0, last_called=-1, ladder=ladder.id, lever=lever.id, stop_pos=stop:getWorldPosition().x}    
+    animation.start_pos = ladder:getWorldPosition()
     if checkLadderStop(animation) then    
-       global_scripts.script.playSoundAtObject("lever", animation.lever)
-       animation.lever.lever:setState("deactivated")
+       global_scripts.script.playSoundAtObject("lever", lever)
+       lever.lever:setState("deactivated")
        return
     end
     -- stop_pos is where the ladder should end up at the end of the animation (used for calculating how far to move it each animation frame)
     -- on_finish_pos is an in map integer position where the ladder is snapped to when the animation time is over, to ensure that no rounding errors or timing issues, etc...
     -- make the ladder end up in weird positions over the course of moving it lots
     animation.stop_pos = animation.start_pos + delta_vec
-    animation.on_finish_pos = {x=animation.ladder.x+delta_x, y=animation.ladder.y, facing=animation.ladder.facing, elevation=animation.ladder.elevation, level=animation.ladder.level}
-    animation.lever.lever:disable()
-    animation.lever.clickable:disable()
-    animation.ladder.clickable:disable()
-    animation.ladder.ladder:disable()
+    animation.on_finish_pos = {x=ladder.x+delta_x, y=ladder.y, facing=ladder.facing, elevation=ladder.elevation, level=ladder.level}
+    lever.lever:disable()
+    lever.clickable:disable()
+    ladder.clickable:disable()
+    ladder.ladder:disable()
     moist_add_animation(animation)
-    global_scripts.script.playSoundAtObject("gate_iron_open", animation.ladder)
+    global_scripts.script.playSoundAtObject("gate_iron_open", ladder)
 end
 
 function checkLadderStopWest(animation)
-    return animation.start_pos.x <= animation.stop:getWorldPosition().x
+    return animation.start_pos.x <= animation.stop_pos
 end
 
 function checkLadderStopEast(animation)
-    return animation.start_pos.x >= animation.stop:getWorldPosition().x
+    return animation.start_pos.x >= animation.stop_pos
 end
 
 function startMoveSouthLadderWest()
@@ -47,18 +49,21 @@ end
 function moveLadder(time_delta, animation)
     local percentage = animation.duration / animation.elapsed
     local w_pos = ((animation.stop_pos - animation.start_pos) / percentage) + animation.start_pos
-    animation.ladder:setWorldPosition(w_pos)
+    local ladder = findEntity(animation.ladder)
+    ladder:setWorldPosition(w_pos)
 end
 
 function finishMoveLadder(time_delta, animation)
-    animation.ladder:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
-    global_scripts.script.playSoundAtObject("lever", animation.lever)
-    animation.lever.lever:setState("deactivated")
-    animation.lever.lever:enable()
-    animation.lever.clickable:enable()
-    animation.ladder.clickable:enable()
-    animation.ladder.ladder:enable()
-    global_scripts.script.playSoundAtObject("pressure_plate_pressed", animation.ladder)    
+    local lever = findEntity(animation.lever)
+    local ladder = findEntity(animation.ladder)
+    ladder:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
+    global_scripts.script.playSoundAtObject("lever", lever)
+    lever.lever:setState("deactivated")
+    lever.lever:enable()
+    lever.clickable:enable()
+    ladder.clickable:enable()
+    ladder.ladder:enable()
+    global_scripts.script.playSoundAtObject("pressure_plate_pressed", ladder)    
 end
 
 moist_animation = {}
