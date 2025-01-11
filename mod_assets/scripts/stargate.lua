@@ -94,6 +94,7 @@ function check_address()
             address = address.."O"
         end
     end
+    hudPrint(address)
     local coordinates = stargate_addresses[address]
     if coordinates ~= nil then
         deactivate_coordinates(stargate_last_coordinates)

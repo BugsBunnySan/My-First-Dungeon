@@ -2306,13 +2306,6 @@ And so, with infinte regret, the council finds\
 itself helpless and sends condolences and recompense as can\
 be found to the families of the miners lost in this tragic\
 catastrophe.")
-spawn("timer",5,31,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("starting_location",4,19,0,1,"starting_location_1")
 spawn("sage_of_water",7,15,1,0,"sage_of_water")
 
 --- level 4 ---
@@ -2558,6 +2551,7 @@ spawn("forest_bridge_pillar",7,29,1,-1,"forest_bridge_pillar_7")
 spawn("dungeon_wall_01",5,31,2,0,"dungeon_wall_01_101")
 spawn("dungeon_wall_01",5,31,2,1,"dungeon_wall_01_84")
 spawn("herder",9,28,3,0,"herder_1")
+herder_1.brain:disable()
 spawn("catacomb_alcove_01",10,27,0,0,"catacomb_alcove_01_1")
 spawn("catacomb_alcove_01",12,27,0,0,"catacomb_alcove_01_2")
 spawn("catacomb_alcove_01",13,29,2,0,"catacomb_alcove_01_3")
@@ -2716,6 +2710,13 @@ spawn("brass_key",5,31,0,0,"brass_key_1")
 spawn("mine_ceiling_roots_01",4,26,2,0,"mine_ceiling_roots_01_1")
 spawn("mine_ceiling_roots_01",6,31,1,0,"mine_ceiling_roots_01_2")
 spawn("ceiling_roots_01",4,31,1,0,"ceiling_roots_01_1")
+spawn("starting_location",27,5,1,1,"starting_location_1")
+spawn("timer",5,19,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 
 --- level 5 ---
 
