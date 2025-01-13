@@ -98,6 +98,17 @@ function moistAnimateTick()
 end
 
 
+function onInsertItemAlcove(self, item)
+    hudPrint(tostring(self.go.id))
+    for clan, level, sublevel, nr in (self.go.id):gmatch "tomb_(sylar)_(%a)(%a)(%d+)$" do
+        hudPrint(clan)
+        hudPrint(level)
+        hudPrint(sublevel)
+        hudPrint(nr)
+    end
+end
+
+
 dungeon_dock_state = "inside" -- the party starts inside the dungeon
 -- dungeonInSidePlate <-> dungeonSidePlate <-> dungeonOutSidePlate <-> dockInSidePlate <-> dockSidePlate <-> dockOutSidePlate
 

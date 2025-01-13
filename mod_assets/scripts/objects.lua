@@ -30,3 +30,44 @@ defineObject{
         }
     }
 }
+
+defineObject{
+	name = "surface_catacomb_alcove_lower",
+	baseObject = "base_wall",
+	components = {
+		{
+			class = "Surface",
+			offset = vec(0, 0.85, 0.2), 
+			size = vec(2, 0.2),
+			--debugDraw = true,
+		}, 
+		{
+			class = "Clickable",
+			offset = vec(0, 0.85, 0.2), 
+			size = vec(2, 0.2),
+			-- debugDraw = true,
+		},
+	},
+	editorIcon = 92,
+	minimalSaveState = false,
+}
+defineObject{
+	name = "surface_catacomb_alcove_upper",
+	baseObject = "base_wall",
+	components = {
+		{
+			class = "Surface",
+			offset = vec(0, 1.85, 0.2), 
+			size = vec(2, 0.2),
+			--debugDraw = true,
+		}, 
+		{
+			class = "Clickable",
+			offset = vec(0, 2, 0.2), 
+			size = vec(2, 0.2),
+			-- debugDraw = true,
+		},
+	},
+	editorIcon = 92,
+	minimalSaveState = false,
+}
