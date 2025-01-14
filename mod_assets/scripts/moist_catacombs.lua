@@ -97,17 +97,169 @@ function moistAnimateTick()
     end
 end
 
+red_gem_gifts = {
+    sylar = { ll1 = { red_gem = 0},
+              uu3 = { red_gem = 0},
+              ul11 = { red_gem = 0}},
+    carals = { uu2 = {red_gem = 0},
+               uu7 = {red_gem = 0},
+               uu12 = {red_gem = 0}}
+}
 
-function onInsertItemAlcove(self, item)
-    hudPrint(tostring(self.go.id))
-    for clan, level, sublevel, nr in (self.go.id):gmatch "tomb_(sylar)_(%a)(%a)(%d+)$" do
-        hudPrint(clan)
-        hudPrint(level)
-        hudPrint(sublevel)
-        hudPrint(nr)
+-- red_gem_gifts = {
+    -- sylar = { ll1 = { red_gem = 0}},
+    -- carals = { ll6 = {red_gem = 0}}
+-- }
+
+red_gem_sounds = {
+    sylar = { ll1 = nil },
+    carals = { ll6 = nil }
+}
+
+function check_clan_gifts(clan)
+    local all_gifts_given = true
+    for alcove, gifts_given in pairs(red_gem_gifts[clan]) do
+        for gift, given in pairs(gifts_given) do
+            all_gifts_given = all_gifts_given and (given > 0)
+            if not all_gifts_given then
+                return false
+            end
+        end
+    end
+    return all_gifts_given
+end
+
+spawns = {
+    sylar = {  sylar_spawn_1  = nil,
+               sylar_spawn_2  = nil,
+               sylar_spawn_3  = "giant_snake",
+               sylar_spawn_4  = nil,
+               sylar_spawn_5  = nil,
+               sylar_spawn_6  = "giant_snake",
+               sylar_spawn_7  = "dark_acolyte",
+               sylar_spawn_8  = "giant_snake",
+               sylar_spawn_9  = nil,
+               sylar_spawn_10 = "giant_snake",
+               sylar_spawn_11 = nil,
+               sylar_spawn_12 = nil, },
+    carals = { carals_spawn_1  = "skeleton_trooper",
+               carals_spawn_2  = "skeleton_trooper",
+               carals_spawn_3  = "skeleton_trooper",
+               carals_spawn_4  = "skeleton_archer",
+               carals_spawn_5  = "skeleton_archer",
+               carals_spawn_6  = "skeleton_commander",
+               carals_spawn_7  = "skeleton_trooper",
+               carals_spawn_8  = "skeleton_trooper",
+               carals_spawn_9  = "skeleton_trooper",
+               carals_spawn_10 = "skeleton_archer",
+               carals_spawn_11 = "skeleton_archer",
+               carals_spawn_12 = "skeleton_trooper",
+    }
+}
+
+-- these count down the ghosts existing (sync to table above)
+sylar_ghosts_destroyed = 5
+carals_ghosts_destroyed = 12
+
+function allClanGhostsDestroyed(clan)
+    for selector, sound_id in pairs(red_gem_sounds[clan]) do
+        findEntity(sound_id).sound:fadeOut(2)
+    end
+    for selector, gifts in pairs(red_gem_gifts[clan]) do
+        local alcove = findEntity(string.format("tomb_%s_%s", clan, selector))
+        alcove.surface:removeConnector("onInsertItem", "moist_script_entity", "onInsertItemAlcove")
+        alcove.surface:removeConnector("onRemoveItem", "moist_script_entity", "onRemoveItemAlcove")
     end
 end
 
+function caralsGhostDestroyed()
+    carals_ghosts_destroyed = carals_ghosts_destroyed - 1
+    if carals_ghosts_destroyed == 0 then
+        allClanGhostsDestroyed("carals")        
+        hudPrint("Carals' evil ghosts are all destroyed. Their evil influence of jealosy, anger, bigotry and stuff like that has left the world.")
+    end
+end
+
+function sylarGhostDestroyed()
+    sylar_ghosts_destroyed = sylar_ghosts_destroyed - 1
+    if sylar_ghost_destroyed == 0 then
+         allClanGhostsDestroyed("sylar")    
+        hudPrint("Sylar's evil ghost is destroyed. Their evil influence of toxic bad stuff is gone from the world.")       
+    end
+end
+
+function spawn_ghosts(clan)
+    for i=1,12 do
+        local spawn_name = string.format("%s_spawn_%d", clan, i)
+        local spawner = findEntity(spawn_name)
+        local spawn = spawns[clan][spawner.id]
+        if spawn then
+            hudPrint(spawner.id .. " going to spawn "..spawn)
+            local entity = spawner:spawn(spawn)
+            local func_name = string.format("%sGhostDestroyed", clan)
+            entity.monster:addConnector("onDie", "moist_script_entity", func_name)
+        end
+    end
+end
+
+
+function allGiftsGiven(clan)
+    hudPrint("Clan "..clan.." has all their gifts!")    
+    if clan == "sylar" then
+        spawn_ghosts("carals")
+        hudPrint("You Fools! You dare support our enemies?!?")
+    elseif clan == "carals" then
+        spawn_ghosts("sylar")
+        hudPrint("You Fools! You dare support my enemies?!?")
+    end
+end
+
+function checkInsertItemAlcoveClan(alcove, clan, selector, item)
+    red_gem_gifts[clan][selector][item.go.name] = red_gem_gifts[clan][selector][item.go.name] + 1
+    if red_gem_gifts[clan][selector][item.go.name] == 1 then
+        alcove.go.light:enable()
+        local sound = nil
+        if red_gem_sounds[clan][selector] == nil then
+            sound = alcove.go:spawn("sound")            
+            sound.sound:setSound("evil_whisper")                                       
+            red_gem_sounds[clan][selector] = sound.id
+        else
+            sound = findEntity(red_gem_sounds[clan][selector])
+        end
+        sound.sound:fadeIn(2)
+    end
+    hudPrint(tostring(red_gem_gifts[clan][selector][item.go.name]))
+end
+
+function onInsertItemAlcove(self, item)
+    hudPrint(tostring(self.go.id))
+    for clan, selector in (self.go.id):gmatch "tomb_(%a+)_(%a%a%d+)$" do
+        checkInsertItemAlcoveClan(self, clan, selector, item)               
+    end
+    if check_clan_gifts("sylar") then
+        allGiftsGiven("sylar")
+    end
+    if check_clan_gifts("carals") then
+        allGiftsGiven("carals")
+    end
+end
+
+function checkRemoveItemAlcoveClan(alcove, clan, selector, item)
+    red_gem_gifts[clan][selector][item.go.name] = red_gem_gifts[clan][selector][item.go.name] - 1
+    if red_gem_gifts[clan][selector][item.go.name] == 0 then      
+        alcove.go.light:disable()
+        findEntity(red_gem_sounds[clan][selector]).sound:fadeOut(2)
+    end
+    hudPrint(tostring(red_gem_gifts[clan][selector][item.go.name]))
+    
+end
+
+function onRemoveItemAlcove(self, item)
+    hudPrint(tostring(self.go.id))
+    for clan, selector in (self.go.id):gmatch "tomb_(%a+)_(%a%a%d+)$" do
+        checkRemoveItemAlcoveClan(self, clan, selector, item)
+    end
+end
 
 dungeon_dock_state = "inside" -- the party starts inside the dungeon
 -- dungeonInSidePlate <-> dungeonSidePlate <-> dungeonOutSidePlate <-> dockInSidePlate <-> dockSidePlate <-> dockOutSidePlate
