@@ -9,3 +9,12 @@ defineSound{
 	minDistance = 5,
 	maxDistance = 12,
 }
+
+defineSound{
+    name = "evil_whisper",
+    filename = "mod_assets/sounds/evil_whisper.wav",
+    loop = true,
+    volume = 1,
+    minDistance = 3,
+    maxDistance = 12
+}
