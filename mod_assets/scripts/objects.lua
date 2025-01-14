@@ -46,6 +46,21 @@ defineObject{
 			offset = vec(0, 0.85, 0.2), 
 			size = vec(2, 0.2),
 			-- debugDraw = true,
+		},		
+        {
+			class = "Light",
+			range = 3.5,
+			color = vec(0, 1, 0),
+			brightness = 7,
+			castShadow = true,
+			staticShadows = true,
+			shadowMapSize = 256,
+			--fillLight = true,
+			offset = vec(0, 0.85, 0.2),
+			onUpdate = function(self)
+				local noise = math.noise(Time.currentTime()*3 + 123) * 0.5 + 0.9
+				self:setBrightness(noise * 10)
+			end,
 		},
 	},
 	editorIcon = 92,
@@ -66,6 +81,21 @@ defineObject{
 			offset = vec(0, 2, 0.2), 
 			size = vec(2, 0.2),
 			-- debugDraw = true,
+		},        
+        {
+			class = "Light",
+			range = 3.5,
+			color = vec(0, 1, 0),
+			brightness = 7,
+			castShadow = true,
+			staticShadows = true,
+			shadowMapSize = 256,
+			--fillLight = true,
+			offset = vec(0, 1.85, 0.2),
+			onUpdate = function(self)
+				local noise = math.noise(Time.currentTime()*3 + 123) * 0.5 + 0.9
+				self:setBrightness(noise * 10)
+			end,
 		},
 	},
 	editorIcon = 92,
