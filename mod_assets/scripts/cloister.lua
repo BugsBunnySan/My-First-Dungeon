@@ -4,5 +4,5 @@ end
 
 function tick()
     -- seems like an oofline tick is roughly between 41 and 44 seconds
-    hudPrint(tostring(Time.systemTime()))
+    hudPrint(tostring(Time.systemTime()) .. " - " .. tostring(Time.currentTime()))
 end
