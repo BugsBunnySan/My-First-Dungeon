@@ -50,7 +50,7 @@ defineObject{
         {
 			class = "Light",
 			range = 3.5,
-			color = vec(0, 1, 0),
+			color = vec(1, 0, 0),
 			brightness = 7,
 			castShadow = true,
 			staticShadows = true,
@@ -85,7 +85,7 @@ defineObject{
         {
 			class = "Light",
 			range = 3.5,
-			color = vec(0, 1, 0),
+			color = vec(1, 0, 0),
 			brightness = 7,
 			castShadow = true,
 			staticShadows = true,

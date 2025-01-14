@@ -97,50 +97,53 @@ function moistAnimateTick()
     end
 end
 
+-- the purpo0se of the following quest is that each family has 5 really good people that got their
+-- gifts stolen by someone or lost them... Giving them their gifts back angers the evil people from
+-- the opposing side. So giving all the gifts back to one side summons the angry evil ghosts from
+-- the opposing side. Upon defeating them, their evil influence on their families legacy and the world
+-- and the field holding back the young lovers is removed
+
+-- this tracks how many gifts need to still be given
 red_gem_gifts = {
-    sylar = { ll1 = { red_gem = 0},
-              uu3 = { red_gem = 0},
-              ul11 = { red_gem = 0}},
-    carals = { uu2 = {red_gem = 0},
-               uu7 = {red_gem = 0},
-               uu12 = {red_gem = 0}}
+    sylar = { ll1 = { red_gem = 2},
+              uu3 = { red_gem = 1},
+              lu5 = { red_gem = 1},
+              ul7 = { red_gem = 1},
+              ul11 = { red_gem = 1}},
+    carals = { uu2 = {red_gem = 1},
+               uu5 = {red_gem = 1},
+               uu7 = {red_gem = 1},
+               uu9 = {red_gem = 1},
+               uu12 = {red_gem = 1}}
 }
 
--- red_gem_gifts = {
-    -- sylar = { ll1 = { red_gem = 0}},
-    -- carals = { ll6 = {red_gem = 0}}
--- }
+ared_gem_gifts = {
+    sylar = { ll1 = { red_gem = 1}},
+    carals = { ll6 = {red_gem = 1}}
+}
 
 red_gem_sounds = {
-    sylar = { ll1 = nil },
-    carals = { ll6 = nil }
+    sylar = {},
+    carals = {}
 }
 
-function check_clan_gifts(clan)
-    local all_gifts_given = true
-    for alcove, gifts_given in pairs(red_gem_gifts[clan]) do
-        for gift, given in pairs(gifts_given) do
-            all_gifts_given = all_gifts_given and (given > 0)
-            if not all_gifts_given then
-                return false
-            end
-        end
-    end
-    return all_gifts_given
-end
+red_gem_gifts_given = {
+    sylar = false,
+    carals = false
+}
 
 spawns = {
-    sylar = {  sylar_spawn_1  = nil,
+    sylar = {  sylar_spawn_1  = "green_slime",
                sylar_spawn_2  = nil,
                sylar_spawn_3  = "giant_snake",
-               sylar_spawn_4  = nil,
+               sylar_spawn_4  = "spider_walker",
                sylar_spawn_5  = nil,
                sylar_spawn_6  = "giant_snake",
                sylar_spawn_7  = "dark_acolyte",
                sylar_spawn_8  = "giant_snake",
-               sylar_spawn_9  = nil,
+               sylar_spawn_9  = "green_slime",
                sylar_spawn_10 = "giant_snake",
-               sylar_spawn_11 = nil,
+               sylar_spawn_11 = "spider_walker",
                sylar_spawn_12 = nil, },
     carals = { carals_spawn_1  = "skeleton_trooper",
                carals_spawn_2  = "skeleton_trooper",
@@ -157,15 +160,42 @@ spawns = {
     }
 }
 
--- these count down the ghosts existing (sync to table above)
-sylar_ghosts_destroyed = 5
+-- these count down the ghosts existing (synced to table above)
+sylar_ghosts_destroyed = 9
 carals_ghosts_destroyed = 12
 
-function allClanGhostsDestroyed(clan)
+function get_opposing_clan(clan)
+    local opposing_clan = nil
+    if clan == "sylar" then
+        opposing_clan = "carals"
+    elseif clan == "carals" then
+        opposing_clan = "sylar"
+    end
+    return opposing_clan
+end
+
+function check_clan_gifts(clan)
+    local all_gifts_given = true
+    for alcove, gifts_needed in pairs(red_gem_gifts[clan]) do
+        for gift, needed in pairs(gifts_needed) do
+            all_gifts_given = all_gifts_given and (needed == 0)
+            if not all_gifts_given then
+                return false
+            end
+        end
+    end
+    return all_gifts_given
+end
+
+-- evil whispers stop
+-- and their alcove callbacks are disconnected (this has to be done when there is no insert/remove item callback is running
+-- so doing it here is probably the safest (there are flags stopping these callbacks also, removing these here
+-- just means the callbacks aren't called as a small optimization)
+function allClanGhostsDestroyed(clan, opposing_clan)
     for selector, sound_id in pairs(red_gem_sounds[clan]) do
         findEntity(sound_id).sound:fadeOut(2)
     end
-    for selector, gifts in pairs(red_gem_gifts[clan]) do
+    for selector, gifts in pairs(red_gem_gifts[opposing_clan]) do
         local alcove = findEntity(string.format("tomb_%s_%s", clan, selector))
         alcove.surface:removeConnector("onInsertItem", "moist_script_entity", "onInsertItemAlcove")
         alcove.surface:removeConnector("onRemoveItem", "moist_script_entity", "onRemoveItemAlcove")
@@ -175,16 +205,16 @@ end
 function caralsGhostDestroyed()
     carals_ghosts_destroyed = carals_ghosts_destroyed - 1
     if carals_ghosts_destroyed == 0 then
-        allClanGhostsDestroyed("carals")        
-        hudPrint("Carals' evil ghosts are all destroyed. Their evil influence of jealosy, anger, bigotry and stuff like that has left the world.")
+        allClanGhostsDestroyed("carals", "sylar")    
+        hudPrint("Carals' evil ghosts are all destroyed. Their evil influence of jealosy, anger, bigotry and stuff like that has left their clan and the world.")
     end
 end
 
 function sylarGhostDestroyed()
     sylar_ghosts_destroyed = sylar_ghosts_destroyed - 1
-    if sylar_ghost_destroyed == 0 then
-         allClanGhostsDestroyed("sylar")    
-        hudPrint("Sylar's evil ghost is destroyed. Their evil influence of toxic bad stuff is gone from the world.")       
+    if sylar_ghosts_destroyed == 0 then
+         allClanGhostsDestroyed("sylar", "carals")    
+        hudPrint("Sylar's evil ghost is destroyed. Their evil influence of toxic bad stuff is gone from their clan and the world.")       
     end
 end
 
@@ -193,8 +223,8 @@ function spawn_ghosts(clan)
         local spawn_name = string.format("%s_spawn_%d", clan, i)
         local spawner = findEntity(spawn_name)
         local spawn = spawns[clan][spawner.id]
-        if spawn then
-            hudPrint(spawner.id .. " going to spawn "..spawn)
+        if spawn ~= nil then
+            --hudPrint(spawner.id .. " going to spawn "..spawn)
             local entity = spawner:spawn(spawn)
             local func_name = string.format("%sGhostDestroyed", clan)
             entity.monster:addConnector("onDie", "moist_script_entity", func_name)
@@ -202,61 +232,89 @@ function spawn_ghosts(clan)
     end
 end
 
+function lockGifts(clan)   
+    for selector, gifts in pairs(red_gem_gifts[clan]) do
+        local alcove = findEntity(string.format("tomb_%s_%s", clan, selector))
+        for _, item in alcove.surface:contents() do
+            if red_gem_gifts[clan][selector][item.go.name] ~= nil then
+                item.go:destroyDelayed()
+                red_gem_gifts[clan][selector][item.go.name] = nil
+            end
+        end
+    end    
+end
 
 function allGiftsGiven(clan)
     hudPrint("Clan "..clan.." has all their gifts!")    
     if clan == "sylar" then
-        spawn_ghosts("carals")
+        red_gem_gifts_given["sylar"] = true
+        lockGifts("sylar")
+        spawn_ghosts("carals")        
         hudPrint("You Fools! You dare support our enemies?!?")
     elseif clan == "carals" then
-        spawn_ghosts("sylar")
+        red_gem_gifts_given["carals"] = true
+        lockGifts("carals")
+        spawn_ghosts("sylar")        
         hudPrint("You Fools! You dare support my enemies?!?")
     end
 end
 
 function checkInsertItemAlcoveClan(alcove, clan, selector, item)
-    red_gem_gifts[clan][selector][item.go.name] = red_gem_gifts[clan][selector][item.go.name] + 1
-    if red_gem_gifts[clan][selector][item.go.name] == 1 then
+    if red_gem_gifts[clan][selector][item.go.name] == nil then
+        return false
+    end
+    red_gem_gifts[clan][selector][item.go.name] = red_gem_gifts[clan][selector][item.go.name] - 1
+    if red_gem_gifts[clan][selector][item.go.name] == 0 then       
         alcove.go.light:enable()
-        local sound = nil
-        if red_gem_sounds[clan][selector] == nil then
-            sound = alcove.go:spawn("sound")            
+        local sound_clan = get_opposing_clan(clan)
+        local sound = nil        
+        if red_gem_sounds[sound_clan][selector] == nil then
+            local sound_alcove = findEntity(string.format("tomb_%s_%s", sound_clan, selector))
+            sound = sound_alcove:spawn("sound")            
             sound.sound:setSound("evil_whisper")                                       
-            red_gem_sounds[clan][selector] = sound.id
+            red_gem_sounds[sound_clan][selector] = sound.id
         else
-            sound = findEntity(red_gem_sounds[clan][selector])
+            sound = findEntity(red_gem_sounds[sound_clan][selector])
         end
         sound.sound:fadeIn(2)
-    end
-    hudPrint(tostring(red_gem_gifts[clan][selector][item.go.name]))
+        return true
+    end    
+    return false
 end
 
 function onInsertItemAlcove(self, item)
-    hudPrint(tostring(self.go.id))
+    print(item.go.name .. " put into " .. tostring(self.go.id))        
     for clan, selector in (self.go.id):gmatch "tomb_(%a+)_(%a%a%d+)$" do
-        checkInsertItemAlcoveClan(self, clan, selector, item)               
-    end
-    if check_clan_gifts("sylar") then
-        allGiftsGiven("sylar")
-    end
-    if check_clan_gifts("carals") then
-        allGiftsGiven("carals")
-    end
+        if red_gem_gifts_given[clan] then
+            return
+        end
+        checkInsertItemAlcoveClan(self, clan, selector, item)           
+        if check_clan_gifts(clan) then
+            allGiftsGiven(clan)
+        end            
+    end 
 end
 
 function checkRemoveItemAlcoveClan(alcove, clan, selector, item)
-    red_gem_gifts[clan][selector][item.go.name] = red_gem_gifts[clan][selector][item.go.name] - 1
-    if red_gem_gifts[clan][selector][item.go.name] == 0 then      
+    if red_gem_gifts[clan][selector][item.go.name] == nil then
+        return false
+    end    
+    red_gem_gifts[clan][selector][item.go.name] = red_gem_gifts[clan][selector][item.go.name] + 1
+    if red_gem_gifts[clan][selector][item.go.name] > 0 then      
         alcove.go.light:disable()
-        findEntity(red_gem_sounds[clan][selector]).sound:fadeOut(2)
-    end
-    hudPrint(tostring(red_gem_gifts[clan][selector][item.go.name]))
-    
+        local sound_clan = get_opposing_clan(clan)
+        findEntity(red_gem_sounds[sound_clan][selector]).sound:fadeOut(2)
+        return true
+    end    
+    return false
 end
 
-function onRemoveItemAlcove(self, item)
-    hudPrint(tostring(self.go.id))
-    for clan, selector in (self.go.id):gmatch "tomb_(%a+)_(%a%a%d+)$" do
+function onRemoveItemAlcove(self, item)    
+    print(item.go.name .. " removed from " .. tostring(self.go.id))     
+    for clan, selector in (self.go.id):gmatch "tomb_(%a+)_(%a%a%d+)$" do        
+        if red_gem_gifts_given[clan] then
+            return
+        end
         checkRemoveItemAlcoveClan(self, clan, selector, item)
     end
 end
