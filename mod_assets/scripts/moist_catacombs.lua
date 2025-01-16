@@ -1,11 +1,11 @@
 moist_animation = {}
 
-function moist_add_animation(animation)
+function moist_add_animation(animation)    
     table.insert(moist_animation, animation)
 end
 
 function startMoveLadder(ladder, lever, stop, delta_vec, delta_x, checkLadderStop)
-    local animation = {func=moveLadder, on_finish=finishMoveLadder, step=0.1, duration=2, elapsed=0, last_called=-1, ladder=ladder.id, lever=lever.id, stop=stop.id}    
+    local animation = {func=moveLadder, on_finish=finishMoveLadder, step=0.005, duration=2, elapsed=0, last_called=-1, ladder=ladder.id, lever=lever.id, stop=stop.id}    
     local start_pos = ladder:getWorldPosition()
     local stop_pos = start_pos + delta_vec
     animation.start_pos = {x=start_pos.x, y=start_pos.y, z=start_pos.z}
@@ -75,26 +75,31 @@ function finishMoveLadder(time_delta, animation)
     global_scripts.script.playSoundAtObject("pressure_plate_pressed", ladder)    
 end
 
+last_tick = -1
+
 function moistAnimateTick()
     local now = Time.systemTime()
+    if last_tick == -1 then
+        last_tick = now
+    end
+    local tick_delta = now - last_tick    
     for idx, animation in ipairs(moist_animation) do        
         if animation.last_called == -1 or animation.last_called > now then
             animation.last_called = now
-        end        
-        local time_delta = now - animation.last_called        
-        animation.elapsed = animation.elapsed + time_delta
-        if animation.last_called + animation.step >= now then
-            animation.func(time_delta, animation)
-        end        
+        end                
+        animation.elapsed = animation.elapsed + tick_delta        
+        local time_delta = now - animation.last_called    
         if animation.elapsed >= animation.duration then
             if animation.on_finish ~= nil then
                 animation.on_finish(time_delta, animation)
             end
-            table.remove(moist_animation, idx)
-        else 
-            animation.last_called = now                      
-        end
+            table.remove(moist_animation, idx)                          
+        elseif time_delta >= animation.step then            
+            animation.func(time_delta, animation)
+            animation.last_called = now
+        end                
     end
+    last_tick = now
 end
 
 -- the purpo0se of the following quest is that each family has 5 really good people that got their
