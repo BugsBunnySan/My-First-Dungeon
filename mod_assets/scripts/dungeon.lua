@@ -2307,6 +2307,13 @@ itself helpless and sends condolences and recompense as can\
 be found to the families of the miners lost in this tragic\
 catastrophe.")
 spawn("sage_of_water",7,15,1,0,"sage_of_water")
+spawn("timer",1,27,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",5,11,0,1,"starting_location_1")
 
 --- level 4 ---
 
@@ -2322,6 +2329,7 @@ newMap{
 		"dungeon_floor_water",
 		"dungeon_wall",
 		"forest_underwater",
+		"mine_wall_grass",
 		"tomb_floor",
 	}
 }
@@ -2355,7 +2363,7 @@ loadLayer("floor_elevation", {
 	0,0,0,-1,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,-1,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,-1,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,-1,0,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,-1,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,-1,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,-1,0,0,0,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -2425,8 +2433,8 @@ loadLayer("tiles", {
 	4,4,4,4,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,
 	4,4,4,4,1,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,
 	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,1,4,4,4,4,4,4,4,4,
-	4,4,4,4,6,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,
-	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,7,3,3,3,3,1,3,3,3,3,3,3,3,3,3,3,3,3,1,1,6,4,4,4,4,4,4,4,
+	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,6,6,4,4,4,4,4,4,4,
 	4,4,4,4,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 	4,4,4,4,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 })
@@ -2993,13 +3001,6 @@ sylar_spawn_11.projectilecollider:disable()
 spawn("invisible_wall",19,27,2,0,"sylar_spawn_10")
 sylar_spawn_10.obstacle:disable()
 sylar_spawn_10.projectilecollider:disable()
-spawn("timer",5,22,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("starting_location",10,28,0,1,"starting_location_1")
 spawn("mine_bridge_01",4,30,3,0,"mine_bridge_01_7")
 spawn("pedestal",11,28,0,0,"pedestal_1")
 spawn("pedestal",11,28,2,0,"pedestal_2")
@@ -3017,25 +3018,36 @@ spawn("pedestal",20,28,0,0,"pedestal_18")
 spawn("pedestal",20,28,2,0,"pedestal_19")
 spawn("altar",15,28,2,0,"altar_2")
 spawn("altar",16,28,2,0,"altar_3")
-spawn("castle_wall_text",14,28,0,0,"castle_wall_text_5")
-castle_wall_text_5.walltext:setWallText("1 M.Col.Esq. 1    1\
-2 L.Col.Esq. 2    2\
-3 F. Libra.  3    3\
-4 Ara        4    4")
-spawn("castle_wall_text",11,28,0,0,"castle_wall_text_6")
-castle_wall_text_6.walltext:setWallText("")
-spawn("castle_wall_text",17,28,0,0,"castle_wall_text_7")
-castle_wall_text_7.walltext:setWallText("")
-spawn("castle_wall_text",20,28,0,0,"castle_wall_text_8")
-castle_wall_text_8.walltext:setWallText("")
-spawn("castle_wall_text",20,28,2,0,"castle_wall_text_9")
-castle_wall_text_9.walltext:setWallText("")
-spawn("castle_wall_text",17,28,2,0,"castle_wall_text_10")
-castle_wall_text_10.walltext:setWallText("")
-spawn("castle_wall_text",14,28,2,0,"castle_wall_text_11")
-castle_wall_text_11.walltext:setWallText("")
-spawn("castle_wall_text",11,28,2,0,"castle_wall_text_12")
-castle_wall_text_12.walltext:setWallText("")
+spawn("beach_wall_text",11,28,0,0,"beach_wall_text_1")
+beach_wall_text_1.walltext:setWallText("")
+spawn("beach_wall_text",14,28,0,0,"beach_wall_text_2")
+beach_wall_text_2.walltext:setWallText("")
+spawn("beach_wall_text",11,28,2,0,"beach_wall_text_3")
+beach_wall_text_3.walltext:setWallText("")
+spawn("beach_wall_text",14,28,2,0,"beach_wall_text_4")
+beach_wall_text_4.walltext:setWallText("")
+spawn("beach_wall_text",17,28,0,0,"beach_wall_text_5")
+beach_wall_text_5.walltext:setWallText("")
+spawn("beach_wall_text",17,28,2,0,"beach_wall_text_6")
+beach_wall_text_6.walltext:setWallText("")
+spawn("beach_wall_text",20,28,0,0,"beach_wall_text_7")
+beach_wall_text_7.walltext:setWallText("")
+spawn("beach_wall_text",20,28,2,0,"beach_wall_text_8")
+beach_wall_text_8.walltext:setWallText("")
+spawn("castle_bridge_grating",10,28,0,0,"castle_bridge_grating_10")
+spawn("castle_bridge_grating",11,28,0,0,"castle_bridge_grating_11")
+spawn("castle_bridge_grating",12,28,0,0,"castle_bridge_grating_12")
+spawn("castle_bridge_grating",13,28,0,0,"castle_bridge_grating_13")
+spawn("castle_bridge_grating",14,28,0,0,"castle_bridge_grating_14")
+spawn("castle_bridge_grating",15,28,0,0,"castle_bridge_grating_15")
+spawn("castle_bridge_grating",17,28,0,0,"castle_bridge_grating_16")
+spawn("castle_bridge_grating",16,28,0,0,"castle_bridge_grating_17")
+spawn("castle_bridge_grating",18,28,0,0,"castle_bridge_grating_18")
+spawn("castle_bridge_grating",19,28,0,0,"castle_bridge_grating_19")
+spawn("castle_bridge_grating",21,28,0,0,"castle_bridge_grating_20")
+spawn("castle_bridge_grating",20,28,0,0,"castle_bridge_grating_21")
+spawn("mine_ceiling_roots_01",22,28,1,0,"mine_ceiling_roots_01_3")
+spawn("dungeon_wall_height_difference",21,28,1,1,"dungeon_wall_height_difference_4")
 
 --- level 5 ---
 
@@ -4511,3 +4523,133 @@ spawn("barrel_crate_block_broken",12,26,3,1,"barrel_crate_block_broken_1")
 spawn("turtle",25,5,2,0,"turtle_2")
 spawn("script_entity",18,31,2,0,"init_dungeon")
 init_dungeon.script:loadFile("mod_assets/scripts/init_dungeon.lua")
+
+--- level 7 ---
+
+newMap{
+	name = "Forest",
+	width = 32,
+	height = 32,
+	levelCoord = {9,0,0},
+	ambientTrack = "forest",
+	tiles = {
+		"beach_ground",
+	}
+}
+
+loadLayer("floor_elevation", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+spawn("mine_support_wall_button",9,25,1,0,"mine_support_wall_button_2")
+spawn("mine_support_wall_button",9,25,2,0,"mine_support_wall_button_3")
+spawn("mine_support_wall_button",9,25,3,0,"mine_support_wall_button_4")
+spawn("script_entity",4,31,2,0,"forest_script_entity")
+forest_script_entity.script:loadFile("mod_assets/scripts/forest.lua")
+spawn("timer",5,31,1,0,"timer_6")
+timer_6.timer:setTimerInterval(0.01)
+timer_6.timer:setDisableSelf(false)
+timer_6.timer:setTriggerOnStart(false)
+timer_6.timer:setCurrentLevelOnly(true)
+timer_6.timer:addConnector("onActivate", "forest_script_entity", "keepTOD")
+timer_6.timer:addConnector("onActivate", "forest_script_entity", "forestAnimateTick")
+spawn("forest_heightmap",4,30,0,0,"forest_heightmap_5")
+spawn("forest_day_sky",3,30,1,0,"forest_day_sky_4")
+spawn("beach_lever",9,21,3,0,"beach_lever_1")
+beach_lever_1.lever:setDisableSelf(false)
+beach_lever_1.lever:addConnector("onActivate", "forest_script_entity", "goTilEvening")
+spawn("beach_lever",9,21,2,0,"beach_lever_2")
+beach_lever_2.lever:setDisableSelf(false)
+beach_lever_2.lever:addConnector("onActivate", "forest_script_entity", "goTilNoon")
+spawn("beach_lever",9,21,1,0,"beach_lever_3")
+beach_lever_3.lever:setDisableSelf(false)
+beach_lever_3.lever:addConnector("onActivate", "forest_script_entity", "goTilMorning")
+spawn("beach_lever",9,20,0,0,"beach_lever_4")
+beach_lever_4.lever:setDisableSelf(false)
+beach_lever_4.lever:addConnector("onActivate", "forest_script_entity", "goTilMidnight")
+spawn("forest_spruce_01",14,21,1,0,"forest_spruce_01_1")
+spawn("forest_oak",15,21,3,0,"forest_oak_1")
+spawn("pushable_block_floor",5,17,0,0,"pushable_block_floor_8")
+pushable_block_floor_8.model:disable()
+spawn("pushable_block_floor",4,17,3,0,"pushable_block_floor_9")
+pushable_block_floor_9.model:disable()
+spawn("pushable_block_floor",3,17,3,0,"pushable_block_floor_10")
+pushable_block_floor_10.model:disable()
+spawn("pushable_block",5,17,0,0,"pushable_block_7")
+spawn("mine_lever",6,18,3,0,"mine_lever_3")
+mine_lever_3.lever:setDisableSelf(false)
+mine_lever_3.lever:addConnector("onActivate", "pushable_block_floor_8", "activate")
+mine_lever_3.lever:addConnector("onActivate", "pushable_block_floor_9", "activate")
+mine_lever_3.lever:addConnector("onActivate", "pushable_block_floor_10", "activate")
+mine_lever_3.lever:addConnector("onDeactivate", "pushable_block_floor_8", "deactivate")
+mine_lever_3.lever:addConnector("onDeactivate", "pushable_block_floor_9", "deactivate")
+mine_lever_3.lever:addConnector("onDeactivate", "pushable_block_floor_10", "deactivate")
+mine_lever_3.lever:addConnector("onToggle", "magic_bridge_2", "toggle")
+spawn("magic_bridge",4,17,2,0,"magic_bridge_2")
+magic_bridge_2.controller:setInitialState("deactivate")

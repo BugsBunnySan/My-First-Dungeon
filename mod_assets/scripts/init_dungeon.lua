@@ -7,6 +7,7 @@ function initDungeon()
     initBeach()
     initBeginningDungeon()
     initFieldOfHerbs()
+    initForest()
 end
 
 function initParty()
@@ -98,4 +99,8 @@ function initFieldOfHerbs()
     herb_timer.timer:disable()
     herb_raiser_timer.timer:disable()
     --main_gate.door:setOpenVelocity(0.1)
+end
+
+function initForest()
+    forest_script_entity.script.time_of_day = GameMode.getTimeOfDay()
 end
