@@ -472,6 +472,19 @@ spawn("ladder_metal",19,20,0,-1,"ladder_metal_11")
 spawn("dungeon_secret_door",20,20,3,0,"dungeon_secret_door_2")
 spawn("dungeon_secret_door",19,21,0,0,"dungeon_secret_door_3")
 spawn("barrel_crate_block",22,24,0,0,"barrel_crate_block_2")
+spawn("chest",27,18,3,0,"chest_3")
+spawn("red_gem",27,18,3,0,"red_gem_16")
+chest_3.surface:addItem(red_gem_16.item)
+spawn("red_gem",27,18,3,0,"red_gem_17")
+chest_3.surface:addItem(red_gem_17.item)
+spawn("red_gem",27,18,3,0,"red_gem_18")
+chest_3.surface:addItem(red_gem_18.item)
+spawn("letter",27,18,3,0,"letter_1")
+letter_1.scrollitem:setScrollText("Steward ...\
+\
+With haste I remind you to stow these well, and send them off to XX0...")
+chest_3.surface:addItem(letter_1.item)
+spawn("chest",27,19,3,0,"chest_4")
 
 --- level 2 ---
 
@@ -2313,7 +2326,7 @@ timer_5.timer:setDisableSelf(true)
 timer_5.timer:setTriggerOnStart(false)
 timer_5.timer:setCurrentLevelOnly(false)
 timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("starting_location",5,11,0,1,"starting_location_1")
+spawn("starting_location",4,9,0,1,"starting_location_1")
 
 --- level 4 ---
 
@@ -2329,6 +2342,7 @@ newMap{
 		"dungeon_floor_water",
 		"dungeon_wall",
 		"forest_underwater",
+		"mine_floor",
 		"mine_wall_grass",
 		"tomb_floor",
 	}
@@ -2432,9 +2446,9 @@ loadLayer("tiles", {
 	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,
 	4,4,4,4,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,
 	4,4,4,4,1,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4,4,4,
-	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,1,4,4,4,4,4,4,4,4,
-	4,4,4,4,7,3,3,3,3,1,3,3,3,3,3,3,3,3,3,3,3,3,1,1,6,4,4,4,4,4,4,4,
-	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,6,6,4,4,4,4,4,4,4,
+	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,1,6,4,4,4,4,4,4,4,
+	4,4,4,4,8,3,3,3,3,1,3,3,3,3,3,3,3,3,3,3,3,3,1,1,7,4,4,4,4,4,4,4,
+	4,4,4,4,1,3,3,3,3,4,1,1,1,1,1,1,1,1,1,1,1,1,4,7,7,4,4,4,4,4,4,4,
 	4,4,4,4,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 	4,4,4,4,1,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 })
@@ -2558,7 +2572,7 @@ spawn("forest_bridge_pillar",7,28,3,-1,"forest_bridge_pillar_2")
 spawn("forest_bridge_pillar",7,29,1,-1,"forest_bridge_pillar_7")
 spawn("dungeon_wall_01",5,31,2,0,"dungeon_wall_01_101")
 spawn("dungeon_wall_01",5,31,2,1,"dungeon_wall_01_84")
-spawn("herder",8,26,3,0,"herder_1")
+spawn("herder",9,28,3,0,"herder_1")
 herder_1.brain:disable()
 spawn("catacomb_alcove_01",10,27,0,0,"catacomb_alcove_01_1")
 spawn("catacomb_alcove_01",12,27,0,0,"catacomb_alcove_01_2")
@@ -4637,6 +4651,7 @@ spawn("forest_spruce_01",14,21,1,0,"forest_spruce_01_1")
 spawn("forest_oak",15,21,3,0,"forest_oak_1")
 spawn("pushable_block_floor",5,17,0,0,"pushable_block_floor_8")
 pushable_block_floor_8.model:disable()
+pushable_block_floor_8.controller:setInitialState(true)
 spawn("pushable_block_floor",4,17,3,0,"pushable_block_floor_9")
 pushable_block_floor_9.model:disable()
 spawn("pushable_block_floor",3,17,3,0,"pushable_block_floor_10")
