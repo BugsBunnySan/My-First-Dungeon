@@ -18,3 +18,12 @@ defineSound{
     minDistance = 1,
     maxDistance = 3
 }
+
+defineSound{
+    name = "charge_up",
+    filename = "mod_assets/sounds/charge_up.wav",
+    loop = false,
+    volume = 1,
+    minDistance = 5,
+    maxDistance = 12
+}

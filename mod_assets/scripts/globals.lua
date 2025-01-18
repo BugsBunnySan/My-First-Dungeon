@@ -1,4 +1,56 @@
 
+-- global animation
+animations = {}
+
+function add_animation(level, animation)
+    hudPrint("add animation to animations for level "..tostring(level))
+    if animations[level] == nil then
+        animations[level] = {animation}
+    else
+        table.insert(animations[level], animation)
+    end
+end
+
+function get_animations(level)
+    return animations[level]
+end
+
+last_tick = -1
+
+function animateTick(level)
+    local animations = get_animations(level)
+    if animations == nil then
+        return
+    end
+    local now = Time.systemTime()
+    if last_tick == -1 then
+        last_tick = now
+    end
+    local tick_delta = now - last_tick
+    for idx, animation in ipairs(animations) do        
+        if animation.last_called == -1 or animation.last_called > now then
+            animation.last_called = now
+        end                
+        animation.elapsed = animation.elapsed + tick_delta        
+        local time_delta = now - animation.last_called    
+        if animation.elapsed >= animation.duration then
+            if animation.on_finish ~= nil then
+                animation.on_finish(time_delta, animation)
+            end
+            table.remove(animations, idx)                          
+        elseif time_delta >= animation.step then            
+            animation.func(time_delta, animation)
+            animation.last_called = now
+        end                
+    end
+    last_tick = now
+end
+
+function globaAnimationTick(timer)
+    animateTick(0)
+    animateTick(timer.go.level)
+end
+
 -- Beginning Dungeon
 rubble_pedestals = {["rubble_pedestal_2"] = {["rubble"] = {"rubble_2"},
                                             ["kin"] = {"rubble_pedestal_1"},

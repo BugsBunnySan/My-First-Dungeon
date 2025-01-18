@@ -1,5 +1,5 @@
 function initDungeon()    
-    GameMode.setTimeOfDay(0.5)
+    GameMode.setTimeOfDay(1.5)
     initParty()
     initCastleOfWater()
     initMoistCatacombs()
@@ -77,6 +77,7 @@ function initCloister()
 end
 
 function initBeach()
+    hudPrint(tostring(pushable_block_floor_12.light:getBrightness()))
 end
 
 function initBeginningDungeon()

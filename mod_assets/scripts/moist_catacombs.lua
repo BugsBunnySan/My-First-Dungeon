@@ -1,9 +1,3 @@
-moist_animation = {}
-
-function moist_add_animation(animation)    
-    table.insert(moist_animation, animation)
-end
-
 function startMoveLadder(ladder, lever, stop, delta_vec, delta_x, checkLadderStop)
     local animation = {func=moveLadder, on_finish=finishMoveLadder, step=0.005, duration=2, elapsed=0, last_called=-1, ladder=ladder.id, lever=lever.id, stop=stop.id}    
     local start_pos = ladder:getWorldPosition()
@@ -23,7 +17,8 @@ function startMoveLadder(ladder, lever, stop, delta_vec, delta_x, checkLadderSto
     lever.clickable:disable()
     ladder.clickable:disable()
     ladder.ladder:disable()
-    moist_add_animation(animation)
+    --moist_add_animation(animation)
+    global_scripts.script.add_animation(ladder.level, animation)
     global_scripts.script.playSoundAtObject("gate_iron_open", ladder)
 end
 
@@ -73,33 +68,6 @@ function finishMoveLadder(time_delta, animation)
     ladder.clickable:enable()
     ladder.ladder:enable()
     global_scripts.script.playSoundAtObject("pressure_plate_pressed", ladder)    
-end
-
-last_tick = -1
-
-function moistAnimateTick()
-    local now = Time.systemTime()
-    if last_tick == -1 then
-        last_tick = now
-    end
-    local tick_delta = now - last_tick    
-    for idx, animation in ipairs(moist_animation) do        
-        if animation.last_called == -1 or animation.last_called > now then
-            animation.last_called = now
-        end                
-        animation.elapsed = animation.elapsed + tick_delta        
-        local time_delta = now - animation.last_called    
-        if animation.elapsed >= animation.duration then
-            if animation.on_finish ~= nil then
-                animation.on_finish(time_delta, animation)
-            end
-            table.remove(moist_animation, idx)                          
-        elseif time_delta >= animation.step then            
-            animation.func(time_delta, animation)
-            animation.last_called = now
-        end                
-    end
-    last_tick = now
 end
 
 -- the purpo0se of the following quest is that each family has 5 really good people that got their
