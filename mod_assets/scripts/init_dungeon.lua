@@ -1,5 +1,5 @@
 function initDungeon()    
-    GameMode.setTimeOfDay(1.5)
+    GameMode.setTimeOfDay(0.5)
     initParty()
     initCastleOfWater()
     initMoistCatacombs()
@@ -7,6 +7,7 @@ function initDungeon()
     initBeach()
     initBeginningDungeon()
     initFieldOfHerbs()
+    initTrialsRobin()
     initForest()
 end
 
@@ -100,6 +101,9 @@ function initFieldOfHerbs()
     herb_timer.timer:disable()
     herb_raiser_timer.timer:disable()
     --main_gate.door:setOpenVelocity(0.1)
+end
+
+function initTrialsRobin()
 end
 
 function initForest()
