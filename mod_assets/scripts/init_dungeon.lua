@@ -1,5 +1,5 @@
 function initDungeon()    
-    GameMode.setTimeOfDay(0.5)
+    GameMode.setTimeOfDay(1.5)
     initParty()
     initCastleOfWater()
     initMoistCatacombs()

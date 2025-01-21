@@ -4590,9 +4590,46 @@ newMap{
 	ambientTrack = "forest",
 	tiles = {
 		"beach_ground_stones",
+		"forest_ground",
+		"forest_underwater",
 		"swamp_ground",
 	}
 }
+
+loadLayer("floor_elevation", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
 
 loadLayer("ceiling_elevation", {
 	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
@@ -4650,21 +4687,21 @@ loadLayer("tiles", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 })
 
-spawn("starting_location",16,27,2,1,"starting_location_1")
+spawn("starting_location",14,24,0,1,"starting_location_1")
 spawn("timer",1,27,1,0,"timer_5")
 timer_5.timer:setTimerInterval(0)
 timer_5.timer:setDisableSelf(true)
@@ -4678,7 +4715,7 @@ trials_robin_timer.timer:setTimerInterval(0.01)
 trials_robin_timer.timer:setDisableSelf(false)
 trials_robin_timer.timer:setTriggerOnStart(false)
 trials_robin_timer.timer:setCurrentLevelOnly(true)
-trials_robin_timer.timer:addConnector("onActivate", "global_scripts", "animateTick")
+trials_robin_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 spawn("forest_heightmap",0,30,2,0,"forest_heightmap_6")
 spawn("forest_day_sky",1,30,2,0,"forest_day_sky_5")
 spawn("castle_wall_grating_ornament",13,30,1,-1,"castle_wall_grating_ornament_71")
@@ -4761,11 +4798,6 @@ castle_wall_grating_ornament_81.door:disable()
 spawn("castle_wall_grating",19,25,2,0,"castle_wall_grating_49")
 castle_wall_grating_49.model:disable()
 castle_wall_grating_49.frame:disable()
-spawn("castle_wall_grating_ornament",18,25,2,-1,"castle_wall_grating_ornament_82")
-castle_wall_grating_ornament_82.door:disable()
-spawn("castle_wall_grating",18,25,2,0,"castle_wall_grating_50")
-castle_wall_grating_50.model:disable()
-castle_wall_grating_50.frame:disable()
 spawn("castle_pillar_01",19,26,3,-1,"castle_pillar_01_209")
 spawn("castle_wall_grating_ornament",21,26,3,-1,"castle_wall_grating_ornament_83")
 castle_wall_grating_ornament_83.door:disable()
@@ -4787,11 +4819,6 @@ spawn("castle_wall_grating",21,27,3,0,"castle_wall_grating_53")
 castle_wall_grating_53.model:disable()
 castle_wall_grating_53.frame:disable()
 spawn("castle_pillar_01",21,28,3,-1,"castle_pillar_01_214")
-spawn("castle_wall_grating_ornament",21,28,3,-1,"castle_wall_grating_ornament_86")
-castle_wall_grating_ornament_86.door:disable()
-spawn("castle_wall_grating",21,28,3,0,"castle_wall_grating_54")
-castle_wall_grating_54.model:disable()
-castle_wall_grating_54.frame:disable()
 spawn("castle_wall_text",13,29,1,0,"castle_wall_text_5")
 castle_wall_text_5.walltext:setWallText("The rials of\
 Sir Robin De Vere")
@@ -4983,6 +5010,140 @@ leader. ")
 spawn("castle_wall_cloth_torn",17,29,0,0,"castle_wall_cloth_torn_1")
 spawn("castle_wall_cloth_torn",16,29,0,0,"castle_wall_cloth_torn_2")
 spawn("castle_wall_cloth_torn",16,29,3,0,"castle_wall_cloth_torn_3")
+spawn("rat_shank",9,28,3,0,"rat_shank_1")
+spawn("rat_shank",9,28,0,0,"rat_shank_2")
+spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_6")
+spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_7")
+spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_8")
+spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_9")
+spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_10")
+spawn("rat_shank",17,29,2,0,"rat_shank_3")
+spawn("rat_shank",17,29,2,0,"rat_shank_4")
+spawn("pushable_block_floor",12,26,0,0,"pushblock_floor_r1")
+pushblock_floor_r1.model:disable()
+spawn("pushable_block_floor",12,25,0,0,"pushblock_floor_r2")
+pushblock_floor_r2.model:disable()
+spawn("spiked_club",17,29,2,0,"spiked_club_1")
+spawn("pushable_block_floor",12,24,0,0,"pushblock_floor_r3")
+pushblock_floor_r3.model:disable()
+spawn("pushable_block_floor",12,23,1,0,"pushblock_floor_r4")
+pushblock_floor_r4.model:disable()
+spawn("pushable_block_floor",13,23,1,0,"pushblock_floor_r5")
+pushblock_floor_r5.model:disable()
+spawn("pushable_block_floor",14,23,1,0,"pushblock_floor_r6")
+pushblock_floor_r6.model:disable()
+spawn("pushable_block_floor_trigger",12,25,0,0,"pushblock_floor_trigger_r1")
+pushblock_floor_trigger_r1.model:disable()
+pushblock_floor_trigger_r1.floortrigger:setTriggeredByParty(false)
+pushblock_floor_trigger_r1.floortrigger:setTriggeredByMonster(false)
+pushblock_floor_trigger_r1.floortrigger:setTriggeredByItem(false)
+pushblock_floor_trigger_r1.floortrigger:setTriggeredByDigging(false)
+pushblock_floor_trigger_r1.floortrigger:setDisableSelf(false)
+pushblock_floor_trigger_r1.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "liteUpPushblockFloorAnimation")
+spawn("pushable_block_floor_trigger",12,24,0,0,"pushblock_floor_trigger_r2")
+pushblock_floor_trigger_r2.model:disable()
+pushblock_floor_trigger_r2.floortrigger:setTriggeredByParty(false)
+pushblock_floor_trigger_r2.floortrigger:setTriggeredByMonster(false)
+pushblock_floor_trigger_r2.floortrigger:setTriggeredByItem(false)
+pushblock_floor_trigger_r2.floortrigger:setTriggeredByDigging(false)
+pushblock_floor_trigger_r2.floortrigger:setDisableSelf(false)
+pushblock_floor_trigger_r2.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "liteUpPushblockFloorAnimation")
+spawn("pushable_block_floor_trigger",12,23,1,0,"pushblock_floor_trigger_r3")
+pushblock_floor_trigger_r3.model:disable()
+pushblock_floor_trigger_r3.floortrigger:setTriggeredByParty(false)
+pushblock_floor_trigger_r3.floortrigger:setTriggeredByMonster(false)
+pushblock_floor_trigger_r3.floortrigger:setTriggeredByItem(false)
+pushblock_floor_trigger_r3.floortrigger:setTriggeredByDigging(false)
+pushblock_floor_trigger_r3.floortrigger:setDisableSelf(false)
+pushblock_floor_trigger_r3.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "liteUpPushblockFloorAnimation")
+spawn("pushable_block_floor_trigger",13,23,1,0,"pushblock_floor_trigger_r4")
+pushblock_floor_trigger_r4.model:disable()
+pushblock_floor_trigger_r4.floortrigger:setTriggeredByParty(false)
+pushblock_floor_trigger_r4.floortrigger:setTriggeredByMonster(false)
+pushblock_floor_trigger_r4.floortrigger:setTriggeredByItem(false)
+pushblock_floor_trigger_r4.floortrigger:setTriggeredByDigging(false)
+pushblock_floor_trigger_r4.floortrigger:setDisableSelf(false)
+pushblock_floor_trigger_r4.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "liteUpPushblockFloorAnimation")
+spawn("pushable_block_floor_trigger",14,23,1,0,"pushblock_floor_trigger_r5")
+pushblock_floor_trigger_r5.model:disable()
+pushblock_floor_trigger_r5.floortrigger:setTriggeredByParty(false)
+pushblock_floor_trigger_r5.floortrigger:setTriggeredByMonster(false)
+pushblock_floor_trigger_r5.floortrigger:setTriggeredByItem(false)
+pushblock_floor_trigger_r5.floortrigger:setTriggeredByDigging(false)
+pushblock_floor_trigger_r5.floortrigger:setDisableSelf(false)
+pushblock_floor_trigger_r5.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "robinAtTheBridge")
+spawn("castle_bridge",18,27,2,0,"castle_bridge_131")
+spawn("water_surface",0,29,2,0,"water_surface_2")
+spawn("castle_wall_grating",15,25,2,-1,"castle_wall_grating_55")
+castle_wall_grating_55.model:disable()
+castle_wall_grating_55.frame:disable()
+spawn("castle_wall_grating",21,27,3,-1,"castle_wall_grating_56")
+castle_wall_grating_56.model:disable()
+castle_wall_grating_56.frame:disable()
+spawn("ladder_metal",19,27,2,-1,"ladder_metal_12")
+spawn("forest_plant_cluster_01",17,26,2,0,"forest_plant_cluster_01_9")
+forest_plant_cluster_01_9.obstacle:disable()
+forest_plant_cluster_01_9.projectilecollider:disable()
+spawn("forest_plant_cluster_01",18,26,2,0,"forest_plant_cluster_01_10")
+forest_plant_cluster_01_10.obstacle:disable()
+forest_plant_cluster_01_10.projectilecollider:disable()
+spawn("forest_plant_cluster_01",19,26,3,0,"forest_plant_cluster_01_11")
+forest_plant_cluster_01_11.obstacle:disable()
+forest_plant_cluster_01_11.projectilecollider:disable()
+spawn("forest_plant_cluster_01",20,26,1,0,"forest_plant_cluster_01_12")
+forest_plant_cluster_01_12.obstacle:disable()
+forest_plant_cluster_01_12.projectilecollider:disable()
+spawn("forest_ruins_arch",18,26,0,0,"forest_ruins_arch_7")
+spawn("forest_ruins_arch",21,28,3,0,"forest_ruins_arch_8")
+spawn("pushable_block_floor",10,27,0,0,"pushblock_floor_rs1")
+pushblock_floor_rs1.model:disable()
+spawn("pushable_block_floor",12,27,0,0,"pushblock_floor_rs3")
+pushblock_floor_rs3.model:disable()
+spawn("pushable_block_floor",11,27,0,0,"pushblock_floor_rs2")
+pushblock_floor_rs2.model:disable()
+spawn("castle_wall_text_long",16,30,3,0,"castle_wall_text_long_4")
+castle_wall_text_long_4.walltext:setWallText("Having defeated the bandits,\
+Robin had a choice, return home,\
+or set out into the world.")
+spawn("pushable_block_floor_trigger",10,27,3,0,"pushable_block_floor_trigger_5")
+pushable_block_floor_trigger_5.model:disable()
+pushable_block_floor_trigger_5.floortrigger:setTriggeredByParty(false)
+pushable_block_floor_trigger_5.floortrigger:setTriggeredByMonster(false)
+pushable_block_floor_trigger_5.floortrigger:setTriggeredByItem(false)
+pushable_block_floor_trigger_5.floortrigger:setTriggeredByDigging(false)
+pushable_block_floor_trigger_5.floortrigger:setDisableSelf(false)
+pushable_block_floor_trigger_5.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "wrongMove")
+spawn("pushblock_robin",12,26,0,0,"pushblock_robin")
+spawn("invisible_wall",12,26,0,0,"robin_start")
+robin_start.obstacle:disable()
+robin_start.projectilecollider:disable()
+spawn("invisible_wall",15,23,2,-1,"robin_first_bridge")
+robin_first_bridge.obstacle:disable()
+robin_first_bridge.projectilecollider:disable()
+spawn("castle_wall_text_long",16,30,2,0,"castle_wall_text_long_5")
+castle_wall_text_long_5.walltext:setWallText("Robin came upon a river,\
+he slew the stone monster\
+and used its bones to build\
+a bridge.")
+spawn("invisible_wall",13,21,3,0,"robin_magma_golem_spawn")
+robin_magma_golem_spawn.obstacle:disable()
+robin_magma_golem_spawn.projectilecollider:disable()
+spawn("pedestal",14,24,1,0,"pedestal_4")
+pedestal_4.surface:addConnector("onInsertItem", "triels_robin_script_entitiy", "onBridgePedestalInsertItem")
+pedestal_4.door:disable()
+spawn("boulder",14,24,0,0,"boulder_1")
+spawn("pushable_block_floor",15,23,1,0,"pushblock_floor_r7")
+pushblock_floor_r7.model:disable()
+spawn("pushable_block_floor_trigger",15,23,1,0,"pushblock_floor_trigger_r6")
+pushblock_floor_trigger_r6.model:disable()
+pushblock_floor_trigger_r6.floortrigger:setTriggeredByParty(false)
+pushblock_floor_trigger_r6.floortrigger:setTriggeredByMonster(false)
+pushblock_floor_trigger_r6.floortrigger:setTriggeredByItem(false)
+pushblock_floor_trigger_r6.floortrigger:setTriggeredByDigging(false)
+pushblock_floor_trigger_r6.floortrigger:setDisableSelf(false)
+pushblock_floor_trigger_r6.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "liteUpPushblockFloorAnimation")
+spawn("pushable_block_floor",16,23,1,0,"pushblock_floor_r8")
+pushblock_floor_r8.model:disable()
 
 --- level 9 ---
 

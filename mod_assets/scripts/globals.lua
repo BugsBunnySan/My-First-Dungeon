@@ -66,9 +66,7 @@ function clearRubble(pedestal, item)
     if item ~= nil and item.go.name ~= "pickaxe" then
         return
     end
-    if pedestal.go ~= nil then
-        pedestal = pedestal.go
-    end
+    pedestal = getGO(pedestal)
     for _, rubble_n in ipairs(rubble_pedestals[pedestal.id]["rubble"]) do
         local rubble = findEntity(rubble_n)
         playSound("mining")
@@ -127,6 +125,15 @@ function party_gain_health(champions, amount)
     end
 end
 
+function party_take_damage(champions, amount, damage_type)
+    for _, i in ipairs(champions) do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            champion:damage(amount, damage_type)
+        end
+    end
+end
+
 function party_wears_item(champions, item_slot, item_class)    
     local wearing_champions = {count = 0}
     for _, i in ipairs(champions) do
@@ -156,10 +163,15 @@ function party_conditions(champions, add_conditions, remove_conditions)
     end
 end
 
+function moveObjectToObject(object, target)
+    object = getGO(object)
+    target = getGO(target)
+    hudPrint("moving "..object.id.."("..tostring(object.x)..") to where "..target.id.."( "..tostring(target.x)..") is ")
+    object:setPosition(target.x, target.y, target.facing, target.elevation, target.level)
+end
+
 function spawnAtObject(projectile, ref_object, facing, offset_x, offset_y, offset_elevation)
-    if ref_object.go ~= nil then
-        ref_object = ref_object.go
-    end
+    ref_object = getGO(ref_object)
     if facing == nil then
         facing = ref_object.facing
     end
@@ -175,13 +187,11 @@ function spawnAtObject(projectile, ref_object, facing, offset_x, offset_y, offse
     if offset_elevation ~= nil then
         elevation = elevation + offset_elevation
     end
-    spawn(projectile, ref_object.level, x, y, facing, elevation)
+    return spawn(projectile, ref_object.level, x, y, facing, elevation)
 end
 
 function playSoundAtObject(sound, ref_object)
-     if ref_object.go ~= nil then
-        ref_object = ref_object.go
-    end
+    ref_object = getGO(ref_object)
     playSoundAt(sound, ref_object.level, ref_object.x, ref_object.y)
 end
 
