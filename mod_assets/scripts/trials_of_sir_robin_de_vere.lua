@@ -26,7 +26,7 @@ function start_lite_up_pushblock_floor(pushblock_floor_id)
     local pushblock_floor = findEntity(pushblock_floor_id)
     pushblock_floor.light:setBrightness(0)
     pushblock_floor.light:enable()
-    local animation = {func=lite_up_pushblock_floor, on_finish=finish_lite_up_pushblock_floor, step=0.05, duration=2, elapsed=0, last_called=-1, pushblock_floor_id=pushblock_floor.id, light_level=35}
+    local animation = {func=lite_up_pushblock_floor, on_finish=finish_lite_up_pushblock_floor, step=0.05, duration=1, elapsed=0, last_called=-1, pushblock_floor_id=pushblock_floor.id, light_level=35}
     global_scripts.script.add_animation(pushblock_floor.level, animation)
     global_scripts.script.playSoundAtObject("charge_up", pushblock_floor)
 end
@@ -46,9 +46,8 @@ function liteUpPushblockFloorAnimation(trigger)
 end
 
 function finish_raise_bridge(time_delta, animation)
-    local bridge = findEntity(animation.bridge_id)
-    local w_pos  = vec(animation.stop_pos.x, animation.stop_pos.y, animation.stop_pos.z)
-    bridge:setWorldPosition(w_pos)
+    local bridge = findEntity(animation.bridge_id)    
+    bridge:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
     start_lite_up_pushblock_floor(animation.pushblock_floor_id)
 end
 
@@ -63,19 +62,23 @@ end
 
 function onBridgePedestalInsertItem(pedestal, item)
     hudPrint(item.go.name)
-    if item.go.name == "boulder" then
+    if item.go.name == "meteorite" then
         local bridge = global_scripts.script.spawnAtObject("castle_bridge", robin_first_bridge)
         local bridge_w_pos = bridge:getWorldPosition()
         local start_pos = {x=bridge_w_pos.x, y=bridge_w_pos.y, z=bridge_w_pos.z}
         local stop_pos  = {x=bridge_w_pos.x, y=bridge_w_pos.y+3, z=bridge_w_pos.z}
-        local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=bridge.id, pushblock_floor_id="pushblock_floor_r7"}
+        local on_finish_pos = {x=bridge.x, y=bridge.y, facing=bridge.facing, elevation=bridge.elevation+1, level=bridge.level}
+        local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=bridge.id, on_finish_pos=on_finish_pos, pushblock_floor_id="pushblock_floor_r7"}
         global_scripts.script.add_animation(pedestal.go.level, animation)
         global_scripts.script.playSoundAtObject("gate_iron_open", bridge)
+
     end
 end
 
 function robinAtTheBridge()
-    --global_scripts.script.spawnAtObject("magma_golem", robin_magma_golem_spawn)
+    local magma_golem = global_scripts.script.spawnAtObject("magma_golem", robin_magma_golem_spawn)
+    local meteorite = spawn("meteorite").item
+    magma_golem.monster:addItem(meteorite)
 end
 
 function wrongMove()

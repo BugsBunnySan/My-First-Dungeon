@@ -538,6 +538,15 @@ letter_1.scrollitem:setScrollText("Steward ...\
 With haste I remind you to stow these well, and send them off to XX0...")
 chest_3.surface:addItem(letter_1.item)
 spawn("chest",27,19,3,0,"chest_4")
+spawn("starting_location",14,24,3,1,"starting_location_1")
+spawn("timer",1,27,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("brass_key",14,22,3,0,"brass_key_2")
+spawn("gear_key",14,22,3,0,"gear_key_2")
 
 --- level 3 ---
 
@@ -4591,6 +4600,7 @@ newMap{
 	tiles = {
 		"beach_ground_stones",
 		"forest_ground",
+		"forest_trees",
 		"forest_underwater",
 		"swamp_ground",
 	}
@@ -4615,8 +4625,8 @@ loadLayer("floor_elevation", {
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -4624,7 +4634,7 @@ loadLayer("floor_elevation", {
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -4685,29 +4695,22 @@ loadLayer("tiles", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,3,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,3,3,3,3,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,3,3,3,3,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1,1,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,1,3,1,3,1,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,4,1,1,1,3,1,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,4,3,3,1,3,1,3,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,4,1,1,1,3,1,1,1,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,4,4,2,2,2,2,1,3,3,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,1,4,4,4,4,4,4,4,4,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 })
 
-spawn("starting_location",14,24,0,1,"starting_location_1")
-spawn("timer",1,27,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("script_entity",0,31,2,0,"triels_robin_script_entitiy")
 triels_robin_script_entitiy.script:loadFile("mod_assets/scripts/trials_of_sir_robin_de_vere.lua")
 spawn("timer",1,31,1,0,"trials_robin_timer")
@@ -4870,28 +4873,28 @@ spawn("blooddrop_cap",7,28,2,0,"blooddrop_cap_3")
 spawn("blooddrop_cap",8,26,2,0,"blooddrop_cap_4")
 spawn("blooddrop_cap",8,30,2,0,"blooddrop_cap_5")
 spawn("castle_secret_door",17,28,2,0,"castle_secret_door_2")
-spawn("cemetery_wall_01",17,23,2,1,"cemetery_wall_01_1")
+spawn("cemetery_wall_01",2,23,2,1,"cemetery_wall_01_1")
 cemetery_wall_01_1.door:disable()
-spawn("ceiling_witch_lantern",18,22,3,0,"ceiling_witch_lantern_4")
-spawn("castle_bridge",16,22,1,2,"castle_bridge_123")
+spawn("ceiling_witch_lantern",3,22,3,0,"ceiling_witch_lantern_4")
+spawn("castle_bridge",1,22,1,2,"castle_bridge_123")
 castle_bridge_123.platform:disable()
-spawn("castle_bridge",16,23,1,2,"castle_bridge_121")
+spawn("castle_bridge",1,23,1,2,"castle_bridge_121")
 castle_bridge_121.platform:disable()
-spawn("castle_bridge",17,22,1,2,"castle_bridge_122")
+spawn("castle_bridge",2,22,1,2,"castle_bridge_122")
 castle_bridge_122.platform:disable()
-spawn("castle_bridge",17,23,1,2,"castle_bridge_124")
+spawn("castle_bridge",2,23,1,2,"castle_bridge_124")
 castle_bridge_124.platform:disable()
-spawn("castle_bridge",18,22,1,2,"castle_bridge_125")
+spawn("castle_bridge",3,22,1,2,"castle_bridge_125")
 castle_bridge_125.platform:disable()
-spawn("castle_bridge",18,23,1,2,"castle_bridge_126")
+spawn("castle_bridge",3,23,1,2,"castle_bridge_126")
 castle_bridge_126.platform:disable()
-spawn("castle_bridge",19,22,1,2,"castle_bridge_127")
+spawn("castle_bridge",4,22,1,2,"castle_bridge_127")
 castle_bridge_127.platform:disable()
-spawn("castle_bridge",19,23,1,2,"castle_bridge_128")
+spawn("castle_bridge",4,23,1,2,"castle_bridge_128")
 castle_bridge_128.platform:disable()
-spawn("castle_bridge",20,22,1,2,"castle_bridge_129")
+spawn("castle_bridge",5,22,1,2,"castle_bridge_129")
 castle_bridge_129.platform:disable()
-spawn("castle_bridge",20,23,1,2,"castle_bridge_130")
+spawn("castle_bridge",5,23,1,2,"castle_bridge_130")
 castle_bridge_130.platform:disable()
 spawn("catacomb_pillar_lantern_01",21,29,2,0,"catacomb_pillar_lantern_01_1")
 spawn("catacomb_pillar_lantern_01",21,31,3,0,"catacomb_pillar_lantern_01_2")
@@ -4955,7 +4958,7 @@ spawn("castle_pillar_light",21,31,0,0,"castle_pillar_light_14")
 castle_pillar_light_14.model:disable()
 castle_pillar_light_14.particle:disable()
 spawn("cemetery_wall_01",17,29,0,1,"cemetery_wall_01_14")
-spawn("forest_ruins_secret_door",17,25,0,0,"forest_ruins_secret_door_4")
+spawn("forest_ruins_secret_door",2,25,0,0,"forest_ruins_secret_door_4")
 spawn("castle_secret_door",19,28,2,0,"castle_secret_door_1")
 spawn("cemetery_wall_01",19,29,0,1,"cemetery_wall_01_2")
 spawn("forest_ruins_secret_door",19,29,0,0,"forest_ruins_secret_door_5")
@@ -5131,7 +5134,6 @@ robin_magma_golem_spawn.projectilecollider:disable()
 spawn("pedestal",14,24,1,0,"pedestal_4")
 pedestal_4.surface:addConnector("onInsertItem", "triels_robin_script_entitiy", "onBridgePedestalInsertItem")
 pedestal_4.door:disable()
-spawn("boulder",14,24,0,0,"boulder_1")
 spawn("pushable_block_floor",15,23,1,0,"pushblock_floor_r7")
 pushblock_floor_r7.model:disable()
 spawn("pushable_block_floor_trigger",15,23,1,0,"pushblock_floor_trigger_r6")
@@ -5144,6 +5146,58 @@ pushblock_floor_trigger_r6.floortrigger:setDisableSelf(false)
 pushblock_floor_trigger_r6.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "liteUpPushblockFloorAnimation")
 spawn("pushable_block_floor",16,23,1,0,"pushblock_floor_r8")
 pushblock_floor_r8.model:disable()
+spawn("meteorite",14,24,0,0,"meteorite_1")
+spawn("castle_wall_text_long",17,30,2,0,"castle_wall_text_long_6")
+castle_wall_text_long_6.walltext:setWallText("Having crossed the river\
+Robin rid the forst of evil\
+of the sandwargs")
+spawn("pushable_block_floor",17,23,1,0,"pushable_block_floor_17")
+pushable_block_floor_17.model:disable()
+spawn("pushable_block_floor",18,23,1,0,"pushable_block_floor_18")
+pushable_block_floor_18.model:disable()
+spawn("pushable_block_floor",18,22,1,0,"pushable_block_floor_19")
+pushable_block_floor_19.model:disable()
+spawn("pushable_block_floor",18,21,1,0,"pushable_block_floor_20")
+pushable_block_floor_20.model:disable()
+spawn("pushable_block_floor",19,21,1,0,"pushable_block_floor_21")
+pushable_block_floor_21.model:disable()
+spawn("pushable_block_floor",20,21,1,0,"pushable_block_floor_22")
+pushable_block_floor_22.model:disable()
+spawn("pushable_block_floor",20,22,1,0,"pushable_block_floor_23")
+pushable_block_floor_23.model:disable()
+spawn("pushable_block_floor",20,23,1,0,"pushable_block_floor_24")
+pushable_block_floor_24.model:disable()
+spawn("pushable_block_floor",20,24,1,0,"pushable_block_floor_25")
+pushable_block_floor_25.model:disable()
+spawn("pushable_block_floor",20,25,1,0,"pushable_block_floor_26")
+pushable_block_floor_26.model:disable()
+spawn("pushable_block_floor",21,25,1,0,"pushable_block_floor_27")
+pushable_block_floor_27.model:disable()
+spawn("pushable_block_floor",22,25,1,0,"pushable_block_floor_28")
+pushable_block_floor_28.model:disable()
+spawn("pushable_block_floor",22,24,1,0,"pushable_block_floor_29")
+pushable_block_floor_29.model:disable()
+spawn("pushable_block_floor",22,23,1,0,"pushable_block_floor_30")
+pushable_block_floor_30.model:disable()
+spawn("pushable_block_floor",22,22,1,0,"pushable_block_floor_31")
+pushable_block_floor_31.model:disable()
+spawn("pushable_block_floor",22,21,1,0,"pushable_block_floor_32")
+pushable_block_floor_32.model:disable()
+spawn("pushable_block_floor",22,20,1,0,"pushable_block_floor_33")
+pushable_block_floor_33.model:disable()
+spawn("pushable_block_floor",22,19,1,0,"pushable_block_floor_34")
+pushable_block_floor_34.model:disable()
+spawn("pushable_block_floor",22,18,1,0,"pushable_block_floor_35")
+pushable_block_floor_35.model:disable()
+spawn("pushable_block_floor",22,17,1,0,"pushable_block_floor_36")
+pushable_block_floor_36.model:disable()
+spawn("pushable_block_floor_trigger",18,23,1,0,"pushable_block_floor_trigger_6")
+pushable_block_floor_trigger_6.model:disable()
+pushable_block_floor_trigger_6.floortrigger:setTriggeredByParty(false)
+pushable_block_floor_trigger_6.floortrigger:setTriggeredByMonster(false)
+pushable_block_floor_trigger_6.floortrigger:setTriggeredByItem(false)
+pushable_block_floor_trigger_6.floortrigger:setTriggeredByDigging(false)
+pushable_block_floor_trigger_6.floortrigger:setDisableSelf(false)
 
 --- level 9 ---
 
