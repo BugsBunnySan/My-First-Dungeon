@@ -7,6 +7,8 @@ function add_animation(level, animation)
     if animations[level] == nil then
         animations[level] = {animation}
     else
+        animation.elapsed = 0
+        animation.last_called = -1
         table.insert(animations[level], animation)
     end
 end
@@ -38,9 +40,11 @@ function animateTick(level)
                 animation.on_finish(time_delta, animation)
             end
             table.remove(animations, idx)                          
-        elseif time_delta >= animation.step then            
-            animation.func(time_delta, animation)
-            animation.last_called = now
+        elseif time_delta >= animation.step then
+            if animation.func ~= nil then
+                animation.func(time_delta, animation)
+                animation.last_called = now
+            end
         end                
     end
     last_tick = now
@@ -164,8 +168,8 @@ function party_conditions(champions, add_conditions, remove_conditions)
 end
 
 function moveObjectToObject(object, target)
-    object = getGO(object)
-    target = getGO(target)
+    --local object = getGO(object)
+    --local target = getGO(target)
     hudPrint("moving "..object.id.."("..tostring(object.x)..") to where "..target.id.."( "..tostring(target.x)..") is ")
     object:setPosition(target.x, target.y, target.facing, target.elevation, target.level)
 end

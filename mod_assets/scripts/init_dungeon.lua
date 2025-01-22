@@ -73,7 +73,7 @@ end
 
 function initCloister()    
     local essence_of_air = spawn("essence_air").item
-    beacon_air.socket:addItem(essence_of_air)
+    beacon_air.socket:addItem(essence_of_air)    
     timer_4.timer:start()
 end
 
@@ -104,6 +104,8 @@ function initFieldOfHerbs()
 end
 
 function initTrialsRobin()
+    --trials_robin_forest_sky.sky:setFogRange({1,2})    
+    --trials_robin_forest_sky.sky:setFogMode("dense")
 end
 
 function initForest()

@@ -1,8 +1,7 @@
-pushblock_floors = {["start"] = {"pushblock_floor_r1", "pushblock_floor_r2", "pushblock_floor_rs1", "pushblock_floor_rs2", "pushblock_floor_rs3", "pushblock_floor_trigger_r5"},
+pushblock_floors = {["start"] = {"pushblock_floor_r1", "pushblock_floor_r2", "pushblock_floor_rs1", "pushblock_floor_rs2", "pushblock_floor_rs3", "pushblock_floor_trigger_rs4", "pushblock_floor_trigger_r5", "pushblock_floor_trigger_r0"},
                     ["pushblock_floor_trigger_r1"] = {"pushblock_floor_r3"},
                     ["pushblock_floor_trigger_r2"] = {"pushblock_floor_r4"},
-                    ["pushblock_floor_trigger_r3"] = {"pushblock_floor_r5"},
-                    ["pushblock_floor_trigger_r4"] = {"pushblock_floor_r6"},
+                    ["pushblock_floor_trigger_r3"] = {"pushblock_floor_r5"},                    
                     ["pushblock_floor_trigger_r6"] = {"pushblock_floor_r8"},
 }
 
@@ -75,19 +74,62 @@ function onBridgePedestalInsertItem(pedestal, item)
     end
 end
 
-function robinAtTheBridge()
+function finish_lower_object(time_delta, animation)
+    local object = findEntity(animation.object_id)    
+    object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
+end
+
+function lower_object(time_delta, animation)
+    local object = findEntity(animation.object_id)
+    local percentage = animation.duration / animation.elapsed
+    local start_pos = vec(animation.start_pos.x, animation.start_pos.y, animation.start_pos.z)
+    local stop_pos = vec(animation.stop_pos.x, animation.stop_pos.y, animation.stop_pos.z)
+    local w_pos = ((stop_pos - start_pos) / percentage) + start_pos
+    object:setWorldPosition(w_pos)
+end
+
+function onFinishRobinInTheForest()
+    boss_fight_robin_forest.bossfight:deactivate()
+    start_lite_up_pushblock_floor("pushblock_floor_r13")
+    local oaks_w_pos = forest_oak_cluster_2:getWorldPosition()
+    local start_pos = {x=oaks_w_pos.x, y=oaks_w_pos.y, z=oaks_w_pos.z}
+    local stop_pos = {x=oaks_w_pos.x, y=oaks_w_pos.y-9, z=oaks_w_pos.z}
+    local on_finish_pos = {x=forest_oak_cluster_2.x, y=forest_oak_cluster_2.y, facing=forest_oak_cluster_2.facing, elevation=forest_oak_cluster_2.elevation-3, level=forest_oak_cluster_2.level}
+    local animation = {func=lower_object, on_finish=finish_lower_object, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, on_finish_pos=on_finish_pos, object_id="forest_oak_cluster_2"}
+    global_scripts.script.add_animation(forest_oak_cluster_2.level, animation)
+end
+
+robin_monsters_forest = {"fjeld_warg_1", "fjeld_warg_2", "fjeld_warg_3", "fjeld_warg_4"}
+
+function robinInTheForest(trigger)
+    robin_counter_forest.counter:setValue(#robin_monsters_forest)
+    for _,monster_id in ipairs(robin_monsters_forest) do
+        local monster = findEntity(monster_id)
+        boss_fight_robin_forest.bossfight:addMonster(monster.monster)
+        monster.brain:enable()
+    end
+    boss_fight_robin_forest.bossfight:activate()
+end
+
+function robinAtTheBridge(trigger)
     local magma_golem = global_scripts.script.spawnAtObject("magma_golem", robin_magma_golem_spawn)
     local meteorite = spawn("meteorite").item
-    magma_golem.monster:addItem(meteorite)
+    magma_golem.monster:addItem(meteorite) 
+    trigger:disable()
+end
+
+function reset_sir_robin()
+    global_scripts.script.moveObjectToObject(pushblock_robin, robin_start)
 end
 
 function wrongMove()
     hudPrint("You chose poorly.")
-    global_scripts.script.spawnAtObject("shockburst", party, nil, 0, 0, 0)
+    --global_scripts.script.spawnAtObject("shockburst", party, nil, 0, 0, 0)
     local damage_flags = DamageFlags.CameraShake
-    damageTile(party.level, party.x, party.y, party.facing, party.elevation, damage_flags, "electric", 10)
-    hudPrint("Though he never did forget his farming origins, he set out into the world.")
-    global_scripts.script.moveObjectToObject(pushblock_robin, robin_start)
+    damageTile(party.level, party.x, party.y, party.facing, party.elevation, damage_flags, "shock", 10)
+    hudPrint("Though he never did forget his farming origins, neither did he ever return to them.")
+    local animation = {func=nil, on_finish=reset_sir_robin, step=0.7, duration=0.8, elapsed=0, last_called=-1}
+    global_scripts.script.add_animation(pushblock_robin.level, animation)
 end
 
 function start_journey(state_data)
@@ -120,6 +162,10 @@ function onPutItem(surface, item)
     end
     state = state_data.func(state_data)
     hudPrint(state)
+end
+
+function enterTheTrials()
+    trials_robin_forest_sky.sky:setFogRange({1,1}) 
 end
 
 state = "bandits" 
