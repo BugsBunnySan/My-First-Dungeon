@@ -11,6 +11,44 @@ defineObject{
 }
 
 defineObject{
+	name = "pushblock_floor_trigger_blue",
+	baseObject = "pushable_block_floor",
+	components = {
+		{
+			class = "Model",
+			name = "lightStrip",
+			model = "assets/models/env/pushable_block_floor_beam_white.fbx",
+			staticShadow = true,
+			enabled = false,
+		},
+		{
+			class = "Particle",
+			particleSystem = "pushable_block_red",
+			emitterMesh = "assets/models/env/pushable_block_floor_light.fbx",
+			enabled = false,
+		},		
+		{
+			class = "Light",
+			offset = vec(0, 0, 0),
+			range = 3,
+			color = vec(1, 0.35, 0.2),
+			brightness = 35,
+			enabled = false,
+			fillLight = true,
+        },
+		{
+			class = "FloorTrigger",
+			triggeredByParty = false,
+			triggeredByMonster = false,
+			triggeredByItem = false,
+			triggeredByPushableBlock = true,
+		},
+	},
+	editorIcon = 228,
+	replacesFloor = true,
+}
+
+defineObject{
 	name = "boat_small",
 	baseObject = "base_floor_decoration",
 	components = {
