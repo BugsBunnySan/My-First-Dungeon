@@ -111,6 +111,37 @@ function lower_object(time_delta, animation)
     object:setWorldPosition(w_pos)
 end
 
+function on_finish_robin_castle_countdown(time_delta, animation)
+    hudPrint("The Castle was breached, that's bad")
+    boss_fight_robin_castle.bossfight:deactivate()
+end
+
+function damage_caste(percentage)
+    
+end
+
+function robin_castle_countdown(time_delta, animation)
+    local monster = findEntity(animation.monster_id)
+    local monster_health = monster.monster:getHealth() - animation.health_tick
+    if monster_health > 0
+        monster.monster:setHealth(monster_health)
+        if monster_health <= animation.health_tick_stages[1] then
+            table.remove(animation.health_tick_stages, 1)
+            damage_castle(monster_health / animation.starting_health)
+        end
+    else    
+        animation.elapsed = animation.duration+animation.step
+    end
+end
+
+function robinAtTheCastle(trigger)
+    local monster = findEntity("robin_castle_ogre").monster
+    boss_fight_robin_castle.bossfight:addMonster(monster)    
+    boss_fight_robin_castle.bossfight:activate()
+    local animation = {func=robin_castle_countdown, on_finish=on_finish_robin_castle_countdown, step=.1, duration=250000, elapsed=0, last_called=-1, starting_health=5000, health_tick=10, monster_id="robin_castle_ogre", health_tick_stages = {4500, 4000, 3000, 1500, 1000, 200}}
+    global_scripts.script.add_animation(boss_fight_robin_castle.level, animation)
+end
+
 function onFinishRobinInTheForest()
     boss_fight_robin_forest.bossfight:deactivate()
     start_lite_up_pushblock_floor("pushblock_trigger_r12")
