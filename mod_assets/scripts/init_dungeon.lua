@@ -104,8 +104,8 @@ function initFieldOfHerbs()
 end
 
 function initTrialsRobin()
-    --trials_robin_forest_sky.sky:setFogRange({1,2})    
-    --trials_robin_forest_sky.sky:setFogMode("dense")
+    trials_robin_forest_sky.sky:setFogRange({1,2})    
+    trials_robin_forest_sky.sky:setFogMode("dense")
 end
 
 function initForest()

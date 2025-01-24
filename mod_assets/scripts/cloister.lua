@@ -7,9 +7,18 @@ function tick()
     hudPrint(tostring(Time.systemTime()) .. " - " .. tostring(Time.currentTime()))
 end
 
+function blueCloudVision()
+    cloister_sky.sky:disable()
+    cloister_forest_sky.sky:setFogRange({1,2})    
+    cloister_forest_sky.sky:setFogMode("dense")
+end
+
 function cloudVision()
     cloister_sky.sky:setFogMode("dense")
     cloister_sky.sky:setFogRange({1,2})
+    
+   -- cloister_forest_sky.sky:setFogRange({1,2})    
+    -- cloister_forest_sky.sky:setFogMode("dense")
     --cloister_sky.fogparticles:setOpacity(255)
     --cloister_sky.fogparticles:setParticleSize(100)
 end

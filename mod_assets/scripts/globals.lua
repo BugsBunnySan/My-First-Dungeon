@@ -3,7 +3,7 @@
 animations = {}
 
 function add_animation(level, animation)
-    hudPrint("add animation to animations for level "..tostring(level))
+    --hudPrint("add animation to animations for level "..tostring(level))
     if animations[level] == nil then
         animations[level] = {animation}
     else
@@ -167,10 +167,13 @@ function party_conditions(champions, add_conditions, remove_conditions)
     end
 end
 
+function faceObject(object, facing)
+    object:setPosition(object.x, object.y, facing, object.elevation, object.level)
+end
+
 function moveObjectToObject(object, target)
-    --local object = getGO(object)
-    --local target = getGO(target)
-    hudPrint("moving "..object.id.."("..tostring(object.x)..") to where "..target.id.."( "..tostring(target.x)..") is ")
+    local object = getGO(object)
+    local target = getGO(target)
     object:setPosition(target.x, target.y, target.facing, target.elevation, target.level)
 end
 
