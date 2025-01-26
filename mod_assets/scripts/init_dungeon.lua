@@ -1,5 +1,5 @@
 function initDungeon()    
-    GameMode.setTimeOfDay(1.5)
+    initGlobals()    
     initParty()
     initCastleOfWater()
     initMoistCatacombs()
@@ -9,6 +9,11 @@ function initDungeon()
     initFieldOfHerbs()
     initTrialsRobin()
     initForest()
+end
+
+function initGlobals()
+    GameMode.setTimeOfDay(1.5)
+    global_scripts.script.last_tick = -1
 end
 
 function initParty()

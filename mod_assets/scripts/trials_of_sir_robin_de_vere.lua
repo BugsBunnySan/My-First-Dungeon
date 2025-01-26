@@ -297,7 +297,7 @@ function robinAtTheCastle(trigger)
     global_scripts.script.add_animation(boss_fight_robin_castle.level, countdown_animation)
     
     local spawner = findEntity("spawn_robin_castle_1")
-    ratling_boss = spawner:spawn("ratling_boss")    
+    local ratling_boss = spawner:spawn("ratling_boss")    
     spawner = findEntity("spawn_robin_castle_2")
     spawner:spawn("forest_ogre")
     spawner = findEntity("spawn_robin_castle_3")

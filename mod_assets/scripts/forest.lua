@@ -46,7 +46,7 @@ noon = 0.5
 evening = 1
 midnight = 1.5
 maxtime = 1.99 -- this then becomes morning
-onehour = 1/12
+onehour = 0.0833333
 
 time_of_day = 1.5
 keep_time_of_day = true
