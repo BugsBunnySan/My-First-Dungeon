@@ -120,59 +120,147 @@ function lower_object(time_delta, animation)
 end
 
 function on_finish_robin_castle_countdown(time_delta, animation)
-    hudPrint("The Castle was breached, that's bad")
     boss_fight_robin_castle.bossfight:deactivate()
 end
+                               
+robin_castle_sections = {{parapet =  {"robin_castle_parapet_01", "robin_castle_parapet_06", "robin_castle_parapet_11", "robin_castle_pillar_14", "robin_castle_pillar_20"},
+                           undamaged = {"robin_castle_wall_01", "robin_castle_wall_09", "robin_castle_wall_10"},
+                           damaged_1 = {"robin_castle_broken_01_01", "robin_castle_broken_01_09", "robin_castle_broken_01_10"},
+                           damaged_2 = {"robin_castle_broken_02_01", "robin_castle_broken_02_09", "robin_castle_broken_02_10"},
+                           rubble_spawn = "robin_castle_rubble_01"},
+                          {parapet =  {"robin_castle_parapet_02", "robin_castle_parapet_07"},
+                           undamaged = {"robin_castle_wall_02", "robin_castle_wall_08", "robin_castle_wall_13"},
+                           damaged_1 = {"robin_castle_broken_01_02", "robin_castle_broken_01_08", "robin_castle_broken_01_11"},
+                           damaged_2 = {"robin_castle_broken_02_02", "robin_castle_broken_02_08", "robin_castle_broken_02_11"},
+                           rubble_spawn = "robin_castle_rubble_02"},
+                          {parapet = {"robin_castle_parapet_03", "robin_castle_parapet_10"},
+                           undamaged = {"robin_castle_wall_16", "robin_castle_wall_11", "robin_castle_wall_12", "robin_castle_wall_14"},
+                           damaged_1 = {"robin_castle_door_portcullis_3", "robin_castle_broken_01_12", "robin_castle_broken_01_13"},
+                           damaged_2 = {"robin_castle_door_wood_6", "robin_castle_broken_02_12", "robin_castle_broken_02_13"},
+                           rubble_spawn = "robin_castle_rubble_05"},
+                          {parapet =  {"robin_castle_parapet_04", "robin_castle_parapet_08"},
+                           undamaged = {"robin_castle_wall_03", "robin_castle_wall_07", "robin_castle_wall_15"},
+                           damaged_1 = {"robin_castle_broken_01_03", "robin_castle_broken_01_07", "robin_castle_broken_01_14"},
+                           damaged_2 = {"robin_castle_broken_02_03", "robin_castle_broken_02_07", "robin_castle_broken_02_14"},
+                           rubble_spawn = "robin_castle_rubble_03"},
+                          {parapet =  {"robin_castle_parapet_05", "robin_castle_parapet_09", "robin_castle_parapet_12"},
+                           undamaged = {"robin_castle_wall_04", "robin_castle_wall_05", "robin_castle_wall_06"},
+                           damaged_1 = {"robin_castle_broken_01_04", "robin_castle_broken_01_05", "robin_castle_broken_01_06"},
+                           damaged_2 = {"robin_castle_broken_02_04", "robin_castle_broken_02_05", "robin_castle_broken_02_06"},
+                           rubble_spawn = "robin_castle_rubble_04"}
+}                           
 
-robin_castle_parts = {["parapet"] = {"robin_castle_parapet_01", "robin_castle_parapet_02", "robin_castle_parapet_03",
-                                     "robin_castle_parapet_04", "robin_castle_parapet_05", "robin_castle_parapet_06",
-                                     "robin_castle_parapet_07", "robin_castle_parapet_08", "robin_castle_parapet_09",
-                                     "robin_castle_parapet_10", "robin_castle_parapet_11", "robin_castle_parapet_12"},
-                      ["first_layer"] = {"robin_castle_wall_01", "robin_castle_wall_02", "robin_castle_wall_03",
-                                         "robin_castle_wall_04", "robin_castle_wall_05", "robin_castle_wall_06",
-                                         "robin_castle_wall_07", "robin_castle_wall_08", "robin_castle_wall_09", "robin_castle_wall_10"},
-                      ["second_layer"] = {"robin_castle_broken_01_01", "robin_castle_broken_01_02", "robin_castle_broken_01_03",
-                                          "robin_castle_broken_01_04", "robin_castle_broken_01_05", "robin_castle_broken_01_06",
-                                          "robin_castle_broken_01_07", "robin_castle_broken_01_08", "robin_castle_broken_01_09", "robin_castle_broken_01_10"},
-                      ["third_layer"] = {"robin_castle_broken_02_01", "robin_castle_broken_02_02", "robin_castle_broken_02_03",
-                                         "robin_castle_broken_02_04", "robin_castle_broken_02_05", "robin_castle_broken_02_06",
-                                         "robin_castle_broken_02_07", "robin_castle_broken_02_08", "robin_castle_broken_02_09", "robin_castle_broken_02_10"},
-                      ["rubble_spawn"] = {"robin_castle_rubble_01", "robin_castle_rubble_02", "robin_castle_rubble_03", "robin_castle_rubble_04", "robin_castle_rubble_05"}}
-                                     
+function castle_section_smoke(section)
+    for _, wall_id in ipairs(robin_castle_sections[section].undamaged) do
+        local smoke_wall = findEntity(wall_id)
+        smoke_wall.smoke:enable()        
+    end
+end
+
+function castle_section_flames(section)
+    local rubble_spawner = findEntity(robin_castle_sections[section].rubble_spawn)
+    rubble_spawner:spawn("wall_fire")
+    for _, wall_id in ipairs(robin_castle_sections[section].undamaged) do
+        local fire_wall = findEntity(wall_id)
+        fire_wall.flames:enable()
+    end
+end
+
+function castle_section_damage_1(section)
+    for _, wall_id in ipairs(robin_castle_sections[section].undamaged) do
+        local wall = findEntity(wall_id)
+        wall.model:disable()
+        if wall.occluder ~= nil then
+            wall.occluder:disable()
+        end
+    end
+    for _, wall_id in ipairs(robin_castle_sections[section].parapet) do
+        local wall = findEntity(wall_id)
+        wall.model:disable()
+        if wall.occluder ~= nil then
+            wall.occluder:disable()
+        end
+    end
+    for _, wall_id in ipairs(robin_castle_sections[section].damaged_1) do
+        local wall = findEntity(wall_id)
+        wall.model:enable()
+        if wall.occluder ~= nil then
+            wall.occluder:enable()
+        end
+    end
+end
+
+function castle_section_damage_2(section)
+    for _, wall_id in ipairs(robin_castle_sections[section].damaged_1) do
+        local wall = findEntity(wall_id)
+        wall.model:disable()
+        if wall.occluder ~= nil then
+            wall.occluder:disable()
+        end
+    end
+    for _, wall_id in ipairs(robin_castle_sections[section].damaged_2) do
+        local wall = findEntity(wall_id)
+        wall.model:enable()
+        if wall.occluder ~= nil then
+            wall.occluder:enable()
+        end
+    end        
+end
+
+function castle_section_rubble(section)    
+    local rubble_spawner = findEntity(robin_castle_sections[section].rubble_spawn)
+    global_scripts.script.playSoundAtObject("gun_shot_cannon", rubble_spawner)
+    rubble_spawner:spawn("mine_floor_sandpile")
+    rubble_spawner:destroyDelayed()
+    for _, wall_id in ipairs(robin_castle_sections[section].undamaged) do
+        local smoke_fire_wall = findEntity(wall_id)
+        smoke_fire_wall:destroyDelayed()
+    end
+    for _, wall_id in ipairs(robin_castle_sections[section].damaged_1) do
+        local wall = findEntity(wall_id)
+        wall:destroyDelayed()
+    end
+    for _, wall_id in ipairs(robin_castle_sections[section].damaged_2) do
+        local wall = findEntity(wall_id)
+        wall:destroyDelayed()
+    end
+end
 
 function damage_castle(percentage)
     if percentage <= 0.9 and percentage > 0.8 then
-        for i=1,5 do
-            local smoke_wall = findEntity(robin_castle_parts["first_layer"][i])
-            smoke_wall.smoke:enable()
-        end
-    elseif percentage <= 0.8 and percentage > 0.6 then
-        for i=1,5 do
-            local fire_wall = findEntity(robin_castle_parts["first_layer"][i])
-            fire_wall.flames:enable()
-        end
-    elseif percentage <= 0.6 and percentage > 0.3 then
-        for i=1,5 do
-            local normal_wall = findEntity(robin_castle_parts["first_layer"][i])
-            local broken_wall = findEntity(robin_castle_parts["second_layer"][i])
-            normal_wall.model:disable()
-            normal_wall.occluder:disable()
-            broken_wall.model:enable()
-            broken_wall.occluder:enable()
-        end   
+        castle_section_smoke(1)
+    elseif percentage <= 0.8 and percentage > 0.7 then
+        castle_section_flames(1)
+        castle_section_smoke(5)
+    elseif percentage <= 0.7 and percentage > 0.6 then
+        castle_section_damage_1(1)        
+        castle_section_flames(5)
+        castle_section_smoke(2)                
+    elseif percentage <= 0.6 and percentage > 0.5 then
+        castle_section_damage_2(1)
+        castle_section_damage_1(5)
+        castle_section_flames(2)
+        castle_section_smoke(4)
+    elseif percentage <= 0.5 and percentage > 0.4 then
+        castle_section_rubble(1)
+        castle_section_damage_2(5)
+        castle_section_damage_1(2)
+        castle_section_flames(4)
+        castle_section_smoke(3)
+    elseif percentage <= 0.4 and percentage > 0.3 then
+        castle_section_rubble(5)
+        castle_section_damage_2(2)
+        castle_section_damage_1(4)
+        castle_section_flames(3) 
     elseif percentage <= 0.3 and percentage > 0.2 then
-        for i=1,5 do
-            local broken_wall = findEntity(robin_castle_parts["second_layer"][i])
-            local more_broken_wall = findEntity(robin_castle_parts["third_layer"][i])
-            broken_wall.model:disable()
-            broken_wall.occluder:disable()
-            more_broken_wall.model:enable()
-            more_broken_wall.occluder:enable()            
-        end   
-    elseif percentage <= 1000 then
-        
-    elseif percentage <= 200 then
-        
+        castle_section_rubble(2)
+        castle_section_damage_2(4)
+        castle_section_damage_1(3)
+    elseif percentage <= 0.2 and percentage > 0.1 then
+        castle_section_rubble(4)
+        castle_section_damage_2(3)
+    elseif percentage <= 0.2 then
+        castle_section_rubble(3)
     end
 end
 
@@ -190,15 +278,34 @@ function robin_castle_countdown(time_delta, animation)
     end
 end
 
+ratling_types = {"ratling1", "ratling2", "ratling3", "rat_swarm"}
+
+function robin_castle_spawn_ratling(time_delta, animation)
+    local ratling_boss = findEntity(animation.spawn_at)
+    if ratling_boss ~= nil then
+        animation.duration = -1
+    else
+        local ratling_type = ratling_types[math.random(#ratling_types)]    
+        ratling_boss:spawn(ratling_type)
+    end
+end
+
 function robinAtTheCastle(trigger)
-    robin_castle_parts["first_layer"] = global_scripts.script.shuffle(robin_castle_parts["first_layer"])
-    robin_castle_parts["second_layer"] = global_scripts.script.shuffle(robin_castle_parts["second_layer"])
-    robin_castle_parts["third_layer"] = global_scripts.script.shuffle(robin_castle_parts["third_layer"])
     local monster = findEntity("robin_castle_ogre").monster
     boss_fight_robin_castle.bossfight:addMonster(monster)    
-    boss_fight_robin_castle.bossfight:activate()
-    local animation = {func=robin_castle_countdown, on_finish=on_finish_robin_castle_countdown, step=.1, duration=250000, elapsed=0, last_called=-1, starting_health=5000, health_tick=10, monster_id="robin_castle_ogre", health_tick_stages = {4500, 4000, 3000, 1500, 1000, 200}}
-    global_scripts.script.add_animation(boss_fight_robin_castle.level, animation)
+    boss_fight_robin_castle.bossfight:activate()    local countdown_animation = {func=robin_castle_countdown, on_finish=on_finish_robin_castle_countdown, step=.1, duration=250000, elapsed=0, last_called=-1, starting_health=5000, health_tick=10, monster_id="robin_castle_ogre", health_tick_stages = {4500, 4000, 3500, 3000, 2500, 2000, 1500, 1000, 500}}
+    global_scripts.script.add_animation(boss_fight_robin_castle.level, countdown_animation)
+    
+    local spawner = findEntity("spawn_robin_castle_1")
+    ratling_boss = spawner:spawn("ratling_boss")    
+    spawner = findEntity("spawn_robin_castle_2")
+    spawner:spawn("forest_ogre")
+    spawner = findEntity("spawn_robin_castle_3")
+    spawner:spawn("fire_elemental")    
+    spawner:spawn("ratling1")
+
+    local ratling_boss_spawn_animation = {func=robin_castle_spawn_ratling, on_finish=nil, step=10, duration=250000, elapsed=0, last_called=-1, spawn_at=ratling_boss.id}
+    global_scripts.script.add_animation(boss_fight_robin_castle.level, ratling_boss_spawn_animation)
 end
 
 function robinDigUpTreasure(trigger)
