@@ -1,3 +1,129 @@
+defineParticleSystem{
+	name = "flames_on_wall",
+	emitters = {
+
+
+		-- flames
+		{
+			emissionRate = 50,
+			emissionTime = 0,
+			maxParticles = 100,
+			boxMin = {-0.53, -0.03, 0.53},
+			boxMax = { 0.53, 0.03,  -0.53},
+			sprayAngle = {10,50},
+			velocity = {0.2, 6},
+			texture = "assets/textures/particles/torch_flame.tga",
+			frameRate = 35,
+			frameSize = 64,
+			frameCount = 16,
+			lifetime = {0.55, 1.85},
+			colorAnimation = true,
+			color0 = {2, 2, 2},
+			color1 = {1.0, 1.0, 1.0},
+			color2 = {1.0, 0.5, 0.25},
+			color3 = {1.0, 0.3, 0.1},
+			opacity = 1,
+			fadeIn = 0.15,
+			fadeOut = 0.3,
+			size = {1.35, 1.015},
+			gravity = {0,0,0},
+			airResistance = 1.0,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = 0.1,
+		},
+
+		-- glow
+		{
+			spawnBurst = true,
+			emissionRate = 1,
+			emissionTime = 0,
+			maxParticles = 1,
+			boxMin = {0,0,-0.1},
+			boxMax = {0,0,-0.1},
+			sprayAngle = {0,30},
+			velocity = {0,4},
+			texture = "assets/textures/particles/glow.tga",
+			lifetime = {1000000, 1000000},
+			colorAnimation = false,
+			color0 = {0.23, 0.11, 0.08},
+			opacity = 1,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {2, 2},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = 0.1,
+		}
+	}
+}
+
+
+defineObject{
+    name = "dungeon_wall_burning_01",
+    baseObject = "dungeon_wall_01",
+    components = {
+        {
+			class = "Particle",
+            name = "smoke",
+			particleSystem = "floor_vent_steam",
+			offset = vec(00, 4, .9),
+            enabled = true
+        },
+        {
+			class = "Particle",
+            name = "flames",
+			particleSystem = "flames_on_wall",
+			offset = vec(0, 1.85, 1),
+            enabled = true
+        },
+    }
+}
+
+defineObject{
+    name = "dungeon_wall_broken_burning_01",
+    baseObject = "dungeon_wall_broken_01",
+    components = {
+        {
+			class = "Particle",
+            name = "smoke",
+			particleSystem = "floor_vent_steam",
+			offset = vec(00, 4, .9),
+            enabled = true
+        },
+        {
+			class = "Particle",
+            name = "flames",
+			particleSystem = "flames_on_wall",
+			offset = vec(0, 1.85, 1),
+            enabled = true
+        },
+    }
+}
+
+defineObject{
+    name = "dungeon_wall_broken_burning_02",
+    baseObject = "dungeon_wall_broken_02",
+    components = {
+        {
+			class = "Particle",
+            name = "smoke",
+			particleSystem = "floor_vent_steam",
+			offset = vec(00, 4, .9),
+            enabled = true
+        },
+        {
+			class = "Particle",
+            name = "flames",
+			particleSystem = "flames_on_wall",
+			offset = vec(0, 1.85, 1),
+            enabled = true
+        },
+    }
+}
+
 defineObject{
     name = "pushblock_robin",
     baseObject = "pushable_block",
