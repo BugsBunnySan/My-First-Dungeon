@@ -1,7 +1,8 @@
 pushblock_floors = {["start"] = {"pushblock_trigger_robin_start", "pushblock_trigger_r1", "pushblock_trigger_rs1"},
                     ["pushblock_trigger_rs1"] = {on = {"pushblock_trigger_rs2"}, off = nil},
                     ["pushblock_trigger_rs2"] = {on = {"pushblock_trigger_rs3"}, off = {"pushblock_trigger_rs1"}},
-                    ["pushblock_trigger_rs3"] = {on = {"pushblock_trigger_robin_home"}, off = {"pushblock_trigger_rs2"}},
+                    ["pushblock_trigger_rs3"] = {on = {"pushblock_trigger_rs4"}, off = {"pushblock_trigger_rs2"}},
+                    ["pushblock_trigger_rs4"] = {on = {"pushblock_trigger_robin_home"}, off = {"pushblock_trigger_rs3"}},
                     ["pushblock_trigger_r1"] = {on = {"pushblock_trigger_r2"}, off = {"pushblock_trigger_rs1"}},
                     ["pushblock_trigger_r2"] = {on = {"pushblock_trigger_r3"}, off = {"pushblock_trigger_r1"}},
                     ["pushblock_trigger_r3"] = {on = {"pushblock_trigger_r4"}, off = {"pushblock_trigger_r2"}},
@@ -20,8 +21,24 @@ pushblock_floors = {["start"] = {"pushblock_trigger_robin_start", "pushblock_tri
                     ["pushblock_trigger_r15"] = {on = {"pushblock_trigger_r16"}, off = {"pushblock_trigger_r14"}},
                     ["pushblock_trigger_r16"] = {on = {"pushblock_trigger_r17"}, off = {"pushblock_trigger_r15"}},
                     ["pushblock_trigger_r17"] = {on = {"pushblock_trigger_robin_after_forest"}, off = {"pushblock_trigger_r16"}},
-                    ["pushblock_trigger_robin_after_forest"] = {on = {"pushblock_trigger_r99", "pushblock_trigger_r19"}, off = {"pushblock_trigger_r17"}},
+                    ["pushblock_trigger_robin_after_forest"] = {on = {"pushblock_trigger_r99", "pushblock_trigger_r18"}, off = {"pushblock_trigger_r17"}},
+                    ["pushblock_trigger_r18"] = {on = {"pushblock_trigger_r19"}, off = {"pushblock_trigger_robin_after_forest", "pushblock_trigger_r99"}},
+                    ["pushblock_trigger_r19"] = {on = {"pushblock_trigger_r20"}, off = {"pushblock_trigger_r18"}},
+                    ["pushblock_trigger_r20"] = {on = {"pushblock_trigger_robin_treasure_hunt"}, off = {"pushblock_trigger_r19"}},  
+                    ["pushblock_trigger_robin_treasure_hunt"] = {on = {"pushblock_trigger_r21"}, off = {"pushblock_trigger_r20"}}, 
+                    ["pushblock_trigger_r21"] = {on = {"pushblock_trigger_r22"}, off = {"pushblock_trigger_robin_treasure_hunt"}},  
+                    ["pushblock_trigger_r22"] = {on = {"pushblock_trigger_r23"}, off = {"pushblock_trigger_r21"}},    
+                    ["pushblock_trigger_r23"] = {on = {"pushblock_trigger_r24"}, off = {"pushblock_trigger_r22"}},                   
+                    ["pushblock_trigger_r24"] = {on = {"pushblock_trigger_r25"}, off = {"pushblock_trigger_r22"}},                   
+                    ["pushblock_trigger_r25"] = {on = {"pushblock_trigger_r26"}, off = {"pushblock_trigger_r23"}},                    
+                    ["pushblock_trigger_r26"] = {on = {"pushblock_trigger_r27"}, off = {"pushblock_trigger_r24"}},                    
+                    ["pushblock_trigger_r27"] = {on = {"pushblock_trigger_r28"}, off = {"pushblock_trigger_r25"}},                    
+                    ["pushblock_trigger_r28"] = {on = {"pushblock_trigger_r29"}, off = {"pushblock_trigger_r26"}},                    
+                    ["pushblock_trigger_r29"] = {on = {"pushblock_trigger_r30"}, off = {"pushblock_trigger_r27"}},                    
+                    ["pushblock_trigger_r30"] = {on = {"pushblock_trigger_robin_castle"}, off = {"pushblock_trigger_r28"}},                                            
 }
+
+pushblock_floor_trigger_push = {["pushblock_trigger_rs1"] = true, ["pushblock_trigger_r21"] = true}
 
 pushblock_floor_triggered = {}
 
@@ -58,19 +75,23 @@ function start_lite_up_pushblock_floor(pushblock_floor_id, push, pushblock_floor
     global_scripts.script.playSoundAtObject("charge_up", pushblock_floor)
 end
 
-function liteUpPushblockFloorAnimation(trigger)
-    if pushblock_floors[trigger.go.id] == nil then
-        hudPrint(trigger.go.id.." no continuation found")
-        return
-    end    
+function liteUpPushblockFloorAnimation(trigger) 
     trigger:disable()
-    pushblock_robin:setPosition(pushblock_robin.x, pushblock_robin.y, trigger.go.facing, pushblock_robin.elevation, pushblock_robin.level)      
-    for _,pushblock_floor_id in ipairs(pushblock_floors[trigger.go.id]["on"]) do
-        if pushblock_floor_triggered[pushblock_floor_id] == nil then
-            pushblock_floor_triggered[pushblock_floor_id] = true                      
-            start_lite_up_pushblock_floor(pushblock_floor_id, true, pushblock_floors[trigger.go.id]["off"])
-        end
+    local push = false
+    if pushblock_robin.facing ~= trigger.go.facing then
+        pushblock_robin:setPosition(pushblock_robin.x, pushblock_robin.y, trigger.go.facing, pushblock_robin.elevation, pushblock_robin.level)
+        push = pushblock_floor_trigger_push[trigger.go.id]
+    else
+        push = true
     end
+    if pushblock_floors[trigger.go.id] ~= nil then       
+        for _,pushblock_floor_id in ipairs(pushblock_floors[trigger.go.id]["on"]) do
+            if pushblock_floor_triggered[pushblock_floor_id] == nil then
+                pushblock_floor_triggered[pushblock_floor_id] = true                      
+                start_lite_up_pushblock_floor(pushblock_floor_id, push, pushblock_floors[trigger.go.id]["off"])
+            end
+        end
+    end 
 end
 
 function finish_raise_bridge(time_delta, animation)
@@ -295,15 +316,36 @@ function robinAtTheCastle(trigger)
 
     -- local ratling_boss_spawn_animation = {func=robin_castle_spawn_ratling, on_finish=nil, step=10, duration=250000, elapsed=0, last_called=-1, spawn_at=ratling_boss.id}
     -- global_scripts.script.add_animation(boss_fight_robin_castle.level, ratling_boss_spawn_animation)
+    global_scripts.script.faceObject(pushblock_robin, trigger.go.facing)
+end
+
+function onFindTreasure(chest, item) 
+    if chest.go.surface:count() == 0 then   
+        start_lite_up_pushblock_floor("pushblock_trigger_r21")
+        chest.go.surface:removeConnector("onRemoveItem", "triels_robin_script_entitiy", "onFindTreasure")
+    end
 end
 
 function robinDigUpTreasure(trigger)
     trigger.go:spawn("dig_hole")
-    local chest = trigger.go:spawn("chest")    
+    local chest = trigger.go:spawn("chest")  
+    chest.surface:addConnector("onRemoveItem", "triels_robin_script_entitiy", "onFindTreasure")  
     for _,treasure_type in ipairs({"red_gem", "figure_skeleton"}) do
         local treasure = spawn(treasure_type)
         chest.surface:addItem(treasure.item)
     end
+end
+
+function robinTreasureHunt(trigger)    
+    trigger:disable()
+    if pushblock_floors[trigger.go.id]["off"] ~= nil then
+        for _,pushblock_floor_id in ipairs(pushblock_floors[trigger.go.id]["off"]) do            
+            local pushblock_floor = findEntity(pushblock_floor_id)
+            pushblock_floor.controller:deactivate()
+            pushblock_floor.light:enable()
+        end
+    end
+    
 end
 
 function robinAfterTheForest(trigger)
@@ -355,16 +397,17 @@ function reset_sir_robin()
     global_scripts.script.moveObjectToObject(pushblock_robin, robin_start)
 end
 
-function wrongMove()
+function wrongMove(trigger)
+    trigger:disable()
     hudPrint("You chose poorly.")
     global_scripts.script.spawnAtObject("shockburst", party, nil, 0, 0, 0)
     local damage_flags = DamageFlags.CameraShake
     damageTile(party.level, party.x, party.y, party.facing, party.elevation, damage_flags, "shock", 10)
     hudPrint("Though he never forgot his farming origins, neither did he ever return to them.")
-    local animation = {func=nil, on_finish=reset_sir_robin, step=0.7, duration=0.8, elapsed=0, last_called=-1} -- wait till the pushblock miovng finishes movbing pushblock_robin before teleporting him
+    local animation = {func=nil, on_finish=reset_sir_robin, step=1.7, duration=1.8, elapsed=0, last_called=-1} -- wait till the pushblock miovng finishes movbing pushblock_robin before teleporting him
     global_scripts.script.add_animation(pushblock_robin.level, animation)
-    pushblock_trigger_rs3.controller:deactivate()
-    pushblock_trigger_rs3.light:enable()
+    pushblock_trigger_rs4.controller:deactivate()
+    pushblock_trigger_rs4.light:enable()
 end
 
 function start_journey(state_data)

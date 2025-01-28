@@ -23,4 +23,13 @@ defineSound{
     volume = 1,
     minDistance = 5,
     maxDistance = 12
+}istance = 12,
+
+defineSound{
+	name = "wall_fire_loop",
+	filename = "assets/samples/magic/wall_fire_01.wav",
+	loop = true,
+	volume = 1,
+	minDistance = 1,
+	maxDistance = 10,
 }
