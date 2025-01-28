@@ -13,7 +13,7 @@ end
 
 function initGlobals()
     GameMode.setTimeOfDay(1.5)
-    global_scripts.script.last_tick = -1
+    --global_scripts.script.last_tick = -1
 end
 
 function initParty()
@@ -114,5 +114,5 @@ function initTrialsRobin()
 end
 
 function initForest()
-    forest_script_entity.script.time_of_day = GameMode.getTimeOfDay()
+    --forest_script_entity.script.time_of_day = GameMode.getTimeOfDay()
 end

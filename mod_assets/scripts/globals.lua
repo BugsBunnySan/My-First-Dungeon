@@ -35,7 +35,7 @@ function animateTick(level)
         end                
         animation.elapsed = animation.elapsed + tick_delta        
         local time_delta = now - animation.last_called    
-        if animation.elapsed >= animation.duration then
+        if animation.elapsed >= animation.duration then        
             if animation.on_finish ~= nil then
                 animation.on_finish(time_delta, animation)
             end

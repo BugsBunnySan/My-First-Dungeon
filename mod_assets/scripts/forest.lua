@@ -48,7 +48,7 @@ midnight = 1.5
 maxtime = 1.99 -- this then becomes morning
 onehour = 0.0833333
 
-time_of_day = 1.5
+time_of_day = GameMode.getTimeOfDay()--1.5
 keep_time_of_day = true
 
 step = 0.05

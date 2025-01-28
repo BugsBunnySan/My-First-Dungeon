@@ -69,17 +69,16 @@ defineObject{
 			class = "Particle",
             name = "smoke",
 			particleSystem = "floor_vent_steam",
-			offset = vec(00, 4, .9),
-            enabled = true
+			offset = vec(00, 4, .9)
         },
         {
 			class = "Particle",
             name = "flames",
 			particleSystem = "flames_on_wall",
-			offset = vec(0, 1.85, 1),
-            enabled = true
+			offset = vec(0, 1.85, 1)
         },
-    }
+    },
+    minimalSaveState = false
 }
 
 defineObject{
@@ -90,17 +89,16 @@ defineObject{
 			class = "Particle",
             name = "smoke",
 			particleSystem = "floor_vent_steam",
-			offset = vec(00, 4, .9),
-            enabled = true
+			offset = vec(00, 4, .9)
         },
         {
 			class = "Particle",
             name = "flames",
 			particleSystem = "flames_on_wall",
-			offset = vec(0, 1.85, 1),
-            enabled = true
+			offset = vec(0, 1.85, 1)
         },
-    }
+    },
+    minimalSaveState = false
 }
 
 defineObject{
@@ -111,17 +109,40 @@ defineObject{
 			class = "Particle",
             name = "smoke",
 			particleSystem = "floor_vent_steam",
-			offset = vec(00, 4, .9),
-            enabled = true
+			offset = vec(00, 4, .9)
         },
         {
 			class = "Particle",
             name = "flames",
 			particleSystem = "flames_on_wall",
-			offset = vec(0, 1.85, 1),
-            enabled = true
+			offset = vec(0, 1.85, 1)
         },
-    }
+    },
+    minimalSaveState = false
+}
+
+defineObject{
+    name = "dungeon_wall_broken_01_sl",
+    baseObject = "dungeon_wall_broken_01",    
+    minimalSaveState = false
+}
+
+defineObject{
+    name = "dungeon_wall_broken_02_sl",
+    baseObject = "dungeon_wall_broken_02",    
+    minimalSaveState = false
+}
+
+defineObject{
+    name = "cemetery_wall_01_sl",
+    baseObject = "cemetery_wall_01",
+    minimalSaveState = false
+}
+
+defineObject{
+    name = "dungeon_pillar_sl",
+    baseObject = "dungeon_pillar",
+    minimalSaveState = false    
 }
 
 defineObject{
@@ -133,7 +154,8 @@ defineObject{
 			model = "assets/models/monsters/skeleton_knight_commander.fbx",
 			storeSourceData = true, -- must be enabled for mesh particles to work
         }
-    }
+    },
+    minimalSaveState = false
 }
 
 defineObject{
