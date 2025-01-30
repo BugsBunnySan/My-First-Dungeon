@@ -161,10 +161,25 @@ end
 
 castle_of_caral = {well = {},
                    walls = {},
+                   ceilings = {},
                    pillars = {},
                    floor_cover = {},
                    towers = {},
                    pedestals = {"robin_castle_pedestal_se", "robin_castle_pedestal_sw", "robin_castle_pedestal_ne", "robin_castle_pedestal_nw"}}
+castle_of_caral_virtues = {tome_health = 1,
+                           tome_energy = 1,
+                           tome_leadership = 1,
+                           tome_wisdom = 1}
+castle_of_caral_build_order = {"well", "floor_cover", "pillars", "walls", "ceilings", "towers"}
+
+function castleCornerStonePedestalOnInsertItem(pedestal, item)
+    if castle_of_caral_virtues[item.go.id] == 1 then
+        castle_of_caral_virtues[item.go.id] = nil
+    end
+    if #castle_of_caral_virtues == 0 then
+        
+    end
+end
 
 function robinBuildsCastle(trigger)            
     pushblock_trigger_r47.controller:deactivate()
