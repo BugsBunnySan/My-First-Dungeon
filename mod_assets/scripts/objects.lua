@@ -146,6 +146,12 @@ defineObject{
 }
 
 defineObject{
+    name = "forest_plant_cluster_01_sl",
+    baseObject = "forest_plant_cluster_01",
+    minimalSaveState = false
+}
+
+defineObject{
     name = "pushblock_robin",
     baseObject = "pushable_block",
     components = {

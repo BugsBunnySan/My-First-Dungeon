@@ -15,18 +15,18 @@ pushblock_floors = {["start"] = {"pushblock_trigger_robin_start", "pushblock_tri
                     ["pushblock_trigger_r9"] = {on = {"pushblock_trigger_r10"}, off = {"pushblock_trigger_r8"}},
                     ["pushblock_trigger_r10"] = {on = {"pushblock_trigger_r11"}, off = {"pushblock_trigger_r9"}},
                     ["pushblock_trigger_r11"] = {on = {"pushblock_trigger_robin_forest"}, off = {"pushblock_trigger_r10"}},
-                    ["pushblock_trigger_r12"] = {on = {"pushblock_trigger_r13"}, off = {"pushblock_trigger_robin_forest"}},
+                    ["pushblock_trigger_r12"] = {on = {"pushblock_trigger_r13"}, off = nil},
                     ["pushblock_trigger_r13"] = {on = {"pushblock_trigger_r14"}, off = {"pushblock_trigger_r12"}},
                     ["pushblock_trigger_r14"] = {on = {"pushblock_trigger_r15"}, off = {"pushblock_trigger_r13"}},
                     ["pushblock_trigger_r15"] = {on = {"pushblock_trigger_r16"}, off = {"pushblock_trigger_r14"}},
                     ["pushblock_trigger_r16"] = {on = {"pushblock_trigger_r17"}, off = {"pushblock_trigger_r15"}},
                     ["pushblock_trigger_r17"] = {on = {"pushblock_trigger_robin_after_forest"}, off = {"pushblock_trigger_r16"}},
                     ["pushblock_trigger_robin_after_forest"] = {on = {"pushblock_trigger_r99", "pushblock_trigger_r18"}, off = {"pushblock_trigger_r17"}},
-                    ["pushblock_trigger_r18"] = {on = {"pushblock_trigger_r19"}, off = {"pushblock_trigger_robin_after_forest", "pushblock_trigger_r99"}},
+                    ["pushblock_trigger_r18"] = {on = {"pushblock_trigger_r19"}, off = {"pushblock_trigger_r99"}},
                     ["pushblock_trigger_r19"] = {on = {"pushblock_trigger_r20"}, off = {"pushblock_trigger_r18"}},
                     ["pushblock_trigger_r20"] = {on = {"pushblock_trigger_robin_treasure_hunt"}, off = {"pushblock_trigger_r19"}},  
                     ["pushblock_trigger_robin_treasure_hunt"] = {on = {"pushblock_trigger_r21"}, off = {"pushblock_trigger_r20"}}, 
-                    ["pushblock_trigger_r21"] = {on = {"pushblock_trigger_r22"}, off = {"pushblock_trigger_robin_treasure_hunt"}},  
+                    ["pushblock_trigger_r21"] = {on = {"pushblock_trigger_r22"}, off = nil},  
                     ["pushblock_trigger_r22"] = {on = {"pushblock_trigger_r23"}, off = {"pushblock_trigger_r21"}},    
                     ["pushblock_trigger_r23"] = {on = {"pushblock_trigger_r24"}, off = {"pushblock_trigger_r22"}},                   
                     ["pushblock_trigger_r24"] = {on = {"pushblock_trigger_r25"}, off = {"pushblock_trigger_r22"}},                   
@@ -35,10 +35,29 @@ pushblock_floors = {["start"] = {"pushblock_trigger_robin_start", "pushblock_tri
                     ["pushblock_trigger_r27"] = {on = {"pushblock_trigger_r28"}, off = {"pushblock_trigger_r25"}},                    
                     ["pushblock_trigger_r28"] = {on = {"pushblock_trigger_r29"}, off = {"pushblock_trigger_r26"}},                    
                     ["pushblock_trigger_r29"] = {on = {"pushblock_trigger_r30"}, off = {"pushblock_trigger_r27"}},                    
-                    ["pushblock_trigger_r30"] = {on = {"pushblock_trigger_robin_castle"}, off = {"pushblock_trigger_r28"}},                                            
+                    ["pushblock_trigger_r30"] = {on = {"pushblock_trigger_robin_castle"}, off = {"pushblock_trigger_r28"}},     
+                    ["pushblock_trigger_robin_castle"] = {on = {"pushblock_trigger_r31"}, off = {"pushblock_trigger_r30"}},    
+                    ["pushblock_trigger_r31"] = {on = {"pushblock_trigger_r32"}, off = nil},                   
+                    ["pushblock_trigger_r32"] = {on = {"pushblock_trigger_r33"}, off = {"pushblock_trigger_r31"}},                   
+                    ["pushblock_trigger_r33"] = {on = {"pushblock_trigger_r34"}, off = {"pushblock_trigger_r32"}},                    
+                    ["pushblock_trigger_r34"] = {on = {"pushblock_trigger_r35"}, off = {"pushblock_trigger_r33"}},                    
+                    ["pushblock_trigger_r35"] = {on = {"pushblock_trigger_r36"}, off = {"pushblock_trigger_r34"}},                    
+                    ["pushblock_trigger_r36"] = {on = {"pushblock_trigger_r37"}, off = {"pushblock_trigger_r35"}},                    
+                    ["pushblock_trigger_r37"] = {on = {"pushblock_trigger_r38"}, off = {"pushblock_trigger_r36"}},    
+                    ["pushblock_trigger_r38"] = {on = {"pushblock_trigger_r39"}, off = {"pushblock_trigger_r37"}},                   
+                    ["pushblock_trigger_r39"] = {on = {"pushblock_trigger_r40"}, off = {"pushblock_trigger_r38"}},                    
+                    ["pushblock_trigger_r40"] = {on = {"pushblock_trigger_r41"}, off = {"pushblock_trigger_r39"}},                    
+                    ["pushblock_trigger_r41"] = {on = {"pushblock_trigger_r42"}, off = {"pushblock_trigger_r40"}},                    
+                    ["pushblock_trigger_r42"] = {on = {"pushblock_trigger_r43"}, off = {"pushblock_trigger_r41"}},                    
+                    ["pushblock_trigger_r43"] = {on = {"pushblock_trigger_r44"}, off = {"pushblock_trigger_r42"}},                     
+                    ["pushblock_trigger_r44"] = {on = {"pushblock_trigger_r45"}, off = {"pushblock_trigger_r43"}},                    
+                    ["pushblock_trigger_r45"] = {on = {"pushblock_trigger_r46"}, off = {"pushblock_trigger_r44"}},                    
+                    ["pushblock_trigger_r46"] = {on = {"pushblock_trigger_r47"}, off = {"pushblock_trigger_r45"}},                    
+                    ["pushblock_trigger_r47"] = {on = {"pushblock_trigger_robin_builds_castle"}, off = {"pushblock_trigger_r46"}},                    
+                    ["pushblock_trigger_robin_builds_castle"] = {on = nil, off = {"pushblock_trigger_r47"}},                                                         
 }
 
-pushblock_floor_trigger_push = {["pushblock_trigger_rs1"] = true, ["pushblock_trigger_r21"] = true}
+pushblock_floor_trigger_push = {["pushblock_trigger_rs1"] = true, ["pushblock_trigger_r1"] = true, ["pushblock_trigger_r21"] = true, ["pushblock_trigger_r35"] = true, ["pushblock_trigger_r31"] = true, ["pushblock_trigger_r21"] = true}
 
 pushblock_floor_triggered = {}
 
@@ -84,7 +103,7 @@ function liteUpPushblockFloorAnimation(trigger)
     else
         push = true
     end
-    if pushblock_floors[trigger.go.id] ~= nil then       
+    if pushblock_floors[trigger.go.id] ~= nil and pushblock_floors[trigger.go.id]["on"] ~= nil then       
         for _,pushblock_floor_id in ipairs(pushblock_floors[trigger.go.id]["on"]) do
             if pushblock_floor_triggered[pushblock_floor_id] == nil then
                 pushblock_floor_triggered[pushblock_floor_id] = true                      
@@ -97,8 +116,10 @@ end
 function finish_raise_bridge(time_delta, animation)
     local bridge = findEntity(animation.bridge_id)    
     bridge:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
-    start_lite_up_pushblock_floor(animation.pushblock_trigger_id)
-    global_scripts.script.faceObject(pushblock_robin, 1)
+    if animation.pushblock_trigger_id ~= nil then
+        start_lite_up_pushblock_floor(animation.pushblock_trigger_id)  
+        global_scripts.script.faceObject(pushblock_robin, 1)                
+    end
 end
 
 function raise_bridge(time_Delta, animation)
@@ -138,8 +159,31 @@ function lower_object(time_delta, animation)
     object:setWorldPosition(w_pos)
 end
 
+castle_of_caral = {well = {},
+                   walls = {},
+                   pillars = {},
+                   floor_cover = {},
+                   towers = {},
+                   pedestals = {"robin_castle_pedestal_se", "robin_castle_pedestal_sw", "robin_castle_pedestal_ne", "robin_castle_pedestal_nw"}}
+
+function robinBuildsCastle(trigger)            
+    pushblock_trigger_r47.controller:deactivate()
+    pushblock_trigger_r47.light:enable()
+    for _,pedestal_id in ipairs(castle_of_caral.pedestals) do
+        local pedestal = findEntity(pedestal_id)
+        local pedestal_w_pos = pedestal:getWorldPosition()
+        local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
+        local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
+        local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+1, level=pedestal.level}
+        local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos}
+        global_scripts.script.add_animation(pedestal.level, animation)
+        global_scripts.script.playSoundAtObject("gate_iron_open", pedestal)
+    end
+end
+
 function on_finish_robin_castle_countdown(time_delta, animation)
     boss_fight_robin_castle.bossfight:deactivate()
+    liteUpPushblockFloorAnimation(pushblock_trigger_robin_castle.floortrigger)
 end
                                
 robin_castle_sections = {{parapet =  {"robin_castle_parapet_01", "robin_castle_parapet_02", "robin_castle_parapet_03", "robin_castle_pillar_03", "robin_castle_pillar_04"},
@@ -330,7 +374,7 @@ function robinDigUpTreasure(trigger)
     trigger.go:spawn("dig_hole")
     local chest = trigger.go:spawn("chest")  
     chest.surface:addConnector("onRemoveItem", "triels_robin_script_entitiy", "onFindTreasure")  
-    for _,treasure_type in ipairs({"red_gem", "figure_skeleton"}) do
+    for _,treasure_type in ipairs({"tome_health", "tome_energy", "tome_leadership", "tome_wisdom"}) do
         local treasure = spawn(treasure_type)
         chest.surface:addItem(treasure.item)
     end
