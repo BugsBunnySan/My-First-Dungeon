@@ -148,12 +148,12 @@ function onBridgePedestalInsertItem(pedestal, item)
     end
 end
 
-function finish_lower_object(time_delta, animation)
+function finish_move_object(time_delta, animation)
     local object = findEntity(animation.object_id)    
     object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
 end
 
-function lower_object(time_delta, animation)
+function move_object(time_delta, animation)
     local object = findEntity(animation.object_id)
     local percentage = animation.duration / animation.elapsed
     local start_pos = vec(animation.start_pos.x, animation.start_pos.y, animation.start_pos.z)
@@ -175,8 +175,45 @@ castle_of_caral_virtues = {tome_health = 1,
                            tome_wisdom = 1}
 castle_of_caral_build_order = {"well", "floor_cover", "pillars", "walls", "ceilings", "towers"}
 
-function build_castle()
+function spawn_floor(animation)
+    local floor_tile = spawn(animation.floor_type)
+    floor_tile:setPosition(animation.spawn_pos.x, animation.spawn_pos.y, animation.spawn_pos.facing, animation.spawn_pos.elevation, animation.spawn_pos.level)
+    floor_tile:spawn("teleportation_effect")
+    animation.object_id = floor_tile.id
+end
+
+function make_floor_animation(middle_pos, middle_w_pos, x, y, delay, floor_type)
+    local spawn_pos = {x=middle_pos.x - 2 + x, y=middle_pos.y - 2 + y, facing=middle_pos.facing, elevation=middle_pos.elevation, level=middle_pos.level}
+    local start_pos = {x=middle_w_pos.x - 6 + 3*x, y=middle_w_pos.y, z=middle_w_pos.z + 6 - 3*y}
+    local stop_pos = {x=middle_w_pos.x - 6 + 3*x, y=middle_w_pos.y+3, z=middle_w_pos.z + 6 - 3*y}
+    local on_finish_pos = {x=middle_pos.x - 2 + x, y=middle_pos.y - 2 + y, facing=middle_pos.facing, elevation=middle_pos.elevation, level=middle_pos.level}
+    local animation = {on_start=spawn_floor, func=move_object, on_finish=finish_move_object, step=0.05, duration=1, delay=delay, start_pos=start_pos, stop_pos=stop_pos, spawn_pos=spawn_pos, on_finish_pos=on_finish_pos, floor_type=floor_type}
+    return animation
+end
+
+
+function lay_floors(well_of_caral)
+    local well_of_caral_pos = {x=well_of_caral.x, y=well_of_caral.y, facing=well_of_caral.facing, elevation=well_of_caral.elevation, level=well_of_caral.level}
+    local well_of_caral_w_pos = well_of_caral:getWorldPosition()   
+
+    local animations = {}
+    local i = 1
+    for x=0,4 do
+        for y=0,4 do            
+            i = i + 0.2
+            local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, i, "castle_bridge_grating")
+            table.insert(animations, animation)   
+        end      
+    end
     
+    for _,a in ipairs(animations) do
+        global_scripts.script.add_animation(well_of_caral.level, a)
+    end
+end
+
+function buildCastle()  
+    local well_of_caral = findEntity("well_of_caral")  
+    lay_floors(well_of_caral)
 end
 
 function castleCornerStonePedestalOnInsertItem(pedestal, item)
@@ -194,7 +231,6 @@ function raisePedestal(pedestal_id)
     local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
     local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
     
-    -- https://javascript.info/bezier-curve 
     local curve = {p1 = {x=0, y=0},
                    p2 = {x=0.5,y=0},
                    p3 = {x=0.5,y=1},
@@ -436,7 +472,7 @@ function onFinishRobinInTheForest()
     local start_pos = {x=oaks_w_pos.x, y=oaks_w_pos.y, z=oaks_w_pos.z}
     local stop_pos = {x=oaks_w_pos.x, y=oaks_w_pos.y-9, z=oaks_w_pos.z}
     local on_finish_pos = {x=forest_oak_cluster_2.x, y=forest_oak_cluster_2.y, facing=forest_oak_cluster_2.facing, elevation=forest_oak_cluster_2.elevation-3, level=forest_oak_cluster_2.level}
-    local animation = {func=lower_object, on_finish=finish_lower_object, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, on_finish_pos=on_finish_pos, object_id="forest_oak_cluster_2"}
+    local animation = {func=move_object, on_finish=finish_move_object, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, on_finish_pos=on_finish_pos, object_id="forest_oak_cluster_2"}
     global_scripts.script.add_animation(forest_oak_cluster_2.level, animation)
 end
 

@@ -4,11 +4,12 @@ animations = {}
 
 function add_animation(level, animation)
     --hudPrint("add animation to animations for level "..tostring(level))
+    
+    animation.elapsed = 0
+    animation.last_called = -1
     if animations[level] == nil then
         animations[level] = {animation}
     else
-        animation.elapsed = 0
-        animation.last_called = -1
         table.insert(animations[level], animation)
     end
 end
@@ -17,6 +18,8 @@ function get_animations(level)
     return animations[level]
 end
 
+
+-- https://javascript.info/bezier-curve 
 -- P = ((1−t)^3 * P1) + (3 * (1−t)^2 * t * P2) + (3 * (1−t)t^2 * P3) + (t^3 * P4)
 
 function bezier(curve, t)
@@ -34,6 +37,34 @@ end
 
 last_tick = -1
 
+function handle_animation(animation, now, tick_delta, animations, idx)
+    if animation.delay ~= nil then
+        if animation.delay > tick_delta then
+            animation.delay = animation.delay - tick_delta
+            return
+        else
+            animation.on_start(animation)
+            animation.delay = nil
+        end
+    end
+    if animation.last_called == -1 or animation.last_called > now then
+        animation.last_called = now
+    end  
+    animation.elapsed = animation.elapsed + tick_delta        
+    local time_delta = now - animation.last_called    
+    if animation.elapsed >= animation.duration then        
+        if animation.on_finish ~= nil then
+            animation.on_finish(time_delta, animation)
+        end
+        table.remove(animations, idx)                          
+    elseif time_delta >= animation.step then
+        if animation.func ~= nil then
+            animation.func(time_delta, animation)
+            animation.last_called = now
+        end
+    end             
+end
+
 function animateTick(level)
     local animations = get_animations(level)
     if animations == nil then
@@ -45,22 +76,7 @@ function animateTick(level)
     end
     local tick_delta = now - last_tick
     for idx, animation in ipairs(animations) do        
-        if animation.last_called == -1 or animation.last_called > now then
-            animation.last_called = now
-        end                
-        animation.elapsed = animation.elapsed + tick_delta        
-        local time_delta = now - animation.last_called    
-        if animation.elapsed >= animation.duration then        
-            if animation.on_finish ~= nil then
-                animation.on_finish(time_delta, animation)
-            end
-            table.remove(animations, idx)                          
-        elseif time_delta >= animation.step then
-            if animation.func ~= nil then
-                animation.func(time_delta, animation)
-                animation.last_called = now
-            end
-        end                
+        handle_animation(animation, now, tick_delta, animations, idx)
     end
     last_tick = now
 end
