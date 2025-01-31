@@ -122,12 +122,15 @@ function finish_raise_bridge(time_delta, animation)
     end
 end
 
-function raise_bridge(time_Delta, animation)
+function raise_bridge(time_delta, animation)
     local bridge = findEntity(animation.bridge_id)
-    local percentage = animation.duration / animation.elapsed
+    local percentage = animation.elapsed / animation.duration 
+    if animation.curve ~= nil then
+        percentage = global_scripts.script.bezier(animation.curve, percentage)  
+    end
     local start_pos = vec(animation.start_pos.x, animation.start_pos.y, animation.start_pos.z)
     local stop_pos = vec(animation.stop_pos.x, animation.stop_pos.y, animation.stop_pos.z)
-    local w_pos = ((stop_pos - start_pos) / percentage) + start_pos
+    local w_pos = ((stop_pos - start_pos) * percentage) + start_pos 
     bridge:setWorldPosition(w_pos)
 end
 
@@ -159,7 +162,7 @@ function lower_object(time_delta, animation)
     object:setWorldPosition(w_pos)
 end
 
-castle_of_caral = {well = {},
+castle_of_caral = {well = {"castle_carral_well_cover"},
                    walls = {},
                    ceilings = {},
                    pillars = {},
@@ -172,27 +175,42 @@ castle_of_caral_virtues = {tome_health = 1,
                            tome_wisdom = 1}
 castle_of_caral_build_order = {"well", "floor_cover", "pillars", "walls", "ceilings", "towers"}
 
+function build_castle()
+    
+end
+
 function castleCornerStonePedestalOnInsertItem(pedestal, item)
     if castle_of_caral_virtues[item.go.id] == 1 then
         castle_of_caral_virtues[item.go.id] = nil
     end
     if #castle_of_caral_virtues == 0 then
-        
+        build_castle()
     end
+end
+
+function raisePedestal(pedestal_id)
+    local pedestal = findEntity(pedestal_id)
+    local pedestal_w_pos = pedestal:getWorldPosition()
+    local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
+    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
+    
+    -- https://javascript.info/bezier-curve 
+    local curve = {p1 = {x=0, y=0},
+                   p2 = {x=0.5,y=0},
+                   p3 = {x=0.5,y=1},
+                   p4 = {x=1, y=1}}
+
+    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+1, level=pedestal.level}
+    local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos, curve=curve}
+    global_scripts.script.add_animation(pedestal.level, animation)
+    global_scripts.script.playSoundAtObject("gate_iron_open", pedestal)
 end
 
 function robinBuildsCastle(trigger)            
     pushblock_trigger_r47.controller:deactivate()
     pushblock_trigger_r47.light:enable()
     for _,pedestal_id in ipairs(castle_of_caral.pedestals) do
-        local pedestal = findEntity(pedestal_id)
-        local pedestal_w_pos = pedestal:getWorldPosition()
-        local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
-        local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
-        local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+1, level=pedestal.level}
-        local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos}
-        global_scripts.script.add_animation(pedestal.level, animation)
-        global_scripts.script.playSoundAtObject("gate_iron_open", pedestal)
+        raisePedestal(pedestal_id)
     end
 end
 

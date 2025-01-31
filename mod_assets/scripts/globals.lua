@@ -17,6 +17,21 @@ function get_animations(level)
     return animations[level]
 end
 
+-- P = ((1−t)^3 * P1) + (3 * (1−t)^2 * t * P2) + (3 * (1−t)t^2 * P3) + (t^3 * P4)
+
+function bezier(curve, t)
+    local t_ = 1 - t
+    local t_2 = t_ * t_    
+    local t2 = t * t      
+    
+    local y = t_2 * t_ * curve.p1.y
+    y = y + 3 * t_2 * t * curve.p2.y
+    y = y + 3 * t_ * t2 * curve.p3.y
+    y = y + t2 * t * curve.p4.y
+    
+    return y
+end
+
 last_tick = -1
 
 function animateTick(level)
