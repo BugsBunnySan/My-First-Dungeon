@@ -148,6 +148,29 @@ function onBridgePedestalInsertItem(pedestal, item)
     end
 end
 
+function finish_plop_object(time_delta, animation)
+    local object = findEntity(animation.object_id)    
+    object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
+    for entity in Dungeon.getMap(object.level):entitiesAt(object.x, object.y) do
+        if entity.name == "forest_ground_01" then
+            entity:destroyDelayed()           
+        end
+    end
+    object:spawn(animation.on_finish_floor_type)
+    object:destroyDelayed()
+end
+
+function plop_object(time_delta, animation)
+    local object = findEntity(animation.object_id)
+    local percentage = (2*(animation.elapsed / animation.duration)) - 1
+    
+    local dy = ((-1 * (percentage * percentage)) + 1) * animation.height
+    
+    local w_pos = vec(animation.start_pos.x, animation.start_pos.y+dy, animation.start_pos.z)
+    
+    object:setWorldPosition(w_pos)
+end
+
 function finish_move_object(time_delta, animation)
     local object = findEntity(animation.object_id)    
     object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
@@ -179,15 +202,18 @@ function spawn_floor(animation)
     local floor_tile = spawn(animation.floor_type)
     floor_tile:setPosition(animation.spawn_pos.x, animation.spawn_pos.y, animation.spawn_pos.facing, animation.spawn_pos.elevation, animation.spawn_pos.level)
     floor_tile:spawn("teleportation_effect")
-    animation.object_id = floor_tile.id
+    animation.object_id = floor_tile.id    
+    if animation.sound ~= nil then
+        global_scripts.script.playSoundAtObject(animation.sound, floor_tile)
+    end
 end
 
-function make_floor_animation(middle_pos, middle_w_pos, x, y, delay, floor_type)
+function make_floor_animation(middle_pos, middle_w_pos, x, y, height, delay, floor_type, on_finish_floor_type, sound)
     local spawn_pos = {x=middle_pos.x - 2 + x, y=middle_pos.y - 2 + y, facing=middle_pos.facing, elevation=middle_pos.elevation, level=middle_pos.level}
     local start_pos = {x=middle_w_pos.x - 6 + 3*x, y=middle_w_pos.y, z=middle_w_pos.z + 6 - 3*y}
-    local stop_pos = {x=middle_w_pos.x - 6 + 3*x, y=middle_w_pos.y+3, z=middle_w_pos.z + 6 - 3*y}
+    local stop_pos = {x=middle_w_pos.x - 6 + 3*x, y=middle_w_pos.y, z=middle_w_pos.z + 6 - 3*y}
     local on_finish_pos = {x=middle_pos.x - 2 + x, y=middle_pos.y - 2 + y, facing=middle_pos.facing, elevation=middle_pos.elevation, level=middle_pos.level}
-    local animation = {on_start=spawn_floor, func=move_object, on_finish=finish_move_object, step=0.05, duration=1, delay=delay, start_pos=start_pos, stop_pos=stop_pos, spawn_pos=spawn_pos, on_finish_pos=on_finish_pos, floor_type=floor_type}
+    local animation = {on_start=spawn_floor, func=plop_object, on_finish=finish_plop_object, step=0.05, duration=1, delay=delay, start_pos=start_pos, height=height, spawn_pos=spawn_pos, on_finish_pos=on_finish_pos, floor_type=floor_type, on_finish_floor_type=on_finish_floor_type, sound=sound}
     return animation
 end
 
@@ -197,18 +223,32 @@ function lay_floors(well_of_caral)
     local well_of_caral_w_pos = well_of_caral:getWorldPosition()   
 
     local animations = {}
-    local i = 1
-    for x=0,4 do
-        for y=0,4 do            
-            i = i + 0.2
-            local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, i, "castle_bridge_grating")
-            table.insert(animations, animation)   
-        end      
+    print("animation go")
+    
+    local delay = 1.2
+    local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, 2, 2, 1, delay, "castle_bridge_grating", "castle_bridge_grating", "water_hit_large_loud")
+    table.insert(animations, animation)   
+    delay = 1.6
+    for _, xy in ipairs({{1,1}, {2,1}, {3,1}, {1,2}, {3,2}, {1,3}, {2,3}, {3,3}}) do
+        local x, y = xy[1],xy[2] 
+        local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, 0.7, delay, "castle_bridge_grating", "tomb_floor_01")
+        table.insert(animations, animation)           
+    end
+    delay = 2.2
+    for _,xy in ipairs({{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {0,1}, {4,1}, {0,2}, {4,2}, {0,3}, {4,3}, {0,4}, {1,4}, {2,4}, {3,4}, {4,4}}) do
+        local x, y = xy[1],xy[2]
+        --print(tostring(x).." "..tostring(y))
+        local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, 0.3, delay, "castle_bridge_grating", "tomb_floor_01")
+        table.insert(animations, animation)        
     end
     
     for _,a in ipairs(animations) do
         global_scripts.script.add_animation(well_of_caral.level, a)
     end
+end
+
+function grow_pillars(well_of_carals)
+    
 end
 
 function buildCastle()  

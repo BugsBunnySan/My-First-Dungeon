@@ -33,3 +33,12 @@ defineSound{
 	minDistance = 1,
 	maxDistance = 10,
 }
+
+defineSound{
+	name = "water_hit_large_loud",
+	filename = "assets/samples/weapons/hit_water_large_01.wav",
+	loop = false,
+	volume = 1,
+	minDistance = 10,
+	maxDistance = 15,
+}

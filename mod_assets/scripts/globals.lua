@@ -37,11 +37,12 @@ end
 
 last_tick = -1
 
-function handle_animation(animation, now, tick_delta, animations, idx)
+function handle_animation(animation, now, tick_delta)
+    local done = false
     if animation.delay ~= nil then
         if animation.delay > tick_delta then
             animation.delay = animation.delay - tick_delta
-            return
+            return false
         else
             animation.on_start(animation)
             animation.delay = nil
@@ -56,13 +57,15 @@ function handle_animation(animation, now, tick_delta, animations, idx)
         if animation.on_finish ~= nil then
             animation.on_finish(time_delta, animation)
         end
-        table.remove(animations, idx)                          
+        done = true                    
     elseif time_delta >= animation.step then
         if animation.func ~= nil then
             animation.func(time_delta, animation)
             animation.last_called = now
         end
-    end             
+        done = false
+    end
+    return done
 end
 
 function animateTick(level)
@@ -76,7 +79,10 @@ function animateTick(level)
     end
     local tick_delta = now - last_tick
     for idx, animation in ipairs(animations) do        
-        handle_animation(animation, now, tick_delta, animations, idx)
+        local done = handle_animation(animation, now, tick_delta)
+        if done then
+            table.remove(animations, idx)      
+        end
     end
     last_tick = now
 end
