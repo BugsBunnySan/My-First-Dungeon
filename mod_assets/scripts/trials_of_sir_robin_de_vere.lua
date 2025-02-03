@@ -47,9 +47,9 @@ pushblock_floors = {["start"] = {"pushblock_trigger_robin_start", "pushblock_tri
                     ["pushblock_trigger_r38"] = {on = {"pushblock_trigger_r39"}, off = {"pushblock_trigger_r37"}},                   
                     ["pushblock_trigger_r39"] = {on = {"pushblock_trigger_r40"}, off = {"pushblock_trigger_r38"}},                    
                     ["pushblock_trigger_r40"] = {on = {"pushblock_trigger_r41"}, off = {"pushblock_trigger_r39"}},                    
-                    ["pushblock_trigger_r41"] = {on = {"pushblock_trigger_r42"}, off = {"pushblock_trigger_r40"}},                    
-                    ["pushblock_trigger_r42"] = {on = {"pushblock_trigger_r43"}, off = {"pushblock_trigger_r41"}},                    
-                    ["pushblock_trigger_r43"] = {on = {"pushblock_trigger_r44"}, off = {"pushblock_trigger_r42"}},                     
+                    ["pushblock_trigger_r41"] = {on = {"pushblock_trigger_in_the_desert"}, off = {"pushblock_trigger_r40"}},                    
+                    ["pushblock_trigger_in_the_desert"] = {on = {"pushblock_trigger_r43"}, off = {"pushblock_trigger_r41"}},                    
+                    ["pushblock_trigger_r43"] = {on = {"pushblock_trigger_r44"}, off = nil},                     
                     ["pushblock_trigger_r44"] = {on = {"pushblock_trigger_r45"}, off = {"pushblock_trigger_r43"}},                    
                     ["pushblock_trigger_r45"] = {on = {"pushblock_trigger_r46"}, off = {"pushblock_trigger_r44"}},                    
                     ["pushblock_trigger_r46"] = {on = {"pushblock_trigger_r47"}, off = {"pushblock_trigger_r45"}},                    
@@ -57,7 +57,7 @@ pushblock_floors = {["start"] = {"pushblock_trigger_robin_start", "pushblock_tri
                     ["pushblock_trigger_robin_builds_castle"] = {on = nil, off = {"pushblock_trigger_r47"}},                                                         
 }
 
-pushblock_floor_trigger_push = {["pushblock_trigger_rs1"] = true, ["pushblock_trigger_r1"] = true, ["pushblock_trigger_r21"] = true, ["pushblock_trigger_r35"] = true, ["pushblock_trigger_r31"] = true, ["pushblock_trigger_r21"] = true}
+pushblock_floor_trigger_push = {["pushblock_trigger_rs1"] = true, ["pushblock_trigger_r1"] = true, ["pushblock_trigger_r21"] = true, ["pushblock_trigger_r35"] = true, ["pushblock_trigger_r31"] = true, ["pushblock_trigger_r21"] = true, ["pushblock_trigger_r43"] = true}
 
 pushblock_floor_triggered = {}
 
@@ -188,14 +188,19 @@ end
 castle_of_caral = {well = {"castle_carral_well_cover"},
                    walls = {},
                    ceilings = {},
-                   pillars = {},
+                   pillars = {"tomb_pillar_robin_castle_se", "tomb_pillar_robin_castle_sw", "tomb_pillar_robin_castle_ne", "tomb_pillar_robin_castle_nw",
+                              "tomb_pillar_robin_castle_01", "tomb_pillar_robin_castle_02", "tomb_pillar_robin_castle_03", "tomb_pillar_robin_castle_04",
+                              "tomb_pillar_robin_castle_05", "tomb_pillar_robin_castle_06", "tomb_pillar_robin_castle_07", "tomb_pillar_robin_castle_08", 
+                              "tomb_pillar_robin_castle_09", "tomb_pillar_robin_castle_10", "tomb_pillar_robin_castle_11", "tomb_pillar_robin_castle_12", 
+                   },
                    floor_cover = {},
                    towers = {},
                    pedestals = {"robin_castle_pedestal_se", "robin_castle_pedestal_sw", "robin_castle_pedestal_ne", "robin_castle_pedestal_nw"}}
 castle_of_caral_virtues = {tome_health = 1,
                            tome_energy = 1,
                            tome_leadership = 1,
-                           tome_wisdom = 1}
+                           tome_wisdom = 1,
+                           count = 4}
 castle_of_caral_build_order = {"well", "floor_cover", "pillars", "walls", "ceilings", "towers"}
 
 function spawn_floor(animation)
@@ -217,6 +222,10 @@ function make_floor_animation(middle_pos, middle_w_pos, x, y, height, delay, flo
     return animation
 end
 
+function finish_floors(time_delta, animation)
+    finish_plop_object(time_delta, animation)
+    grow_pillars(animation.well_of_carals_id)
+end
 
 function lay_floors(well_of_caral)
     local well_of_caral_pos = {x=well_of_caral.x, y=well_of_caral.y, facing=well_of_caral.facing, elevation=well_of_caral.elevation, level=well_of_caral.level}
@@ -225,22 +234,27 @@ function lay_floors(well_of_caral)
     local animations = {}
     print("animation go")
     
-    local delay = 1.2
+    local delay = 2.2
     local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, 2, 2, 1, delay, "castle_bridge_grating", "castle_bridge_grating", "water_hit_large_loud")
     table.insert(animations, animation)   
-    delay = 1.6
+    delay = 2.6
     for _, xy in ipairs({{1,1}, {2,1}, {3,1}, {1,2}, {3,2}, {1,3}, {2,3}, {3,3}}) do
         local x, y = xy[1],xy[2] 
         local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, 0.7, delay, "castle_bridge_grating", "tomb_floor_01")
         table.insert(animations, animation)           
     end
-    delay = 2.2
-    for _,xy in ipairs({{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {0,1}, {4,1}, {0,2}, {4,2}, {0,3}, {4,3}, {0,4}, {1,4}, {2,4}, {3,4}, {4,4}}) do
+    delay = 3.2
+    for _,xy in ipairs({{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {0,1}, {4,1}, {0,2}, {4,2}, {0,3}, {4,3}, {0,4}, {1,4}, {2,4}, {3,4}}) do
         local x, y = xy[1],xy[2]
         --print(tostring(x).." "..tostring(y))
         local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, 0.3, delay, "castle_bridge_grating", "tomb_floor_01")
         table.insert(animations, animation)        
     end
+    
+    local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, 4, 4, 0.3, delay, "castle_bridge_grating", "tomb_floor_01")
+    animation.well_of_caral_id = well_of_caral.id
+    animation.on_finish=finish_floors
+    table.insert(animations, animation)        
     
     for _,a in ipairs(animations) do
         global_scripts.script.add_animation(well_of_caral.level, a)
@@ -248,20 +262,26 @@ function lay_floors(well_of_caral)
 end
 
 function grow_pillars(well_of_carals)
-    
+    for _, pillar_id in ipairs(castle_of_caral["pillars"]) do
+        raisePedestal(pillar_id)
+    end
 end
 
 function buildCastle()  
+    --hudPrint("A gentle force moves you")
+    --global_scripts.script.moveObjectToObject(party, robin_build_castle_observe)
+    --global_scripts.script.playSoundAtObject("teleport", party)
     local well_of_caral = findEntity("well_of_caral")  
     lay_floors(well_of_caral)
 end
 
 function castleCornerStonePedestalOnInsertItem(pedestal, item)
-    if castle_of_caral_virtues[item.go.id] == 1 then
-        castle_of_caral_virtues[item.go.id] = nil
+    if castle_of_caral_virtues[item.go.name] == 1 then
+        castle_of_caral_virtues[item.go.name] = nil
+        castle_of_caral_virtues.count = castle_of_caral_virtues.count - 1
     end
-    if #castle_of_caral_virtues == 0 then
-        build_castle()
+    if castle_of_caral_virtues.count == 0 then
+        buildCastle()
     end
 end
 
@@ -288,6 +308,29 @@ function robinBuildsCastle(trigger)
     for _,pedestal_id in ipairs(castle_of_caral.pedestals) do
         raisePedestal(pedestal_id)
     end
+end
+
+desert_provisions = {bread = 1, water_flask = 1, count=2}
+
+function desertProvisionsGiven()
+    start_lite_up_pushblock_floor("pushblock_trigger_r43", false, {})
+end
+
+function onGiveDesertProvisions(pedestal, item)
+    if desert_provisions[item.go.name] ~= nil then
+        desert_provisions[item.go.name] = nil
+        desert_provisions.count = desert_provisions.count - 1
+    end
+    if desert_provisions.count == 0 then
+        desertProvisionsGiven()
+    end
+end
+
+function inTheDesert(trigger)           
+    pushblock_trigger_r41.controller:deactivate()
+    pushblock_trigger_r41.light:enable()
+    raisePedestal("pedestal_robin_desert_s")
+    raisePedestal("pedestal_robin_desert_n")
 end
 
 function on_finish_robin_castle_countdown(time_delta, animation)
@@ -533,6 +576,7 @@ end
 function robinAtTheBridge(trigger)
     global_scripts.script.faceObject(pushblock_robin, 0)
     global_scripts.script.spawnAtObject("magma_golem_meteor_impact_ground", robin_magma_golem_spawn)
+    raisePedestal("pedestal_robin_bridge")
     local magma_golem = global_scripts.script.spawnAtObject("magma_golem", robin_magma_golem_spawn)
     local meteorite = spawn("meteorite").item
     magma_golem.monster:addItem(meteorite) 
