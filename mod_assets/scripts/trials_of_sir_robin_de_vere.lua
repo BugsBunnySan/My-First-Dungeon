@@ -171,6 +171,28 @@ function plop_object(time_delta, animation)
     object:setWorldPosition(w_pos)
 end
 
+function finish_slam_object(time_delta, animation)
+    local object = findEntity(animation.object_id)    
+    object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
+   
+    local forest_door = object:spawn("forest_ruins_secret_door")
+    forest_door.go.model:disable()
+end
+
+function slam_object(time_delta, animation)
+    local object = findEntity(animation.object_id)
+    local percentage = animation.elapsed / animation.duration
+    percentage = percentage * percentage
+    
+    local dx = animation.dx * percentage
+    local dy = animation.dy * percentage
+    local dz = animation.dz * percentage
+    
+    local w_pos = vec(animation.start_pos.x + dx, animation.start_pos.y + dy, animation.start_pos.z + dz)
+    
+    object:setWorldPosition(w_pos)
+end
+
 function finish_move_object(time_delta, animation)
     local object = findEntity(animation.object_id)    
     object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
@@ -186,15 +208,26 @@ function move_object(time_delta, animation)
 end
 
 castle_of_caral = {well = {"castle_carral_well_cover"},
-                   walls = {},
+                   walls = {"robin_castle_spawn_wall_01", "robin_castle_spawn_wall_02", "robin_castle_spawn_wall_03", "robin_castle_spawn_wall_04",
+                            "robin_castle_spawn_wall_05", "robin_castle_spawn_wall_06", "robin_castle_spawn_wall_07", "robin_castle_spawn_wall_08",
+                            "robin_castle_spawn_wall_09", "robin_castle_spawn_wall_10", "robin_castle_spawn_wall_11", "robin_castle_spawn_wall_12",
+                            "robin_castle_spawn_wall_13", "robin_castle_spawn_wall_14", "robin_castle_spawn_wall_15", "robin_castle_spawn_wall_16",
+                   },
                    ceilings = {},
                    pillars = {"tomb_pillar_robin_castle_se", "tomb_pillar_robin_castle_sw", "tomb_pillar_robin_castle_ne", "tomb_pillar_robin_castle_nw",
                               "tomb_pillar_robin_castle_01", "tomb_pillar_robin_castle_02", "tomb_pillar_robin_castle_03", "tomb_pillar_robin_castle_04",
                               "tomb_pillar_robin_castle_05", "tomb_pillar_robin_castle_06", "tomb_pillar_robin_castle_07", "tomb_pillar_robin_castle_08", 
-                              "tomb_pillar_robin_castle_09", "tomb_pillar_robin_castle_10", "tomb_pillar_robin_castle_11", "tomb_pillar_robin_castle_12", 
+                              "tomb_pillar_robin_castle_09", "tomb_pillar_robin_castle_10", "tomb_pillar_robin_castle_11", "tomb_pillar_robin_castle_12",
+                              "tomb_pillar_robin_castle_13", "tomb_pillar_robin_castle_14", "tomb_pillar_robin_castle_15", "tomb_pillar_robin_castle_16",
+                              "tomb_pillar_robin_castle_17", "tomb_pillar_robin_castle_18", "tomb_pillar_robin_castle_19", "tomb_pillar_robin_castle_20",
+                              "tomb_pillar_robin_castle_21", "tomb_pillar_robin_castle_22", "tomb_pillar_robin_castle_23", "tomb_pillar_robin_castle_24",
+                              "tomb_pillar_robin_castle_25", "tomb_pillar_robin_castle_26", "tomb_pillar_robin_castle_27", "tomb_pillar_robin_castle_28",   
                    },
                    floor_cover = {},
-                   towers = {},
+                   towers = {"dome_robin_castle_sw", "dome_robin_castle_s", "dome_robin_castle_se",
+                             "dome_robin_castle_e", "dome_robin_castle_w",
+                             "dome_robin_castle_nw", "dome_robin_castle_n", "dome_robin_castle_ne",
+                   },
                    pedestals = {"robin_castle_pedestal_se", "robin_castle_pedestal_sw", "robin_castle_pedestal_ne", "robin_castle_pedestal_nw"}}
 castle_of_caral_virtues = {tome_health = 1,
                            tome_energy = 1,
@@ -263,7 +296,45 @@ end
 
 function grow_pillars(well_of_carals)
     for _, pillar_id in ipairs(castle_of_caral["pillars"]) do
-        raisePedestal(pillar_id)
+        raisePedestal(pillar_id, {sound_name="viper_root_rise"})
+    end
+end
+
+function spawn_wall(animation)
+    local spawn_wall_marker = findEntity(animation.spawn_wall_marker_id)
+    
+    local wall = spawn_wall_marker:spawn("tomb_door_serpent")
+    wall.door:disable()
+    wall.controller:disable()
+    wall:spawn("teleportation_effect")
+    
+    animation.start_pos = wall:getWorldPosition()
+    
+    animation.dx = 0
+    animation.dy = 0
+    animation.dz = 0
+    if wall.facing == 0 then
+        animation.dx = 3
+    elseif wall.facing == 1 then
+        animation.dz = 3
+    elseif wall.facing == 2 then
+        animation.dx = -3
+    elseif wall.facing == 3 then        
+        animation.dz = -3
+    end    
+end
+
+function fly_in_walls(well_of_carals)
+    local delay = 0
+    for _, spawn_wall_marker_id in ipairs(castle_of_caral["walls"]) do
+        local animation = {on_start=spawn_wall, func=slam_object, on_finish=finish_slam_object, step=0.05, duration=1, delay=delay, spawn_wall_marker_id=spawn_wall_marker_id, on_finish_pos=on_finish_pos}
+        delay = delay + .2
+    end
+end
+
+function grow_towers(well_of_carals)
+    for _, tower_id in ipairs(castle_of_caral["corner_towers"]) do
+    
     end
 end
 
@@ -285,21 +356,26 @@ function castleCornerStonePedestalOnInsertItem(pedestal, item)
     end
 end
 
-function raisePedestal(pedestal_id)
+function raisePedestal(pedestal_id, overrides)
+    local height, sound_name
+    if overrides ~= nil then
+        height = overrides.height or 1
+        sound_name = overrides.sound_name or "gate_iron_open"
+    end
     local pedestal = findEntity(pedestal_id)
     local pedestal_w_pos = pedestal:getWorldPosition()
     local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
-    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
+    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3*height, z=pedestal_w_pos.z}
     
     local curve = {p1 = {x=0, y=0},
                    p2 = {x=0.5,y=0},
                    p3 = {x=0.5,y=1},
                    p4 = {x=1, y=1}}
 
-    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+1, level=pedestal.level}
+    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+height, level=pedestal.level}
     local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos, curve=curve}
     global_scripts.script.add_animation(pedestal.level, animation)
-    global_scripts.script.playSoundAtObject("gate_iron_open", pedestal)
+    global_scripts.script.playSoundAtObject(sound_name, pedestal)
 end
 
 function robinBuildsCastle(trigger)            
