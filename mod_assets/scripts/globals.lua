@@ -81,7 +81,7 @@ function animateTick(level)
     for idx, animation in ipairs(animations) do        
         local done = handle_animation(animation, now, tick_delta)
         if done then
-            table.remove(animations, idx)      
+            table.remove(animations, idx)
         end
     end
     last_tick = now

@@ -174,9 +174,10 @@ end
 function finish_slam_object(time_delta, animation)
     local object = findEntity(animation.object_id)    
     object:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
-   
+    global_scripts.script.playSoundAtObject("pressure_plate_pressed_loud", object)                           
+    
     local forest_door = object:spawn("forest_ruins_secret_door")
-    forest_door.go.model:disable()
+    forest_door.model:disable()
 end
 
 function slam_object(time_delta, animation)
@@ -211,7 +212,7 @@ castle_of_caral = {well = {"castle_carral_well_cover"},
                    walls = {"robin_castle_spawn_wall_01", "robin_castle_spawn_wall_02", "robin_castle_spawn_wall_03", "robin_castle_spawn_wall_04",
                             "robin_castle_spawn_wall_05", "robin_castle_spawn_wall_06", "robin_castle_spawn_wall_07", "robin_castle_spawn_wall_08",
                             "robin_castle_spawn_wall_09", "robin_castle_spawn_wall_10", "robin_castle_spawn_wall_11", "robin_castle_spawn_wall_12",
-                            "robin_castle_spawn_wall_13", "robin_castle_spawn_wall_14", "robin_castle_spawn_wall_15", "robin_castle_spawn_wall_16",
+                            "robin_castle_spawn_wall_13", "robin_castle_spawn_wall_14", "robin_castle_spawn_wall_15", "robin_castle_spawn_wall_16"
                    },
                    ceilings = {},
                    pillars = {"tomb_pillar_robin_castle_se", "tomb_pillar_robin_castle_sw", "tomb_pillar_robin_castle_ne", "tomb_pillar_robin_castle_nw",
@@ -221,7 +222,7 @@ castle_of_caral = {well = {"castle_carral_well_cover"},
                               "tomb_pillar_robin_castle_13", "tomb_pillar_robin_castle_14", "tomb_pillar_robin_castle_15", "tomb_pillar_robin_castle_16",
                               "tomb_pillar_robin_castle_17", "tomb_pillar_robin_castle_18", "tomb_pillar_robin_castle_19", "tomb_pillar_robin_castle_20",
                               "tomb_pillar_robin_castle_21", "tomb_pillar_robin_castle_22", "tomb_pillar_robin_castle_23", "tomb_pillar_robin_castle_24",
-                              "tomb_pillar_robin_castle_25", "tomb_pillar_robin_castle_26", "tomb_pillar_robin_castle_27", "tomb_pillar_robin_castle_28",   
+                              "tomb_pillar_robin_castle_25", "tomb_pillar_robin_castle_26", "tomb_pillar_robin_castle_27",   
                    },
                    floor_cover = {},
                    towers = {"dome_robin_castle_sw", "dome_robin_castle_s", "dome_robin_castle_se",
@@ -257,7 +258,7 @@ end
 
 function finish_floors(time_delta, animation)
     finish_plop_object(time_delta, animation)
-    grow_pillars(animation.well_of_carals_id)
+    grow_pillars(animation.well_of_caral_id)
 end
 
 function lay_floors(well_of_caral)
@@ -265,7 +266,6 @@ function lay_floors(well_of_caral)
     local well_of_caral_w_pos = well_of_caral:getWorldPosition()   
 
     local animations = {}
-    print("animation go")
     
     local delay = 2.2
     local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, 2, 2, 1, delay, "castle_bridge_grating", "castle_bridge_grating", "water_hit_large_loud")
@@ -276,7 +276,7 @@ function lay_floors(well_of_caral)
         local animation = make_floor_animation(well_of_caral_pos, well_of_caral_w_pos, x, y, 0.7, delay, "castle_bridge_grating", "tomb_floor_01")
         table.insert(animations, animation)           
     end
-    delay = 3.2
+    delay = 3
     for _,xy in ipairs({{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {0,1}, {4,1}, {0,2}, {4,2}, {0,3}, {4,3}, {0,4}, {1,4}, {2,4}, {3,4}}) do
         local x, y = xy[1],xy[2]
         --print(tostring(x).." "..tostring(y))
@@ -294,9 +294,28 @@ function lay_floors(well_of_caral)
     end
 end
 
-function grow_pillars(well_of_carals)
+function finish_grow_pillars(time_delta, animation)
+    finish_raise_bridge(time_delta, animation)
+    fly_in_walls(animation.well_of_caral_id)
+end
+
+function grow_pillars(well_of_caral_id)
+    local well_of_caral = findEntity(well_of_caral_id)
+    local animation
+    local animations = {}
     for _, pillar_id in ipairs(castle_of_caral["pillars"]) do
-        raisePedestal(pillar_id, {sound_name="viper_root_rise"})
+        animation = raisePedestal(pillar_id, true)
+        animation.sound_name = "viper_root_rise"
+        table.insert(animations, animation)
+    end
+    animation = raisePedestal("tomb_pillar_robin_castle_28", true)
+    animation.sound_name = "viper_root_rise"
+    animation.on_finish = finish_grow_pillars
+    animation.well_of_caral_id = well_of_caral.id
+    table.insert(animations, animation)
+    
+    for _,a in ipairs(animations) do
+        global_scripts.script.add_animation(well_of_caral.level, a)
     end
 end
 
@@ -308,31 +327,54 @@ function spawn_wall(animation)
     wall.controller:disable()
     wall:spawn("teleportation_effect")
     
+    animation.object_id = wall.id
     animation.start_pos = wall:getWorldPosition()
     
+    animation.on_finish_pos = {x=wall.x, y=wall.y, facing=wall.facing, elevation=wall.elevation, level=wall.level}
     animation.dx = 0
     animation.dy = 0
     animation.dz = 0
     if wall.facing == 0 then
-        animation.dx = 3
+        animation.dz = 6
+        animation.on_finish_pos.y = animation.on_finish_pos.y - 2
     elseif wall.facing == 1 then
-        animation.dz = 3
+        animation.dx = 6
+        animation.on_finish_pos.x = animation.on_finish_pos.x + 2
     elseif wall.facing == 2 then
-        animation.dx = -3
+        animation.dz = -6
+        animation.on_finish_pos.y = animation.on_finish_pos.y + 2
     elseif wall.facing == 3 then        
-        animation.dz = -3
+        animation.dx = -6
+        animation.on_finish_pos.x = animation.on_finish_pos.x - 2
     end    
 end
 
-function fly_in_walls(well_of_carals)
-    local delay = 0
-    for _, spawn_wall_marker_id in ipairs(castle_of_caral["walls"]) do
-        local animation = {on_start=spawn_wall, func=slam_object, on_finish=finish_slam_object, step=0.05, duration=1, delay=delay, spawn_wall_marker_id=spawn_wall_marker_id, on_finish_pos=on_finish_pos}
-        delay = delay + .2
-    end
+function finish_fly_in_walls(time_delta, animation)
+    finish_slam_object(time_delta, animation)
+    
 end
 
-function grow_towers(well_of_carals)
+function fly_in_walls(well_of_carals_id)
+    local well_of_caral = findEntity(well_of_carals_id)
+    local delay = 0
+    local animations = {}
+    for _, spawn_wall_marker_id in ipairs(castle_of_caral["walls"]) do
+        local animation = {on_start=spawn_wall, func=slam_object, on_finish=finish_slam_object, step=0.05, duration=1, delay=delay, spawn_wall_marker_id=spawn_wall_marker_id}
+        table.insert(animations, animation)
+        delay = delay + .2
+    end
+    
+    local animation = {on_start=spawn_wall, func=slam_object, on_finish=finish_fly_in_walls, step=0.05, duration=1, delay=delay, spawn_wall_marker_id="robin_castle_spawn_wall_16"}
+    animation.well_of_caral_id = well_of_caral_id
+    table.insert(animations, animation)
+    
+    for _,a in ipairs(animations) do
+        global_scripts.script.add_animation(well_of_caral.level, a)
+    end 
+end
+
+function grow_towers(well_of_caral_id)
+    local well_of_caral = findEntity(well_of_carals_id)
     for _, tower_id in ipairs(castle_of_caral["corner_towers"]) do
     
     end
@@ -356,26 +398,29 @@ function castleCornerStonePedestalOnInsertItem(pedestal, item)
     end
 end
 
-function raisePedestal(pedestal_id, overrides)
-    local height, sound_name
-    if overrides ~= nil then
-        height = overrides.height or 1
-        sound_name = overrides.sound_name or "gate_iron_open"
-    end
+function start_raise_pedestal(animation)
+    local pedestal = findEntity(animation.bridge_id)
+    global_scripts.script.playSoundAtObject(animation.sound_name, pedestal)    
+end
+
+function raisePedestal(pedestal_id, return_animation)
     local pedestal = findEntity(pedestal_id)
     local pedestal_w_pos = pedestal:getWorldPosition()
     local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
-    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3*height, z=pedestal_w_pos.z}
+    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
     
     local curve = {p1 = {x=0, y=0},
                    p2 = {x=0.5,y=0},
                    p3 = {x=0.5,y=1},
                    p4 = {x=1, y=1}}
 
-    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+height, level=pedestal.level}
-    local animation = {func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, elapsed=0, last_called=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos, curve=curve}
-    global_scripts.script.add_animation(pedestal.level, animation)
-    global_scripts.script.playSoundAtObject(sound_name, pedestal)
+    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+1, level=pedestal.level}
+    local animation = {on_start=start_raise_pedestal, func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, delay=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos, curve=curve, sound_name="gate_iron_open"}
+    if return_animation then
+        return animation
+    else
+        global_scripts.script.add_animation(pedestal.level, animation)
+    end
 end
 
 function robinBuildsCastle(trigger)            

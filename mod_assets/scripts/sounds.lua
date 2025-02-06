@@ -42,3 +42,12 @@ defineSound{
 	minDistance = 10,
 	maxDistance = 15,
 }
+
+defineSound{
+	name = "pressure_plate_pressed_loud",
+	filename = "assets/samples/env/pressure_plate_down_01.wav",
+	loop = false,
+	volume = 1,
+	minDistance = 10,
+	maxDistance = 15,
+}
