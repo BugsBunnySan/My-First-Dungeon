@@ -209,25 +209,22 @@ function move_object(time_delta, animation)
 end
 
 castle_of_caral = {well = {"castle_carral_well_cover"},
-                   walls = {"robin_castle_spawn_wall_01", "robin_castle_spawn_wall_02", "robin_castle_spawn_wall_03", "robin_castle_spawn_wall_04",
+                   walls = {"robin_castle_spawn_wall_15", "robin_castle_spawn_wall_16",
+                            "robin_castle_spawn_wall_01", "robin_castle_spawn_wall_02", "robin_castle_spawn_wall_03", "robin_castle_spawn_wall_04",
                             "robin_castle_spawn_wall_05", "robin_castle_spawn_wall_06", "robin_castle_spawn_wall_07", "robin_castle_spawn_wall_08",
                             "robin_castle_spawn_wall_09", "robin_castle_spawn_wall_10", "robin_castle_spawn_wall_11", "robin_castle_spawn_wall_12",
-                            "robin_castle_spawn_wall_13", "robin_castle_spawn_wall_14", "robin_castle_spawn_wall_15", "robin_castle_spawn_wall_16"
+                            "robin_castle_spawn_wall_13", "robin_castle_spawn_wall_14"
                    },
-                   ceilings = {},
+                   ceilings = {"castle_bridge_robin_01", "castle_bridge_robin_02", "castle_bridge_robin_03", "castle_bridge_robin_04",
+                               "castle_bridge_robin_05", "castle_bridge_robin_06", "castle_bridge_robin_07", "castle_bridge_robin_08",
+                               "castle_bridge_robin_09", "castle_bridge_robin_10", "castle_bridge_robin_11"},
                    pillars = {"tomb_pillar_robin_castle_se", "tomb_pillar_robin_castle_sw", "tomb_pillar_robin_castle_ne", "tomb_pillar_robin_castle_nw",
                               "tomb_pillar_robin_castle_01", "tomb_pillar_robin_castle_02", "tomb_pillar_robin_castle_03", "tomb_pillar_robin_castle_04",
                               "tomb_pillar_robin_castle_05", "tomb_pillar_robin_castle_06", "tomb_pillar_robin_castle_07", "tomb_pillar_robin_castle_08", 
                               "tomb_pillar_robin_castle_09", "tomb_pillar_robin_castle_10", "tomb_pillar_robin_castle_11", "tomb_pillar_robin_castle_12",
-                              "tomb_pillar_robin_castle_13", "tomb_pillar_robin_castle_14", "tomb_pillar_robin_castle_15", "tomb_pillar_robin_castle_16",
-                              "tomb_pillar_robin_castle_17", "tomb_pillar_robin_castle_18", "tomb_pillar_robin_castle_19", "tomb_pillar_robin_castle_20",
-                              "tomb_pillar_robin_castle_21", "tomb_pillar_robin_castle_22", "tomb_pillar_robin_castle_23", "tomb_pillar_robin_castle_24",
-                              "tomb_pillar_robin_castle_25", "tomb_pillar_robin_castle_26", "tomb_pillar_robin_castle_27",   
                    },
-                   floor_cover = {},
-                   towers = {"dome_robin_castle_sw", "dome_robin_castle_s", "dome_robin_castle_se",
-                             "dome_robin_castle_e", "dome_robin_castle_w",
-                             "dome_robin_castle_nw", "dome_robin_castle_n", "dome_robin_castle_ne",
+                   domes = {entrances = {"dome_robin_castle_s","dome_robin_castle_e", "dome_robin_castle_w", "dome_robin_castle_n"},
+                            towers = {"dome_robin_castle_sw", "dome_robin_castle_se", "dome_robin_castle_nw", "dome_robin_castle_ne"}
                    },
                    pedestals = {"robin_castle_pedestal_se", "robin_castle_pedestal_sw", "robin_castle_pedestal_ne", "robin_castle_pedestal_nw"}}
 castle_of_caral_virtues = {tome_health = 1,
@@ -303,13 +300,71 @@ function grow_pillars(well_of_caral_id)
     local well_of_caral = findEntity(well_of_caral_id)
     local animation
     local animations = {}
+    for _, entrance_dome_id in ipairs(castle_of_caral["domes"]["entrances"]) do
+        animation = raisePedestal(entrance_dome_id, true)
+        animation.sound_name = "water_hit_small"
+        table.insert(animations, animation)
+    end
+    for _, tower_dome_id in ipairs(castle_of_caral["domes"]["towers"]) do
+        animation = raisePedestal(tower_dome_id, true)
+        animation.sound_name = "water_hit_small"
+        table.insert(animations, animation)
+    end
+    
     for _, pillar_id in ipairs(castle_of_caral["pillars"]) do
         animation = raisePedestal(pillar_id, true)
         animation.sound_name = "viper_root_rise"
+        animation.delay = 3
         table.insert(animations, animation)
     end
-    animation = raisePedestal("tomb_pillar_robin_castle_28", true)
-    animation.sound_name = "viper_root_rise"
+    for _, ceiling_id in ipairs(castle_of_caral["ceilings"]) do
+        animation = raisePedestal(ceiling_id, true)
+        animation.sound_name = nil
+        animation.delay = 3
+        table.insert(animations, animation)
+    end
+    for _, entrance_dome_id in ipairs(castle_of_caral["domes"]["entrances"]) do
+        animation = raisePedestal(entrance_dome_id, true)
+        animation.delay = 3
+        animation.start_pos.y = animation.start_pos.y + 3
+        animation.on_finish_pos.elevation = animation.on_finish_pos.elevation + 1
+        animation.stop_pos.y = animation.stop_pos.y + 3
+        table.insert(animations, animation)
+    end
+    for _, tower_dome_id in ipairs(castle_of_caral["domes"]["towers"]) do
+        animation = raisePedestal(tower_dome_id, true)
+        animation.delay = 3
+        animation.start_pos.y = animation.start_pos.y + 3
+        animation.stop_pos.y = animation.stop_pos.y + 3
+        animation.on_finish_pos.elevation = animation.on_finish_pos.elevation + 1
+        table.insert(animations, animation)
+    end
+    
+    
+    for _, ceiling_id in ipairs(castle_of_caral["ceilings"]) do
+        animation = raisePedestal(ceiling_id, true)
+        animation.sound_name = nil
+        animation.delay = 6
+        animation.start_pos.y = animation.start_pos.y + 3
+        animation.stop_pos.y = animation.stop_pos.y + 3
+        animation.on_finish_pos.elevation = animation.on_finish_pos.elevation + 1
+        table.insert(animations, animation)
+    end
+    for _, tower_dome_id in ipairs(castle_of_caral["domes"]["towers"]) do
+        animation = raisePedestal(tower_dome_id, true)
+        animation.delay = 6
+        animation.start_pos.y = animation.start_pos.y + 6
+        animation.stop_pos.y = animation.stop_pos.y + 6
+        animation.on_finish_pos.elevation = animation.on_finish_pos.elevation + 2
+        table.insert(animations, animation)
+    end
+    
+    animation = raisePedestal("castle_bridge_robin_12", true)
+    animation.sound_name = nil
+    animation.delay = 6
+    animation.start_pos.y = animation.start_pos.y + 3
+    animation.stop_pos.y = animation.stop_pos.y + 3
+    animation.on_finish_pos.elevation = animation.on_finish_pos.elevation + 1
     animation.on_finish = finish_grow_pillars
     animation.well_of_caral_id = well_of_caral.id
     table.insert(animations, animation)
@@ -335,27 +390,84 @@ function spawn_wall(animation)
     animation.dy = 0
     animation.dz = 0
     if wall.facing == 0 then
-        animation.dz = 6
-        animation.on_finish_pos.y = animation.on_finish_pos.y - 2
+        animation.dz = 3
+        animation.on_finish_pos.y = animation.on_finish_pos.y - 1
     elseif wall.facing == 1 then
-        animation.dx = 6
-        animation.on_finish_pos.x = animation.on_finish_pos.x + 2
+        animation.dx = 3
+        animation.on_finish_pos.x = animation.on_finish_pos.x + 1
     elseif wall.facing == 2 then
-        animation.dz = -6
-        animation.on_finish_pos.y = animation.on_finish_pos.y + 2
+        animation.dz = -3
+        animation.on_finish_pos.y = animation.on_finish_pos.y + 1
     elseif wall.facing == 3 then        
-        animation.dx = -6
-        animation.on_finish_pos.x = animation.on_finish_pos.x - 2
+        animation.dx = -3
+        animation.on_finish_pos.x = animation.on_finish_pos.x - 1
     end    
+end
+
+function do_light_up_glow_light(dome_id)
+    local dome = findEntity(dome_id)
+    local glow_light = global_scripts.script.spawnAtObject("pushable_block_floor_trigger", dome, nil, nil, nil, 1)
+    glow_light.model:disable()
+    glow_light.controller:disable()
+    glow_light.floortrigger:disable()
+    glow_light.light:enable()
+    glow_light.particle:enable()
+end
+
+function light_up_glow_light(animation)
+    do_light_up_glow_light(animation.dome_id)
+end
+
+function light_up_well(animation)
+    local well_of_caral = findEntity(animation.well_of_caral_id)
+    local light = global_scripts.script.spawnAtObject("pushable_block_floor", well_of_caral)
+    light.model:disable()
+    light.controller:disable()
+    light.light:enable()
+    light.particle:enable()    
+end
+
+function finish_build_castle(animation)
+    local well_of_caral = findEntity(animation.well_of_caral_id)    
+    -- deactivate pushblock trigger, keep light ofc
+    global_scripts.script.faceObject(pushblock_robin, 1)
+    global_scripts.script.party_level_up_champions({1,2,3,4})
+    goTilNoon(well_of_caral)    
+end
+
+function light_up(well_of_caral_id)
+    local animations = {}
+    local well_of_caral = findEntity(well_of_caral_id)
+    
+    local animation = {on_start=light_up_well, func=nil, on_finish=nil, step=1, duration=-1, delay=.5, well_of_caral_id=well_of_caral.id}
+    table.insert(animations, animation)
+    
+    for _, entrance_dome_id in ipairs(castle_of_caral["domes"]["entrances"]) do
+        animation = {on_start=light_up_glow_light, func=nil, on_finish=nil, step=1, duration=-1, delay=1, dome_id=entrance_dome_id}
+        table.insert(animations, animation)
+    end
+    
+    for _, tower_dome_id in ipairs(castle_of_caral["domes"]["towers"]) do
+        animation = {on_start=light_up_glow_light, func=nil, on_finish=nil, step=1, duration=-1, delay=1.5, dome_id=tower_dome_id}
+        table.insert(animations, animation)
+    end
+    
+    animation = {on_start=finish_build_castle, func=nil, on_finish=nil, step=1, duration=-1, delay=2, dome_id=tower_dome_id}
+    animation.well_of_caral_id = well_of_caral_id
+    table.insert(animations, animation)
+    
+    for _,a in ipairs(animations) do
+        global_scripts.script.add_animation(well_of_caral.level, a)
+    end
 end
 
 function finish_fly_in_walls(time_delta, animation)
     finish_slam_object(time_delta, animation)
-    
+    light_up(animation.well_of_caral_id)
 end
 
-function fly_in_walls(well_of_carals_id)
-    local well_of_caral = findEntity(well_of_carals_id)
+function fly_in_walls(well_of_caral_id)
+    local well_of_caral = findEntity(well_of_caral_id)
     local delay = 0
     local animations = {}
     for _, spawn_wall_marker_id in ipairs(castle_of_caral["walls"]) do
@@ -383,7 +495,13 @@ end
 function buildCastle()  
     --hudPrint("A gentle force moves you")
     --global_scripts.script.moveObjectToObject(party, robin_build_castle_observe)
-    --global_scripts.script.playSoundAtObject("teleport", party)
+    for _,pedestal_id in ipairs(castle_of_caral.pedestals) do
+        local animation = raisePedestal(pedestal_id, true)
+        animation.stop_pos.y = animation.stop_pos.y + - 6
+        animation.on_finish_pos.elevation = animation.on_finish_pos.elevation - 2
+        global_scripts.script.add_animation(well_of_caral.level, animation)     
+    end
+    playSound("blow_horn")    
     local well_of_caral = findEntity("well_of_caral")  
     lay_floors(well_of_caral)
 end
@@ -399,6 +517,9 @@ function castleCornerStonePedestalOnInsertItem(pedestal, item)
 end
 
 function start_raise_pedestal(animation)
+    if animation.sound_name == nil then
+        return
+    end
     local pedestal = findEntity(animation.bridge_id)
     global_scripts.script.playSoundAtObject(animation.sound_name, pedestal)    
 end
@@ -804,6 +925,7 @@ function setTOD(time_delta, animation)
 end
 
 function goTilMorning(lever)
+    local lever = global_scripts.script.getGO(lever)
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -817,10 +939,11 @@ function goTilMorning(lever)
     end
     
     local animation = {func=moveTOD, on_finish=setTOD, step=step, duration=duration, elapsed=0, last_called=-1, targetTime=maxtime, tick=tick}
-    global_scripts.script.add_animation(lever.go.level, animation)
+    global_scripts.script.add_animation(lever.level, animation)
 end
 
 function goTilNoon(lever)
+    local lever = global_scripts.script.getGO(lever)
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -836,10 +959,11 @@ function goTilNoon(lever)
     end
     
     local animation = {func=moveTOD, on_finish=setTOD, step=step, duration=duration, elapsed=0, last_called=-1, targetTime=noon, tick=tick}
-    global_scripts.script.add_animation(lever.go.level, animation)
+    global_scripts.script.add_animation(lever.level, animation)
 end
 
 function goTilEvening(lever)
+    local lever = global_scripts.script.getGO(lever)
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -855,10 +979,11 @@ function goTilEvening(lever)
     end
     
     local animation = {func=moveTOD, on_finish=setTOD, step=step, duration=duration, elapsed=0, last_called=-1, targetTime=evening, tick=tick}
-    global_scripts.script.add_animation(lever.go.level, animation)
+    global_scripts.script.add_animation(lever.level, animation)
 end
 
 function goTilMidnight(lever)
+    local lever = global_scripts.script.getGO(lever)
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -874,7 +999,7 @@ function goTilMidnight(lever)
     end
     
     local animation = {func=moveTOD, on_finish=setTOD, step=step, duration=duration, elapsed=0, last_called=-1, targetTime=midnight, tick=tick}
-    global_scripts.script.add_animation(lever.go.level, animation)
+    global_scripts.script.add_animation(lever.level, animation)
 end
 
 function onPutItem(surface, item)

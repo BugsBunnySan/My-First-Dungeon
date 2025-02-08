@@ -139,6 +139,15 @@ function party_consume_food(champions, amount)
     end
 end
 
+function party_level_up_champions(champions)
+    for _, i in ipairs(champions) do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            champion:levelUp()
+        end
+    end
+end
+
 function party_gain_xp(champions, amount)
     for _, i in ipairs(champions) do
         local champion = party.party:getChampion(i)
