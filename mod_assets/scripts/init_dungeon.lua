@@ -79,7 +79,7 @@ end
 function initCloister()    
     local essence_of_air = spawn("essence_air").item
     beacon_air.socket:addItem(essence_of_air)    
-    timer_4.timer:start()
+    --timer_4.timer:start()
 end
 
 function initBeach()

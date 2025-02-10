@@ -5393,16 +5393,16 @@ robin_castle_ogre.charge:disable()
 spawn("invisible_wall",15,12,1,0,"spawn_robin_castle_1")
 spawn_robin_castle_1.obstacle:disable()
 spawn_robin_castle_1.projectilecollider:disable()
-spawn("beach_lever",15,30,3,0,"robin_timeofday_lever_evening")
+spawn("beach_lever",14,30,3,0,"robin_timeofday_lever_evening")
 robin_timeofday_lever_evening.lever:setDisableSelf(false)
 robin_timeofday_lever_evening.lever:addConnector("onActivate", "triels_robin_script_entitiy", "goTilEvening")
-spawn("beach_lever",15,30,2,0,"robin_timeofday_lever_noon")
+spawn("beach_lever",14,30,2,0,"robin_timeofday_lever_noon")
 robin_timeofday_lever_noon.lever:setDisableSelf(false)
 robin_timeofday_lever_noon.lever:addConnector("onActivate", "triels_robin_script_entitiy", "goTilNoon")
-spawn("beach_lever",15,30,1,0,"robin_timeofday_lever_morning")
+spawn("beach_lever",14,30,1,0,"robin_timeofday_lever_morning")
 robin_timeofday_lever_morning.lever:setDisableSelf(false)
 robin_timeofday_lever_morning.lever:addConnector("onActivate", "triels_robin_script_entitiy", "goTilMorning")
-spawn("beach_lever",15,29,0,0,"robin_timeofday_lever_midnight")
+spawn("beach_lever",14,29,0,0,"robin_timeofday_lever_midnight")
 robin_timeofday_lever_midnight.lever:setDisableSelf(false)
 robin_timeofday_lever_midnight.lever:addConnector("onActivate", "triels_robin_script_entitiy", "goTilMidnight")
 spawn("pushable_block_floor_trigger",22,17,1,0,"pushblock_trigger_robin_after_forest")
@@ -5501,12 +5501,6 @@ robin_castle_wall_06.flames:disable()
 spawn("dungeon_wall_burning_01",20,6,2,0,"robin_castle_wall_03")
 robin_castle_wall_03.smoke:disable()
 robin_castle_wall_03.flames:disable()
-spawn("timer",1,26,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("dungeon_wall_burning_01",22,8,0,0,"robin_castle_wall_07")
 robin_castle_wall_07.model:disable()
 robin_castle_wall_07.occluder:disable()
@@ -6064,7 +6058,6 @@ spawn("tome_wisdom",11,7,3,0,"tome_wisdom_1")
 spawn("tome_leadership",11,7,2,0,"tome_leadership_1")
 spawn("tome_energy",11,7,0,0,"tome_energy_1")
 spawn("tome_health",11,7,1,0,"tome_health_1")
-spawn("starting_location",10,7,3,1,"starting_location_1")
 spawn("tomb_pillar",3,9,0,-1,"tomb_pillar_robin_castle_01")
 spawn("tomb_pillar",4,9,0,-1,"tomb_pillar_robin_castle_02")
 spawn("tomb_pillar",7,9,0,-1,"tomb_pillar_robin_castle_03")
@@ -6145,6 +6138,14 @@ spawn("castle_bridge",4,4,2,-1,"castle_bridge_robin_09")
 spawn("castle_bridge",6,4,2,-1,"castle_bridge_robin_08")
 spawn("castle_bridge",4,8,2,-1,"castle_bridge_robin_02")
 spawn("castle_bridge",6,8,2,-1,"castle_bridge_robin_03")
+spawn("castle_secret_door",15,30,2,0,"castle_secret_door_13")
+spawn("forest_plant_cluster_01",15,29,2,0,"forest_plant_cluster_01_13")
+forest_plant_cluster_01_13.obstacle:disable()
+forest_plant_cluster_01_13.projectilecollider:disable()
+spawn("forest_plant_cluster_01",15,30,2,0,"forest_plant_cluster_01_14")
+forest_plant_cluster_01_14.obstacle:disable()
+forest_plant_cluster_01_14.projectilecollider:disable()
+spawn("forest_oak_cluster",15,30,0,0,"forest_oak_cluster_4")
 
 --- level 9 ---
 
@@ -6328,3 +6329,97 @@ pushable_block_floor_trigger_4.floortrigger:setDisableSelf(false)
 pushable_block_floor_trigger_4.floortrigger:addConnector("onActivate", "forest_script_entity", "liteUpPushblockFloorAnimation")
 spawn("pushable_block_floor",13,16,3,0,"pushable_block_floor_16")
 pushable_block_floor_16.model:disable()
+
+--- level 10 ---
+
+newMap{
+	name = "test inside",
+	width = 32,
+	height = 32,
+	levelCoord = {0,99,0},
+	ambientTrack = "dungeon",
+	tiles = {
+		"dungeon_floor",
+		"dungeon_wall",
+	}
+}
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,2,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+spawn("starting_location",10,26,0,0,"starting_location_1")
+spawn("timer",0,31,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("floor_trigger",10,17,3,0,"floor_trigger_26")
+floor_trigger_26.floortrigger:setTriggeredByParty(true)
+floor_trigger_26.floortrigger:setTriggeredByMonster(false)
+floor_trigger_26.floortrigger:setTriggeredByItem(false)
+floor_trigger_26.floortrigger:setTriggeredByDigging(false)
+floor_trigger_26.floortrigger:setDisableSelf(false)
+floor_trigger_26.floortrigger:addConnector("onActivate", "script_entity_1", "spawnDungeonSection")
+spawn("script_entity",7,23,0,0,"script_entity_1")
+script_entity_1.script:loadFile("mod_assets/scripts/test_inside.lua")
+spawn("cemetery_sky",8,26,1,0,"test_inside_sky")
+test_inside_sky.model:disable()
+test_inside_sky.nightSky:disable()
+test_inside_sky.stars:disable()
+test_inside_sky.light:disable()
+test_inside_sky.ambient:disable()
+test_inside_sky.lensflare:disable()
+spawn("floor_trigger",10,17,2,0,"floor_trigger_28")
+floor_trigger_28.floortrigger:setTriggeredByParty(true)
+floor_trigger_28.floortrigger:setTriggeredByMonster(false)
+floor_trigger_28.floortrigger:setTriggeredByItem(false)
+floor_trigger_28.floortrigger:setTriggeredByDigging(false)
+floor_trigger_28.floortrigger:setDisableSelf(true)
+floor_trigger_28.floortrigger:addConnector("onActivate", "script_entity_1", "init")
+spawn("dungeon_wall_text",11,25,0,0,"dungeon_wall_text_2")
+dungeon_wall_text_2.walltext:setWallText("The Cruek Maze")
+spawn("dungeon_door_iron_barred",10,25,0,0,"dungeon_door_iron_barred_1")
+dungeon_door_iron_barred_1.door:setDoorState("open")
+spawn("invisible_teleporter",10,24,0,0,"invisible_teleporter_2")
+invisible_teleporter_2.teleporter:setTeleportTarget(10,10,17,0)
+invisible_teleporter_2.teleporter:setSpin("none")
+invisible_teleporter_2.teleporter:setTriggeredByParty(true)
+invisible_teleporter_2.teleporter:setTriggeredByMonster(true)
+invisible_teleporter_2.teleporter:setTriggeredByItem(true)
+invisible_teleporter_2.teleporter:setTriggeredBySpell(true)
+spawn("invisible_wall",10,18,2,0,"spawn_last_section")
+spawn_last_section.obstacle:disable()
+spawn_last_section.projectilecollider:disable()
