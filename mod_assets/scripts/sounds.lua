@@ -51,3 +51,41 @@ defineSound{
 	minDistance = 10,
 	maxDistance = 15,
 }
+
+defineSound{
+	name = "trickster_escape_low",
+	filename = "assets/samples/monsters/trickster_escape_01.wav",
+	loop = false,
+	volume = .1,
+	minDistance = 3,
+	maxDistance = 10,
+}
+
+defineSound{
+	name = "trickster_laugh_low",
+	filename = "assets/samples/monsters/trickster_laugh_01.wav",
+	loop = false,
+	volume = .1,
+	minDistance = 4,
+	maxDistance = 13,
+}
+defineSound{
+	name = "trickster_walk_low",
+	filename = {
+		"assets/samples/monsters/trickster_walk_01.wav",
+		"assets/samples/monsters/trickster_walk_01.wav",
+		"assets/samples/monsters/trickster_walk_01.wav",
+		"assets/samples/monsters/trickster_walk_02.wav",
+		"assets/samples/monsters/trickster_walk_02.wav",
+		"assets/samples/monsters/trickster_walk_02.wav",
+		"assets/samples/monsters/trickster_walk_03.wav",
+		"assets/samples/monsters/trickster_walk_03.wav",
+		"assets/samples/monsters/trickster_walk_03.wav",
+		--"assets/samples/monsters/trickster_walk_04.wav",
+		"assets/samples/monsters/trickster_walk_05.wav",
+	},
+	loop = false,
+	volume = 0.7,
+	minDistance = 1,
+	maxDistance = 8,
+}

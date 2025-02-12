@@ -298,6 +298,10 @@ function getGO(entity)
     end
 end
 
+function copy_pos(pos)
+    return {x=pos.x, y=pos.y, facing=pos.facing, elevation=pos.elevation, level=pos.level}    
+end
+
 -- find a location amongst locations (must be an array), that are free of anything (occupiers == nil)
 -- or free of any of the item classes listed in occupiers (which must be a table with the class names as keys)
 function findEmptySpot(locations, occupiers)
