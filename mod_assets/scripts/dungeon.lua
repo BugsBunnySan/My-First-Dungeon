@@ -6379,7 +6379,7 @@ loadLayer("tiles", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 })
 
-spawn("starting_location",10,29,0,0,"starting_location_1")
+spawn("starting_location",10,25,0,0,"starting_location_1")
 spawn("timer",0,31,1,0,"timer_5")
 timer_5.timer:setTimerInterval(0)
 timer_5.timer:setDisableSelf(true)
