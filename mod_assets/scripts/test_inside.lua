@@ -20,9 +20,12 @@ function spawn_floor_trigger(x, y, facing, elevation, level, section)
     sections[floor_trigger.id] = section
     
     floor_trigger:setPosition(x, y, facing, elevation, level)
-    floor_trigger.floortrigger:addConnector("onActivate", "test_inside_script_entity", "onActivateSectionFloorTrigger")
+    floor_trigger.floortrigger:setTriggeredByItem(false)
+    floor_trigger.floortrigger:setTriggeredByMonster(false)
+    floor_trigger.floortrigger:setTriggeredByDigging(false)
     floor_trigger.floortrigger:setDisableSelf(true)
-    
+    floor_trigger.floortrigger:addConnector("onActivate", "test_inside_script_entity", "onActivateSectionFloorTrigger")
+        
     --floor_trigger.floortrigger:disable()
     table.insert(section.floor_triggers, floor_trigger.id)    
 end
@@ -98,6 +101,30 @@ function straight_ahead(pos, spawn, section)
     pos_straight_ahead(pos)
 end
 
+function straight_ahead_left(pos, spawn, section)
+    if spawn then
+        spawn_wall(pos.x, pos.y, modulo_facing(pos.facing - 1), pos.elevation, pos.level, section)
+    end
+    
+    pos_straight_ahead(pos)
+end
+
+function straight_ahead_right(pos, spawn, section)
+    if spawn then
+        spawn_wall(pos.x, pos.y, modulo_facing(pos.facing + 1), pos.elevation, pos.level, section)
+    end
+    
+    pos_straight_ahead(pos)
+end
+
+function straight_ahead_ahead(pos, spawn, section)
+    if spawn then
+        spawn_wall(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)
+    end
+    
+    pos_straight_ahead(pos)
+end
+
 function turn_left(pos, spawn, section)
     if spawn then
         local left = modulo_facing(pos.facing + 1)
@@ -140,7 +167,10 @@ function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits)
         exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"straight"}, arch_facing, false)
         section.exit_types[1] = exit_section.section_type
     else
-        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)            
+        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)             
+        for i, exit_type in ipairs(exit_types) do
+            section.exit_types[i] = exit_type
+        end          
     end
 
     straight_ahead(pos, true, section)
@@ -148,7 +178,9 @@ function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits)
     straight_ahead(pos, true, section)
     
     if spawn_exits == true then
-        exit_pos = global_scripts.script.copy_pos(pos)
+        exit_pos = global_scripts.script.copy_pos(pos) 
+        arch_facing = modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)       
         
         exit_section = spawn_functions["empty"]("empty", exit_pos, {"straight"}, arch_facing, false)
         section.exit_types[2] = exit_section.section_type 
@@ -179,7 +211,10 @@ function spawn_left_turn(section_type, pos, exit_types, arch_facing, spawn_exits
         exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"left_turn"}, arch_facing, false)
         section.exit_types[1] = exit_section.section_type
     else
-        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)            
+        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)           
+        for i, exit_type in ipairs(exit_types) do
+            section.exit_types[i] = exit_type
+        end           
     end
 
     straight_ahead(pos, true, section)
@@ -187,10 +222,11 @@ function spawn_left_turn(section_type, pos, exit_types, arch_facing, spawn_exits
     straight_ahead(pos, true, section)
     
     if spawn_exits == true then
-        exit_pos = global_scripts.script.copy_pos(pos)
-        spawn_arch(exit_pos.x, exit_pos.y, exit_pos.facing, exit_pos.elevation, exit_pos.level, section)        
+        exit_pos = global_scripts.script.copy_pos(pos) 
+        arch_facing = modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)       
         
-        exit_section = spawn_functions["empty"]("empty", exit_pos, {"right_turn"}, exit_pos.facing, false)
+        exit_section = spawn_functions["empty"]("empty", exit_pos, {"right_turn"}, arch_facing, false)
         section.exit_types[2] = exit_section.section_type
     end
         
@@ -208,7 +244,7 @@ function spawn_right_turn(section_type, pos, exit_types, arch_facing, spawn_exit
                      exit_types = {"empty", "empty"}}
 
     local exit_section
-                                          
+                                             
     if spawn_exits == true then
         local exit_pos = global_scripts.script.copy_pos(pos)  
         arch_facing = arch_facing or modulo_facing(pos.facing + 2)
@@ -221,6 +257,9 @@ function spawn_right_turn(section_type, pos, exit_types, arch_facing, spawn_exit
         section.exit_types[1] = exit_section.section_type  
     else
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)            
+        for i, exit_type in ipairs(exit_types) do
+            section.exit_types[i] = exit_type
+        end
     end
 
     straight_ahead(pos, true, section)
@@ -228,10 +267,11 @@ function spawn_right_turn(section_type, pos, exit_types, arch_facing, spawn_exit
     straight_ahead(pos, true, section)
     
     if spawn_exits == true then
-        exit_pos = global_scripts.script.copy_pos(pos)
-        spawn_arch(exit_pos.x, exit_pos.y, exit_pos.facing, exit_pos.elevation, exit_pos.level, section)        
+        exit_pos = global_scripts.script.copy_pos(pos)  
+        arch_facing = modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)        
         
-        exit_section = spawn_functions["empty"]("empty", exit_pos, {"left_turn"}, exit_pos.facing, false)
+        exit_section = spawn_functions["empty"]("empty", exit_pos, {"left_turn"}, arch_facing, false)
         section.exit_types[2] = exit_section.section_type 
     end
         
@@ -240,8 +280,164 @@ function spawn_right_turn(section_type, pos, exit_types, arch_facing, spawn_exit
     return section 
 end
 
+function spawn_T_junction(section_type, pos, exit_types, arch_facing, spawn_exits)
+    local section = {section_type = section_type,
+                     facing = pos.facing,
+                     arch_facing = arch_facing,
+                     walls = {},
+                     floor_triggers = {},
+                     exit_types = {"empty", "empty", "empty"}}
+
+    local exit_section
+    local exit_pos
+
+    if spawn_exits == true then
+        if section_type == "T_junction_left" then
+            -- exit 1
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_reverse(exit_pos)
+            pos_straight_ahead(exit_pos)
+            
+            arch_facing = arch_facing or modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)             
+            exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"T_junction_left"}, arch_facing, false)
+            section.exit_types[1] = exit_section.section_type 
+            
+            -- exit 2
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_ahead(exit_pos)
+            pos_left(exit_pos)
+            pos_straight_ahead(exit_pos)
+            pos_straight_ahead(exit_pos)
+            
+            arch_facing = modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)             
+            exit_section = spawn_functions["empty"]("empty", exit_pos, {"T_junction_T"}, arch_facing, false)
+            section.exit_types[2] = exit_section.section_type 
+            
+            -- exit 3
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_ahead(exit_pos)
+            pos_straight_ahead(exit_pos)
+            pos_straight_ahead(exit_pos)
+
+            arch_facing = modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions["empty"]("empty", exit_pos, {"T_junction_right"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type                        
+        elseif section_type == "T_junction_T" then  
+            -- exit 1
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_reverse(exit_pos)      
+            pos_straight_ahead(exit_pos) 
+            
+            arch_facing = arch_facing or modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"T_junction_T"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type 
+            
+            -- exit 2
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_ahead(exit_pos)
+            pos_left(exit_pos)
+            pos_straight_ahead(exit_pos) 
+            
+            arch_facing = modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions["empty"]("empty", exit_pos, {"T_junction_right"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type      
+            
+            --exit 3
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_ahead(exit_pos)
+            pos_right(exit_pos)
+            pos_straight_ahead(exit_pos)    
+            
+            arch_facing = modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions["empty"]("empty", exit_pos, {"T_junction_left"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type 
+        elseif section_type == "T_junction_right" then 
+            -- exit 1
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_reverse(exit_pos)      
+            pos_straight_ahead(exit_pos)    
+            
+            arch_facing = arch_facing or modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"T_junction_right"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type            
+             
+            -- exit 2
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_ahead(exit_pos)
+            pos_straight_ahead(exit_pos)
+            pos_straight_ahead(exit_pos)    
+            
+            arch_facing = modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions["empty"]("empty", exit_pos, {"T_junction_left"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type 
+            
+            -- exit 3
+            exit_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_ahead(exit_pos)
+            pos_right(exit_pos)
+            pos_straight_ahead(exit_pos)
+            pos_straight_ahead(exit_pos)    
+            
+            arch_facing = modulo_facing(exit_pos.facing + 2)
+            spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)            
+            exit_section = spawn_functions["empty"]("empty", exit_pos, {"T_junction_T"}, arch_facing, false)
+            section.exit_types[3] = exit_section.section_type                        
+        end
+    else
+        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)            
+        for i, exit_type in ipairs(exit_types) do
+            section.exit_types[i] = exit_type
+        end
+    end
+
+    if section_type == "T_junction_left" then
+        straight_ahead(pos, true, section)
+        
+        local spawn_pos = global_scripts.script.copy_pos(pos)
+        pos_left(spawn_pos)
+        pos_straight_ahead(spawn_pos)
+        straight_ahead(spawn_pos, true, section)
+        
+        straight_ahead_right(pos, true, section)
+        straight_ahead(pos, true, section)        
+    elseif section_type == "T_junction_T" then 
+        straight_ahead(pos, true, section)
+        
+        local spawn_pos = global_scripts.script.copy_pos(pos)
+        pos_left(spawn_pos)
+        pos_straight_ahead(spawn_pos)
+        straight_ahead(spawn_pos, true, section)
+        
+        pos_right(pos)
+        straight_ahead_left(pos, true, section)
+        straight_ahead(pos, true, section)        
+    elseif section_type == "T_junction_right" then
+        straight_ahead(pos, true, section)
+        
+        local spawn_pos = global_scripts.script.copy_pos(pos)
+        pos_right(spawn_pos)
+        pos_straight_ahead(spawn_pos)
+        straight_ahead(spawn_pos, true, section)
+        
+        straight_ahead_left(pos, true, section)
+        straight_ahead(pos, true, section)        
+    end
+    
+    table.insert(dungeon_sections, section) 
+    
+    return section 
+end
+
 function spawn_random_section(ignored, pos, exit_types, arch_facing, spawn_exits)
-    local section_type = section_types[math.random(3)]
+    local section_type = section_types[math.random(4)]
     local section_sub_type = section_sub_types[section_type][math.random(#section_sub_types[section_type])]
     
     local section = spawn_functions[section_sub_type](section_sub_type, pos, exit_types, arch_facing, spawn_exits)
@@ -253,42 +449,29 @@ spawn_functions = {empty = spawn_random_section,
                    straight = spawn_straight,
                    left_turn = spawn_left_turn,
                    right_turn = spawn_right_turn,
-                   T_junction1 = spawn_T_junction,
-                   T_junction2 = spawn_T_junction,
-                   T_junction3 = spawn_T_junction,
-                   X_junction1 = spawn_X_junction,
-                   X_junction2 = spawn_X_junction,
-                   X_junction3 = spawn_X_junction,
-                   X_junction4 = spawn_X_junction
+                   T_junction_left = spawn_T_junction,
+                   T_junction_T = spawn_T_junction,
+                   T_junction_right = spawn_T_junction,
+                   X_junction = spawn_X_junction
                    }
           
 section_types = {"straight", "left_turn", "right_turn", "T_junction", "X_junction"}
           
 section_sub_types = {straight = {"straight"}, left_turn = {"left_turn"}, right_turn = {"right_turn"}, 
-                     T_junction = {"T_junction1", "T_junction2", "T_junction3"}, 
-                     X_junction = {"X_junction1", "X_junction2", "X_junction3", "X_junction4"}}
+                     T_junction = {"T_junction_left", "T_junction_T", "T_junction_right"}, 
+                     X_junction = {"X_junction"}}
 
 function stepTeleport(trigger_id)
-    print("step")
     local trigger = findEntity(trigger_id)
     
-    local enter_section = sections[trigger.id]
-    
-    print(enter_section.exit_types[1])
+    local enter_section = sections[trigger.id]    
     
     local facing = enter_section.facing 
-    
+
     start_pos.facing = facing
     start_pos.level = trigger.level    
-
-    if facing_is_reversed(facing, party.facing) then
-        print("party entered backwards")
-    else
-        print("party entered forwards")        
-    end
     
-   for i, section in ipairs(dungeon_sections) do
-        print(tostring(i).." "..section.section_type)
+    for i, section in ipairs(dungeon_sections) do
         local go
         for _, go_id in ipairs(section.walls) do
             go = findEntity(go_id)
@@ -307,37 +490,37 @@ function stepTeleport(trigger_id)
     dungeon_sections = {}
     sections = {}    
     
+    local exit_types
+    if facing_is_reversed(facing, party.facing) then
+        print("party entered backwards")
+        exit_types = enter_section.exit_types
+    else
+        print("party entered forwards")
+        exit_types = {"empty"}
+    end
    
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)    
-    local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, enter_section.exit_types, enter_section.arch_facing, true)
+    print("copying section to start position")
+    for _, exit_type in ipairs(enter_section.exit_types) do
+        print("    "..exit_type)
+    end
+    local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true)
     table.insert(dungeon_sections, new_section)  
     
     party:setPosition(start_pos.x, start_pos.y, party.facing, start_pos.elevation, start_pos.level)  
-end
-function nop()
-    
-   
-       
-    
-    for _, section in ipairs(dungeon_sections) do
-        for _, go_id in ipairs(section.walls) do
-            go = findEntity(go_id)
-            --go:destroyDelayed()
-        end
-        for _, go_id in ipairs(section.floor_triggers) do
-            go = findEntity(go_id)
-            --go:destroyDelayed()
-        end
-    end
 end
 
 function onActivateSectionFloorTrigger(trigger)    
     trigger = global_scripts.script.getGO(trigger)               
     
     if math.random(5) == 5 then
-        global_scripts.script.playSoundAtObject("trickster_walk_low", party)
+        local facing = modulo_facing(party.facing + math.random(3))
+        local sound_pos = global_scripts.script.copy_pos(party)
+        pos_straight_ahead(sound_pos)
+            
+        playSoundAt("trickster_walk_low", sound_pos.level, sound_pos.x, sound_pos.y)        
     end
-    delayedCall("test_inside_script_entity", .2, "stepTeleport", trigger.id)
+    delayedCall("test_inside_script_entity", .19, "stepTeleport", trigger.id)
 end
 
 function onEnterDungeon(trigger)
