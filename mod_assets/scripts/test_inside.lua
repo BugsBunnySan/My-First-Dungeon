@@ -436,8 +436,90 @@ function spawn_T_junction(section_type, pos, exit_types, arch_facing, spawn_exit
     return section 
 end
 
+function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exits)
+     local section = {section_type = section_type,
+                     facing = pos.facing,
+                     arch_facing = arch_facing,
+                     walls = {},
+                     floor_triggers = {},
+                     exit_types = {"empty", "empty", "empty", "empty"}}
+
+    local exit_section
+    local exit_pos   
+    
+    if spawn_exits == true then
+        -- exit 1
+        exit_pos = global_scripts.script.copy_pos(pos)
+        pos_reverse(exit_pos)
+        pos_straight_ahead(exit_pos)
+            
+        arch_facing = arch_facing or modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)             
+        exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"X_junction"}, arch_facing, false)
+        section.exit_types[1] = exit_section.section_type 
+        
+        -- exit 2
+        exit_pos = global_scripts.script.copy_pos(pos)
+        pos_straight_ahead(exit_pos)
+        pos_left(exit_pos)
+        pos_straight_ahead(exit_pos)
+        
+        arch_facing = modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)             
+        exit_section = spawn_functions["empty"]("empty", exit_pos, {"X_junction"}, arch_facing, false)
+        section.exit_types[2] = exit_section.section_type 
+        
+        -- exit 3
+        exit_pos = global_scripts.script.copy_pos(pos)
+        pos_straight_ahead(exit_pos)
+        pos_straight_ahead(exit_pos)
+        pos_straight_ahead(exit_pos)
+        
+        arch_facing = modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)             
+        exit_section = spawn_functions["empty"]("empty", exit_pos, {"X_junction"}, arch_facing, false)
+        section.exit_types[3] = exit_section.section_type 
+        
+        -- exit 4
+        exit_pos = global_scripts.script.copy_pos(pos)
+        pos_straight_ahead(exit_pos)
+        pos_right(exit_pos)
+        pos_straight_ahead(exit_pos)
+        
+        arch_facing = modulo_facing(exit_pos.facing + 2)
+        spawn_arch(exit_pos.x, exit_pos.y, arch_facing, exit_pos.elevation, exit_pos.level, section)             
+        exit_section = spawn_functions["empty"]("empty", exit_pos, {"X_junction"}, arch_facing, false)
+        section.exit_types[4] = exit_section.section_type         
+    else
+        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)            
+        for i, exit_type in ipairs(exit_types) do
+            section.exit_types[i] = exit_type
+        end    
+    end
+    
+    straight_ahead(pos, true, section)
+    
+    local spawn_pos = global_scripts.script.copy_pos(pos)
+    pos_left(spawn_pos)
+    pos_straight_ahead(spawn_pos)
+    straight_ahead(spawn_pos, true, section)
+    
+    local spawn_pos = global_scripts.script.copy_pos(pos)
+    pos_straight_ahead(spawn_pos)
+    straight_ahead(spawn_pos, true, section)
+    
+    local spawn_pos = global_scripts.script.copy_pos(pos)
+    pos_right(spawn_pos)
+    pos_straight_ahead(spawn_pos)
+    straight_ahead(spawn_pos, true, section)
+    
+    table.insert(dungeon_sections, section)
+    
+    return section
+end
+
 function spawn_random_section(ignored, pos, exit_types, arch_facing, spawn_exits)
-    local section_type = section_types[math.random(4)]
+    local section_type = section_types[math.random(5)]
     local section_sub_type = section_sub_types[section_type][math.random(#section_sub_types[section_type])]
     
     local section = spawn_functions[section_sub_type](section_sub_type, pos, exit_types, arch_facing, spawn_exits)
@@ -513,7 +595,7 @@ end
 function onActivateSectionFloorTrigger(trigger)    
     trigger = global_scripts.script.getGO(trigger)               
     
-    if math.random(5) == 5 then
+    if math.random(3) == 3 then
         local facing = modulo_facing(party.facing + math.random(3))
         local sound_pos = global_scripts.script.copy_pos(party)
         pos_straight_ahead(sound_pos)
