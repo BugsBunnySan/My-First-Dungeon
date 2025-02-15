@@ -643,7 +643,7 @@ function onActivateSectionFloorTrigger(trigger)
 end
 
 function onEnterDungeon(trigger)
-    print("-----------------------------------")
+    --print("-----------------------------------")
     trigger = global_scripts.script.getGO(trigger)
     
     start_pos.facing = trigger.facing
