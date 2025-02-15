@@ -266,6 +266,18 @@ function shuffle(tbl)
     return tbl
 end
 
+function getGO(entity)
+    if entity.go ~= nil then
+        return entity.go
+    else
+        return entity
+    end
+end
+
+function copy_pos(pos)
+    return {x=pos.x, y=pos.y, facing=pos.facing, elevation=pos.elevation, level=pos.level}    
+end
+
 north = 0
 east  = 1
 south = 2
@@ -290,18 +302,6 @@ function getEmptyFacings(location, occupiers)
     return empty_facings
 end
 
-function getGO(entity)
-    if entity.go ~= nil then
-        return entity.go
-    else
-        return entity
-    end
-end
-
-function copy_pos(pos)
-    return {x=pos.x, y=pos.y, facing=pos.facing, elevation=pos.elevation, level=pos.level}    
-end
-
 -- find a location amongst locations (must be an array), that are free of anything (occupiers == nil)
 -- or free of any of the item classes listed in occupiers (which must be a table with the class names as keys)
 function findEmptySpot(locations, occupiers)
@@ -321,6 +321,32 @@ function findEmptySpot(locations, occupiers)
             break
         end
     end
+    return empty_spot
+end
+
+function findSpawnSpot(from_x, to_x, from_y, to_y, elevation, level, occupiers)
+    local empty_spot = {x = nil, y = nil, elevation = nil, level = nil, facing = nil, id = nil}
+    
+    local dx = to_x - from_x
+    local dy = to_y - from_y
+    local x = math.random(0, dx) + from_x
+    local y = math.random(0, dy) + from_y
+    
+    local empty = false
+    
+    while not empty do
+        empty = true
+        for entity in Dungeon.getMap(level):entitiesAt(x, y) do
+            if empty and (occupiers ~= nil and occupiers[entity.name] ~= nil) then
+                empty = false
+                x = math.fmod((math.fmod(x-from_x+1, dx) + dx), dx) + from_x -- assure result is positive
+                y = math.fmod((math.fmod(y-from_y+1, dy) + dy), dy) + from_y -- assure result is positive                       
+            end
+        end        
+    end
+        
+    empty_spot = {x=x, y=y, elevation=elevation, level=level, facing=math.random(0, 3)}
+    
     return empty_spot
 end
 
