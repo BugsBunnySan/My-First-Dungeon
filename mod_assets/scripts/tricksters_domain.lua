@@ -3,14 +3,8 @@ virtual_pos = {x=0, y=0, facing=9, elevation=0}
 dungeon_sections = {}
 sections = {}
 
-special_places = {["pedestal_of_roses"] = {x=0, y=1}}
+special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-8, entry_id="pedestal_of_roses_marker"}}
 special_entities = {}
-
-function spawn_pedestal_of_roses(x, y, facing, elevation, level)
-    local pedestal_of_roses = spawn("pedestal")
-    pedestal_of_roses:setPosition(x, y, 0, elevation, level)
-    table.insert(special_entities, pedestal_of_roses.id)
-end
 
 function spawn_wall(x, y, facing, elevation, level, section)
     local wall = spawn("dungeon_secret_door")
@@ -44,7 +38,7 @@ function spawn_floor_trigger(x, y, facing, elevation, level, section)
     floor_trigger.floortrigger:setTriggeredByMonster(false)
     floor_trigger.floortrigger:setTriggeredByDigging(false)
     floor_trigger.floortrigger:setDisableSelf(true)
-    floor_trigger.floortrigger:addConnector("onActivate", "test_inside_script_entity", "onActivateSectionFloorTrigger")
+    floor_trigger.floortrigger:addConnector("onActivate", "tricksters_domain_script_entity", "onActivateSectionFloorTrigger")
         
     --floor_trigger.floortrigger:disable()
     table.insert(section.floor_triggers, floor_trigger.id)    
@@ -189,7 +183,18 @@ function turn_right(pos, spawn, section)
     pos_straight_ahead(pos)
 end
   
-function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits)
+function spawn_nop(section_type, pos, exit_types, arch_facing, spawn_exits)
+    local section = {section_type = "nop",                     
+                     facing = pos.facing,
+                     arch_facing=arch_facing,
+                     walls = {},
+                     floor_triggers = {},
+                     exit_types = {"empty"}}
+
+    return section
+end    
+  
+function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits, special_position)
     local section = {section_type = "straight",                     
                      facing = pos.facing,
                      arch_facing=arch_facing,
@@ -612,7 +617,7 @@ function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exit
 end
 
 function spawn_random_section(ignored, pos, exit_types, arch_facing, spawn_exits)
-    local section_type = section_types[math.random(5)]
+    local section_type = section_types[math.random(1)]
     local section_sub_type = section_sub_types[section_type][math.random(#section_sub_types[section_type])]
     
     local section = spawn_functions[section_sub_type](section_sub_type, pos, exit_types, arch_facing, spawn_exits)
@@ -620,14 +625,16 @@ function spawn_random_section(ignored, pos, exit_types, arch_facing, spawn_exits
     return section
 end
 
-spawn_functions = {empty = spawn_random_section,
+spawn_functions = {nop = spawn_nothing,
+                   empty = spawn_random_section,
                    straight = spawn_straight,
                    left_turn = spawn_left_turn,
                    right_turn = spawn_right_turn,
                    T_junction_left = spawn_T_junction,
                    T_junction_T = spawn_T_junction,
                    T_junction_right = spawn_T_junction,
-                   X_junction = spawn_X_junction
+                   X_junction = spawn_X_junction,
+                   pedestal_of_roses = spawn_pedestal_of_roses_portal
                    }
           
 section_types = {"straight", "left_turn", "right_turn", "T_junction", "X_junction"}
@@ -689,22 +696,33 @@ function stepTeleport(trigger_id)
     end
    
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)    
-
-    local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, enter_section.virtual_pos)
-    table.insert(dungeon_sections, new_section)  
-    
+    local spawned_special = false
     print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
     
     for name, pos in pairs(special_places) do
-        if pos.x > virtual_pos.x -5 and pos.x < virtual_pos.x + 5 and pos.y > virtual_pos.y -5 and pos.y < virtual_pos.y + 5 then
-            local spawn_pos = global_scripts.script.copy_pos(start_pos)
-            spawn_pos.x = start_pos.x + (pos.x - virtual_pos.x)
-            spawn_pos.y = start_pos.y + (pos.y - virtual_pos.y)
-            special_spawn_function[name](spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level)
+        if virtual_pos.x >= pos.x1 and virtual_pos.x <= pos.x2 and virtual_pos.y >= pos.y1 and virtual_pos.y <= pos.y2 then
+            if enter_section.section_type == "straight" then
+                if enter_section.facing == 0 or enter_section.facing == 2 then
+                    exit_types[2] = "nop"
+                    local entry_marker = findEntity(pos.entry_id)
+                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
+                    start_spawn_pos.y = start_spawn_pos.y + 3
+                    spawned_special = true
+                    local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, true)
+                    table.insert(dungeon_sections, new_section)  
+                    party:setPosition(start_spawn_pos.x, start_spawn_pos.y-1, party.facing, start_spawn_pos.elevation, start_spawn_pos.level)                              
+                end
+            end
+            
         end
     end
     
-    party:setPosition(start_pos.x, start_pos.y, party.facing, start_pos.elevation, start_pos.level)  
+    if spawned_special == false then
+        local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, enter_section.virtual_pos)
+        table.insert(dungeon_sections, new_section) 
+    
+        party:setPosition(start_pos.x, start_pos.y, party.facing, start_pos.elevation, start_pos.level)   
+    end
 end
 
 function onActivateSectionFloorTrigger(trigger)    
@@ -723,7 +741,7 @@ function onActivateSectionFloorTrigger(trigger)
         playSoundAt("trickster_walk_low", sound_pos.level, sound_pos.x, sound_pos.y)    
     end
 
-    delayedCall("test_inside_script_entity", .19, "stepTeleport", trigger.id) -- 0.18 seconds is exactly the right amount of time to let the step animation finish before moving the party
+    delayedCall("tricksters_domain_script_entity", .19, "stepTeleport", trigger.id) -- 0.18 seconds is exactly the right amount of time to let the step animation finish before moving the party
 end
 
 function onEnterDungeon(trigger)
@@ -741,7 +759,7 @@ function onEnterDungeon(trigger)
 end
 
 function init()    
-    --test_inside_sky.sky:setFogMode("dense")
-    --test_inside_sky.sky:setFogRange({1,2})
+    --tricksters_domain_sky.sky:setFogMode("dense")
+    --tricksters_domain_sky.sky:setFogRange({1,2})
     dungeon_door_iron_barred_1.door:close()
 end
