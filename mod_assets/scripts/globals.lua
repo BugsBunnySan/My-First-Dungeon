@@ -278,6 +278,10 @@ function copy_pos(pos)
     return {x=pos.x, y=pos.y, facing=pos.facing, elevation=pos.elevation, level=pos.level}    
 end
 
+function print_pos(pos)
+    print("x: "..tostring(pos.x).." y: "..tostring(pos.y).." facing: "..tostring(pos.facing).." elevation: "..tostring(pos.elevation).." level: "..tostring(pos.level))
+end
+
 north = 0
 east  = 1
 south = 2

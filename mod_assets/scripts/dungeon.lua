@@ -6522,6 +6522,10 @@ spawn("castle_pillar_candle_holder",24,4,1,0,"castle_pillar_candle_holder_17")
 spawn("castle_pillar_candle_holder",27,4,2,0,"castle_pillar_candle_holder_22")
 spawn("castle_pillar_candle_holder",27,6,1,0,"castle_pillar_candle_holder_29")
 spawn("castle_pillar_candle_holder",24,6,2,0,"castle_pillar_candle_holder_96")
+spawn("castle_torch_holder",24,9,2,0,"castle_torch_holder_1")
+castle_torch_holder_1.controller:setHasTorch(true)
+spawn("castle_torch_holder",26,9,2,0,"castle_torch_holder_2")
+castle_torch_holder_2.controller:setHasTorch(true)
 
 --- level 11 ---
 
