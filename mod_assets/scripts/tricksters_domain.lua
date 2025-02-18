@@ -231,6 +231,7 @@ function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits,
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if special_position ~=  "" then
             special_places[special_position].spawn_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_back(special_places[special_position].spawn_pos)
         end
 
         spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
@@ -298,6 +299,7 @@ function spawn_left_turn(section_type, pos, exit_types, arch_facing, spawn_exits
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if special_position ~=  "" then
             special_places[special_position].spawn_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_back(special_places[special_position].spawn_pos)
         end                                        
 
         spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
@@ -362,6 +364,7 @@ function spawn_right_turn(section_type, pos, exit_types, arch_facing, spawn_exit
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                      
         if special_position ~=  "" then
             special_places[special_position].spawn_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_back(special_places[special_position].spawn_pos)
         end                                       
 
         spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
@@ -495,6 +498,7 @@ function spawn_T_junction(section_type, pos, exit_types, arch_facing, spawn_exit
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                      
         if special_position ~= "" then
             special_places[special_position].spawn_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_back(special_places[special_position].spawn_pos)
         end                                           
 
         spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
@@ -621,6 +625,7 @@ function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exit
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if special_position ~=  "" then
             special_places[special_position].spawn_pos = global_scripts.script.copy_pos(pos)
+            pos_straight_back(special_places[special_position].spawn_pos)
         end                                             
 
         spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
@@ -691,15 +696,23 @@ function stepTeleport(trigger_id)
     
     local enter_section = sections[trigger.id]    
     
+    print("stepTeleport")
+    
+    global_scripts.script.print_pos(virtual_pos)    
     virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
     virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
-    virtual_pos.facing = trigger.facing  
+    virtual_pos.facing = trigger.facing      
+    global_scripts.script.print_pos(virtual_pos)
     
     print(tostring(enter_section.special_position))
     
     if enter_section.special_position ~= "" then
-         virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
-         virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
+        print("    from special place")
+        global_scripts.script.print_pos(virtual_pos)
+        local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
+        virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
+        virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
+        global_scripts.script.print_pos(virtual_pos)
     end
     
     local facing = enter_section.facing 
@@ -744,7 +757,7 @@ function stepTeleport(trigger_id)
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)    
     local party_pos = global_scripts.script.copy_pos(start_pos)
     local spawn_special = ""
-    print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
+    --print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
     
     for name, pos in pairs(special_places) do           
         local entry_marker = findEntity(pos.entry_id)
@@ -756,7 +769,6 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.y = start_spawn_pos.y + 3                                       
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 end
             elseif enter_section.section_type == "left_turn" and enter_section.facing == 1 then
@@ -766,7 +778,6 @@ function stepTeleport(trigger_id)
                 start_spawn_pos.x = start_spawn_pos.x - 1                                    
                 party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                 start_spawn_pos.facing = enter_section.facing
-                global_scripts.script.print_pos(start_spawn_pos)
                 spawn_special = name         
             elseif enter_section.section_type == "right_turn" and enter_section.facing == 3 then
                 exit_types[2] = "nop"
@@ -775,7 +786,6 @@ function stepTeleport(trigger_id)
                 start_spawn_pos.x = start_spawn_pos.x + 1                                    
                 party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                 start_spawn_pos.facing = enter_section.facing
-                global_scripts.script.print_pos(start_spawn_pos)
                 spawn_special = name         
             elseif enter_section.section_type == "T_junction_left" then
                 if enter_section.facing == 0 then
@@ -784,7 +794,6 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.y = start_spawn_pos.y + 3                            
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 elseif enter_section.facing == 1 then
                     exit_types[2] = "nop"
@@ -793,17 +802,15 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.x = start_spawn_pos.x - 1                            
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 end
             elseif enter_section.section_type == "T_junction_right" then
                 if enter_section.facing == 0 then
-                    exit_types[3] = "nop"
+                    exit_types[2] = "nop"
                     start_spawn_pos = global_scripts.script.copy_pos(entry_marker)                                        
                     start_spawn_pos.y = start_spawn_pos.y + 3                            
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 elseif enter_section.facing == 3 then
                     exit_types[3] = "nop"
@@ -812,7 +819,6 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.x = start_spawn_pos.x + 1                        
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     pawn_special = name         
                 end
             elseif enter_section.section_type == "X_junction" then
@@ -822,7 +828,6 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.y = start_spawn_pos.y + 3                        
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 elseif enter_section.facing == 1 then
                     exit_types[2] = "nop"
@@ -831,7 +836,6 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.x = start_spawn_pos.x - 1                                    
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 elseif enter_section.facing == 3 then
                     exit_types[4] = "nop"
@@ -840,14 +844,9 @@ function stepTeleport(trigger_id)
                     start_spawn_pos.x = start_spawn_pos.x + 1                                    
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.facing
-                    global_scripts.script.print_pos(start_spawn_pos)
                     spawn_special = name         
                 end
             end
-        end
-        if spawn_special then
-            special_places[name].spawn_pos = part_pos
-            special_door_id = pos.door_id
         end
     end
     
@@ -865,11 +864,11 @@ function onActivateSectionFloorTrigger(trigger)
     trigger = global_scripts.script.getGO(trigger)               
     
     local chance = math.random(24)
-    if chance == 1 then
+    if chance == -1 then
         local spawn_pos = global_scripts.script.findSpawnSpot(start_pos.x - 4, start_pos.x + 4, start_pos.y - 4, start_pos.y + 4, start_pos.elevation, start_pos.level, {["party"] = true, ["turtle"] = true})
         local turtle = spawn("turtle")
         turtle:setPosition(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level)
-    elseif chance <= 12 then
+    elseif chance <= -12 then
         local facing = modulo_facing(party.facing + math.random(3))
         local sound_pos = global_scripts.script.copy_pos(party)
         pos_straight_ahead(sound_pos)
