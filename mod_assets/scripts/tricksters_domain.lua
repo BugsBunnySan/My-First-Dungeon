@@ -6,7 +6,8 @@ virtual_pos = {x=0, y=0, facing=9, elevation=0}
 dungeon_sections = {}
 sections = {}
 
-special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-8, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}}}--pedestal_of_roses_door"}}
+special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-8, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}}, --pedestal_of_roses_door"}}
+                  ["test_location"] = {x1=-5, y1=12, x2=5, y2=8, entry_id="crystel_lane_marker", door_id="", spawn_pos={}}}
 special_entities = {}
 special_door_id = ""
 
@@ -695,6 +696,9 @@ section_sub_types = {nop = {"nop"}, straight = {"straight"}, left_turn = {"left_
 
 special_spawn_function = {pedestal_of_roses = spawn_pedestal_of_roses}
 
+special_script_entities = {pedestal_of_roses = "pedestal_of_roses_script_entity",
+                           test_location = "test_location__script_entity"}
+
 function stepTeleport(trigger_id)
     local trigger = findEntity(trigger_id)       
     
@@ -723,7 +727,6 @@ function stepTeleport(trigger_id)
     local facing = enter_section.pos.facing 
 
     start_pos.facing = facing
-    start_pos.level = trigger.level    
     
     for i, section in ipairs(dungeon_sections) do
         local go
@@ -772,97 +775,8 @@ function stepTeleport(trigger_id)
          -- the spawn location is now one further to the west or east and out side where the special place woudl spawn
         if virtual_pos.x >= pos.x1 and virtual_pos.x <= pos.x2 and virtual_pos.y >= pos.y1 and virtual_pos.y <= pos.y2 then
             spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them     
-            if enter_section.section_type == "straight" then
-                if enter_section.pos.facing == 0 then
-                    exit_types[2] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)                                               
-                    start_spawn_pos.y = start_spawn_pos.y + 3                                       
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                end
-            elseif enter_section.section_type == "left_turn" and enter_section.pos.facing == 1 then
-                exit_types[2] = "nop"
-                start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                start_spawn_pos.y = start_spawn_pos.y + 2
-                start_spawn_pos.x = start_spawn_pos.x - 1                                    
-                party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                start_spawn_pos.facing = enter_section.pos.facing
-            elseif enter_section.section_type == "right_turn" and enter_section.pos.facing == 3 then
-                exit_types[2] = "nop"
-                start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                start_spawn_pos.y = start_spawn_pos.y + 2
-                start_spawn_pos.x = start_spawn_pos.x + 1                                    
-                party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                start_spawn_pos.facing = enter_section.pos.facing
-            elseif enter_section.section_type == "T_junction_left" then
-                if enter_section.pos.facing == 0 then
-                    exit_types[3] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)                                        
-                    start_spawn_pos.y = start_spawn_pos.y + 3                            
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                elseif enter_section.pos.facing == 1 then
-                    exit_types[2] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                    start_spawn_pos.y = start_spawn_pos.y + 2
-                    start_spawn_pos.x = start_spawn_pos.x - 1                            
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                end
-            elseif enter_section.section_type == "T_junction_T" then
-                if enter_section.pos.facing == 1 then
-                    exit_types[2] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                    start_spawn_pos.y = start_spawn_pos.y + 2
-                    start_spawn_pos.x = start_spawn_pos.x - 1                                    
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                elseif enter_section.pos.facing == 3 then
-                    exit_types[3] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                    start_spawn_pos.y = start_spawn_pos.y + 2
-                    start_spawn_pos.x = start_spawn_pos.x + 1                                    
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                end
-            elseif enter_section.section_type == "T_junction_right" then
-                if enter_section.pos.facing == 0 then
-                    exit_types[2] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)                                        
-                    start_spawn_pos.y = start_spawn_pos.y + 3                            
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                elseif enter_section.pos.facing == 3 then
-                    exit_types[3] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                    start_spawn_pos.y = start_spawn_pos.y + 2
-                    start_spawn_pos.x = start_spawn_pos.x + 1                        
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                end
-            elseif enter_section.section_type == "X_junction" then
-                if enter_section.pos.facing == 0 then
-                    exit_types[3] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)              
-                    start_spawn_pos.y = start_spawn_pos.y + 3                        
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                elseif enter_section.pos.facing == 1 then
-                    exit_types[2] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                    start_spawn_pos.y = start_spawn_pos.y + 2
-                    start_spawn_pos.x = start_spawn_pos.x - 1                                    
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                elseif enter_section.pos.facing == 3 then
-                    exit_types[4] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
-                    start_spawn_pos.y = start_spawn_pos.y + 2
-                    start_spawn_pos.x = start_spawn_pos.x + 1                                    
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                end
-            end
+            local script_entity = findEntity(special_script_entities[name])
+            start_spawn_pos, party_pos = script_entity.script.check_exits(enter_section, entry_marker, exit_types, start_spawn_pos, party_pos)
         end
     end
     
