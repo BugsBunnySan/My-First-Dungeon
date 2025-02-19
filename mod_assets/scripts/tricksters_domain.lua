@@ -1,3 +1,6 @@
+-- in the actual game engine, going into an exit section doesn't do the teleport back...
+-- "somewhere 10 leagues due north from the center"
+
 start_pos = {x=10, y=17, facing=0, elevation=0}
 virtual_pos = {x=0, y=0, facing=9, elevation=0}
 dungeon_sections = {}
@@ -565,13 +568,14 @@ function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exit
                      floor_triggers = {},
                      exit_types = {"empty", "empty", "empty", "empty"}}
 
-    local exit_section
-    local exit_pos  
 
-     for i, exit_type in ipairs(section.exit_types) do
+    local exit_section
+    local exit_pos
+        
+    for i, exit_type in ipairs(section.exit_types) do
         exit_types[i] = exit_types[i] or section.exit_types[i]
     end
-    
+        
     local arch_pos = global_scripts.script.copy_pos(pos)
     
     if arch_facing == "inward" then
@@ -580,7 +584,9 @@ function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exit
     elseif arch_facing == "outward" then
         pos_reverse(arch_pos)
         arch_facing = "inward"
-    end 
+    end
+                      
+    virtual_pos.facing = pos.facing
     
     if spawn_exits == true then
         -- exit 1
@@ -641,7 +647,7 @@ function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exit
     pos_straight_ahead(spawn_pos)
     straight_ahead(spawn_pos, true, section)
     
-    local spawn_pos = global_scripts.script.copy_pos(pos)
+    spawn_pos = global_scripts.script.copy_pos(pos)
     pos_straight_ahead(spawn_pos)
     straight_ahead(spawn_pos, true, section) 
     
@@ -650,7 +656,7 @@ function spawn_X_junction(section_type, pos, exit_types, arch_facing, spawn_exit
         spawn_projectile_catcher(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level, section)
     end
     
-    local spawn_pos = global_scripts.script.copy_pos(pos)
+    spawn_pos = global_scripts.script.copy_pos(pos)
     pos_right(spawn_pos)
     pos_straight_ahead(spawn_pos)
     straight_ahead(spawn_pos, true, section)
@@ -694,24 +700,24 @@ function stepTeleport(trigger_id)
     
     local enter_section = sections[trigger.id]    
     
-    --print("stepTeleport")
-    --print("coming from "..enter_section.section_type)
+    print("stepTeleport")
+    print("coming from "..enter_section.section_type)
     
-    --global_scripts.script.print_pos(virtual_pos)    
+    global_scripts.script.print_pos(virtual_pos)    
     virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
     virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
     virtual_pos.facing = trigger.facing      
-    --global_scripts.script.print_pos(virtual_pos)
+    global_scripts.script.print_pos(virtual_pos)
     
     print(tostring(enter_section.special_position))
     
     if enter_section.special_position ~= "" then
         print("    from special place")
-        --global_scripts.script.print_pos(virtual_pos)
+        global_scripts.script.print_pos(virtual_pos)
         local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
         virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
         virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
-        --global_scripts.script.print_pos(virtual_pos)
+        global_scripts.script.print_pos(virtual_pos)
     end
     
     local facing = enter_section.pos.facing 
@@ -760,6 +766,10 @@ function stepTeleport(trigger_id)
     
     for name, pos in pairs(special_places) do           
         local entry_marker = findEntity(pos.entry_id)
+         -- here, the exits location that would/could lead to a special place neeeds to be checked, not the spawn position of the section, or it can happen that,
+         -- e.g. coming from east or west in a corner/T or X junction, the spawn position of the section is within the range, yet the exits location is just outside it,
+         -- and thus coming from east or west, the exit to the special place is there, but going to the south exit and going north again will not make it appear, since
+         -- the spawn location is now one further to the west or east and out side where the special place woudl spawn
         if virtual_pos.x >= pos.x1 and virtual_pos.x <= pos.x2 and virtual_pos.y >= pos.y1 and virtual_pos.y <= pos.y2 then
             spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them     
             if enter_section.section_type == "straight" then
@@ -842,12 +852,6 @@ function stepTeleport(trigger_id)
                     start_spawn_pos = global_scripts.script.copy_pos(entry_marker)
                     start_spawn_pos.y = start_spawn_pos.y + 2
                     start_spawn_pos.x = start_spawn_pos.x - 1                                    
-                    party_pos = global_scripts.script.copy_pos(start_spawn_pos)
-                    start_spawn_pos.facing = enter_section.pos.facing
-                elseif enter_section.pos.facing == 2 then
-                    exit_types[1] = "nop"
-                    start_spawn_pos = global_scripts.script.copy_pos(entry_marker)              
-                    start_spawn_pos.y = start_spawn_pos.y - 3                        
                     party_pos = global_scripts.script.copy_pos(start_spawn_pos)
                     start_spawn_pos.facing = enter_section.pos.facing
                 elseif enter_section.pos.facing == 3 then
