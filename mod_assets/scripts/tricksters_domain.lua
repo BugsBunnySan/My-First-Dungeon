@@ -7,7 +7,7 @@ dungeon_sections = {}
 sections = {}
 
 special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-8, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}}, --pedestal_of_roses_door"}}
-                  ["test_location"] = {x1=-5, y1=12, x2=5, y2=8, entry_id="crystel_lane_marker", door_id="", spawn_pos={}}}
+                  ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}}}
 special_entities = {}
 special_door_id = ""
 
@@ -208,7 +208,8 @@ function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits,
                      special_position = special_position,
                      walls = {},
                      floor_triggers = {},
-                     exit_types = {"empty", "empty"}}       
+                     exit_types = {"empty", "empty"},
+                     exit_pos = {}}       
     local exit_section
                   
     local arch_pos = global_scripts.script.copy_pos(pos)
@@ -226,13 +227,14 @@ function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits,
     end
            
     if spawn_exits == true then    
-        local exit_pos = global_scripts.script.copy_pos(pos) 
+        local exit_pos = global_scripts.script.copy_pos(pos)         
     
         pos_reverse(exit_pos)      
         pos_straight_ahead(exit_pos) 
+        section.exit_pos[1] = global_scripts.script.copy_pos(exit_pos)
         
         exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"straight"}, arch_facing, false, section, special_position)
-        section.exit_types[1] = exit_section.section_type
+        section.exit_types[1] = exit_section.section_type        
     else        
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if special_position ~=  "" then
@@ -253,7 +255,8 @@ function spawn_straight(section_type, pos, exit_types, arch_facing, spawn_exits,
     
     exit_pos = global_scripts.script.copy_pos(pos) 
     
-    if spawn_exits == true then                   
+    if spawn_exits == true then  
+        section.exit_pos[2] = global_scripts.script.copy_pos(exit_pos)                  
         exit_section = spawn_functions[exit_types[2]](exit_types[2], exit_pos, {"straight"}, "outward", false, section, special_position)
         section.exit_types[2] = exit_section.section_type 
     else
@@ -697,7 +700,7 @@ section_sub_types = {nop = {"nop"}, straight = {"straight"}, left_turn = {"left_
 special_spawn_function = {pedestal_of_roses = spawn_pedestal_of_roses}
 
 special_script_entities = {pedestal_of_roses = "pedestal_of_roses_script_entity",
-                           test_location = "test_location__script_entity"}
+                           test_location = "test_location_script_entity"}
 
 function stepTeleport(trigger_id)
     local trigger = findEntity(trigger_id)       
@@ -712,11 +715,9 @@ function stepTeleport(trigger_id)
     virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
     virtual_pos.facing = trigger.facing      
     global_scripts.script.print_pos(virtual_pos)
-    
-    print(tostring(enter_section.special_position))
-    
+        
     if enter_section.special_position ~= "" then
-        print("    from special place")
+        print("    from special place: "..enter_section.special_position)
         global_scripts.script.print_pos(virtual_pos)
         local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
         virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
@@ -767,15 +768,11 @@ function stepTeleport(trigger_id)
     local spawn_special = ""
     --print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
     
-    for name, pos in pairs(special_places) do           
+    for name, pos in pairs(special_places) do
+        local script_entity = findEntity(special_script_entities[name])
         local entry_marker = findEntity(pos.entry_id)
-         -- here, the exits location that would/could lead to a special place neeeds to be checked, not the spawn position of the section, or it can happen that,
-         -- e.g. coming from east or west in a corner/T or X junction, the spawn position of the section is within the range, yet the exits location is just outside it,
-         -- and thus coming from east or west, the exit to the special place is there, but going to the south exit and going north again will not make it appear, since
-         -- the spawn location is now one further to the west or east and out side where the special place woudl spawn
-        if virtual_pos.x >= pos.x1 and virtual_pos.x <= pos.x2 and virtual_pos.y >= pos.y1 and virtual_pos.y <= pos.y2 then
-            spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them     
-            local script_entity = findEntity(special_script_entities[name])
+        if script_entity.script.in_range(virtual_pos, special_places[name], enter_section) then
+            spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them                
             start_spawn_pos, party_pos = script_entity.script.check_exits(enter_section, entry_marker, exit_types, start_spawn_pos, party_pos)
         end
     end

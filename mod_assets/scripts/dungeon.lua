@@ -3112,6 +3112,15 @@ spawn("castle_bridge_grating",21,28,0,0,"castle_bridge_grating_20")
 spawn("castle_bridge_grating",20,28,0,0,"castle_bridge_grating_21")
 spawn("mine_ceiling_roots_01",22,28,1,0,"mine_ceiling_roots_01_3")
 spawn("dungeon_wall_height_difference",21,28,1,1,"dungeon_wall_height_difference_4")
+spawn("cemetery_sky",0,30,1,0,"cemetery_sky_1")
+cemetery_sky_1.model:disable()
+cemetery_sky_1.nightSky:disable()
+cemetery_sky_1.stars:disable()
+cemetery_sky_1.light:disable()
+cemetery_sky_1.ambient:disable()
+cemetery_sky_1.sky:disable()
+cemetery_sky_1.lensflare:disable()
+cemetery_sky_1.fogparticles:disable()
 
 --- level 6 ---
 
@@ -4246,6 +4255,7 @@ and follow it in ignorance of my giving it:\
 Do not consume anything gained/given to\
 you during the trials, until you have completed them. DO not be alarmed, It will not harm you,only hinder you. \
 ")
+spawn("dungeon_wall_broken_02",18,14,0,-1,"dungeon_wall_broken_02_6")
 
 --- level 7 ---
 
@@ -4616,6 +4626,13 @@ spawn("forest_ruins_wall_02",13,27,0,1,"forest_ruins_wall_02_5")
 spawn("beach_stone_ring",12,27,0,1,"beach_stone_ring_1")
 spawn("barrel_crate_block_broken",12,26,3,1,"barrel_crate_block_broken_1")
 spawn("turtle",25,5,2,0,"turtle_2")
+spawn("timer",0,30,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",14,30,2,0,"starting_location_1")
 
 --- level 8 ---
 
@@ -5132,7 +5149,7 @@ pushblock_trigger_robin_home.floortrigger:setTriggeredByItem(false)
 pushblock_trigger_robin_home.floortrigger:setTriggeredByDigging(false)
 pushblock_trigger_robin_home.floortrigger:setDisableSelf(false)
 pushblock_trigger_robin_home.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "wrongMove")
-spawn("pushblock_robin",22,6,3,0,"pushblock_robin")
+spawn("pushblock_robin",12,27,0,0,"pushblock_robin")
 spawn("invisible_wall",15,23,2,-1,"robin_first_bridge")
 robin_first_bridge.obstacle:disable()
 robin_first_bridge.projectilecollider:disable()
@@ -6380,13 +6397,6 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,
 })
 
-spawn("starting_location",30,31,0,0,"starting_location_1")
-spawn("timer",0,31,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("floor_trigger",10,17,0,0,"floor_trigger_26")
 floor_trigger_26.floortrigger:setTriggeredByParty(true)
 floor_trigger_26.floortrigger:setTriggeredByMonster(false)
@@ -6396,15 +6406,6 @@ floor_trigger_26.floortrigger:setDisableSelf(true)
 floor_trigger_26.floortrigger:addConnector("onActivate", "tricksters_domain_script_entity", "onEnterDungeon")
 spawn("script_entity",1,31,0,0,"tricksters_domain_script_entity")
 tricksters_domain_script_entity.script:loadFile("mod_assets/scripts/tricksters_domain.lua")
-spawn("cemetery_sky",0,30,1,0,"tricksters_domain_sky")
-tricksters_domain_sky.model:disable()
-tricksters_domain_sky.nightSky:disable()
-tricksters_domain_sky.stars:disable()
-tricksters_domain_sky.light:disable()
-tricksters_domain_sky.ambient:disable()
-tricksters_domain_sky.sky:disable()
-tricksters_domain_sky.lensflare:disable()
-tricksters_domain_sky.fogparticles:disable()
 spawn("floor_trigger",10,17,2,0,"floor_trigger_init")
 floor_trigger_init.floortrigger:setTriggeredByParty(true)
 floor_trigger_init.floortrigger:setTriggeredByMonster(false)
@@ -6529,74 +6530,77 @@ newMap{
 	ambientTrack = "dungeon",
 	tiles = {
 		"dungeon_floor",
+		"dungeon_floor_tiles",
 		"dungeon_wall",
+		"forest_ground",
 		"mine_floor_crystal",
+		"mine_wall_crystal",
 		"void",
 	}
 }
 
 loadLayer("tiles", {
-	2,2,2,2,2,2,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,1,1,1,1,1,1,1,1,1,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	2,2,2,2,2,1,2,2,2,2,2,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,3,2,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,3,3,3,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,2,2,2,2,2,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	3,3,3,3,3,3,3,3,3,3,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,2,2,2,1,1,1,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,2,1,2,1,1,1,2,1,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,2,2,2,2,2,2,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,1,1,2,4,4,4,2,1,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,1,1,2,4,4,4,2,1,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,1,1,2,2,2,2,2,1,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,2,2,2,1,1,1,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,2,1,2,1,1,1,2,1,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,2,2,2,1,1,1,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,3,3,3,3,1,3,3,3,3,3,7,7,7,7,7,7,7,7,7,7,7,7,7,6,7,1,7,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,5,6,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
 })
 
 spawn("script_entity",0,31,2,0,"tricksters_locations_script_entity")
-tricksters_locations_script_entity.script:setSource("")
+tricksters_locations_script_entity.script:loadFile("mod_assets/scripts/tricksters_locations.lua")
 spawn("invisible_wall",3,28,2,0,"pedestal_of_roses")
 spawn("pedestal",5,5,0,0,"pedestal_11")
 spawn("red_gem",5,5,0,0,"red_gem_21")
 pedestal_11.surface:addItem(red_gem_21.item)
 spawn("red_gem",5,5,0,0,"red_gem_22")
 pedestal_11.surface:addItem(red_gem_22.item)
+pedestal_11.surface:addConnector("onRemoveItem", "pedestal_of_roses_script_entity", "onRemoveItemPedestalOfRoses")
+pedestal_11.surface:addConnector("onInsertItem", "pedestal_of_roses_script_entity", "onInsertItemPedestalOfRoses")
 spawn("castle_pillar_candle_holder",4,4,1,0,"castle_pillar_candle_holder_97")
-spawn("castle_pillar_candle_holder",7,4,2,0,"castle_pillar_candle_holder_98")
-spawn("castle_pillar_candle_holder",7,6,1,0,"castle_pillar_candle_holder_99")
-spawn("castle_pillar_candle_holder",4,6,2,0,"castle_pillar_candle_holder_100")
+spawn("castle_pillar_candle_holder",7,4,3,0,"castle_pillar_candle_holder_98")
+spawn("castle_pillar_candle_holder",7,6,3,0,"castle_pillar_candle_holder_99")
+spawn("castle_pillar_candle_holder",4,6,1,0,"castle_pillar_candle_holder_100")
 spawn("forest_plant_cluster_01",4,5,0,0,"forest_plant_cluster_01_20")
 spawn("forest_plant_cluster_01",4,4,3,0,"forest_plant_cluster_01_21")
 spawn("forest_plant_cluster_01",5,4,1,0,"forest_plant_cluster_01_22")
 spawn("forest_plant_cluster_01",6,4,2,0,"forest_plant_cluster_01_23")
 spawn("forest_plant_cluster_01",6,5,2,0,"forest_plant_cluster_01_24")
-spawn("castle_pillar_light",5,6,2,0,"castle_pillar_light_17")
-spawn("castle_pillar_light",6,6,2,0,"castle_pillar_light_18")
 spawn("dungeon_secret_door",4,10,1,0,"dungeon_secret_door_5")
 spawn("dungeon_secret_door",6,10,3,0,"dungeon_secret_door_6")
 spawn("invisible_wall",5,10,0,0,"pedestal_of_roses_marker")
 pedestal_of_roses_marker.obstacle:disable()
 pedestal_of_roses_marker.projectilecollider:disable()
-spawn("castle_torch_holder",4,9,2,0,"castle_torch_holder_3")
+spawn("castle_torch_holder",25,12,0,0,"castle_torch_holder_3")
 castle_torch_holder_3.controller:setHasTorch(true)
-spawn("castle_torch_holder",6,9,2,0,"castle_torch_holder_4")
+spawn("castle_torch_holder",27,12,0,0,"castle_torch_holder_4")
 castle_torch_holder_4.controller:setHasTorch(true)
 spawn("dungeon_wall_01",4,11,0,0,"dungeon_wall_01_115")
 spawn("dungeon_wall_01",3,11,0,0,"dungeon_wall_01_116")
@@ -6609,8 +6613,103 @@ spawn("dungeon_wall_01",7,11,0,0,"dungeon_wall_01_122")
 spawn("dungeon_wall_01",6,11,0,0,"dungeon_wall_01_123")
 spawn("dungeon_wall_01",0,11,0,0,"dungeon_wall_01_124")
 spawn("forest_heightmap",1,31,2,0,"forest_heightmap_8")
-spawn("invisible_wall",26,11,0,0,"crystel_lane_marker")
-crystel_lane_marker.obstacle:disable()
-crystel_lane_marker.projectilecollider:disable()
+spawn("invisible_wall",26,10,2,0,"crystal_bridge_marker")
+crystal_bridge_marker.obstacle:disable()
+crystal_bridge_marker.projectilecollider:disable()
 spawn("script_entity",9,9,3,0,"pedestal_of_roses_script_entity")
 pedestal_of_roses_script_entity.script:loadFile("mod_assets/scripts/pedestal_of_roses_script_entity.lua")
+spawn("script_entity",27,19,1,0,"test_location_script_entity")
+test_location_script_entity.script:loadFile("mod_assets/scripts/test_location.lua")
+spawn("dungeon_wall_01",24,9,2,0,"dungeon_wall_01_105")
+spawn("dungeon_wall_01",25,9,2,0,"dungeon_wall_01_106")
+spawn("dungeon_wall_01",27,9,2,0,"dungeon_wall_01_107")
+spawn("dungeon_wall_01",28,9,2,0,"dungeon_wall_01_108")
+spawn("dungeon_wall_01",26,10,3,0,"dungeon_wall_01_109")
+spawn("dungeon_wall_01",26,10,1,0,"dungeon_wall_01_110")
+spawn("forest_ruins_arch",5,11,0,0,"forest_ruins_arch_12")
+spawn("forest_ruins_arch",26,10,0,0,"forest_ruins_arch_14")
+spawn("dungeon_pillar",4,4,0,0,"dungeon_pillar_2")
+spawn("dungeon_pillar",7,4,2,0,"dungeon_pillar_3")
+spawn("dungeon_pillar",7,6,0,0,"dungeon_pillar_4")
+spawn("dungeon_pillar",4,6,1,0,"dungeon_pillar_5")
+spawn("forest_ruins_ceiling_flat",11,2,3,1,"forest_ruins_ceiling_flat_1")
+spawn("forest_ruins_ceiling_flat",11,1,2,1,"forest_ruins_ceiling_flat_2")
+spawn("forest_ruins_ceiling_flat",12,1,1,1,"forest_ruins_ceiling_flat_3")
+spawn("forest_ruins_ceiling_flat",13,1,2,1,"forest_ruins_ceiling_flat_4")
+spawn("forest_ruins_ceiling_flat",13,2,2,1,"forest_ruins_ceiling_flat_5")
+spawn("forest_ruins_ceiling_flat",12,2,3,1,"forest_ruins_ceiling_flat_6")
+spawn("castle_wall_cloth",4,6,0,0,"castle_wall_cloth_8")
+spawn("castle_wall_cloth",3,5,1,0,"castle_wall_cloth_9")
+spawn("castle_wall_cloth",3,4,1,0,"castle_wall_cloth_10")
+spawn("castle_wall_cloth",4,4,0,0,"castle_wall_cloth_11")
+spawn("castle_wall_cloth",5,4,0,0,"castle_wall_cloth_12")
+spawn("castle_wall_cloth",6,3,2,0,"castle_wall_cloth_13")
+spawn("castle_wall_cloth",7,4,3,0,"castle_wall_cloth_14")
+spawn("castle_wall_cloth",7,5,3,0,"castle_wall_cloth_15")
+spawn("castle_wall_cloth",6,5,2,0,"castle_wall_cloth_16")
+spawn("forest_fireflies",5,5,0,0,"forest_fireflies_3")
+spawn("forest_fireflies",4,5,0,0,"forest_fireflies_4")
+spawn("forest_fireflies",4,4,2,0,"forest_fireflies_5")
+spawn("forest_fireflies",5,4,1,0,"forest_fireflies_6")
+spawn("forest_fireflies",6,4,2,0,"forest_fireflies_7")
+spawn("forest_fireflies",6,5,3,0,"forest_fireflies_8")
+spawn("castle_pillar_light_red",5,4,2,0,"castle_pillar_light_red_1")
+spawn("castle_pillar_light_red",6,4,0,0,"castle_pillar_light_red_2")
+spawn("dungeon_wall_01",25,11,0,0,"dungeon_wall_01_111")
+spawn("dungeon_wall_01",27,11,0,0,"dungeon_wall_01_112")
+spawn("dungeon_wall_01",25,11,0,1,"dungeon_wall_01_113")
+spawn("dungeon_wall_01",26,10,3,1,"dungeon_wall_01_114")
+spawn("dungeon_wall_01",27,11,0,1,"dungeon_wall_01_125")
+spawn("dungeon_wall_01",26,10,1,1,"dungeon_wall_01_126")
+spawn("dungeon_wall_01",26,11,0,1,"dungeon_wall_01_127")
+spawn("dungeon_wall_01",26,10,2,1,"dungeon_wall_01_128")
+spawn("dungeon_pillar",27,11,0,0,"dungeon_pillar_6")
+spawn("dungeon_pillar",26,11,0,0,"dungeon_pillar_7")
+spawn("mine_floor_pit_light",26,15,2,0,"mine_floor_pit_light_1")
+spawn("castle_pillar_light_red",5,6,2,0,"castle_pillar_light_red_3")
+spawn("castle_pillar_light_red",6,6,0,0,"castle_pillar_light_red_4")
+spawn("dungeon_wall_broken_02",4,6,0,-1,"dungeon_wall_broken_02_7")
+spawn("dungeon_wall_broken_02",6,6,0,-1,"dungeon_wall_broken_02_8")
+spawn("dungeon_wall_broken_02",7,5,3,-1,"dungeon_wall_broken_02_9")
+spawn("dungeon_wall_broken_02",7,4,3,-1,"dungeon_wall_broken_02_10")
+spawn("dungeon_wall_broken_02",6,3,2,-1,"dungeon_wall_broken_02_11")
+spawn("dungeon_wall_broken_02",5,3,2,-1,"dungeon_wall_broken_02_12")
+spawn("dungeon_wall_broken_02",4,3,2,-1,"dungeon_wall_broken_02_13")
+spawn("dungeon_wall_broken_02",3,4,1,-1,"dungeon_wall_broken_02_14")
+spawn("dungeon_wall_broken_02",3,5,1,-1,"dungeon_wall_broken_02_15")
+spawn("lock_ornate",5,10,3,0,"pedestal_of_roses_lock")
+pedestal_of_roses_lock.lock:setOpenedBy("ornate_key")
+pedestal_of_roses_lock.lock:addConnector("onActivate", "tricksters_locations_script_entity", "openDoor")
+spawn("ornate_key",26,19,2,0,"ornate_key_1")
+spawn("dungeon_door_iron_barred",5,10,0,0,"pedestal_of_roses_door")
+spawn("dungeon_ceiling",4,5,2,0,"dungeon_ceiling_2")
+spawn("dungeon_ceiling",5,5,1,0,"dungeon_ceiling_3")
+spawn("dungeon_ceiling",6,5,0,0,"dungeon_ceiling_4")
+spawn("dungeon_ceiling",6,4,2,0,"dungeon_ceiling_5")
+spawn("dungeon_ceiling",4,4,3,0,"dungeon_ceiling_7")
+spawn("dungeon_ceiling",5,4,2,0,"dungeon_ceiling_6")
+spawn("ornate_key",5,10,3,0,"ornate_key_2")
+spawn("dungeon_pillar",7,8,0,0,"dungeon_pillar_8")
+spawn("dungeon_pillar",4,8,0,0,"dungeon_pillar_9")
+spawn("dungeon_pillar",4,2,0,0,"dungeon_pillar_10")
+spawn("dungeon_pillar",7,2,0,0,"dungeon_pillar_11")
+spawn("dungeon_pillar",9,4,0,0,"dungeon_pillar_12")
+spawn("dungeon_pillar",9,6,0,0,"dungeon_pillar_13")
+spawn("dungeon_pillar",2,4,0,0,"dungeon_pillar_14")
+spawn("dungeon_pillar",2,6,0,0,"dungeon_pillar_15")
+spawn("forest_ruins_dome",2,8,3,0,"forest_ruins_dome_1")
+spawn("forest_ruins_dome",8,8,3,0,"forest_ruins_dome_2")
+spawn("forest_ruins_dome",8,2,1,0,"forest_ruins_dome_6")
+spawn("forest_ruins_dome",2,2,3,0,"forest_ruins_dome_7")
+spawn("invisible_wall",8,8,3,0,"por_spawn_guardian_01")
+por_spawn_guardian_01.obstacle:disable()
+por_spawn_guardian_01.projectilecollider:disable()
+spawn("invisible_wall",2,8,1,0,"por_spawn_guardian_02")
+por_spawn_guardian_02.obstacle:disable()
+por_spawn_guardian_02.projectilecollider:disable()
+spawn("invisible_wall",2,2,1,0,"por_spawn_guardian_03")
+por_spawn_guardian_03.obstacle:disable()
+por_spawn_guardian_03.projectilecollider:disable()
+spawn("invisible_wall",8,2,3,0,"por_spawn_guardian_04")
+por_spawn_guardian_04.obstacle:disable()
+por_spawn_guardian_04.projectilecollider:disable()

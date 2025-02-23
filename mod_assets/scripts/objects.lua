@@ -1,4 +1,143 @@
 defineParticleSystem{
+	name = "wizard_lantern_red",
+	emitters = {
+		-- smoke
+		{
+			emissionRate = 5,
+			emissionTime = 0,
+			maxParticles = 50,
+			boxMin = {-0.03, 0.0, -0.03},
+			boxMax = { 0.03, 0.0,  0.03},
+			sprayAngle = {0,30},
+			velocity = {0.1,0.5},
+			texture = "assets/textures/particles/smoke_01.tga",
+			lifetime = {1,1},
+			color0 = {.2, 0, 0},
+			opacity = 1,
+			fadeIn = 0.5,
+			fadeOut = 0.5,
+			size = {0.3, 0.3},
+			gravity = {0,0,0},
+			airResistance = 0.1,
+			rotationSpeed = 0.6,
+			blendMode = "Translucent",
+			objectSpace = false,
+		},
+
+		-- flames
+		{
+			emissionRate = 30,
+			emissionTime = 0,
+			maxParticles = 100,
+			boxMin = {-0.03, -0.07, 0.03},
+			boxMax = { 0.03, -0.07,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.1, 1.4},
+			texture = "assets/textures/particles/goromorg_lantern.tga",
+			frameRate = 45,
+			frameSize = 64,
+			frameCount = 16,
+			lifetime = {0.25, 0.85},
+			colorAnimation = false,
+			color0 = {1, 0, 0},
+			opacity = 1,
+			fadeIn = 0.15,
+			fadeOut = 0.3,
+			size = {0.17, 0.015},
+			gravity = {0,0,0},
+			airResistance = 1.0,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = 0,
+			objectSpace = true,
+		},
+
+		-- inner glow
+		{
+			spawnBurst = true,
+			emissionRate = 1,
+			emissionTime = 0,
+			maxParticles = 1,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,30},
+			velocity = {0,0},
+			texture = "assets/textures/particles/glow.tga",
+			lifetime = {1000000, 1000000},
+			colorAnimation = false,
+			color0 = {1, 0, 0},
+			opacity = 1,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {0.5, 0.5},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = 0.1,
+			objectSpace = true,
+		},
+
+		-- outer glow
+		{
+			spawnBurst = true,
+			emissionRate = 1,
+			emissionTime = 0,
+			maxParticles = 1,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,30},
+			velocity = {0,0},
+			texture = "assets/textures/particles/glow.tga",
+			lifetime = {1000000, 1000000},
+			colorAnimation = false,
+			color0 = {1, 0, 0},
+			opacity = 0.25,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {2, 2},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = 0.1,
+			objectSpace = true,
+		}
+	}
+}
+defineObject{
+	name = "castle_pillar_light_red",
+	components = {
+		{
+			class = "Model",
+			model = "assets/models/env/castle_pillar_light.fbx",
+			staticShadow = true,
+		},
+		
+		{
+			class = "Particle",
+			particleSystem = "wizard_lantern_red",
+			offset = vec(0, 1.6, 0),
+		},
+		{
+			class = "Light",
+			range = 1.5,
+			color = vec(2.5, 0, 0.0),
+			brightness = .5,
+			castShadow = false,
+			--staticShadows = true,
+			--shadowMapSize = 256,
+			offset = vec(0, 1.6, 0),
+			--onUpdate = function(self)
+			--	local noise = math.noise(Time.currentTime()*3 + 123) * 0.5 + 0.9
+			--	self:setBrightness(noise * 10)
+			--end,
+		},
+	},
+	placement = "pillar",
+	editorIcon = 108,
+}
+defineParticleSystem{
 	name = "flames_on_wall",
 	emitters = {
 
