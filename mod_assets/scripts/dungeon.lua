@@ -176,7 +176,7 @@ loadLayer("tiles", {
 })
 
 spawn("dungeon_stairs_up",28,21,1,1,"dungeon_stairs_up_1")
-dungeon_stairs_up_1.stairs:setTeleportTarget(7,11,28,1)
+dungeon_stairs_up_1.stairs:setTeleportTarget(10,11,28,1)
 spawn("ladder_metal",26,21,1,0,"ladder_metal_5")
 spawn("dungeon_alcove",27,21,0,1,"dungeon_alcove_1")
 spawn("torch",27,21,0,1,"torch_1")
@@ -410,7 +410,7 @@ mine_spell_receptor_1.walltrigger:setEntityType("lightning_bolt")
 mine_spell_receptor_1.walltrigger:addConnector("onActivate", "script_entity_7", "activatePortal")
 spawn("pushable_block_floor",10,25,2,0,"pushable_block_floor_5")
 spawn("invisible_teleporter",10,25,2,0,"portal_teleporter")
-portal_teleporter.teleporter:setTeleportTarget(5,5,28,0)
+portal_teleporter.teleporter:setTeleportTarget(8,5,28,0)
 portal_teleporter.teleporter:setSpin("east")
 portal_teleporter.teleporter:setTriggeredByParty(true)
 portal_teleporter.teleporter:setTriggeredByMonster(false)
@@ -544,6 +544,347 @@ spawn("brass_key",14,22,3,0,"brass_key_2")
 spawn("gear_key",14,22,3,0,"gear_key_2")
 
 --- level 3 ---
+
+newMap{
+	name = "Idioma",
+	width = 32,
+	height = 32,
+	levelCoord = {0,0,1},
+	ambientTrack = "forest",
+	tiles = {
+		"forest_ground",
+		"forest_trees",
+	}
+}
+
+loadLayer("tiles", {
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,1,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+})
+
+spawn("forest_heightmap",0,31,2,0,"forest_heightmap_9")
+spawn("forest_ruins_arch",13,22,0,0,"forest_ruins_arch_15")
+spawn("forest_ruins_arch",15,22,0,0,"forest_ruins_arch_17")
+spawn("forest_ruins_arch",17,21,2,0,"forest_ruins_arch_19")
+spawn("castle_wall_text",13,22,3,0,"castle_wall_text_6")
+castle_wall_text_6.walltext:setWallText("Espa~nol")
+spawn("castle_wall_text",15,22,3,0,"castle_wall_text_7")
+castle_wall_text_7.walltext:setWallText("English")
+spawn("castle_wall_text",17,22,3,0,"castle_wall_text_8")
+castle_wall_text_8.walltext:setWallText("Deutsch")
+spawn("teleporter",13,21,3,0,"teleporter_english")
+teleporter_english.teleporter:setTeleportTarget(4,16,21,0)
+teleporter_english.teleporter:setSpin("north")
+teleporter_english.teleporter:setTriggeredByParty(false)
+teleporter_english.teleporter:setTriggeredByMonster(false)
+teleporter_english.teleporter:setTriggeredByItem(false)
+teleporter_english.teleporter:setTriggeredBySpell(false)
+spawn("teleporter",15,21,3,0,"teleporter_espanol")
+teleporter_espanol.teleporter:setTeleportTarget(4,16,21,0)
+teleporter_espanol.teleporter:setSpin("north")
+teleporter_espanol.teleporter:setTriggeredByParty(false)
+teleporter_espanol.teleporter:setTriggeredByMonster(false)
+teleporter_espanol.teleporter:setTriggeredByItem(false)
+teleporter_espanol.teleporter:setTriggeredBySpell(false)
+spawn("teleporter",17,21,1,0,"teleporter_deutsch")
+teleporter_deutsch.teleporter:setTeleportTarget(4,16,21,0)
+teleporter_deutsch.teleporter:setSpin("north")
+teleporter_deutsch.teleporter:setTriggeredByParty(false)
+teleporter_deutsch.teleporter:setTriggeredByMonster(false)
+teleporter_deutsch.teleporter:setTriggeredByItem(false)
+teleporter_deutsch.teleporter:setTriggeredBySpell(false)
+spawn("timer",0,30,2,0,"idioma_timer")
+idioma_timer.timer:setTimerInterval(0.01)
+idioma_timer.timer:setDisableSelf(false)
+idioma_timer.timer:setTriggerOnStart(false)
+idioma_timer.timer:setCurrentLevelOnly(true)
+idioma_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("script_entity",0,29,1,0,"idioma_script_entity")
+idioma_script_entity.script:loadFile("mod_assets/scripts/idioma.lua")
+spawn("floor_trigger",13,21,2,0,"floor_trigger_english")
+floor_trigger_english.floortrigger:setTriggeredByParty(true)
+floor_trigger_english.floortrigger:setTriggeredByMonster(false)
+floor_trigger_english.floortrigger:setTriggeredByItem(false)
+floor_trigger_english.floortrigger:setTriggeredByDigging(false)
+floor_trigger_english.floortrigger:setDisableSelf(false)
+floor_trigger_english.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
+spawn("floor_trigger",15,21,0,0,"floor_trigger_espanol")
+floor_trigger_espanol.floortrigger:setTriggeredByParty(true)
+floor_trigger_espanol.floortrigger:setTriggeredByMonster(false)
+floor_trigger_espanol.floortrigger:setTriggeredByItem(false)
+floor_trigger_espanol.floortrigger:setTriggeredByDigging(false)
+floor_trigger_espanol.floortrigger:setDisableSelf(false)
+floor_trigger_espanol.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
+spawn("floor_trigger",17,21,1,0,"floor_trigger_deutsch")
+floor_trigger_deutsch.floortrigger:setTriggeredByParty(true)
+floor_trigger_deutsch.floortrigger:setTriggeredByMonster(false)
+floor_trigger_deutsch.floortrigger:setTriggeredByItem(false)
+floor_trigger_deutsch.floortrigger:setTriggeredByDigging(false)
+floor_trigger_deutsch.floortrigger:setDisableSelf(false)
+floor_trigger_deutsch.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
+spawn("starting_location",15,25,0,0,"starting_location_1")
+spawn("timer",0,27,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+
+--- level 4 ---
+
+newMap{
+	name = "Hall of Heroes",
+	width = 32,
+	height = 32,
+	levelCoord = {0,0,2},
+	ambientTrack = "ruins",
+	tiles = {
+		"castle_floor",
+		"dungeon_floor",
+	}
+}
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+spawn("teleporter",16,18,3,0,"teleporter_27")
+teleporter_27.teleporter:setTeleportTarget(5,16,22,1)
+teleporter_27.teleporter:setSpin("none")
+teleporter_27.teleporter:setTriggeredByParty(true)
+teleporter_27.teleporter:setTriggeredByMonster(true)
+teleporter_27.teleporter:setTriggeredByItem(true)
+teleporter_27.teleporter:setTriggeredBySpell(true)
+spawn("mine_wall_text",15,19,0,0,"mine_wall_text_1")
+mine_wall_text_1.walltext:setWallText("Choose Heroes and level up enough\
+for the adventure")
+spawn("mine_lever",14,19,0,0,"mine_lever_4")
+mine_lever_4.lever:setDisableSelf(false)
+mine_lever_4.lever:addConnector("onToggle", "hall_of_heroes_script_entity", "leverPulled")
+spawn("script_entity",0,31,3,0,"hall_of_heroes_script_entity")
+hall_of_heroes_script_entity.script:loadFile("mod_assets/scripts/hall_of_heroes.lua")
+spawn("timer",0,30,2,0,"hall_of_heroes_timer")
+hall_of_heroes_timer.timer:setTimerInterval(0.01)
+hall_of_heroes_timer.timer:setDisableSelf(false)
+hall_of_heroes_timer.timer:setTriggerOnStart(false)
+hall_of_heroes_timer.timer:setCurrentLevelOnly(true)
+hall_of_heroes_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("tomb_torch_holder",15,18,0,0,"tomb_torch_holder_1")
+tomb_torch_holder_1.controller:setHasTorch(true)
+
+--- level 5 ---
+
+newMap{
+	name = "Merchants of East HQ",
+	width = 32,
+	height = 32,
+	levelCoord = {0,0,3},
+	ambientTrack = "dungeon",
+	tiles = {
+		"beach_ground_water",
+		"dungeon_floor",
+	}
+}
+
+loadLayer("floor_elevation", {
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+loadLayer("ceiling_elevation", {
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+})
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+})
+
+spawn("timer",0,30,2,0,"merchants_timer")
+merchants_timer.timer:setTimerInterval(0.01)
+merchants_timer.timer:setDisableSelf(false)
+merchants_timer.timer:setTriggerOnStart(false)
+merchants_timer.timer:setCurrentLevelOnly(true)
+merchants_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("script_entity",0,31,3,0,"merchants_script_entity")
+merchants_script_entity.script:loadFile("mod_assets/scripts/merchants_of_east_hq.lua")
+spawn("floor_trigger",16,22,0,1,"floor_trigger_28")
+floor_trigger_28.floortrigger:setTriggeredByParty(true)
+floor_trigger_28.floortrigger:setTriggeredByMonster(false)
+floor_trigger_28.floortrigger:setTriggeredByItem(false)
+floor_trigger_28.floortrigger:setTriggeredByDigging(false)
+floor_trigger_28.floortrigger:setDisableSelf(false)
+floor_trigger_28.floortrigger:addConnector("onActivate", "merchants_script_entity", "enterLevel")
+spawn("beach_wall_text",15,21,0,1,"beach_wall_text_9")
+beach_wall_text_9.walltext:setWallText("Equip Party with optional equipment\
+bought with blue gems from a chest\
+and a bag of essential items, before\
+setting of")
+spawn("forest_heightmap",1,31,1,0,"forest_heightmap_11")
+spawn("forest_day_sky",2,31,1,0,"forest_day_sky_1")
+spawn("boat_small",15,17,2,0,"boat_small_3")
+spawn("teleporter",15,18,0,1,"teleporter_24")
+teleporter_24.teleporter:setTeleportTarget(10,14,30,1)
+teleporter_24.teleporter:setSpin("south")
+teleporter_24.teleporter:setTriggeredByParty(true)
+teleporter_24.teleporter:setTriggeredByMonster(true)
+teleporter_24.teleporter:setTriggeredByItem(true)
+teleporter_24.teleporter:setTriggeredBySpell(true)
+spawn("beach_ocean",14,18,1,0,"beach_ocean_2")
+
+--- level 6 ---
 
 newMap{
 	name = "Field of Herbs",
@@ -830,7 +1171,7 @@ tomb_door_stone_13.cbox1:disable()
 tomb_door_stone_13.cbox2:disable()
 tomb_door_stone_13.model:disable()
 spawn("teleporter",15,31,2,1,"teleporter_20")
-teleporter_20.teleporter:setTeleportTarget(4,11,27,-1)
+teleporter_20.teleporter:setTeleportTarget(7,11,27,-1)
 teleporter_20.teleporter:setSpin("north")
 teleporter_20.teleporter:setTriggeredByParty(true)
 teleporter_20.teleporter:setTriggeredByMonster(true)
@@ -1064,7 +1405,7 @@ castle_wall_cloth_6.health:disable()
 spawn("castle_wall_cloth",16,29,0,1,"castle_wall_cloth_7")
 castle_wall_cloth_7.health:disable()
 
---- level 4 ---
+--- level 7 ---
 
 newMap{
 	name = "Castle of Water",
@@ -1625,14 +1966,14 @@ water_disciple_5.clickable:disable()
 water_disciple_5.walltrigger:setEntityType("water_flask")
 spawn("castle_wall_outside_01",1,16,3,0,"castle_wall_outside_01_36")
 spawn("invisible_teleporter",1,16,3,0,"water_disciple_5_spell_teleporter")
-water_disciple_5_spell_teleporter.teleporter:setTeleportTarget(4,2,16,0)
+water_disciple_5_spell_teleporter.teleporter:setTeleportTarget(7,2,16,0)
 water_disciple_5_spell_teleporter.teleporter:setSpin("east")
 water_disciple_5_spell_teleporter.teleporter:setTriggeredByParty(false)
 water_disciple_5_spell_teleporter.teleporter:setTriggeredByMonster(false)
 water_disciple_5_spell_teleporter.teleporter:setTriggeredByItem(false)
 water_disciple_5_spell_teleporter.teleporter:setTriggeredBySpell(true)
 spawn("invisible_teleporter",1,16,3,-1,"water_disciple_5_teleporter")
-water_disciple_5_teleporter.teleporter:setTeleportTarget(4,2,16,0)
+water_disciple_5_teleporter.teleporter:setTeleportTarget(7,2,16,0)
 water_disciple_5_teleporter.teleporter:setSpin("east")
 water_disciple_5_teleporter.teleporter:setTriggeredByParty(false)
 water_disciple_5_teleporter.teleporter:setTriggeredByMonster(false)
@@ -2012,7 +2353,7 @@ spawn("invisible_wall",9,24,3,-1,"invisible_wall_58")
 spawn("teleporter",11,25,2,-1,"teleporter_10")
 teleporter_10.particle:disable()
 teleporter_10.sound:disable()
-teleporter_10.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_10.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_10.teleporter:setSpin("none")
 teleporter_10.teleporter:setTriggeredByParty(true)
 teleporter_10.teleporter:setTriggeredByMonster(true)
@@ -2023,7 +2364,7 @@ teleporter_10.controller:disable()
 spawn("teleporter",12,25,2,-1,"teleporter_11")
 teleporter_11.particle:disable()
 teleporter_11.sound:disable()
-teleporter_11.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_11.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_11.teleporter:setSpin("none")
 teleporter_11.teleporter:setTriggeredByParty(true)
 teleporter_11.teleporter:setTriggeredByMonster(true)
@@ -2034,7 +2375,7 @@ teleporter_11.controller:disable()
 spawn("teleporter",10,25,2,-1,"teleporter_12")
 teleporter_12.particle:disable()
 teleporter_12.sound:disable()
-teleporter_12.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_12.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_12.teleporter:setSpin("none")
 teleporter_12.teleporter:setTriggeredByParty(true)
 teleporter_12.teleporter:setTriggeredByMonster(true)
@@ -2045,7 +2386,7 @@ teleporter_12.controller:disable()
 spawn("teleporter",10,26,2,-1,"teleporter_13")
 teleporter_13.particle:disable()
 teleporter_13.sound:disable()
-teleporter_13.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_13.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_13.teleporter:setSpin("none")
 teleporter_13.teleporter:setTriggeredByParty(true)
 teleporter_13.teleporter:setTriggeredByMonster(true)
@@ -2056,7 +2397,7 @@ teleporter_13.controller:disable()
 spawn("teleporter",11,26,2,-1,"teleporter_14")
 teleporter_14.particle:disable()
 teleporter_14.sound:disable()
-teleporter_14.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_14.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_14.teleporter:setSpin("none")
 teleporter_14.teleporter:setTriggeredByParty(true)
 teleporter_14.teleporter:setTriggeredByMonster(true)
@@ -2067,7 +2408,7 @@ teleporter_14.controller:disable()
 spawn("teleporter",12,26,2,-1,"teleporter_15")
 teleporter_15.particle:disable()
 teleporter_15.sound:disable()
-teleporter_15.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_15.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_15.teleporter:setSpin("none")
 teleporter_15.teleporter:setTriggeredByParty(true)
 teleporter_15.teleporter:setTriggeredByMonster(true)
@@ -2078,7 +2419,7 @@ teleporter_15.controller:disable()
 spawn("teleporter",12,27,2,-1,"teleporter_16")
 teleporter_16.particle:disable()
 teleporter_16.sound:disable()
-teleporter_16.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_16.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_16.teleporter:setSpin("none")
 teleporter_16.teleporter:setTriggeredByParty(true)
 teleporter_16.teleporter:setTriggeredByMonster(true)
@@ -2089,7 +2430,7 @@ teleporter_16.controller:disable()
 spawn("teleporter",10,27,2,-1,"teleporter_17")
 teleporter_17.particle:disable()
 teleporter_17.sound:disable()
-teleporter_17.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_17.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_17.teleporter:setSpin("none")
 teleporter_17.teleporter:setTriggeredByParty(true)
 teleporter_17.teleporter:setTriggeredByMonster(true)
@@ -2100,7 +2441,7 @@ teleporter_17.controller:disable()
 spawn("teleporter",11,27,2,-1,"teleporter_18")
 teleporter_18.particle:disable()
 teleporter_18.sound:disable()
-teleporter_18.teleporter:setTeleportTarget(4,11,26,-1)
+teleporter_18.teleporter:setTeleportTarget(7,11,26,-1)
 teleporter_18.teleporter:setSpin("none")
 teleporter_18.teleporter:setTriggeredByParty(true)
 teleporter_18.teleporter:setTriggeredByMonster(true)
@@ -2110,7 +2451,7 @@ teleporter_18.teleporter:disable()
 teleporter_18.controller:disable()
 spawn("tomb_wall_grating",13,26,1,-1,"tomb_wall_grating_6")
 spawn("teleporter",11,28,1,-1,"teleporter_19")
-teleporter_19.teleporter:setTeleportTarget(3,15,30,1)
+teleporter_19.teleporter:setTeleportTarget(6,15,30,1)
 teleporter_19.teleporter:setSpin("north")
 teleporter_19.teleporter:setTriggeredByParty(true)
 teleporter_19.teleporter:setTriggeredByMonster(true)
@@ -2236,7 +2577,7 @@ sg_portal.planeModel:disable()
 sg_portal.controller:disable()
 spawn("pushable_block_floor",4,22,1,0,"sg_portal_circuit")
 spawn("invisible_teleporter",4,22,1,0,"sg_teleporter")
-sg_teleporter.teleporter:setTeleportTarget(5,22,3,-1)
+sg_teleporter.teleporter:setTeleportTarget(8,22,3,-1)
 sg_teleporter.teleporter:setSpin("east")
 sg_teleporter.teleporter:setTriggeredByParty(true)
 sg_teleporter.teleporter:setTriggeredByMonster(false)
@@ -2378,7 +2719,7 @@ be found to the families of the miners lost in this tragic\
 catastrophe.")
 spawn("sage_of_water",7,15,1,0,"sage_of_water")
 
---- level 5 ---
+--- level 8 ---
 
 newMap{
 	name = "Moist Catacombs",
@@ -2577,7 +2918,7 @@ spawn("swamp_wall_ivy_02",25,4,3,0,"swamp_wall_ivy_02_1")
 spawn("swamp_wall_ivy_02",28,5,2,0,"swamp_wall_ivy_02_2")
 spawn("forest_underwater_plankton",22,3,1,0,"forest_underwater_plankton_2")
 spawn("teleporter",29,5,1,0,"teleporter_21")
-teleporter_21.teleporter:setTeleportTarget(4,23,14,0)
+teleporter_21.teleporter:setTeleportTarget(7,23,14,0)
 teleporter_21.teleporter:setSpin("west")
 teleporter_21.teleporter:setTriggeredByParty(true)
 teleporter_21.teleporter:setTriggeredByMonster(true)
@@ -2596,7 +2937,7 @@ moist_portal.portalBeam:disable()
 moist_portal.planeModel:disable()
 moist_portal.controller:disable()
 spawn("invisible_teleporter",4,28,1,0,"moist_teleporter")
-moist_teleporter.teleporter:setTeleportTarget(5,22,3,-1)
+moist_teleporter.teleporter:setTeleportTarget(8,22,3,-1)
 moist_teleporter.teleporter:setSpin("east")
 moist_teleporter.teleporter:setTriggeredByParty(true)
 moist_teleporter.teleporter:setTriggeredByMonster(false)
@@ -3121,8 +3462,10 @@ cemetery_sky_1.ambient:disable()
 cemetery_sky_1.sky:disable()
 cemetery_sky_1.lensflare:disable()
 cemetery_sky_1.fogparticles:disable()
+spawn("mine_wall_text_long",23,27,1,0,"mine_wall_text_long_1")
+mine_wall_text_long_1.walltext:setWallText("Insert large underground damp dungeon here")
 
---- level 6 ---
+--- level 9 ---
 
 newMap{
 	name = "Cloister",
@@ -3955,7 +4298,7 @@ spawn("forest_underwater_bubbles",17,9,0,0,"forest_underwater_bubbles_6")
 spawn("forest_underwater_bubbles",18,9,1,0,"forest_underwater_bubbles_7")
 spawn("forest_underwater_bubbles",19,9,1,0,"forest_underwater_bubbles_8")
 spawn("teleporter",23,12,1,0,"teleporter_1")
-teleporter_1.teleporter:setTeleportTarget(6,22,12,1)
+teleporter_1.teleporter:setTeleportTarget(9,22,12,1)
 teleporter_1.teleporter:setSpin("north")
 teleporter_1.teleporter:setTriggeredByParty(true)
 teleporter_1.teleporter:setTriggeredByMonster(true)
@@ -4031,7 +4374,7 @@ spawn("castle_pillar_01",22,5,3,0,"castle_pillar_01_169")
 spawn("castle_pillar_01",15,5,3,0,"castle_pillar_01_170")
 spawn("castle_pillar_01",15,12,3,0,"castle_pillar_01_171")
 spawn("teleporter",14,12,1,1,"teleporter_2")
-teleporter_2.teleporter:setTeleportTarget(6,14,12,0)
+teleporter_2.teleporter:setTeleportTarget(9,14,12,0)
 teleporter_2.teleporter:setSpin("north")
 teleporter_2.teleporter:setTriggeredByParty(true)
 teleporter_2.teleporter:setTriggeredByMonster(true)
@@ -4062,14 +4405,14 @@ spawn("castle_bridge",15,8,1,2,"castle_bridge_54")
 spawn("castle_bridge",15,9,1,2,"castle_bridge_55")
 spawn("castle_bridge",15,10,1,2,"castle_bridge_56")
 spawn("teleporter",21,11,1,1,"teleporter_3")
-teleporter_3.teleporter:setTeleportTarget(6,21,11,2)
+teleporter_3.teleporter:setTeleportTarget(9,21,11,2)
 teleporter_3.teleporter:setSpin("north")
 teleporter_3.teleporter:setTriggeredByParty(true)
 teleporter_3.teleporter:setTriggeredByMonster(true)
 teleporter_3.teleporter:setTriggeredByItem(true)
 teleporter_3.teleporter:setTriggeredBySpell(true)
 spawn("teleporter",15,11,1,2,"teleporter_4")
-teleporter_4.teleporter:setTeleportTarget(6,15,12,1)
+teleporter_4.teleporter:setTeleportTarget(9,15,12,1)
 teleporter_4.teleporter:setSpin("none")
 teleporter_4.teleporter:setTriggeredByParty(true)
 teleporter_4.teleporter:setTriggeredByMonster(true)
@@ -4092,14 +4435,14 @@ spawn("castle_bridge",17,10,0,3,"castle_bridge_70")
 spawn("castle_bridge",18,10,0,3,"castle_bridge_71")
 spawn("castle_bridge",19,10,0,3,"castle_bridge_72")
 spawn("teleporter",20,10,1,2,"teleporter_5")
-teleporter_5.teleporter:setTeleportTarget(6,20,10,3)
+teleporter_5.teleporter:setTeleportTarget(9,20,10,3)
 teleporter_5.teleporter:setSpin("north")
 teleporter_5.teleporter:setTriggeredByParty(true)
 teleporter_5.teleporter:setTriggeredByMonster(true)
 teleporter_5.teleporter:setTriggeredByItem(true)
 teleporter_5.teleporter:setTriggeredBySpell(true)
 spawn("teleporter",16,10,1,3,"teleporter_6")
-teleporter_6.teleporter:setTeleportTarget(6,16,11,2)
+teleporter_6.teleporter:setTeleportTarget(9,16,11,2)
 teleporter_6.teleporter:setSpin("none")
 teleporter_6.teleporter:setTriggeredByParty(true)
 teleporter_6.teleporter:setTriggeredByMonster(true)
@@ -4114,14 +4457,14 @@ spawn("castle_bridge",17,8,0,4,"castle_bridge_78")
 spawn("castle_bridge",17,9,0,4,"castle_bridge_79")
 spawn("castle_bridge",18,9,0,4,"castle_bridge_80")
 spawn("teleporter",19,9,1,3,"teleporter_7")
-teleporter_7.teleporter:setTeleportTarget(6,19,9,4)
+teleporter_7.teleporter:setTeleportTarget(9,19,9,4)
 teleporter_7.teleporter:setSpin("north")
 teleporter_7.teleporter:setTriggeredByParty(true)
 teleporter_7.teleporter:setTriggeredByMonster(true)
 teleporter_7.teleporter:setTriggeredByItem(true)
 teleporter_7.teleporter:setTriggeredBySpell(true)
 spawn("teleporter",17,9,1,4,"teleporter_8")
-teleporter_8.teleporter:setTeleportTarget(6,17,10,3)
+teleporter_8.teleporter:setTeleportTarget(9,17,10,3)
 teleporter_8.teleporter:setSpin("none")
 teleporter_8.teleporter:setTriggeredByParty(true)
 teleporter_8.teleporter:setTriggeredByMonster(true)
@@ -4188,7 +4531,7 @@ timer_4.timer:setTriggerOnStart(false)
 timer_4.timer:setCurrentLevelOnly(false)
 timer_4.timer:addConnector("onActivate", "cloister_script_entity", "tick")
 spawn("teleporter",15,24,2,0,"teleporter_22")
-teleporter_22.teleporter:setTeleportTarget(3,15,22,0)
+teleporter_22.teleporter:setTeleportTarget(6,15,22,0)
 teleporter_22.teleporter:setSpin("none")
 teleporter_22.teleporter:setTriggeredByParty(true)
 teleporter_22.teleporter:setTriggeredByMonster(true)
@@ -4207,7 +4550,7 @@ cloister_portal.portalBeam:disable()
 cloister_portal.planeModel:disable()
 cloister_portal.controller:disable()
 spawn("invisible_teleporter",13,8,1,0,"cloister_teleporter")
-cloister_teleporter.teleporter:setTeleportTarget(5,22,3,-1)
+cloister_teleporter.teleporter:setTeleportTarget(8,22,3,-1)
 cloister_teleporter.teleporter:setSpin("east")
 cloister_teleporter.teleporter:setTriggeredByParty(true)
 cloister_teleporter.teleporter:setTriggeredByMonster(false)
@@ -4233,7 +4576,7 @@ floor_trigger_22.floortrigger:setTriggeredByDigging(false)
 floor_trigger_22.floortrigger:setDisableSelf(false)
 floor_trigger_22.floortrigger:addConnector("onActivate", "cloister_script_entity", "cloudVision")
 spawn("invisible_teleporter",25,8,2,0,"invisible_teleporter_1")
-invisible_teleporter_1.teleporter:setTeleportTarget(8,18,31,0)
+invisible_teleporter_1.teleporter:setTeleportTarget(11,18,31,0)
 invisible_teleporter_1.teleporter:setSpin("north")
 invisible_teleporter_1.teleporter:setTriggeredByParty(true)
 invisible_teleporter_1.teleporter:setTriggeredByMonster(false)
@@ -4257,7 +4600,7 @@ you during the trials, until you have completed them. DO not be alarmed, It will
 ")
 spawn("dungeon_wall_broken_02",18,14,0,-1,"dungeon_wall_broken_02_6")
 
---- level 7 ---
+--- level 10 ---
 
 newMap{
 	name = "Beach of Beginnings",
@@ -4508,8 +4851,6 @@ spawn("invisible_wall",2,30,0,1,"invisible_wall_36")
 invisible_wall_36.projectilecollider:disable()
 spawn("invisible_wall",1,30,0,1,"invisible_wall_37")
 invisible_wall_37.projectilecollider:disable()
-spawn("invisible_wall",0,30,0,1,"invisible_wall_38")
-invisible_wall_38.projectilecollider:disable()
 spawn("beach_rock_border",13,31,0,1,"beach_rock_border_1")
 spawn("beach_rock_3x1",17,30,3,0,"beach_rock_3x1_2")
 spawn("beach_rock_1x1_low",18,30,1,1,"beach_rock_1x1_low_1")
@@ -4626,15 +4967,8 @@ spawn("forest_ruins_wall_02",13,27,0,1,"forest_ruins_wall_02_5")
 spawn("beach_stone_ring",12,27,0,1,"beach_stone_ring_1")
 spawn("barrel_crate_block_broken",12,26,3,1,"barrel_crate_block_broken_1")
 spawn("turtle",25,5,2,0,"turtle_2")
-spawn("timer",0,30,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("starting_location",14,30,2,0,"starting_location_1")
 
---- level 8 ---
+--- level 11 ---
 
 newMap{
 	name = "The Trials of Sir Robin de Vere",
@@ -4985,11 +5319,6 @@ spawn("invisible_rocky_wall",9,31,3,0,"invisible_rocky_wall_77")
 spawn("invisible_rocky_wall",8,31,3,0,"invisible_rocky_wall_78")
 spawn("invisible_rocky_wall",7,31,3,0,"invisible_rocky_wall_79")
 spawn("invisible_rocky_wall",6,31,2,0,"invisible_rocky_wall_80")
-spawn("blooddrop_cap",9,27,0,0,"blooddrop_cap_1")
-spawn("blooddrop_cap",7,25,2,0,"blooddrop_cap_2")
-spawn("blooddrop_cap",7,28,2,0,"blooddrop_cap_3")
-spawn("blooddrop_cap",8,26,2,0,"blooddrop_cap_4")
-spawn("blooddrop_cap",8,30,2,0,"blooddrop_cap_5")
 spawn("castle_secret_door",17,28,2,0,"castle_secret_door_2")
 spawn("catacomb_pillar_lantern_01",21,29,2,0,"catacomb_pillar_lantern_01_1")
 spawn("catacomb_pillar_lantern_01",21,31,3,0,"catacomb_pillar_lantern_01_2")
@@ -5086,8 +5415,6 @@ spawn("castle_secret_door",21,30,3,0,"castle_secret_door_11")
 spawn("castle_secret_door",21,29,3,0,"castle_secret_door_12")
 spawn("cemetery_wall_01",20,29,1,1,"cemetery_wall_01_12")
 spawn("forest_ruins_secret_door",20,29,1,0,"forest_ruins_secret_door_15")
-spawn("pedestal",12,28,3,0,"pedestal_3")
-pedestal_3.surface:addConnector("onInsertItem", "triels_robin_script_entitiy", "onPutItem")
 spawn("castle_wall_text_long",17,29,0,0,"castle_wall_text_long_1")
 castle_wall_text_long_1.walltext:setWallText("Robin grew up on a blooddrop farm.\
 Five times at full moon he would help with the harvest and bring it in at dawn.")
@@ -5096,6 +5423,8 @@ forest_wall_text_long_1.walltext:setWallText("Blooddrop Farm\
 De Vere")
 spawn("castle_wall_text_long",16,29,0,0,"castle_wall_text_long_2")
 castle_wall_text_long_2.walltext:setWallText("One summer, rats invaded the fields.\
+Getting to the root of the infestation,\
+Robin ended it. \
 ")
 spawn("castle_wall_text_long",16,29,3,0,"castle_wall_text_long_3")
 castle_wall_text_long_3.walltext:setWallText("That winter, bandits invaded the farm.\
@@ -5104,16 +5433,6 @@ leader. ")
 spawn("castle_wall_cloth_torn",17,29,0,0,"castle_wall_cloth_torn_1")
 spawn("castle_wall_cloth_torn",16,29,0,0,"castle_wall_cloth_torn_2")
 spawn("castle_wall_cloth_torn",16,29,3,0,"castle_wall_cloth_torn_3")
-spawn("rat_shank",9,28,3,0,"rat_shank_1")
-spawn("rat_shank",9,28,0,0,"rat_shank_2")
-spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_6")
-spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_7")
-spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_8")
-spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_9")
-spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_10")
-spawn("rat_shank",17,29,2,0,"rat_shank_3")
-spawn("rat_shank",17,29,2,0,"rat_shank_4")
-spawn("spiked_club",12,28,3,0,"spiked_club_1")
 spawn("castle_bridge",18,27,2,0,"castle_bridge_131")
 spawn("water_surface",0,29,2,0,"water_surface_2")
 spawn("castle_wall_grating",15,25,2,-1,"castle_wall_grating_55")
@@ -6163,14 +6482,197 @@ spawn("forest_plant_cluster_01",15,30,2,0,"forest_plant_cluster_01_14")
 forest_plant_cluster_01_14.obstacle:disable()
 forest_plant_cluster_01_14.projectilecollider:disable()
 spawn("forest_oak_cluster",15,30,0,0,"forest_oak_cluster_4")
+spawn("invisible_wall",0,27,0,1,"invisible_wall_38")
+invisible_wall_38.projectilecollider:disable()
+spawn("pedestal",17,29,2,-1,"robin_pedestal")
+robin_pedestal.surface:addConnector("onInsertItem", "triels_robin_script_entitiy", "onPutItem")
+spawn("blooddrop_cap",17,29,1,0,"blooddrop_cap_1")
+spawn("blooddrop_cap",17,29,3,0,"blooddrop_cap_2")
+spawn("blooddrop_cap",17,29,2,0,"blooddrop_cap_3")
+spawn("blooddrop_cap",17,29,1,0,"blooddrop_cap_4")
+spawn("blooddrop_cap",17,29,3,0,"blooddrop_cap_5")
+spawn("blooddrop_cap",17,29,1,0,"blooddrop_cap_6")
+spawn("shovel",9,24,1,0,"shovel_3")
+spawn("invisible_wall",9,27,2,0,"robin_rat_spawn_blocker")
+robin_rat_spawn_blocker.obstacle:disable()
+robin_rat_spawn_blocker.projectilecollider:disable()
+spawn("tomb_torch_holder",18,30,2,0,"tomb_torch_holder_3")
+tomb_torch_holder_3.controller:setHasTorch(true)
 
---- level 9 ---
+--- level 12 ---
+
+newMap{
+	name = "The Rat Tunnels",
+	width = 32,
+	height = 32,
+	levelCoord = {8,0,-1},
+	ambientTrack = "mine",
+	tiles = {
+		"mine_floor",
+		"mine_floor_grass",
+		"mine_wall",
+	}
+}
+
+loadLayer("ceiling_elevation", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+loadLayer("tiles", {
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,1,1,1,3,3,3,3,3,3,3,3,3,3,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,1,1,1,3,3,3,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,1,1,1,3,3,3,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,1,3,3,1,1,1,1,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,1,3,3,3,3,3,1,3,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,1,3,1,1,3,3,3,3,3,3,3,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,1,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,2,3,1,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+})
+
+spawn("invisible_wall",4,29,0,0,"robin_rat_hole_01")
+robin_rat_hole_01.obstacle:disable()
+robin_rat_hole_01.projectilecollider:disable()
+spawn("timer",0,31,0,0,"rat_tunnels_timer")
+rat_tunnels_timer.timer:setTimerInterval(0.01)
+rat_tunnels_timer.timer:setDisableSelf(false)
+rat_tunnels_timer.timer:setTriggerOnStart(false)
+rat_tunnels_timer.timer:setCurrentLevelOnly(true)
+rat_tunnels_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("script_entity",0,30,2,0,"rat_tunnels_script_entity")
+rat_tunnels_script_entity.script:loadFile("mod_assets/scripts/rat_tunnels.lua")
+spawn("ratling1",5,21,1,0,"ratling1_1")
+spawn("rat_shank",5,21,1,0,"rat_shank_3")
+ratling1_1.monster:addItem(rat_shank_3.item)
+spawn("rat_swarm",2,25,1,0,"rat_swarm_5")
+spawn("rat_swarm",7,28,1,0,"rat_swarm_6")
+spawn("rat_swarm",6,28,1,0,"rat_swarm_7")
+spawn("rat_swarm",2,26,1,0,"rat_swarm_8")
+spawn("torch_holder",4,21,3,0,"torch_holder_1")
+torch_holder_1.controller:setHasTorch(true)
+spawn("torch_holder",6,21,1,0,"torch_holder_2")
+torch_holder_2.controller:setHasTorch(true)
+spawn("chest",5,20,2,0,"chest_6")
+spawn("floor_trigger",4,29,2,1,"floor_trigger_robin_rat_tunnels_01")
+floor_trigger_robin_rat_tunnels_01.floortrigger:setTriggeredByParty(true)
+floor_trigger_robin_rat_tunnels_01.floortrigger:setTriggeredByMonster(false)
+floor_trigger_robin_rat_tunnels_01.floortrigger:setTriggeredByItem(false)
+floor_trigger_robin_rat_tunnels_01.floortrigger:setTriggeredByDigging(false)
+floor_trigger_robin_rat_tunnels_01.floortrigger:setDisableSelf(false)
+floor_trigger_robin_rat_tunnels_01.floortrigger:addConnector("onActivate", "rat_tunnels_script_entity", "returnPartyToSurface")
+spawn("mine_lever",6,20,0,0,"ladder_lever_robin_rats_01")
+ladder_lever_robin_rats_01.lever:setDisableSelf(false)
+ladder_lever_robin_rats_01.lever:addConnector("onActivate", "rat_tunnels_script_entity", "raiseLadder")
+ladder_lever_robin_rats_01.lever:addConnector("onDeactivate", "rat_tunnels_script_entity", "lowerLadder")
+spawn("ladder",4,29,2,-1,"ladder_robin_rats_01")
+spawn("ratling2",14,25,3,0,"ratling2_1")
+spawn("rat_shank",14,25,3,0,"rat_shank_2")
+ratling2_1.monster:addItem(rat_shank_2.item)
+spawn("mine_ceiling_pit_light",14,24,3,0,"mine_ceiling_pit_light_1")
+spawn("mine_lever",13,25,2,0,"ladder_lever_robin_rats_02")
+ladder_lever_robin_rats_02.lever:setDisableSelf(false)
+ladder_lever_robin_rats_02.lever:addConnector("onActivate", "rat_tunnels_script_entity", "raiseLadder")
+ladder_lever_robin_rats_02.lever:addConnector("onDeactivate", "rat_tunnels_script_entity", "lowerLadder")
+spawn("floor_trigger",10,23,2,1,"floor_trigger_robin_rat_tunnels_02")
+floor_trigger_robin_rat_tunnels_02.floortrigger:setTriggeredByParty(true)
+floor_trigger_robin_rat_tunnels_02.floortrigger:setTriggeredByMonster(false)
+floor_trigger_robin_rat_tunnels_02.floortrigger:setTriggeredByItem(false)
+floor_trigger_robin_rat_tunnels_02.floortrigger:setTriggeredByDigging(false)
+floor_trigger_robin_rat_tunnels_02.floortrigger:setDisableSelf(false)
+floor_trigger_robin_rat_tunnels_02.floortrigger:addConnector("onActivate", "rat_tunnels_script_entity", "returnPartyToSurface")
+spawn("ladder",10,23,2,-1,"ladder_robin_rats_02")
+spawn("rat_swarm",8,23,1,0,"rat_swarm_9")
+spawn("rat_swarm",14,23,3,0,"rat_swarm_10")
+spawn("ladder",18,18,2,-1,"ladder_robin_rats_03")
+spawn("mine_lever",20,18,1,0,"ladder_lever_robin_rats_03")
+ladder_lever_robin_rats_03.lever:setDisableSelf(false)
+ladder_lever_robin_rats_03.lever:addConnector("onActivate", "rat_tunnels_script_entity", "raiseLadder")
+ladder_lever_robin_rats_03.lever:addConnector("onDeactivate", "rat_tunnels_script_entity", "lowerLadder")
+spawn("ratling3",19,18,3,0,"ratling3_1")
+spawn("rat_shank",19,18,3,0,"rat_shank_1")
+ratling3_1.monster:addItem(rat_shank_1.item)
+spawn("rat_swarm",16,19,1,0,"rat_swarm_11")
+spawn("rat_swarm",16,18,1,0,"rat_swarm_12")
+spawn("rat_swarm",16,17,1,0,"rat_swarm_13")
+spawn("floor_trigger",18,18,2,1,"floor_trigger_robin_rat_tunnels_03")
+floor_trigger_robin_rat_tunnels_03.floortrigger:setTriggeredByParty(true)
+floor_trigger_robin_rat_tunnels_03.floortrigger:setTriggeredByMonster(false)
+floor_trigger_robin_rat_tunnels_03.floortrigger:setTriggeredByItem(false)
+floor_trigger_robin_rat_tunnels_03.floortrigger:setTriggeredByDigging(false)
+floor_trigger_robin_rat_tunnels_03.floortrigger:setDisableSelf(false)
+floor_trigger_robin_rat_tunnels_03.floortrigger:addConnector("onActivate", "rat_tunnels_script_entity", "returnPartyToSurface")
+spawn("mine_floor_pit_light",18,18,3,0,"mine_floor_pit_light_2")
+spawn("mine_floor_pit_light",10,23,3,0,"mine_floor_pit_light_3")
+spawn("mine_floor_pit_light",4,29,3,0,"mine_floor_pit_light_4")
+spawn("forest_heightmap",1,31,2,0,"forest_heightmap_10")
+spawn("invisible_wall",10,23,0,0,"robin_rat_hole_02")
+robin_rat_hole_02.obstacle:disable()
+robin_rat_hole_02.projectilecollider:disable()
+spawn("invisible_wall",18,18,0,0,"robin_rat_hole_03")
+robin_rat_hole_03.obstacle:disable()
+robin_rat_hole_03.projectilecollider:disable()
+
+--- level 13 ---
 
 newMap{
 	name = "Forest",
 	width = 32,
 	height = 32,
-	levelCoord = {9,0,0},
+	levelCoord = {10,0,0},
 	ambientTrack = "forest",
 	tiles = {
 		"beach_ground",
@@ -6347,7 +6849,7 @@ pushable_block_floor_trigger_4.floortrigger:addConnector("onActivate", "forest_s
 spawn("pushable_block_floor",13,16,3,0,"pushable_block_floor_16")
 pushable_block_floor_16.model:disable()
 
---- level 10 ---
+--- level 14 ---
 
 newMap{
 	name = "Tricksters Domain",
@@ -6423,7 +6925,7 @@ spawn("teleporter",30,30,0,0,"teleporter_23")
 teleporter_23.particle:disable()
 teleporter_23.light:disable()
 teleporter_23.sound:disable()
-teleporter_23.teleporter:setTeleportTarget(10,10,17,0)
+teleporter_23.teleporter:setTeleportTarget(14,10,17,0)
 teleporter_23.teleporter:setSpin("none")
 teleporter_23.teleporter:setTriggeredByParty(true)
 teleporter_23.teleporter:setTriggeredByMonster(false)
@@ -6520,7 +7022,7 @@ leagues out from the center")
 spawn("compass",30,31,1,0,"compass_1")
 spawn("forest_heightmap",2,31,2,0,"forest_heightmap_7")
 
---- level 11 ---
+--- level 15 ---
 
 newMap{
 	name = "Tricksters Locations",

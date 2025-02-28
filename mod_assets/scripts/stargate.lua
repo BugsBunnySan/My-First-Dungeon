@@ -49,9 +49,9 @@ function chevronToggle(self)
 end
 
 stargate_addresses = {["XOOOXO"] = {level = 2, x = 11, y = 25, elevation = 0, facing=1, destination_gate="portal_1", destination_teleporter="portal_teleporter"}, -- beach dungeon/former mines
-                      ["XOXXOX"] = {level = 6, x = 14, y = 8, elevation = 0, facing=1, destination_gate="cloister_portal", destination_teleporter="cloister_teleporter"}, -- cloister
-                      ["OXOOXX"] = {level = 5, x = 5, y = 28, elevation = 0, facing=1, destination_gate="moist_portal", destination_teleporter="moist_teleporter"}, -- moist catacombs
-                      ["XXXXXX"] = {level = 4, x = 4, y = 21, elevation = 0, facing=0, destination_gate=nil, destination_teleporter=nil}} -- castle of water
+                      ["XOXXOX"] = {level = 9, x = 14, y = 8, elevation = 0, facing=1, destination_gate="cloister_portal", destination_teleporter="cloister_teleporter"}, -- cloister
+                      ["OXOOXX"] = {level = 8, x = 5, y = 28, elevation = 0, facing=1, destination_gate="moist_portal", destination_teleporter="moist_teleporter"}, -- moist catacombs
+                      ["XXXXXX"] = {level = 7, x = 4, y = 21, elevation = 0, facing=0, destination_gate=nil, destination_teleporter=nil}} -- castle of water
 stargate_last_coordinates = {}
 
 function deactivate_coordinates(coordinates)

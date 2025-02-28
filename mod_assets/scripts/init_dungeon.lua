@@ -1,6 +1,6 @@
 function initDungeon()    
     initGlobals()    
-    initParty()
+    --initParty()
     initCastleOfWater()
     initMoistCatacombs()
     initCloister()

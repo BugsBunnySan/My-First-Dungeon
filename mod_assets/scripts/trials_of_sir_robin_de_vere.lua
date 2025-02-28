@@ -524,18 +524,21 @@ function start_raise_pedestal(animation)
     global_scripts.script.playSoundAtObject(animation.sound_name, pedestal)    
 end
 
-function raisePedestal(pedestal_id, return_animation)
+function raisePedestal(pedestal_id, return_animation, direction)    
     local pedestal = findEntity(pedestal_id)
     local pedestal_w_pos = pedestal:getWorldPosition()
+    
+    direction = direction or 1
+    
     local start_pos = {x=pedestal_w_pos.x, y=pedestal_w_pos.y, z=pedestal_w_pos.z}
-    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+3, z=pedestal_w_pos.z}
+    local stop_pos  = {x=pedestal_w_pos.x, y=pedestal_w_pos.y+(3 * direction), z=pedestal_w_pos.z}
     
     local curve = {p1 = {x=0, y=0},
                    p2 = {x=0.5,y=0},
                    p3 = {x=0.5,y=1},
                    p4 = {x=1, y=1}}
 
-    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+1, level=pedestal.level}
+    local on_finish_pos = {x=pedestal.x, y=pedestal.y, facing=pedestal.facing, elevation=pedestal.elevation+direction, level=pedestal.level}
     local animation = {on_start=start_raise_pedestal, func=raise_bridge, on_finish=finish_raise_bridge, step=0.05, duration=2, delay=-1, start_pos=start_pos, stop_pos=stop_pos, bridge_id=pedestal.id, on_finish_pos=on_finish_pos, curve=curve, sound_name="gate_iron_open"}
     if return_animation then
         return animation
@@ -856,6 +859,62 @@ function start_journey(state_data)
     return state_data.next_state
 end
 
+rat_spawn_location_ids = {"spawn_robin_rats_01", "spawn_robin_rats_02", "spawn_robin_rats_03"}
+rat_spawn_floor_trigger_ids = {"floor_trigger_robin_rats_01", "floor_trigger_robin_rats_02", "floor_trigger_robin_rats_03"}
+rat_spawn_connections = {floor_trigger_robin_rats_01 = "spawn_robin_rats_01",
+                         floor_trigger_robin_rats_02 = "spawn_robin_rats_02",
+                         floor_trigger_robin_rats_03 = "spawn_robin_rats_03",
+                         count = 3,
+                         animation = nil,
+                         spawn_robin_rats_01 = "robin_rat_hole_01",
+                         spawn_robin_rats_02 = "robin_rat_hole_02",
+                         spawn_robin_rats_03 = "robin_rat_hole_03"}
+
+function spawn_rat_swarm(animation)
+    local spawn_pos_id = rat_spawn_location_ids[math.random(3)]
+    local spawn_pos = findEntity(spawn_pos_id)
+    if spawn_pos ~= nil then
+        spawn_pos:spawn("rat_swarm")
+    end
+end
+
+function destroyRatNest(trigger)
+    trigger = global_scripts.script.getGO(trigger)
+    
+    local rat_spawn_pos    = findEntity(rat_spawn_connections[trigger.id])  
+    print(rat_spawn_connections[rat_spawn_pos.id])  
+    local teleport_pos = findEntity(rat_spawn_connections[rat_spawn_pos.id])
+    
+    party:setPosition(teleport_pos.x, teleport_pos.y, teleport_pos.facing, teleport_pos.elevation, teleport_pos.level)
+    --spawn_pos:destroyDelayed()
+    --trigger:destroyDelayed()
+    
+    rat_spawn_connections.count = rat_spawn_connections.count - 1
+    
+    if rat_spawn_connections.count == 0 then
+        rat_spawn_connections.animation.duration = 0
+    end
+end
+
+function start_spawn_rats()
+    for i = 1,3 do
+        local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, {"dig_hole"})
+        spawn("dig_hole", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, rat_spawn_location_ids[i]) -- beach_sandpile
+        local floor_trigger = spawn("floor_trigger", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, rat_spawn_floor_trigger_ids[i])
+        floor_trigger.floortrigger:setTriggeredByDigging(true)
+        floor_trigger.floortrigger:setTriggeredByItem(false)
+        floor_trigger.floortrigger:setTriggeredByMonster(false)
+        floor_trigger.floortrigger:setTriggeredByParty(false)
+        floor_trigger.floortrigger:setTriggeredByPushableBlock(false)
+        floor_trigger.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "destroyRatNest")
+    end
+    rat_spawn_connections.animation = {func=spawn_rat_swarm, step=12, duration=999999}
+    --global_scripts.script.add_animation(pushblock_robin.level, rat_spawn_connections.animation)
+    --spawn_rat_swarm(animation)
+    --spawn_rat_swarm(animation)
+    --spawn_rat_swarm(animation)
+end
+
 function rats_defeated(state_data)
     return state_data.next_state
 end
@@ -864,11 +923,37 @@ function count_farming(state_data)
     state_data.count = state_data.count - 1
     hudPrint(tostring(state_data.count))
     if state_data.count == 0 then
+        time_callbacks["blooddrop_cap"] = nil
         return state_data.next_state
     else
+        local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)
+        spawn("blooddrop_cap", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
         return state
     end
 end
+
+function onPutItem(surface, item)
+    hudPrint(item.go.name)
+    hudPrint(tostring(surface:count()))
+    local state_data = states[state]
+    if state_data[item.go.name] == nil then
+        return
+    end
+    state = state_data[item.go.name].func(state_data[item.go.name])
+    local state_data = states[state]
+    if state_data.init_func ~= nil then
+        state_data.init_func()
+    end
+    hudPrint(state)
+end
+
+state = "initial" 
+states = {["initial"] = {["blooddrop_cap"] = {func = count_farming, next_state = "rat_plague", count = 1},
+                         init_func = nil},
+          ["rat_plague"] = {["rat_shank"] = {func = rats_defeated, next_state = "bandits"},
+                            init_func = start_spawn_rats},
+          ["bandits"] = {["spiked_club"] = {func = start_journey, next_state = "init_journey"},
+                         init_func = spawn_bandits}}
 
 morning = 0
 noon = 0.5
@@ -876,6 +961,64 @@ evening = 1
 midnight = 1.5
 maxtime = 1.99 -- this then becomes morning
 onehour = 1/12
+
+function raise_robin_pedestal(key, callback)
+    raisePedestal("robin_pedestal")
+    callback.name = "lower"
+    callback.start_time_of_day = morning + (3 * onehour)
+    callback.end_time_of_day = maxtime
+    callback.func = lower_robin_pedestal
+    callback.enabled = true
+    print("end set to "..tostring(callback.end_time_of_day).." "..tostring(callback.enabled))
+end
+
+function lower_robin_pedestal(key, callback)
+    raisePedestal("robin_pedestal", false, -1)
+    callback.name = "raise"
+    callback.start_time_of_day = morning
+    callback.end_time_of_day = morning + (3 * onehour)
+    callback.func = raise_robin_pedestal
+    callback.enabled = true
+    print("end set to "..tostring(callback.end_time_of_day).." "..tostring(callback.enabled))
+end
+
+function check_timed_events(animation)
+    local time_of_day = GameMode.getTimeOfDay()
+    hudPrint(tostring(time_of_day))
+    
+    for key,callback in pairs(time_callbacks) do
+        print(callback.name)
+        if  time_of_day >= callback.start_time_of_day then
+            print("time of day high enough "..tostring(callback.start_time_of_day))
+            if callback.enabled == true then
+                print("enabled")
+                if time_of_day <= callback.end_time_of_day then
+                    callback.func(key, callback)                    
+                    if callback.oneshot == true then
+                        callback.enabled = false                
+                    end
+                end
+            end
+        end
+    end
+end
+
+function enterTheTrials(trigger)
+    trigger:disable()
+    
+    GameMode.setTimeOfDay(morning)
+    
+    trials_robin_forest_sky.sky:setFogRange({1,1}) 
+    
+    local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)
+    spawn("blooddrop_cap", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
+    
+    local animation = {func=check_timed_events, step=1, duration=-1}
+    global_scripts.script.add_animation(trigger.go.level, animation)
+end
+
+time_callbacks = {blooddrop_cap = {name = "raise", start_time_of_day = morning, end_time_of_day = morning + (3 * onehour), func=raise_robin_pedestal, oneshot=false, enabled=true}}
+
 
 time_of_day = 1.5
 keep_time_of_day = true
@@ -1002,22 +1145,3 @@ function goTilMidnight(lever)
     global_scripts.script.add_animation(lever.level, animation)
 end
 
-function onPutItem(surface, item)
-    hudPrint(item.go.name)
-    hudPrint(tostring(surface:count()))
-    local state_data = states[state][item.go.name]
-    if state_data == nil then
-        return
-    end
-    state = state_data.func(state_data)
-    hudPrint(state)
-end
-
-function enterTheTrials()
-    trials_robin_forest_sky.sky:setFogRange({1,1}) 
-end
-
-state = "bandits" 
-states = {["initial"] = {["blooddrop_cap"] = {func = count_farming, next_state = "rat_plague", count = 5}},
-          ["rat_plague"] = {["rat_shank"] = {func = rats_defeated, next_state = "bandits"}},
-          ["bandits"] = {["spiked_club"] = {func = start_journey, next_state = "init_journey"}}}
