@@ -736,7 +736,8 @@ function robin_castle_spawn_ratling(time_delta, animation)
         animation.duration = -1
     else
         local ratling_type = ratling_types[math.random(#ratling_types)]    
-        ratling_boss:spawn(ratling_type)
+        local ratling = ratling_boss:spawn(ratling_type)
+        ratling.monster:setMaxHealth(1)
     end
 end
 
@@ -747,16 +748,20 @@ function robinAtTheCastle(trigger)
     local countdown_animation = {func=robin_castle_countdown, on_finish=on_finish_robin_castle_countdown, step=.1, duration=250000, elapsed=0, last_called=-1, starting_health=5000, health_tick=10, monster_id="robin_castle_ogre", health_tick_stages = {4500, 4000, 3500, 3000, 2500, 2000, 1500, 1000, 500}}
     global_scripts.script.add_animation(boss_fight_robin_castle.level, countdown_animation)
     
-    -- local spawner = findEntity("spawn_robin_castle_1")
-    -- local ratling_boss = spawner:spawn("ratling_boss")    
-    -- spawner = findEntity("spawn_robin_castle_2")
-    -- spawner:spawn("forest_ogre")
-    -- spawner = findEntity("spawn_robin_castle_3")
-    -- spawner:spawn("fire_elemental")    
-    -- spawner:spawn("ratling1")
+    local spawner = findEntity("spawn_robin_castle_1")
+    local ratling_boss = spawner:spawn("ratling_boss") 
+    ratling_boss.monster:setMaxHealth(1)
+    spawner = findEntity("spawn_robin_castle_2")
+    local ogre = spawner:spawn("forest_ogre")
+    ogre.monster:setMaxHealth(1)
+    spawner = findEntity("spawn_robin_castle_3")
+    local elemental = spawner:spawn("fire_elemental")    
+    elemental.monster:setMaxHealth(1)
+    local ratling = spawner:spawn("ratling1")
+    ratling.monster:setMaxHealth(1)
 
-    -- local ratling_boss_spawn_animation = {func=robin_castle_spawn_ratling, on_finish=nil, step=10, duration=250000, elapsed=0, last_called=-1, spawn_at=ratling_boss.id}
-    -- global_scripts.script.add_animation(boss_fight_robin_castle.level, ratling_boss_spawn_animation)
+    local ratling_boss_spawn_animation = {func=robin_castle_spawn_ratling, on_finish=nil, step=10, duration=250000, elapsed=0, last_called=-1, spawn_at=ratling_boss.id}
+    global_scripts.script.add_animation(boss_fight_robin_castle.level, ratling_boss_spawn_animation)
     global_scripts.script.faceObject(pushblock_robin, trigger.go.facing)
 end
 
@@ -814,6 +819,7 @@ function robinInTheForest(trigger)
         local monster = findEntity(monster_id)
         boss_fight_robin_forest.bossfight:addMonster(monster.monster)
         monster.brain:enable()
+        monster.monster:setMaxHealth(1)
     end
     boss_fight_robin_forest.bossfight:activate()
 end
@@ -824,7 +830,8 @@ function robinAtTheBridge(trigger)
     raisePedestal("pedestal_robin_bridge")
     local magma_golem = global_scripts.script.spawnAtObject("magma_golem", robin_magma_golem_spawn)
     local meteorite = spawn("meteorite").item
-    magma_golem.monster:addItem(meteorite) 
+    magma_golem.monster:addItem(meteorite)
+    magma_golem.monster:setMaxHealth(1)
     trigger:disable()
     if pushblock_floors[trigger.go.id]["off"] ~= nil then
         for _,pushblock_floor_id in ipairs(pushblock_floors[trigger.go.id]["off"]) do            
@@ -855,8 +862,7 @@ end
 function start_journey(state_data)
     for _, pushblock_floor in ipairs(pushblock_floors["start"]) do
         start_lite_up_pushblock_floor(pushblock_floor, false)
-    end    
-    return state_data.next_state
+    end  
 end
 
 rat_spawn_location_ids = {"spawn_robin_rats_01", "spawn_robin_rats_02", "spawn_robin_rats_03"}
@@ -932,28 +938,36 @@ function count_farming(state_data)
     end
 end
 
+function spawn_bandits(state_data)
+    local spiked_club = spawn("spiked_club")
+    local ogre = robin_bandit_spawner:spawn("forest_ogre")
+    ogre.monster:addItem(spiked_club.item)
+    ogre.monster:setMaxHealth(1)
+end
+
 function onPutItem(surface, item)
-    hudPrint(item.go.name)
-    hudPrint(tostring(surface:count()))
+    --hudPrint(item.go.name)
+    --hudPrint(tostring(surface:count()))
     local state_data = states[state]
     if state_data[item.go.name] == nil then
         return
     end
     state = state_data[item.go.name].func(state_data[item.go.name])
     local state_data = states[state]
-    if state_data.init_func ~= nil then
+    if state_data ~= nil and state_data.init_func ~= nil then
         state_data.init_func()
     end
-    hudPrint(state)
+    --hudPrint(state)
 end
 
 state = "initial" 
 states = {["initial"] = {["blooddrop_cap"] = {func = count_farming, next_state = "rat_plague", count = 1},
                          init_func = nil},
-          ["rat_plague"] = {["rat_shank"] = {func = rats_defeated, next_state = "bandits"},
+          ["rat_plague"] = {["rat_shank"] = {func = rats_defeated, next_state = "bandits", count = 1},
                             init_func = start_spawn_rats},
-          ["bandits"] = {["spiked_club"] = {func = start_journey, next_state = "init_journey"},
-                         init_func = spawn_bandits}}
+          ["bandits"] = {["spiked_club"] = {func = start_journey, next_state = "init_journey", count = 1},
+                         init_func = spawn_bandits},
+          ["init_journey"] = {init_func = start_journey}}
 
 morning = 0
 noon = 0.5
@@ -984,14 +998,14 @@ end
 
 function check_timed_events(animation)
     local time_of_day = GameMode.getTimeOfDay()
-    hudPrint(tostring(time_of_day))
+    --hudPrint(tostring(time_of_day))
     
     for key,callback in pairs(time_callbacks) do
-        print(callback.name)
+        --print(callback.name)
         if  time_of_day >= callback.start_time_of_day then
-            print("time of day high enough "..tostring(callback.start_time_of_day))
+            --print("time of day high enough "..tostring(callback.start_time_of_day))
             if callback.enabled == true then
-                print("enabled")
+                --print("enabled")
                 if time_of_day <= callback.end_time_of_day then
                     callback.func(key, callback)                    
                     if callback.oneshot == true then
