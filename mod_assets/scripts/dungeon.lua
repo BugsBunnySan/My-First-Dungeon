@@ -6493,6 +6493,13 @@ robin_rat_spawn_blocker.projectilecollider:disable()
 spawn("invisible_wall",8,26,1,0,"robin_bandit_spawner")
 robin_bandit_spawner.obstacle:disable()
 robin_bandit_spawner.projectilecollider:disable()
+spawn("teleporter",0,28,1,0,"teleporter_25")
+teleporter_25.teleporter:setTeleportTarget(9,22,8,0)
+teleporter_25.teleporter:setSpin("west")
+teleporter_25.teleporter:setTriggeredByParty(true)
+teleporter_25.teleporter:setTriggeredByMonster(true)
+teleporter_25.teleporter:setTriggeredByItem(true)
+teleporter_25.teleporter:setTriggeredBySpell(true)
 
 --- level 12 ---
 
