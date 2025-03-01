@@ -6500,6 +6500,7 @@ teleporter_25.teleporter:setTriggeredByParty(true)
 teleporter_25.teleporter:setTriggeredByMonster(true)
 teleporter_25.teleporter:setTriggeredByItem(true)
 teleporter_25.teleporter:setTriggeredBySpell(true)
+spawn("ladder_metal",23,27,1,-1,"ladder_metal_13")
 
 --- level 12 ---
 

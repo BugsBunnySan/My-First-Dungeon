@@ -732,7 +732,7 @@ ratling_types = {"ratling1", "ratling2", "ratling3", "rat_swarm"}
 
 function robin_castle_spawn_ratling(time_delta, animation)
     local ratling_boss = findEntity(animation.spawn_at)
-    if ratling_boss ~= nil then
+    if ratling_boss == nil then
         animation.duration = -1
     else
         local ratling_type = ratling_types[math.random(#ratling_types)]    
@@ -973,7 +973,7 @@ morning = 0
 noon = 0.5
 evening = 1
 midnight = 1.5
-maxtime = 1.99 -- this then becomes morning
+maxtime = 1.9999 -- this then becomes morning
 onehour = 1/12
 
 function raise_robin_pedestal(key, callback)
