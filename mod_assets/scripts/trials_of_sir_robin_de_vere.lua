@@ -996,26 +996,28 @@ function lower_robin_pedestal(key, callback)
     print("end set to "..tostring(callback.end_time_of_day).." "..tostring(callback.enabled))
 end
 
+function check_for_morning(key, callback, time_of_day)
+    local pass = false
+    if ((time_of_day >= max_time - onehour) or (time_of_day < morning + (3 * onehour))) then
+        pass = true
+        callback.enabled = false
+    else
+        callback.enabled = true
+    end
+end
+
 function check_timed_events(animation)
     local time_of_day = GameMode.getTimeOfDay()
-    --hudPrint(tostring(time_of_day))
     
     for key,callback in pairs(time_callbacks) do
-        --print(callback.name)
-        if  time_of_day >= callback.start_time_of_day then
-            --print("time of day high enough "..tostring(callback.start_time_of_day))
+        if  callback.check_func(key, callback, time_of_day) == true then
             if callback.enabled == true then
-                --print("enabled")
-                if time_of_day <= callback.end_time_of_day then
-                    callback.func(key, callback)                    
-                    if callback.oneshot == true then
-                        callback.enabled = false                
-                    end
-                end
+            callback.func(key, callback)  
             end
         end
     end
 end
+
 
 function enterTheTrials(trigger)
     trigger:disable()
@@ -1031,7 +1033,7 @@ function enterTheTrials(trigger)
     global_scripts.script.add_animation(trigger.go.level, animation)
 end
 
-time_callbacks = {blooddrop_cap = {name = "raise", start_time_of_day = morning, end_time_of_day = morning + (3 * onehour), func=raise_robin_pedestal, oneshot=false, enabled=true}}
+time_callbacks = {blooddrop_cap = {name = "raise", check_func=check_for_morning, func=raise_robin_pedestal, oneshot=false, enabled=true}}
 
 
 time_of_day = 1.5
@@ -1159,3 +1161,7 @@ function goTilMidnight(lever)
     global_scripts.script.add_animation(lever.level, animation)
 end
 
+function init()
+    --trials_robin_forest_sky.sky:setFogRange({1,2})    
+    --trials_robin_forest_sky.sky:setFogMode("dense")
+end

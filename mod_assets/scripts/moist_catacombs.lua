@@ -337,3 +337,15 @@ function dockOutSidePlate()
     dungeon_dock_state = "dockOutside"
 end
 
+function init()
+    cemetery_sky.sky:setFogMode("dense")
+    cemetery_sky.sky:enable()
+    cemetery_sky.fogparticles:setColor1(vec(0.2, 0.3, 0.9, 0))
+    cemetery_sky.fogparticles:setColor2(vec(0.1, 0.15, 0.5, 0))
+    cemetery_sky.fogparticles:setColor3(vec(0.1, 0.1, 0.3, 0))
+    cemetery_sky.fogparticles:setOpacity(1)
+    cemetery_sky.fogparticles:enable()
+    forest_day_sky.sky:disable()
+    forest_day_sky.light:disable()
+    forest_day_sky.ambient:disable()
+end

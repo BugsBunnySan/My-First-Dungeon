@@ -22,3 +22,9 @@ function cloudVision()
     --cloister_sky.fogparticles:setOpacity(255)
     --cloister_sky.fogparticles:setParticleSize(100)
 end
+
+function init()
+    local essence_of_air = spawn("essence_air").item
+    beacon_air.socket:addItem(essence_of_air)    
+    --timer_4.timer:start()
+end

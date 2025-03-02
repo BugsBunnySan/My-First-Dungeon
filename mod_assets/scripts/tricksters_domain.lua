@@ -7,7 +7,8 @@ dungeon_sections = {}
 sections = {}
 
 special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-8, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}}, --pedestal_of_roses_door"}}
-                  ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}}}
+                  ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
+                  ["tricksters_beach"] = {x1=-42, y1=-500, x2=-32, y2=500, entry_id="tricksters_beach_marker", door_id="", spawn_pos={}}}
 special_entities = {}
 special_door_id = ""
 
@@ -700,7 +701,8 @@ section_sub_types = {nop = {"nop"}, straight = {"straight"}, left_turn = {"left_
 special_spawn_function = {pedestal_of_roses = spawn_pedestal_of_roses}
 
 special_script_entities = {pedestal_of_roses = "pedestal_of_roses_script_entity",
-                           test_location = "test_location_script_entity"}
+                           test_location = "test_location_script_entity",
+                           tricksters_beach = "tricksters_beach_script_entity"}
 
 function stepTeleport(trigger_id)
     local trigger = findEntity(trigger_id)       
@@ -814,6 +816,8 @@ end
 
 function onEnterDungeon(trigger)
     --print("-----------------------------------")
+    
+    dungeon_door_iron_barred_1.door:close()
     trigger = global_scripts.script.getGO(trigger)
     
     start_pos.facing = trigger.facing
@@ -829,5 +833,4 @@ end
 function init()    
     --tricksters_domain_sky.sky:setFogMode("dense")
     --tricksters_domain_sky.sky:setFogRange({1,2})
-    dungeon_door_iron_barred_1.door:close()
 end

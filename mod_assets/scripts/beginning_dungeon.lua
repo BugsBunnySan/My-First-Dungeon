@@ -98,3 +98,19 @@ function deactivatePortal()
     portal_teleporter.controller:deactivate()    
     global_scripts.script.playSoundAtObject("lightning_bolt_hit_small", pushable_block_floor_5.model)
 end
+
+function init()
+    -- fix the utter stupidity which is the offset of this door model, like WTactualF
+    beach_door_wood_3.frame.go:setSubtileOffset(-1.5, -1)
+    beach_door_wood_4.frame.go:setSubtileOffset(-1.5, -1)
+    beach_door_wood_5.frame.go:setSubtileOffset(-1.5, -2)
+    beach_door_wood_6.frame.go:setSubtileOffset(-1.5, -2)
+    
+    timer_1.timer:stop()
+    timer_2.timer:stop()
+    timer_3.timer:stop()
+    
+    local w_pos = small_key_lock:getWorldPosition()
+    w_pos = w_pos + vec(-0.2, -0.05, 1.55)    
+    small_key_lock:setWorldPosition(w_pos)
+end

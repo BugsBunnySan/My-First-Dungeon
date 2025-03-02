@@ -292,10 +292,8 @@ spawn("lever",21,18,3,-1,"blob_door_lever")
 blob_door_lever.lever:setState("activated")
 blob_door_lever.lever:setDisableSelf(false)
 blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_1", "open")
-blob_door_lever.lever:addConnector("onActivate", "script_entity_6", "leverBreaks")
+blob_door_lever.lever:addConnector("onActivate", "beach_dungeon_script_entity", "leverBreaks")
 blob_door_lever.lever:addConnector("onDeactivate", "dungeon_door_wooden_3", "open")
-spawn("script_entity",20,17,0,0,"script_entity_6")
-script_entity_6.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
 spawn("dungeon_door_wooden",21,18,0,0,"dungeon_door_wooden_1")
 spawn("castle_bridge_grating",21,17,3,0,"castle_bridge_grating_9")
 spawn("green_slime",21,17,2,0,"green_slime_1")
@@ -306,8 +304,8 @@ spawn("ladder_metal",21,18,2,-1,"ladder_metal_6")
 spawn("dungeon_door_wooden",21,17,0,-1,"dungeon_door_wooden_3")
 spawn("ladder_metal",24,16,2,-1,"ladder_metal_7")
 spawn("pickaxe",17,23,2,0,"pickaxe_1")
-spawn("script_entity",23,19,2,0,"script_entity_7")
-script_entity_7.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
+spawn("script_entity",23,19,2,0,"beach_dungeon_script_entity")
+beach_dungeon_script_entity.script:loadFile("mod_assets/scripts/beginning_dungeon.lua")
 spawn("dungeon_cave_in",24,18,2,0,"rubble_2")
 spawn("dungeon_cave_in",24,20,0,0,"rubble_1")
 spawn("mine_lock",17,23,1,0,"mine_lock_1")
@@ -332,11 +330,11 @@ rubble_pedestal_2.itemconstrainbox:disable()
 spawn("mine_ceiling_pit_light_bright",14,25,1,0,"mine_ceiling_pit_light_bright_1")
 spawn("pullchain",14,26,3,0,"pullchain_1")
 pullchain_1.button:setDisableSelf(false)
-pullchain_1.button:addConnector("onActivate", "script_entity_7", "shootProjectile")
+pullchain_1.button:addConnector("onActivate", "beach_dungeon_script_entity", "shootProjectile")
 spawn("pushable_block_floor",13,26,2,0,"floor_circuit_1")
 spawn("wall_button",14,24,3,0,"wall_button_1")
 wall_button_1.button:setDisableSelf(false)
-wall_button_1.button:addConnector("onActivate", "script_entity_7", "maybeActivateFloor")
+wall_button_1.button:addConnector("onActivate", "beach_dungeon_script_entity", "maybeActivateFloor")
 spawn("mine_door_support",13,25,1,0,"safety_gate")
 safety_gate.door:setDoorState("open")
 spawn("timer",13,21,2,0,"timer_1")
@@ -344,7 +342,7 @@ timer_1.timer:setTimerInterval(9999999999)
 timer_1.timer:setDisableSelf(true)
 timer_1.timer:setTriggerOnStart(false)
 timer_1.timer:setCurrentLevelOnly(true)
-timer_1.timer:addConnector("onActivate", "script_entity_7", "deactivateFloor")
+timer_1.timer:addConnector("onActivate", "beach_dungeon_script_entity", "deactivateFloor")
 spawn("scroll",14,26,2,0,"scroll_2")
 scroll_2.scrollitem:setScrollText("Malek, I've jury rigged the mechanism\
 as best I could:\
@@ -363,7 +361,7 @@ spawn("mine_spell_launcher_support",13,25,0,0,"mine_spell_launcher_support_1")
 mine_spell_launcher_support_1.door:disable()
 spawn("mine_spell_receptor_support",13,25,2,0,"mine_spell_receptor_support_1")
 mine_spell_receptor_support_1.walltrigger:setEntityType("lightning_bolt")
-mine_spell_receptor_support_1.walltrigger:addConnector("onActivate", "script_entity_7", "activateReceptorFloor")
+mine_spell_receptor_support_1.walltrigger:addConnector("onActivate", "beach_dungeon_script_entity", "activateReceptorFloor")
 mine_spell_receptor_support_1.door:disable()
 mine_spell_receptor_support_1.itemconstrainbox:disable()
 spawn("timer",15,26,2,0,"timer_2")
@@ -371,7 +369,7 @@ timer_2.timer:setTimerInterval(9999999999)
 timer_2.timer:setDisableSelf(true)
 timer_2.timer:setTriggerOnStart(false)
 timer_2.timer:setCurrentLevelOnly(true)
-timer_2.timer:addConnector("onActivate", "script_entity_7", "deactivateReceptorFloor")
+timer_2.timer:addConnector("onActivate", "beach_dungeon_script_entity", "deactivateReceptorFloor")
 spawn("pushable_block_floor",11,24,2,0,"floor_circuit_7")
 spawn("mine_support_wall_button",14,24,3,0,"mine_support_wall_button_1")
 spawn("teleportation_effect",13,24,3,0,"blob_power_cell")
@@ -380,9 +378,9 @@ spawn("pushable_block_floor",13,24,2,0,"pushable_block_floor_1")
 spawn("mine_lever",14,22,0,0,"safety_gate_lever")
 safety_gate_lever.clickable:disable()
 safety_gate_lever.lever:setDisableSelf(false)
-safety_gate_lever.lever:addConnector("onActivate", "script_entity_7", "closeSafetyGate")
-safety_gate_lever.lever:addConnector("onActivate", "script_entity_7", "leverBreaks")
-safety_gate_lever.lever:addConnector("onDeactivate", "script_entity_7", "safetyGateLeverBreaks")
+safety_gate_lever.lever:addConnector("onActivate", "beach_dungeon_script_entity", "closeSafetyGate")
+safety_gate_lever.lever:addConnector("onActivate", "beach_dungeon_script_entity", "leverBreaks")
+safety_gate_lever.lever:addConnector("onDeactivate", "beach_dungeon_script_entity", "safetyGateLeverBreaks")
 safety_gate_lever.lever:disable()
 spawn("portal",10,25,1,0,"portal_1")
 portal_1.frame:disable()
@@ -407,7 +405,7 @@ teleporter_9.teleporter:setTriggeredBySpell(true)
 teleporter_9.controller:setInitialState("deactivate")
 spawn("mine_spell_receptor",10,25,3,0,"mine_spell_receptor_1")
 mine_spell_receptor_1.walltrigger:setEntityType("lightning_bolt")
-mine_spell_receptor_1.walltrigger:addConnector("onActivate", "script_entity_7", "activatePortal")
+mine_spell_receptor_1.walltrigger:addConnector("onActivate", "beach_dungeon_script_entity", "activatePortal")
 spawn("pushable_block_floor",10,25,2,0,"pushable_block_floor_5")
 spawn("invisible_teleporter",10,25,2,0,"portal_teleporter")
 portal_teleporter.teleporter:setTeleportTarget(8,5,28,0)
@@ -416,16 +414,16 @@ portal_teleporter.teleporter:setTriggeredByParty(true)
 portal_teleporter.teleporter:setTriggeredByMonster(false)
 portal_teleporter.teleporter:setTriggeredByItem(false)
 portal_teleporter.teleporter:setTriggeredBySpell(false)
-portal_teleporter.controller:setInitialState("activate")
+portal_teleporter.controller:setInitialState("deactivate")
 spawn("timer",9,23,2,0,"timer_3")
 timer_3.timer:setTimerInterval(9999999999)
 timer_3.timer:setDisableSelf(true)
 timer_3.timer:setTriggerOnStart(false)
 timer_3.timer:setCurrentLevelOnly(true)
-timer_3.timer:addConnector("onActivate", "script_entity_7", "deactivatePortal")
+timer_3.timer:addConnector("onActivate", "beach_dungeon_script_entity", "deactivatePortal")
 spawn("lock_gear",14,22,0,0,"lock_gear_1")
 lock_gear_1.lock:setOpenedBy("gear_key")
-lock_gear_1.lock:addConnector("onActivate", "script_entity_7", "activateSafetyGateLever")
+lock_gear_1.lock:addConnector("onActivate", "beach_dungeon_script_entity", "activateSafetyGateLever")
 spawn("gear_key",24,19,0,0,"gear_key_1")
 spawn("tomb_pillar",11,26,1,0,"tomb_pillar_1")
 spawn("tomb_pillar",10,25,3,0,"tomb_pillar_2")
@@ -498,12 +496,12 @@ spawn("pushable_block_floor",12,26,2,0,"floor_circuit_4")
 spawn("pushable_block",11,22,2,0,"pushable_block_1")
 spawn("counter",9,25,3,0,"counter_2")
 counter_2.counter:setValue(3)
-counter_2.counter:addConnector("onActivate", "script_entity_7", "activatePortalCircuit")
+counter_2.counter:addConnector("onActivate", "beach_dungeon_script_entity", "activatePortalCircuit")
 spawn("mine_support_wall_01",13,23,2,0,"mine_support_wall_01_1")
 spawn("mine_support_wall_01",12,24,1,0,"mine_support_wall_01_2")
 spawn("mine_lever",13,23,2,0,"mine_lever_2")
 mine_lever_2.lever:setDisableSelf(false)
-mine_lever_2.lever:addConnector("onActivate", "script_entity_7", "resetBlocks")
+mine_lever_2.lever:addConnector("onActivate", "beach_dungeon_script_entity", "resetBlocks")
 spawn("scroll",24,19,3,0,"scroll_3")
 scroll_3.scrollitem:setScrollText("Lead Researcher Carla, Report #32\
 Aftrer much research, have found at least one set of coordinbates,\
@@ -596,12 +594,12 @@ spawn("forest_heightmap",0,31,2,0,"forest_heightmap_9")
 spawn("forest_ruins_arch",13,22,0,0,"forest_ruins_arch_15")
 spawn("forest_ruins_arch",15,22,0,0,"forest_ruins_arch_17")
 spawn("forest_ruins_arch",17,21,2,0,"forest_ruins_arch_19")
-spawn("castle_wall_text",13,22,3,0,"castle_wall_text_6")
-castle_wall_text_6.walltext:setWallText("Espa~nol")
-spawn("castle_wall_text",15,22,3,0,"castle_wall_text_7")
-castle_wall_text_7.walltext:setWallText("English")
-spawn("castle_wall_text",17,22,3,0,"castle_wall_text_8")
-castle_wall_text_8.walltext:setWallText("Deutsch")
+spawn("castle_wall_text",13,22,3,0,"select_spanish_text")
+select_spanish_text.walltext:setWallText("Espa~nol")
+spawn("castle_wall_text",15,22,3,0,"select_english_text")
+select_english_text.walltext:setWallText("English")
+spawn("castle_wall_text",17,22,3,0,"select_german_text")
+select_german_text.walltext:setWallText("Deutsch")
 spawn("teleporter",13,21,3,0,"teleporter_english")
 teleporter_english.teleporter:setTeleportTarget(4,16,21,0)
 teleporter_english.teleporter:setSpin("north")
@@ -631,20 +629,20 @@ idioma_timer.timer:setCurrentLevelOnly(true)
 idioma_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 spawn("script_entity",0,29,1,0,"idioma_script_entity")
 idioma_script_entity.script:loadFile("mod_assets/scripts/idioma.lua")
-spawn("floor_trigger",13,21,2,0,"floor_trigger_english")
-floor_trigger_english.floortrigger:setTriggeredByParty(true)
-floor_trigger_english.floortrigger:setTriggeredByMonster(false)
-floor_trigger_english.floortrigger:setTriggeredByItem(false)
-floor_trigger_english.floortrigger:setTriggeredByDigging(false)
-floor_trigger_english.floortrigger:setDisableSelf(false)
-floor_trigger_english.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
-spawn("floor_trigger",15,21,0,0,"floor_trigger_espanol")
+spawn("floor_trigger",13,21,2,0,"floor_trigger_espanol")
 floor_trigger_espanol.floortrigger:setTriggeredByParty(true)
 floor_trigger_espanol.floortrigger:setTriggeredByMonster(false)
 floor_trigger_espanol.floortrigger:setTriggeredByItem(false)
 floor_trigger_espanol.floortrigger:setTriggeredByDigging(false)
 floor_trigger_espanol.floortrigger:setDisableSelf(false)
 floor_trigger_espanol.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
+spawn("floor_trigger",15,21,0,0,"floor_trigger_english")
+floor_trigger_english.floortrigger:setTriggeredByParty(true)
+floor_trigger_english.floortrigger:setTriggeredByMonster(false)
+floor_trigger_english.floortrigger:setTriggeredByItem(false)
+floor_trigger_english.floortrigger:setTriggeredByDigging(false)
+floor_trigger_english.floortrigger:setDisableSelf(false)
+floor_trigger_english.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
 spawn("floor_trigger",17,21,1,0,"floor_trigger_deutsch")
 floor_trigger_deutsch.floortrigger:setTriggeredByParty(true)
 floor_trigger_deutsch.floortrigger:setTriggeredByMonster(false)
@@ -652,13 +650,6 @@ floor_trigger_deutsch.floortrigger:setTriggeredByItem(false)
 floor_trigger_deutsch.floortrigger:setTriggeredByDigging(false)
 floor_trigger_deutsch.floortrigger:setDisableSelf(false)
 floor_trigger_deutsch.floortrigger:addConnector("onActivate", "idioma_script_entity", "floorTriggerSteppedOn")
-spawn("timer",0,28,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("starting_location",15,25,0,0,"starting_location_1")
 
 --- level 4 ---
 
@@ -716,9 +707,8 @@ teleporter_27.teleporter:setTriggeredByParty(true)
 teleporter_27.teleporter:setTriggeredByMonster(true)
 teleporter_27.teleporter:setTriggeredByItem(true)
 teleporter_27.teleporter:setTriggeredBySpell(true)
-spawn("mine_wall_text",15,19,0,0,"mine_wall_text_1")
-mine_wall_text_1.walltext:setWallText("Choose Heroes and level up enough\
-for the adventure")
+spawn("mine_wall_text",15,19,0,0,"heroes_level_up_text")
+heroes_level_up_text.walltext:setWallText("")
 spawn("mine_lever",14,19,0,0,"mine_lever_4")
 mine_lever_4.lever:setDisableSelf(false)
 mine_lever_4.lever:addConnector("onToggle", "hall_of_heroes_script_entity", "leverPulled")
@@ -874,7 +864,7 @@ and a bag of essential items, before\
 setting of")
 spawn("forest_heightmap",1,31,1,0,"forest_heightmap_11")
 spawn("forest_day_sky",2,31,1,0,"forest_day_sky_1")
-spawn("boat_small",15,17,2,0,"boat_small_3")
+spawn("boat_small",15,17,1,2,"boat_small_3")
 spawn("teleporter",15,18,0,1,"teleporter_24")
 teleporter_24.teleporter:setTeleportTarget(10,14,30,1)
 teleporter_24.teleporter:setSpin("south")
@@ -882,7 +872,7 @@ teleporter_24.teleporter:setTriggeredByParty(true)
 teleporter_24.teleporter:setTriggeredByMonster(true)
 teleporter_24.teleporter:setTriggeredByItem(true)
 teleporter_24.teleporter:setTriggeredBySpell(true)
-spawn("beach_ocean",14,18,1,0,"beach_ocean_2")
+spawn("beach_ocean",15,18,2,1,"beach_ocean_2")
 
 --- level 6 ---
 
@@ -1185,23 +1175,23 @@ tomb_pressure_plate_1.floortrigger:setTriggeredByMonster(false)
 tomb_pressure_plate_1.floortrigger:setTriggeredByItem(false)
 tomb_pressure_plate_1.floortrigger:setTriggeredByDigging(false)
 tomb_pressure_plate_1.floortrigger:setDisableSelf(false)
-tomb_pressure_plate_1.floortrigger:addConnector("onActivate", "script_entity_9", "checkEntrance")
+tomb_pressure_plate_1.floortrigger:addConnector("onActivate", "field_of_herbs_script_entity", "checkEntrance")
 tomb_pressure_plate_1.model:disable()
-spawn("script_entity",21,31,0,0,"script_entity_9")
-script_entity_9.script:loadFile("mod_assets/scripts/field_of_herbs.lua")
+spawn("script_entity",21,31,0,0,"field_of_herbs_script_entity")
+field_of_herbs_script_entity.script:loadFile("mod_assets/scripts/field_of_herbs.lua")
 spawn("timer",16,30,2,0,"back_gate_timer")
 back_gate_timer.timer:setTimerInterval(1)
 back_gate_timer.timer:setDisableSelf(false)
 back_gate_timer.timer:setTriggerOnStart(false)
 back_gate_timer.timer:setCurrentLevelOnly(false)
-back_gate_timer.timer:addConnector("onActivate", "script_entity_9", "openBackGate")
+back_gate_timer.timer:addConnector("onActivate", "field_of_herbs_script_entity", "openBackGate")
 spawn("ladder_metal",15,28,2,0,"ladder_metal_9")
 spawn("timer",13,24,1,0,"herb_timer")
 herb_timer.timer:setTimerInterval(60)
 herb_timer.timer:setDisableSelf(false)
 herb_timer.timer:setTriggerOnStart(false)
 herb_timer.timer:setCurrentLevelOnly(false)
-herb_timer.timer:addConnector("onActivate", "script_entity_9", "maybeSpawnHerb")
+herb_timer.timer:addConnector("onActivate", "field_of_herbs_script_entity", "maybeSpawnHerb")
 spawn("invisible_wall",8,22,0,0,"herb_spawn_ref")
 herb_spawn_ref.obstacle:disable()
 herb_spawn_ref.projectilecollider:disable()
@@ -1334,7 +1324,7 @@ castle_wall_grating_35.model:disable()
 castle_wall_grating_35.frame:disable()
 spawn("castle_bridge",15,23,0,0,"castle_bridge_118")
 spawn("forest_altar",17,23,3,0,"forest_altar_1")
-forest_altar_1.surface:addConnector("onInsertItem", "script_entity_9", "activateEarthAltar")
+forest_altar_1.surface:addConnector("onInsertItem", "field_of_herbs_script_entity", "activateEarthAltar")
 spawn("forest_fireflies",17,23,3,0,"forest_fireflies_2")
 spawn("forest_fountain",14,20,0,0,"forest_fountain_1")
 spawn("castle_bridge",16,23,3,0,"castle_bridge_120")
@@ -1343,7 +1333,7 @@ herb_raiser_timer.timer:setTimerInterval(0.1)
 herb_raiser_timer.timer:setDisableSelf(false)
 herb_raiser_timer.timer:setTriggerOnStart(false)
 herb_raiser_timer.timer:setCurrentLevelOnly(false)
-herb_raiser_timer.timer:addConnector("onActivate", "script_entity_9", "raisePlants")
+herb_raiser_timer.timer:addConnector("onActivate", "field_of_herbs_script_entity", "raisePlants")
 spawn("essence_earth",16,23,1,0,"essence_earth_1")
 spawn("forest_oak_cluster",13,22,1,0,"forest_oak_cluster_1")
 spawn("invisible_wall",15,20,1,0,"invisible_wall_52")
@@ -1390,7 +1380,7 @@ floor_trigger_20.floortrigger:setTriggeredByMonster(false)
 floor_trigger_20.floortrigger:setTriggeredByItem(false)
 floor_trigger_20.floortrigger:setTriggeredByDigging(false)
 floor_trigger_20.floortrigger:setDisableSelf(false)
-floor_trigger_20.floortrigger:addConnector("onActivate", "script_entity_9", "onEnterLevel")
+floor_trigger_20.floortrigger:addConnector("onActivate", "field_of_herbs_script_entity", "onEnterLevel")
 spawn("castle_wall_cloth",14,28,2,1,"castle_wall_cloth_2")
 castle_wall_cloth_2.health:disable()
 spawn("castle_wall_cloth",14,29,3,1,"castle_wall_cloth_3")
@@ -2560,7 +2550,7 @@ floor_trigger_21.floortrigger:setTriggeredByMonster(false)
 floor_trigger_21.floortrigger:setTriggeredByItem(false)
 floor_trigger_21.floortrigger:setTriggeredByDigging(false)
 floor_trigger_21.floortrigger:setDisableSelf(false)
-floor_trigger_21.floortrigger:addConnector("onActivate", "script_entity_9", "onExitLevel")
+floor_trigger_21.floortrigger:addConnector("onActivate", "field_of_herbs_script_entity", "onExitLevel")
 spawn("portal",4,22,0,0,"sg_portal")
 sg_portal.frame:disable()
 sg_portal.portal:disable()
@@ -6891,7 +6881,7 @@ loadLayer("tiles", {
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
@@ -7024,6 +7014,13 @@ degrees north of meridian and about 10\
 leagues out from the center")
 spawn("compass",30,31,1,0,"compass_1")
 spawn("forest_heightmap",2,31,2,0,"forest_heightmap_7")
+spawn("timer",0,28,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",30,31,0,0,"starting_location_1")
 
 --- level 15 ---
 
@@ -7218,3 +7215,117 @@ por_spawn_guardian_03.projectilecollider:disable()
 spawn("invisible_wall",8,2,3,0,"por_spawn_guardian_04")
 por_spawn_guardian_04.obstacle:disable()
 por_spawn_guardian_04.projectilecollider:disable()
+
+--- level 16 ---
+
+newMap{
+	name = "Trixters Beach",
+	width = 32,
+	height = 32,
+	levelCoord = {0,97,0},
+	ambientTrack = "beach",
+	tiles = {
+		"beach_ground",
+		"beach_wall",
+		"void",
+	}
+}
+
+loadLayer("ceiling_elevation", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+})
+
+spawn("forest_heightmap",0,31,3,0,"forest_heightmap_12")
+spawn("script_entity",1,31,2,0,"tricksters_beach_script_entity")
+tricksters_beach_script_entity.script:loadFile("mod_assets/scripts/tricksters_beach.lua")
+spawn("invisible_wall",15,19,0,0,"tricksters_beach_marker")
+tricksters_beach_marker.obstacle:disable()
+tricksters_beach_marker.projectilecollider:disable()
+spawn("forest_day_sky",2,31,1,0,"tricksters_beach_sky")
+tricksters_beach_sky.model:disable()
+tricksters_beach_sky.nightSky:disable()
+tricksters_beach_sky.stars:disable()
+tricksters_beach_sky.light:disable()
+tricksters_beach_sky.ambient:disable()
+tricksters_beach_sky.sky:disable()
+tricksters_beach_sky.lensflare:disable()
+spawn("floor_trigger",15,18,2,0,"floor_trigger_29")
+floor_trigger_29.floortrigger:setTriggeredByParty(true)
+floor_trigger_29.floortrigger:setTriggeredByMonster(true)
+floor_trigger_29.floortrigger:setTriggeredByItem(true)
+floor_trigger_29.floortrigger:setTriggeredByDigging(false)
+floor_trigger_29.floortrigger:setDisableSelf(false)
+floor_trigger_29.floortrigger:addConnector("onActivate", "tricksters_beach_script_entity", "enterLocation")
+spawn("floor_trigger",15,19,2,0,"floor_trigger_30")
+floor_trigger_30.floortrigger:setTriggeredByParty(true)
+floor_trigger_30.floortrigger:setTriggeredByMonster(true)
+floor_trigger_30.floortrigger:setTriggeredByItem(true)
+floor_trigger_30.floortrigger:setTriggeredByDigging(false)
+floor_trigger_30.floortrigger:setDisableSelf(false)
+floor_trigger_30.floortrigger:addConnector("onActivate", "tricksters_beach_script_entity", "exitLocation")

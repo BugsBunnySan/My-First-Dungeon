@@ -55,3 +55,20 @@ function poolOfEnergy()
     global_scripts.script.party_gain_health({1, 2, 3, 4}, 15)
     global_scripts.script.party_conditions({1, 2, 3, 4}, {"water_breathing"}, {})
 end
+
+function init()
+    local guard_med_cab_note = spawn("scroll").item
+    guard_med_cab_note.go.scrollitem:setScrollText("If you mess up with the security system again\nremember the code to the medical cabinet is\n UpDownUpDownUpDownUpDown")
+    guard_personal_alcove.surface:addItem(guard_med_cab_note)
+    local y = water_disciple_5_teleporter.teleporter.go:getWorldPositionY()
+    water_disciple_5_teleporter.teleporter.go:setWorldPositionY(y+.1)
+    med_station_light.light:disable()
+    
+    fish_timer.timer:start()   
+    energy_pool_timer.timer:disable()
+    energy_pool_timer.timer:setTimerInterval(1)
+    
+    castle_of_water_script_entity.script.armCannon1(nil, true)       
+
+    sg_power_timer.timer:disable() 
+end

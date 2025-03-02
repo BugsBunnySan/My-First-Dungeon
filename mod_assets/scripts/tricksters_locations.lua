@@ -5,3 +5,7 @@ function openDoor(lock)
     local door = findEntity(doors[lock.id])
     door.door:open()
 end
+
+function init()
+
+end
