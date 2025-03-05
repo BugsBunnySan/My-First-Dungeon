@@ -7,5 +7,5 @@ function openDoor(lock)
 end
 
 function init()
-
+    --pedestal_of_roses_candle_ilght.light:setRange(5)
 end

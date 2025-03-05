@@ -3,12 +3,13 @@
 
 start_pos = {x=10, y=17, facing=0, elevation=0}
 virtual_pos = {x=0, y=0, facing=9, elevation=0}
+null_pos = {x=0, y=0, facing=9, elevation=0}
 dungeon_sections = {}
 sections = {}
 
-special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-8, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}}, --pedestal_of_roses_door"}}
-                  ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
-                  ["tricksters_beach"] = {x1=-42, y1=-500, x2=-32, y2=500, entry_id="tricksters_beach_marker", door_id="", spawn_pos={}}}
+special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-9, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}},} --pedestal_of_roses_door"}}
+                  --["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
+                  --["tricksters_beach"] = {x1=-42, y1=-500, x2=-32, y2=500, entry_id="tricksters_beach_marker", door_id="", spawn_pos={}}}
 special_entities = {}
 special_door_id = ""
 
@@ -93,8 +94,6 @@ end
 function pos_add_pos(pos, offset_pos)
     pos.x = pos.x + offset_pos.x
     pos.y = pos.y + offset_pos.y
-    pos.facing = pos.facing + offset_pos.facing
-    pos.elevation = pos.elevation + offset_pos.elevation
 end
 
 function modulo_facing(facing)
@@ -198,15 +197,16 @@ end
   
 function make_nothing(section_type, exit_types)
     local section = {section_type = "nop",                  
-                     pos = nil, 
+                     pos = null_pos, 
                      spawn_func = spawn_nothing,
-                     arch_facing=arch_facing,
+                     get_exit_positions_func = get_nothing_exit_positions,
+                     make_exits_func = make_nop_exits,
                      special_position = "",
                      walls = {},
                      floor_triggers = {},
+                     arch_facings = {},
                      exit_types = {},
-                     exits = {},
-                     exit_pos = {}}
+                     exits = {}}
     --pos_straight_ahead(pos)
     --spawn("dispel_blast", pos.level, pos.x, pos.y, pos.facing, pos.elevation)
 
@@ -217,86 +217,111 @@ function makeNop()
     return make_nothing("nop", {})
 end
 
+function get_nothing_exit_positions(section, reference_pos)
+    return {}
+end
+
+function make_nop_exits()
+end
+
 function spawn_nothing(section, pos, spawn_exits, come_from_section, special_position, arch_facing)
     section.pos = global_scripts.script.copy_pos(pos)
     section.special_position = special_position
     return
 end
-
-function make_straight(section_type, exit_types)
+                   
+function make_straight(section_type, pos, exit_types, arch_facings, make_exits, flip_arches)
     local section = {section_type = "straight",
-                     pos = nil,
+                     pos = pos,
                      spawn_func = spawn_straight,
-                     make_exit_types_func = make_straight_exit_types,
-                     arch_facing=nil,
+                     get_exit_positions_func = get_straight_exit_positions,
+                     make_exits_func = make_straight_exits,                     
                      special_position = "",
                      walls = {},
                      floor_triggers = {},
+                     arch_facings = {"outward", "outward"},
                      exit_types = {"empty", "empty"},
-                     exits = {},
-                     exit_pos = {}} 
+                     exits = {}}
                   
-    for i, exit_type in ipairs(section.exit_types) do
+    for i,_ in ipairs(section.exit_types) do
         section.exit_types[i] = exit_types[i] or section.exit_types[i]
     end
-                  
+    
+    for i,_ in ipairs(section.arch_facings) do
+        section.arch_facings[i] = arch_facings[i] or section.arch_facings[i]
+    end
+                
+    if make_exits == true then
+        section:make_exits_func(section.pos, flip_arches)        
+    end
+    
     return section
 end
 
-function make_straight_exit_types(section)
-    local exit_pos = global_scripts.script.copy_pos(section.pos)
+function get_straight_exit_positions(section, reference_pos)
+    local exit_positions = {}
+    -- exit 1
+    local exit_pos = global_scripts.script.copy_pos(reference_pos)
     pos_reverse(exit_pos)      
     pos_straight_ahead(exit_pos) 
-    section.exit_pos[1] = global_scripts.script.copy_pos(exit_pos)
+    exit_positions[1] = exit_pos
+    
+    -- exit 2        
+    exit_pos = global_scripts.script.copy_pos(reference_pos)
+    pos_straight_ahead(exit_pos, 3) 
+    exit_positions[2] = exit_pos
+    
+    return exit_positions
+end
 
-    local exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"straight"})
-    exit_section.pos = exit_pos
+function make_straight_exits(section, reference_pos, flip_arches)
+    local arch_facings = {}
+    if flip_arches then
+        if section.arch_facings[1] == "outward" then
+            arch_facings[1] = "inward"
+        elseif section.arch_facings[1] == "inward" then
+            arch_facings[1] = "outward"
+        end
+    end
+    
+    local exit_positions = section:get_exit_positions_func(reference_pos)
+    
+    local exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"straight"}, arch_facings, false, false)
     section.exit_types[1] = exit_section.section_type
     section.exits[1] = exit_section      
-                     
-    exit_pos = global_scripts.script.copy_pos(section.pos)
-    pos_straight_ahead(exit_pos, 3)
-    section.exit_pos[2] = global_scripts.script.copy_pos(exit_pos)
-                     
-    exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"straight"})
-    exit_section.pos = exit_pos
+                                 
+    exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"straight"}, {}, false, false)
     section.exit_types[2] = exit_section.section_type
     section.exits[2] = exit_section
 end
 
-function spawn_straight(section, pos, spawn_exits, come_from_section, special_position, arch_facing) 
+function spawn_straight(section, pos, spawn_exits, come_from_section, special_position)
     local exit_section
+    local exit_pos
+    local exit_positions
     section.pos = global_scripts.script.copy_pos(pos)
-    section.special_position = special_position
-    section.arch_facing = arch_facing
-                  
-    local arch_pos = global_scripts.script.copy_pos(pos)
-    local spawn_arch_facing = ""
-       
-    if section.arch_facing == "inward" then
-        pos_straight_back(arch_pos)
-        spawn_arch_facing = "outward"
-    elseif section.arch_facing == "outward" then
-        pos_reverse(arch_pos)
-        spawn_arch_facing = "inward"
+    section.special_position = special_position 
+               
+    if spawn_exits == true then
+        exit_positions = section:get_exit_positions_func(pos)             
+        section.exits[1]:spawn_func(exit_positions[1], false, section, section.special_position)  
+        section.exits[2]:spawn_func(exit_positions[2], false, section, section.special_position)  
     end
-           
-    if spawn_exits == true then    
-        local exit_pos = global_scripts.script.copy_pos(pos)         
-    
-        pos_reverse(exit_pos)      
-        pos_straight_ahead(exit_pos) 
-        section.exit_pos[1] = global_scripts.script.copy_pos(exit_pos)
-        
-        section.exits[1]:spawn_func(exit_pos, false, section, section.special_position, spawn_arch_facing)
-    else        
+               
+    if spawn_exits == false then
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if section.special_position ~=  "" then
             special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)
             
+        end    
+        
+        local arch_pos = global_scripts.script.copy_pos(pos)
+        if section.arch_facings[1] == "outward" then        
+            pos_straight_back(arch_pos)
+        elseif section.arch_facings[1] == "inward" then
+            pos_reverse(arch_pos)
         end
-
-        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)                         
+        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)        
     end
 
     straight_ahead(pos, true, section)
@@ -305,11 +330,8 @@ function spawn_straight(section, pos, spawn_exits, come_from_section, special_po
     
     exit_pos = global_scripts.script.copy_pos(pos) 
     
-    if spawn_exits == true then  
-        section.exit_pos[2] = global_scripts.script.copy_pos(exit_pos) 
-        section.exits[2]:spawn_func(exit_pos, false, section, section.special_position, "outward")
-    else
-        spawn_arch(exit_pos.x, exit_pos.y, modulo_facing(exit_pos.facing+2), exit_pos.elevation, exit_pos.level, section)
+    if spawn_exits == false then 
+        spawn_arch(exit_pos.x, exit_pos.y, modulo_facing(exit_pos.facing + 2), exit_pos.elevation, exit_pos.level, section)
         spawn_projectile_catcher(exit_pos.x, exit_pos.y, exit_pos.facing, exit_pos.elevation, exit_pos.level, section)
     end
         
@@ -318,84 +340,102 @@ function spawn_straight(section, pos, spawn_exits, come_from_section, special_po
     return section
 end
 
-function make_left_turn(section_type, exit_types, arch_facing)
+function make_left_turn(section_type, pos, exit_types, arch_facings, make_exits, flip_arches)
     local section = {section_type = "left_turn",
-                     pos = nil,
+                     pos = pos,
                      spawn_func = spawn_left_turn,
-                     make_exit_types_func = make_left_turn_exit_types,
-                     arch_facing=arch_facing,
+                     get_exit_positions_func = get_left_turn_exit_positions,
+                     make_exits_func = make_left_turn_exits,
                      special_position = "",
                      walls = {},
                      floor_triggers = {},
+                     arch_facings = {"outward", "outward"},
                      exit_types = {"empty", "empty"},
-                     exits = {},
-                     exit_pos = {}} 
+                     exits = {}} 
                   
     for i, exit_type in ipairs(section.exit_types) do
         section.exit_types[i] = exit_types[i] or section.exit_types[i]
+    end  
+    
+    for i,_ in ipairs(section.arch_facings) do
+        section.arch_facings[i] = arch_facings[i] or section.arch_facings[i]
     end
-                  
+         
+    if make_exits == true then
+        section:make_exits_func(section.pos, flip_arches)        
+    end
+                    
     return section
 end
 
-function make_left_turn_exit_types(section)
-    local exit_pos = global_scripts.script.copy_pos(section.pos)
+function get_left_turn_exit_positions(section, reference_pos)    
+    local exit_positions = {}
+   
+    -- exit 1
+    local exit_pos = global_scripts.script.copy_pos(reference_pos)
     pos_reverse(exit_pos)      
-    pos_straight_ahead(exit_pos) 
-    section.exit_pos[1] = global_scripts.script.copy_pos(exit_pos)
-
-    local exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"left_turn"})
-    exit_section.pos = exit_pos
-    section.exit_types[1] = exit_section.section_type
-    section.exits[1] = exit_section      
-                     
-    exit_pos = global_scripts.script.copy_pos(section.pos)
+    pos_straight_ahead(exit_pos)  
+    exit_positions[1] = exit_pos 
+    
+    -- exit 2
+    exit_pos = global_scripts.script.copy_pos(reference_pos)
     pos_straight_ahead(exit_pos)
     pos_left(exit_pos)
-    pos_straight_ahead(exit_pos)
-    section.exit_pos[2] = global_scripts.script.copy_pos(exit_pos)
-                     
-    exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"right_turn"})
-    exit_section.pos = exit_pos
+    pos_straight_ahead(exit_pos, 2)    
+    exit_positions[2] = exit_pos 
+   
+    return exit_positions
+end
+
+function make_left_turn_exits(section, reference_pos, flip_arches)    
+    local arch_facings = {}
+    if flip_arches then
+        if section.arch_facings[1] == "outward" then
+            arch_facings[1] = "inward"
+        elseif section.arch_facings[1] == "inward" then
+            arch_facings[1] = "outward"
+        end
+    end
+    
+    local exit_positions = section:get_exit_positions_func(reference_pos)   
+    
+    local exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"left_turn"}, arch_facings, false, false)
+    section.exit_types[1] = exit_section.section_type
+    section.exits[1] = exit_section      
+                 
+    exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"right_turn"}, {}, false, false)
     section.exit_types[2] = exit_section.section_type
     section.exits[2] = exit_section
 end
 
-function spawn_left_turn(section, pos, spawn_exits, come_from_section, special_position, arch_facing)
+function spawn_left_turn(section, pos, spawn_exits, come_from_section, special_position)
     local exit_section
+    local exit_positions
+    local exit_pos
+    
     section.pos = global_scripts.script.copy_pos(pos)
-    section.special_position = special_position
-    section.arch_facing = arch_facing
-                  
-    local arch_pos = global_scripts.script.copy_pos(pos)
-    local spawn_arch_facing = ""
-       
-    if section.arch_facing == "inward" then
-        pos_straight_back(arch_pos)
-        spawn_arch_facing = "outward"
-    elseif section.arch_facing == "outward" then
-        pos_reverse(arch_pos)
-        spawn_arch_facing = "inward"
-    end
-                      
-    virtual_pos.facing = pos.facing
-    
-    if spawn_exits == true then    
-        local exit_pos = global_scripts.script.copy_pos(pos)         
-    
-        pos_reverse(exit_pos)      
-        pos_straight_ahead(exit_pos) 
-        section.exit_pos[1] = global_scripts.script.copy_pos(exit_pos)
+    section.special_position = special_position 
                
-        section.exits[1]:spawn_func(exit_pos, false, section, section.special_position, spawn_arch_facing)
-    else        
+    virtual_pos.facing = pos.facing  
+    
+    if spawn_exits == true then
+        exit_positions = section:get_exit_positions_func(pos)
+        section.exits[1]:spawn_func(exit_positions[1], false, section, section.special_position)
+        section.exits[2]:spawn_func(exit_positions[2], false, section, section.special_position)
+    end
+        
+    if spawn_exits == false then
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if section.special_position ~=  "" then
-            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)
-            
+            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)           
+        end    
+        local arch_pos = global_scripts.script.copy_pos(pos)
+        if section.arch_facings[1] == "outward" then        
+            pos_straight_back(arch_pos)
+        elseif section.arch_facings[1] == "inward" then
+            pos_reverse(arch_pos)
         end
-
-        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)                         
+        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)        
     end
 
     straight_ahead(pos, true, section)
@@ -404,13 +444,9 @@ function spawn_left_turn(section, pos, spawn_exits, come_from_section, special_p
     
     exit_pos = global_scripts.script.copy_pos(pos) 
     
-    if spawn_exits == true then
-        section.exit_pos[2] = global_scripts.script.copy_pos(exit_pos)                 
-        
-        section.exits[2]:spawn_func(exit_pos, false, section, section.special_position, "outward")
-    else
-        spawn_arch(exit_pos.x, exit_pos.y, modulo_facing(exit_pos.facing+2), exit_pos.elevation, exit_pos.level, section)
-        straight_ahead(pos, true, section)
+    if spawn_exits == false then
+        spawn_arch(exit_pos.x, exit_pos.y, modulo_facing(exit_pos.facing + 2), exit_pos.elevation, exit_pos.level, section)
+        spawn_projectile_catcher(exit_pos.x, exit_pos.y, exit_pos.facing, exit_pos.elevation, exit_pos.level, section)
     end
         
     table.insert(dungeon_sections, section)  
@@ -418,62 +454,102 @@ function spawn_left_turn(section, pos, spawn_exits, come_from_section, special_p
     return section
 end
 
-function make_right_turn(section_type, exit_types, arch_facing)
+function make_right_turn(section_type, pos, exit_types, arch_facings, make_exits, flip_arches)
     local section = {section_type = "right_turn",
-                     pos = nil,
+                     pos = pos,
                      spawn_func = spawn_right_turn,
-                     arch_facing=arch_facing,
+                     get_exit_positions_func = get_right_turn_exit_positions,
+                     make_exits_func = make_right_turn_exits,
                      special_position = "",
                      walls = {},
                      floor_triggers = {},
+                     arch_facings = {"outward", "outward"},
                      exit_types = {"empty", "empty"},
-                     exits = {},
-                     exit_pos = {}} 
+                     exits = {}} 
                   
     for i, exit_type in ipairs(section.exit_types) do
         section.exit_types[i] = exit_types[i] or section.exit_types[i]
+    end  
+    
+    for i,_ in ipairs(section.arch_facings) do
+        section.arch_facings[i] = arch_facings[i] or section.arch_facings[i]
     end
-                  
+         
+    if make_exits == true then
+        section:make_exits_func(section.pos, flip_arches)        
+    end
+                    
     return section
+end
+
+function get_right_turn_exit_positions(section, reference_pos)
+    local exit_positions = {}
+   
+    -- exit 1
+    local exit_pos = global_scripts.script.copy_pos(reference_pos)
+    pos_reverse(exit_pos)      
+    pos_straight_ahead(exit_pos)  
+    exit_positions[1] = exit_pos 
+    
+    -- exit 2
+    exit_pos = global_scripts.script.copy_pos(reference_pos)
+    pos_straight_ahead(exit_pos)
+    pos_right(exit_pos)
+    pos_straight_ahead(exit_pos, 2)    
+    exit_positions[2] = exit_pos 
+   
+    return exit_positions
+end
+
+function make_right_turn_exits(section, reference_pos, flip_arches)    
+    local arch_facings = {}
+    if flip_arches then
+        if section.arch_facings[1] == "outward" then
+            arch_facings[1] = "inward"
+        elseif section.arch_facings[1] == "inward" then
+            arch_facings[1] = "outward"
+        end
+    end
+    
+    local exit_positions = section:get_exit_positions_func(reference_pos)   
+    
+    local exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"right_turn"}, arch_facings, false, false)
+    section.exit_types[1] = exit_section.section_type
+    section.exits[1] = exit_section      
+                 
+    exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"left_turn"}, {}, false, false)
+    section.exit_types[2] = exit_section.section_type
+    section.exits[2] = exit_section
 end
 
 function spawn_right_turn(section, pos, spawn_exits, come_from_section, special_position)
     local exit_section
+    local exit_positions
+    local exit_pos
+    
     section.pos = global_scripts.script.copy_pos(pos)
-    section.special_position = special_position
-                  
-    local arch_pos = global_scripts.script.copy_pos(pos)
-    local arch_facing = ""
-       
-    if section.arch_facing == "inward" then
-        pos_straight_back(arch_pos)
-        arch_facing = "outward"
-    elseif section.arch_facing == "outward" then
-        pos_reverse(arch_pos)
-        arch_facing = "inward"
+    section.special_position = special_position 
+               
+    virtual_pos.facing = pos.facing  
+    
+    if spawn_exits == true then
+        exit_positions = section:get_exit_positions_func(pos)
+        section.exits[1]:spawn_func(exit_positions[1], false, section, section.special_position)
+        section.exits[2]:spawn_func(exit_positions[2], false, section, section.special_position)
     end
-                      
-    virtual_pos.facing = pos.facing
-    
-    if spawn_exits == true then    
-        local exit_pos = global_scripts.script.copy_pos(pos)         
-    
-        pos_reverse(exit_pos)      
-        pos_straight_ahead(exit_pos) 
-        section.exit_pos[1] = global_scripts.script.copy_pos(exit_pos)
         
-        exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"right_turn"}, arch_facing)
-        exit_section:spawn_func(exit_pos, false, section, section.special_position)
-        section.exit_types[1] = exit_section.section_type
-        section.exits[1] = exit_section
-    else        
+    if spawn_exits == false then
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
         if section.special_position ~=  "" then
-            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)
-            
+            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)           
+        end    
+        local arch_pos = global_scripts.script.copy_pos(pos)
+        if section.arch_facings[1] == "outward" then        
+            pos_straight_back(arch_pos)
+        elseif section.arch_facings[1] == "inward" then
+            pos_reverse(arch_pos)
         end
-
-        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)                         
+        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)        
     end
 
     straight_ahead(pos, true, section)
@@ -482,15 +558,9 @@ function spawn_right_turn(section, pos, spawn_exits, come_from_section, special_
     
     exit_pos = global_scripts.script.copy_pos(pos) 
     
-    if spawn_exits == true then
-        section.exit_pos[2] = global_scripts.script.copy_pos(exit_pos)                  
-        exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"left_turn"}, "outward")
-        exit_section:spawn_func(exit_pos, false, section, section.special_position)
-        section.exit_types[2] = exit_section.section_type
-        section.exits[2] = exit_section
-    else
-        spawn_arch(exit_pos.x, exit_pos.y, modulo_facing(exit_pos.facing+2), exit_pos.elevation, exit_pos.level, section)
-        straight_ahead(pos, true, section)
+    if spawn_exits == false then
+        spawn_arch(exit_pos.x, exit_pos.y, modulo_facing(exit_pos.facing + 2), exit_pos.elevation, exit_pos.level, section)
+        spawn_projectile_catcher(exit_pos.x, exit_pos.y, exit_pos.facing, exit_pos.elevation, exit_pos.level, section)
     end
         
     table.insert(dungeon_sections, section)  
@@ -498,155 +568,180 @@ function spawn_right_turn(section, pos, spawn_exits, come_from_section, special_
     return section
 end
 
-function make_T_junction(section_type, exit_types, arch_facing)
+function make_T_junction(section_type, pos, exit_types, arch_facings, make_exits, flip_arches)
     local section = {section_type = section_type,
-                     pos = nil,
+                     pos = pos,
                      spawn_func = spawn_T_junction,
-                     arch_facing=arch_facing,
+                     get_exit_positions_func = get_T_junction_exit_positions,
+                     make_exits_func = make_T_junction_exits,
                      special_position = "",
                      walls = {},
                      floor_triggers = {},
+                     arch_facings = {"outward", "outward", "outward"},
                      exit_types = {"empty", "empty", "empty"},
-                     exits = {},
-                     exit_pos = {}} 
+                     exits = {}} 
                   
     for i, exit_type in ipairs(section.exit_types) do
         section.exit_types[i] = exit_types[i] or section.exit_types[i]
+    end  
+    
+    for i,_ in ipairs(section.arch_facings) do
+        section.arch_facings[i] = arch_facings[i] or section.arch_facings[i]
     end
-                  
+         
+    if make_exits == true then
+        section:make_exits_func(section.pos, flip_arches)        
+    end
+                    
     return section
+end
+
+function get_T_junction_exit_positions(section, reference_pos)
+    local exit_positions = {}
+   
+    -- exit 1
+    local exit_pos = global_scripts.script.copy_pos(reference_pos)
+    pos_reverse(exit_pos)      
+    pos_straight_ahead(exit_pos)  
+    exit_positions[1] = exit_pos 
+    
+    if section.section_type == "T_junction_left" then
+        -- exit 2        
+        exit_pos = global_scripts.script.copy_pos(reference_pos)
+        pos_straight_ahead(exit_pos)
+        pos_left(exit_pos)
+        pos_straight_ahead(exit_pos, 2)  
+        exit_positions[2] = exit_pos 
+        
+        -- exit 3
+        exit_pos = global_scripts.script.copy_pos(reference_pos)
+        pos_straight_ahead(exit_pos, 3)  
+        exit_positions[3] = exit_pos     
+    elseif section.section_type == "T_junction_T" then 
+        -- exit 2        
+        exit_pos = global_scripts.script.copy_pos(reference_pos)
+        pos_straight_ahead(exit_pos)
+        pos_left(exit_pos)
+        pos_straight_ahead(exit_pos, 2)  
+        exit_positions[2] = exit_pos 
+        
+        -- exit 3 
+        exit_pos = global_scripts.script.copy_pos(reference_pos)
+        pos_straight_ahead(exit_pos)
+        pos_right(exit_pos)
+        pos_straight_ahead(exit_pos, 2) 
+        exit_positions[3] = exit_pos         
+    elseif section.section_type == "T_junction_right" then
+        -- exit 2
+        exit_pos = global_scripts.script.copy_pos(reference_pos)
+        pos_straight_ahead(exit_pos, 3)  
+        exit_positions[2] = exit_pos 
+        
+        -- exit 3        
+        exit_pos = global_scripts.script.copy_pos(reference_pos)
+        pos_straight_ahead(exit_pos)
+        pos_right(exit_pos)
+        pos_straight_ahead(exit_pos, 2)  
+        exit_positions[3] = exit_pos       
+    end
+   
+    return exit_positions
+end
+
+function make_T_junction_exits(section, reference_pos, flip_arches)
+    local exit_pos
+    local exit_section 
+    local exit_positions 
+    
+    local arch_facings = {}
+    if flip_arches then
+        if section.arch_facings[1] == "outward" then
+            arch_facings[1] = "inward"
+        elseif section.arch_facings[1] == "inward" then
+            arch_facings[1] = "outward"
+        end
+    end
+
+    exit_positions = section:get_exit_positions_func(reference_pos)
+
+    if section.section_type == "T_junction_left" then
+        -- exit 1
+        exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"T_junction_left"}, arch_facings, false, false)
+        section.exit_types[1] = exit_section.section_type
+        section.exits[1] = exit_section  
+        
+        -- exit 2
+        exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"T_junction_T"}, {}, false, false)
+        section.exit_types[2] = exit_section.section_type 
+        section.exits[2] = exit_section 
+        
+        -- exit 3
+        exit_section = make_functions[section.exit_types[3]](section.exit_types[3], exit_positions[3], {"T_junction_right"}, {}, false, false)
+        section.exit_types[3] = exit_section.section_type  
+        section.exits[3] = exit_section                       
+    elseif section.section_type == "T_junction_T" then  
+        -- exit 1                 
+        exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"T_junction_T"}, arch_facings, false, false)
+        section.exit_types[1] = exit_section.section_type 
+        section.exits[1] = exit_section  
+        
+        -- exit 2
+        exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"T_junction_right"}, {}, false, false)
+        section.exit_types[2] = exit_section.section_type 
+        section.exits[2] = exit_section       
+        
+        --exit 3
+        exit_section = make_functions[section.exit_types[3]](section.exit_types[3], exit_positions[3], {"T_junction_left"}, {}, false, false)
+        section.exit_types[3] = exit_section.section_type 
+        section.exits[3] = exit_section  
+    elseif section.section_type == "T_junction_right" then 
+        -- exit 1        
+        exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"T_junction_right"}, arch_facings, false, false)
+        section.exit_types[1] = exit_section.section_type  
+        section.exits[1] = exit_section            
+         
+        -- exit 2               
+        exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"T_junction_left"}, {}, false, false)
+        section.exit_types[2] = exit_section.section_type 
+        section.exits[2] = exit_section  
+        
+        -- exit 3        
+        exit_section = make_functions[section.exit_types[3]](section.exit_types[3], exit_positions[3], {"T_junction_T"}, {}, false, false)
+        section.exit_types[3] = exit_section.section_type 
+        section.exits[3] = exit_section                         
+    end    
 end
 
 function spawn_T_junction(section, pos, spawn_exits, come_from_section, special_position)
     local exit_section
     local exit_pos
+    local exit_positions
     
     section.pos = global_scripts.script.copy_pos(pos)
-    section.special_position = special_position
-        
-    local arch_pos = global_scripts.script.copy_pos(pos)
-    local arch_facing = ""
+    section.special_position = special_position 
        
-    if section.arch_facing == "inward" then
-        pos_straight_back(arch_pos)
-        arch_facing = "outward"
-    elseif section.arch_facing == "outward" then
-        pos_reverse(arch_pos)
-        arch_facing = "inward"
-    end
-                      
-    virtual_pos.facing = pos.facing
+    virtual_pos.facing = pos.facing 
 
     if spawn_exits == true then
-        if section.section_type == "T_junction_left" then
-            -- exit 1
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_reverse(exit_pos)
-            pos_straight_ahead(exit_pos)
-                   
-            --exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"T_junction_left"}, arch_facing, false, section, special_position)
-            exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"T_junction_left"}, arch_facing)
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[1] = exit_section.section_type
-            section.exits[1] = exit_section  
-            
-            -- exit 2
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_straight_ahead(exit_pos)
-            pos_left(exit_pos)
-            pos_straight_ahead(exit_pos, 2)
-                  
-            --exit_section = spawn_functions[exit_types[2]](exit_types[2], exit_pos, {"T_junction_T"}, "outward", false, section, special_position)
-            exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"T_junction_T"}, "outward")
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[2] = exit_section.section_type 
-            section.exits[2] = exit_section 
-            
-            -- exit 3
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_straight_ahead(exit_pos, 3)
-  
-            --exit_section = spawn_functions[exit_types[3]](exit_types[3], exit_pos, {"T_junction_right"}, "outward", false, section, special_position)
-            exit_section = make_functions[section.exit_types[3]](section.exit_types[3], {"T_junction_right"}, "outward")
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[3] = exit_section.section_type  
-            section.exits[3] = exit_section                       
-        elseif section.section_type == "T_junction_T" then  
-            -- exit 1
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_reverse(exit_pos)      
-            pos_straight_ahead(exit_pos)
-                    
-            --exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"T_junction_T"}, arch_facing, false, section, special_position)
-            exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"T_junction_T"}, arch_facing)
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[1] = exit_section.section_type 
-            section.exits[1] = exit_section  
-            
-            -- exit 2
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_straight_ahead(exit_pos)
-            pos_left(exit_pos)
-            pos_straight_ahead(exit_pos, 2) 
-                 
-            --exit_section = spawn_functions[exit_types[2]](exit_types[2], exit_pos, {"T_junction_right"}, "outward", false, section, special_position)
-            exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"T_junction_right"}, "outward")
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[2] = exit_section.section_type 
-            section.exits[2] = exit_section       
-            
-            --exit 3
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_straight_ahead(exit_pos)
-            pos_right(exit_pos)
-            pos_straight_ahead(exit_pos, 2) 
-                       
-            --exit_section = spawn_functions[exit_types[3]](exit_types[3], exit_pos, {"T_junction_left"}, "outward", false, section, special_position)
-            exit_section = make_functions[section.exit_types[3]](section.exit_types[3], {"T_junction_left"}, "outward")
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[3] = exit_section.section_type 
-            section.exits[3] = exit_section  
-        elseif section.section_type == "T_junction_right" then 
-            -- exit 1
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_reverse(exit_pos)      
-            pos_straight_ahead(exit_pos)
-            
-            --exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"T_junction_right"}, arch_facing, false, section, special_position)
-            exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"T_junction_right"}, arch_facing)
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[1] = exit_section.section_type  
-            section.exits[1] = exit_section            
-             
-            -- exit 2
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_straight_ahead(exit_pos, 3)
-                    
-            --exit_section = spawn_functions[exit_types[2]](exit_types[2], exit_pos, {"T_junction_left"}, "outward", false, section, special_position)
-            exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"T_junction_left"}, "outward")
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[2] = exit_section.section_type 
-            section.exits[2] = exit_section  
-            
-            -- exit 3
-            exit_pos = global_scripts.script.copy_pos(pos)
-            pos_straight_ahead(exit_pos)
-            pos_right(exit_pos)
-            pos_straight_ahead(exit_pos, 2)
-            
-            --exit_section = spawn_functions[exit_types[3]](exit_types[3], exit_pos, {"T_junction_T"}, "outward", false, section, special_position)
-            exit_section = make_functions[section.exit_types[3]](section.exit_types[3], {"T_junction_T"}, "outward")
-            exit_section:spawn_func(exit_pos, false, section, section.special_position)
-            section.exit_types[3] = exit_section.section_type 
-            section.exits[3] = exit_section                         
-        end
-    else
-        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                      
-        if section.special_position ~= "" then
-            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)
-        end                                           
+        exit_positions = section:get_exit_positions_func(pos)
+        section.exits[1]:spawn_func(exit_positions[1], false, section, section.special_position)
+        section.exits[2]:spawn_func(exit_positions[2], false, section, section.special_position)
+        section.exits[3]:spawn_func(exit_positions[3], false, section, section.special_position)
+    end
 
-        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
+    if spawn_exits == false then
+        spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
+        if section.special_position ~=  "" then
+            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)            
+        end   
+        
+        local arch_pos = global_scripts.script.copy_pos(pos)
+        if section.arch_facings[1] == "outward" then        
+            pos_straight_back(arch_pos)
+        elseif section.arch_facings[1] == "inward" then
+            pos_reverse(arch_pos)
+        end
+        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)        
     end
 
     if section.section_type == "T_junction_left" then
@@ -714,102 +809,133 @@ function spawn_T_junction(section, pos, spawn_exits, come_from_section, special_
     return section 
 end
 
-function make_X_junction(section_type, exit_types, arch_facing)
+function make_X_junction(section_type, pos, exit_types, arch_facings, make_exits, flip_arches)
     local section = {section_type = section_type,
-                     pos = nil,
+                     pos = pos,
                      spawn_func = spawn_X_junction,
-                     arch_facing=arch_facing,
+                     get_exit_positions_func = get_X_junction_exit_positions,
+                     make_exits_func = make_X_junction_exits,
                      special_position = "",
                      walls = {},
                      floor_triggers = {},
+                     arch_facings = {"outward", "outward", "outward", "outward"},
                      exit_types = {"empty", "empty", "empty", "empty"},
-                     exits = {},
-                     exit_pos = {}} 
+                     exits = {}} 
                   
     for i, exit_type in ipairs(section.exit_types) do
         section.exit_types[i] = exit_types[i] or section.exit_types[i]
+    end  
+    
+    for i,_ in ipairs(section.arch_facings) do
+        section.arch_facings[i] = arch_facings[i] or section.arch_facings[i]
     end
-                  
+         
+    if make_exits == true then
+        section:make_exits_func(section.pos, flip_arches)        
+    end
+                    
     return section
 end
 
+function get_X_junction_exit_positions(section, reference_pos)
+    local exit_positions = {}
+   
+    -- exit 1
+    local exit_pos = global_scripts.script.copy_pos(reference_pos)
+    pos_reverse(exit_pos)      
+    pos_straight_ahead(exit_pos)  
+    exit_positions[1] = exit_pos 
+    
+    -- exit 2
+    exit_pos = global_scripts.script.copy_pos(reference_pos)
+    pos_straight_ahead(exit_pos)
+    pos_left(exit_pos)
+    pos_straight_ahead(exit_pos, 2)    
+    exit_positions[2] = exit_pos 
+   
+    -- exit 3
+    exit_pos = global_scripts.script.copy_pos(reference_pos)  
+    pos_straight_ahead(exit_pos, 3)
+    exit_positions[3] = exit_pos 
+
+    -- exit 4
+    exit_pos = global_scripts.script.copy_pos(reference_pos) 
+    pos_straight_ahead(exit_pos)
+    pos_right(exit_pos)
+    pos_straight_ahead(exit_pos, 2)
+    exit_positions[4] = exit_pos 
+
+    return exit_positions
+end
+
+function make_X_junction_exits(section, reference_pos, flip_arches)
+    local exit_pos
+    local exit_section 
+    local exit_positions 
+    
+    local arch_facings = {}
+    if flip_arches then
+        if section.arch_facings[1] == "outward" then
+            arch_facings[1] = "inward"
+        elseif section.arch_facings[1] == "inward" then
+            arch_facings[1] = "outward"
+        end
+    end
+
+    exit_positions = section:get_exit_positions_func(reference_pos)
+
+    -- exit 1
+    exit_section = make_functions[section.exit_types[1]](section.exit_types[1], exit_positions[1], {"X_junction"}, arch_facings, false, false)
+    section.exit_types[1] = exit_section.section_type
+    section.exits[1] = exit_section  
+    
+    -- exit 2
+    exit_section = make_functions[section.exit_types[2]](section.exit_types[2], exit_positions[2], {"X_junction"}, {}, false, false)
+    section.exit_types[2] = exit_section.section_type 
+    section.exits[2] = exit_section 
+    
+    -- exit 3
+    exit_section = make_functions[section.exit_types[3]](section.exit_types[3], exit_positions[3], {"X_junction"}, {}, false, false)
+    section.exit_types[3] = exit_section.section_type  
+    section.exits[3] = exit_section
+    
+    -- exit 4
+    exit_section = make_functions[section.exit_types[4]](section.exit_types[4], exit_positions[4], {"X_junction"}, {}, false, false)
+    section.exit_types[4] = exit_section.section_type  
+    section.exits[4] = exit_section 
+end
+        
 function spawn_X_junction(section, pos, spawn_exits, come_from_section, special_position)
     local exit_section
     local exit_pos
+    local exit_positions
     
     section.pos = global_scripts.script.copy_pos(pos)
-    section.special_position = special_position
-        
-    local arch_pos = global_scripts.script.copy_pos(pos)
-    local arch_facing = ""
+    section.special_position = special_position 
        
-    if section.arch_facing == "inward" then
-        pos_straight_back(arch_pos)
-        arch_facing = "outward"
-    elseif section.arch_facing == "outward" then
-        pos_reverse(arch_pos)
-        arch_facing = "inward"
-    end
-                      
-    virtual_pos.facing = pos.facing
+    virtual_pos.facing = pos.facing 
     
     if spawn_exits == true then
-        -- exit 1
-        exit_pos = global_scripts.script.copy_pos(pos)
-        pos_reverse(exit_pos)
-        pos_straight_ahead(exit_pos)
-                 
-        --exit_section = spawn_functions[exit_types[1]](exit_types[1], exit_pos, {"X_junction"}, arch_facing, false, section, special_position)
-        exit_section = make_functions[section.exit_types[1]](section.exit_types[1], {"X_junction"}, arch_facing)
-        exit_section:spawn_func(exit_pos, false, section, section.special_position)
-        section.exit_types[1] = exit_section.section_type
-        section.exits[1] = exit_section  
-        
-        -- exit 2
-        exit_pos = global_scripts.script.copy_pos(pos)
-        pos_straight_ahead(exit_pos)
-        pos_left(exit_pos)
-        pos_straight_ahead(exit_pos)
-        pos_straight_ahead(exit_pos)
-               
-        --exit_section = spawn_functions[exit_types[2]](exit_types[2], exit_pos, {"X_junction"}, "outward", false, section, special_position)
-        exit_section = make_functions[section.exit_types[2]](section.exit_types[2], {"X_junction"}, "outward")
-        exit_section:spawn_func(exit_pos, false, section, section.special_position)
-        section.exit_types[2] = exit_section.section_type
-        section.exits[2] = exit_section  
-        
-        -- exit 3
-        exit_pos = global_scripts.script.copy_pos(pos)
-        pos_straight_ahead(exit_pos)
-        pos_straight_ahead(exit_pos)
-        pos_straight_ahead(exit_pos)
-        
-        
-        --exit_section = spawn_functions[exit_types[3]](exit_types[3], exit_pos, {"X_junction"}, "outward", false, section, special_position)
-        exit_section = make_functions[section.exit_types[3]](section.exit_types[3], {"X_junction"}, "outward")
-        exit_section:spawn_func(exit_pos, false, section, section.special_position)
-        section.exit_types[3] = exit_section.section_type
-        section.exits[3] = exit_section  
-        
-        -- exit 4
-        exit_pos = global_scripts.script.copy_pos(pos)
-        pos_straight_ahead(exit_pos)
-        pos_right(exit_pos)
-        pos_straight_ahead(exit_pos)
-        pos_straight_ahead(exit_pos)
-                
-        --exit_section = spawn_functions[exit_types[4]](exit_types[4], exit_pos, {"X_junction"}, "outward", false, section, special_position)
-        exit_section = make_functions[section.exit_types[4]](section.exit_types[4], {"X_junction"}, "outward")
-        exit_section:spawn_func(exit_pos, false, section, section.special_position)
-        section.exit_types[4] = exit_section.section_type
-        section.exits[4] = exit_section  
-    else
+        exit_positions = section:get_exit_positions_func(pos)
+        section.exits[1]:spawn_func(exit_positions[1], false, section, section.special_position)
+        section.exits[2]:spawn_func(exit_positions[2], false, section, section.special_position)
+        section.exits[3]:spawn_func(exit_positions[3], false, section, section.special_position)
+        section.exits[4]:spawn_func(exit_positions[4], false, section, section.special_position)
+    end
+    
+    if spawn_exits == false then
         spawn_floor_trigger(pos.x, pos.y, pos.facing, pos.elevation, pos.level, section)                                     
-        if special_position ~=  "" then
-            special_places[special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)
-        end                                             
-
-        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)
+        if section.special_position ~=  "" then
+            special_places[section.special_position].spawn_pos = global_scripts.script.copy_pos(come_from_section.pos)            
+        end   
+        
+        local arch_pos = global_scripts.script.copy_pos(pos)
+        if section.arch_facings[1] == "outward" then        
+            pos_straight_back(arch_pos)
+        elseif section.arch_facings[1] == "inward" then
+            pos_reverse(arch_pos)
+        end
+        spawn_arch(arch_pos.x, arch_pos.y, arch_pos.facing, arch_pos.elevation, arch_pos.level, section)        
     end
     
     straight_ahead(pos, true, section)
@@ -848,26 +974,24 @@ function spawn_X_junction(section, pos, spawn_exits, come_from_section, special_
 end
 
 function generate_random_section_type()
-    local section_type = section_types[math.random(1)]
+    local section_type = section_types[math.random(5)]
     local section_sub_type = section_sub_types[section_type][math.random(#section_sub_types[section_type])]
     
     return section_sub_type
 end
                               
-function make_random_section(section_type, exit_types, arch_facing)
+function make_random_section(section_type, pos, exit_types, arch_facings, make_exits, flip_arches)
     local section_sub_type = generate_random_section_type()
-    
-    local section = make_functions[section_sub_type](section_sub_type, exit_types)
+       
+    local section = make_functions[section_sub_type](section_sub_type, pos, exit_types, arch_facings, make_exits, false)
     
     return section    
 end
                               
-function spawn_random_section(ignored, pos, exit_types, arch_facing, spawn_exits, come_from_section, special_position)
+function spawn_random_section(ignored, pos, exit_types, spawn_exits, come_from_section, special_position)
     print(special_position)
-    local section = make_random_section(ignored, exit_types)
-    section.pos = pos
-    section:make_exit_types_func()
-    section:spawn_func(pos, spawn_exits, come_from_section, special_position, arch_facing)
+    local section = make_random_section(ignored, pos, exit_types, {}, spawn_exits, false)
+    section:spawn_func(pos, spawn_exits, come_from_section, special_position)
     
     return section
 end
@@ -972,23 +1096,54 @@ function stepTeleport(trigger_id)
     end
    
    
+    local check_pos = global_scripts.script.copy_pos(virtual_pos)  
+    check_pos.facing = enter_section.pos.facing
+    enter_section:make_exits_func(check_pos, true)
    
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)    
     local party_pos = global_scripts.script.copy_pos(start_pos)
     local spawn_special = ""
+    local spawn_special_entry_exit_idx = nil
+    local exit_idx = -1                                       
     --print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
-    
-    enter_section:make_exit_types_func()
-    
+            
     for name, pos in pairs(special_places) do
         local script_entity = findEntity(special_script_entities[name])
         local entry_marker = findEntity(pos.entry_id)
-        if script_entity.script.in_range(virtual_pos, special_places[name], enter_section, false) then
+        if script_entity.script.in_range(virtual_pos, special_places[name], enter_section) then
             spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them                
-            start_spawn_pos, party_pos = script_entity.script.check_exits(enter_section, entry_marker, start_spawn_pos, party_pos)
+            start_spawn_pos, party_pos, exit_idx = script_entity.script.check_exits(enter_section, entry_marker, start_spawn_pos, party_pos)
+            if exit_idx ~= -1 then
+                enter_section.exit_types[exit_idx] = "nop"
+                enter_section.exits[exit_idx] = tricksters_domain_script_entity.script.makeNop()
+            end
+        end
+        for x, exit_section in ipairs(enter_section.exits) do
+            local exit_positions = exit_section:get_exit_positions_func(exit_section.pos)
+            for i = 2, #exit_positions do
+                exit_exit_pos = exit_positions[i]
+                if script_entity.script.in_range(exit_exit_pos, special_places[name], nil) then
+                    spawn_special_entry_exit_idx = {x, i, name}
+                end
+            end
+        end       
+    end
+  
+    enter_section:make_exits_func(start_spawn_pos, true)
+    
+    if spawn_special_entry_exit_idx ~= nil then
+        print("exit "..tostring(spawn_special_entry_exit_idx[1]).." should spawn a special places special entry entities at its exit "..tostring(spawn_special_entry_exit_idx[2]))
+        local x = spawn_special_entry_exit_idx[1]
+        local i = spawn_special_entry_exit_idx[2]
+        local special_name = spawn_special_entry_exit_idx[3]
+        local torch_pos = enter_section.exits[x]:get_exit_positions_func(enter_section.exits[x].pos)[i]
+        local script_entity = findEntity(special_script_entities[special_name])
+        local special_light = script_entity.script.make_special_entry(torch_pos)
+        if special_light ~= nil then
+            table.insert(enter_section.walls, special_light.id)     
         end
     end
-    
+   
    
     --local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, nil)
     enter_section:spawn_func(start_spawn_pos, true, nil, spawn_special)
@@ -1037,10 +1192,11 @@ function onEnterDungeon(trigger)
     start_pos.elevation = trigger.elevation
     start_pos.level = trigger.level
     virtual_pos.level = trigger.level
+    null_pos.level = trigger.level
     
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)
-   
-    spawn_random_section("empty", start_spawn_pos, {"empty"}, "outward", true, nil, "")
+                                        
+    spawn_random_section("empty", start_spawn_pos, {"empty"}, true, nil, "")
 end
 
 function init()    

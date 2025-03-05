@@ -7215,6 +7215,12 @@ por_spawn_guardian_03.projectilecollider:disable()
 spawn("invisible_wall",8,2,3,0,"por_spawn_guardian_04")
 por_spawn_guardian_04.obstacle:disable()
 por_spawn_guardian_04.projectilecollider:disable()
+spawn("catacomb_altar_candle_01",5,10,0,0,"pedestal_of_roses_candle_ilght")
+pedestal_of_roses_candle_ilght.surface:disable()
+pedestal_of_roses_candle_ilght.clickable:disable()
+pedestal_of_roses_candle_ilght.obstacle:disable()
+pedestal_of_roses_candle_ilght.projectilecollider:disable()
+pedestal_of_roses_candle_ilght.model:disable()
 
 --- level 16 ---
 
