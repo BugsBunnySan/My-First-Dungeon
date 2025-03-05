@@ -227,7 +227,10 @@ end
 function spawn_nothing(section, pos, spawn_exits, come_from_section, special_position, arch_facing)
     section.pos = global_scripts.script.copy_pos(pos)
     section.special_position = special_position
-    spawn("dispel_blast", pos.level, pos.x, pos.y, pos.facing, pos.elevation)
+    local spawn_blast = spawn("dispel_blast", pos.level, pos.x, pos.y, pos.facing, pos.elevation)
+    local w_pos = spawn_blast:getWorldPosition()
+    w_pos = w_pos + vec(0, 0.5, 0)    
+    spawn_blast:setWorldPosition(w_pos)
     return
 end
                    
