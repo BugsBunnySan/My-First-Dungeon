@@ -993,7 +993,7 @@ function make_random_section(section_type, pos, exit_types, arch_facings, make_e
 end
                               
 function spawn_random_section(ignored, pos, exit_types, spawn_exits, come_from_section, special_position)
-    print(special_position)
+    ---print(special_position)
     local section = make_random_section(ignored, pos, exit_types, {}, spawn_exits, false)
     section:spawn_func(pos, spawn_exits, come_from_section, special_position)
     
@@ -1041,22 +1041,22 @@ function stepTeleport(trigger_id)
     
     local enter_section = sections[trigger.id]    
     
-    print("stepTeleport")
-    print("coming from "..enter_section.section_type)
+    ---print("stepTeleport")
+    ---print("coming from "..enter_section.section_type)
     
-    global_scripts.script.print_pos(virtual_pos)    
+    --global_scripts.script.print_pos(virtual_pos)    
     virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
     virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
     virtual_pos.facing = trigger.facing      
-    global_scripts.script.print_pos(virtual_pos)
+    --global_scripts.script.print_pos(virtual_pos)
         
     if enter_section.special_position ~= "" then
-        print("    from special place: "..enter_section.special_position)
-        global_scripts.script.print_pos(virtual_pos)
+        ---print("    from special place: "..enter_section.special_position)
+        --global_scripts.script.print_pos(virtual_pos)
         local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
         virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
         virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
-        global_scripts.script.print_pos(virtual_pos)
+        --global_scripts.script.print_pos(virtual_pos)
     end
     
     local facing = enter_section.pos.facing 
@@ -1136,7 +1136,7 @@ function stepTeleport(trigger_id)
     enter_section:make_exits_func(start_spawn_pos, true)
     
     if spawn_special_entry_exit_idx ~= nil then
-        print("exit "..tostring(spawn_special_entry_exit_idx[1]).." should spawn a special places special entry entities at its exit "..tostring(spawn_special_entry_exit_idx[2]))
+        --print("exit "..tostring(spawn_special_entry_exit_idx[1]).." should spawn a special places special entry entities at its exit "..tostring(spawn_special_entry_exit_idx[2]))
         local x = spawn_special_entry_exit_idx[1]
         local i = spawn_special_entry_exit_idx[2]
         local special_name = spawn_special_entry_exit_idx[3]
@@ -1163,11 +1163,11 @@ function onActivateSectionFloorTrigger(trigger)
     trigger = global_scripts.script.getGO(trigger)               
     
     local chance = math.random(24)
-    if chance == -1 then
+    if chance == 1 then
         local spawn_pos = global_scripts.script.findSpawnSpot(start_pos.x - 4, start_pos.x + 4, start_pos.y - 4, start_pos.y + 4, start_pos.elevation, start_pos.level, {["party"] = true, ["turtle"] = true})
         local turtle = spawn("turtle")
         turtle:setPosition(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level)
-    elseif chance <= -12 then
+    elseif chance <= 12 then
         local facing = modulo_facing(party.facing + math.random(3))
         local sound_pos = global_scripts.script.copy_pos(party)
         pos_straight_ahead(sound_pos)
@@ -1187,7 +1187,7 @@ function onActivateSectionFloorTrigger(trigger)
 end
 
 function onEnterDungeon(trigger)
-    print("-----------------------------------")
+    --print("-----------------------------------")
     
     dungeon_door_iron_barred_1.door:close()
     trigger = global_scripts.script.getGO(trigger)
