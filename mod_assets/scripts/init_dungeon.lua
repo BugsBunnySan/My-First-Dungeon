@@ -1,6 +1,7 @@
 function initDungeon()    
     initGlobals()    
-    --initParty()
+    initParty()
+    levelUpParty()
     initCastleOfWater()
     initMoistCatacombs()
     initCloister()
@@ -18,6 +19,18 @@ end
 function initGlobals()
     GameMode.setTimeOfDay(0.5)
     --global_scripts.script.last_tick = -1
+end
+
+
+
+function levelUpParty()
+    local level = party.party:getChampion(1):getLevel()
+    if level <= 28 then
+        local level_ups = 28 - level
+        for i=1,level_ups do
+            global_scripts.script.party_level_up_champions({1,2,3,4})
+        end
+    end
 end
 
 function initParty()
@@ -69,6 +82,7 @@ function initParty()
     wizard:insertItem(ItemSlot.Chest, spawn("archmage_scapular").item)    
     wizard:insertItem(ItemSlot.Legs, spawn("archmage_mantle").item)
     wizard:insertItem(ItemSlot.Feet, spawn("archmage_loafers").item)
+    wizard:castSpell(25)
 end
 
 function initCastleOfWater()
