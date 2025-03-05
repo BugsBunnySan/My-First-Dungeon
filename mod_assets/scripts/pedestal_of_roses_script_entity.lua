@@ -51,6 +51,7 @@ end
 
 function check_exits(enter_section, entry_marker, start_spawn_pos, party_pos)
     local exit_idx = -1
+
     if enter_section.section_type == "straight" then
         if enter_section.pos.facing == 0 then
             exit_idx = 2
@@ -150,6 +151,7 @@ function in_range(virtual_pos, special_place, enter_section)
     local is_in_range = false
     
     local check_pos = global_scripts.script.copy_pos(virtual_pos)
+    
     if enter_section == nil then
         is_in_range = (check_pos.facing == 0)
     elseif enter_section.section_type == "straight" and enter_section.pos.facing == 0 then

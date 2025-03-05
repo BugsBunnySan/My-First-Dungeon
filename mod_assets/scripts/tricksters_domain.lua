@@ -7,16 +7,16 @@ null_pos = {x=0, y=0, facing=9, elevation=0}
 dungeon_sections = {}
 sections = {}
 
-special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-9, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}},} --pedestal_of_roses_door"}}
-                  --["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
-                  --["tricksters_beach"] = {x1=-42, y1=-500, x2=-32, y2=500, entry_id="tricksters_beach_marker", door_id="", spawn_pos={}}}
+special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-9, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}},     --pedestal_of_roses_door"}}
+                  ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
+                  ["tricksters_beach"] = {x1=-42, y1=-500, x2=-32, y2=500, entry_id="tricksters_beach_marker", door_id="", spawn_pos={}}}
 special_entities = {}
 special_door_id = ""
 
 function spawn_wall(x, y, facing, elevation, level, section)
     local wall = spawn("dungeon_secret_door")
     wall:setPosition(x, y, facing, elevation, level)
-    wall.door:disable()
+    --wall.door:disable()
     table.insert(section.walls, wall.id)    
 end
 
@@ -227,6 +227,7 @@ end
 function spawn_nothing(section, pos, spawn_exits, come_from_section, special_position, arch_facing)
     section.pos = global_scripts.script.copy_pos(pos)
     section.special_position = special_position
+    spawn("dispel_blast", pos.level, pos.x, pos.y, pos.facing, pos.elevation)
     return
 end
                    
