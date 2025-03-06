@@ -6853,43 +6853,45 @@ newMap{
 	tiles = {
 		"dungeon_floor",
 		"dungeon_wall",
+		"mine_floor_crystal",
+		"mine_wall_crystal",
 		"void",
 	}
 }
 
 loadLayer("tiles", {
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,1,2,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,1,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,5,3,5,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,3,4,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,1,2,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,1,1,
 })
 
 spawn("floor_trigger",10,17,0,0,"floor_trigger_26")
@@ -6908,13 +6910,13 @@ floor_trigger_init.floortrigger:setTriggeredByItem(false)
 floor_trigger_init.floortrigger:setTriggeredByDigging(false)
 floor_trigger_init.floortrigger:setDisableSelf(true)
 floor_trigger_init.floortrigger:addConnector("onActivate", "tricksters_domain_script_entity", "init")
-spawn("dungeon_wall_text",31,31,0,0,"dungeon_wall_text_2")
+spawn("dungeon_wall_text",30,22,1,0,"dungeon_wall_text_2")
 dungeon_wall_text_2.walltext:setWallText("The Cruel Maze")
 spawn("dungeon_door_iron_barred",30,31,0,0,"dungeon_door_iron_barred_1")
 dungeon_door_iron_barred_1.door:setDoorState("open")
 spawn("invisible_wall",14,12,3,0,"invisible_wall_93")
 invisible_wall_93.projectilecollider:disable()
-spawn("teleporter",30,30,0,0,"teleporter_23")
+spawn("teleporter",25,19,0,0,"teleporter_23")
 teleporter_23.particle:disable()
 teleporter_23.light:disable()
 teleporter_23.sound:disable()
@@ -7002,8 +7004,7 @@ spawn("invisible_wall",5,13,3,0,"invisible_wall_99")
 invisible_wall_99.projectilecollider:disable()
 spawn("invisible_wall",5,12,3,0,"invisible_wall_100")
 invisible_wall_100.projectilecollider:disable()
-spawn("dungeon_ceiling",30,31,2,0,"dungeon_ceiling_1")
-spawn("note",29,31,1,0,"note_9")
+spawn("note",28,23,1,0,"note_9")
 note_9.scrollitem:setScrollText("Note: I overheard Maester Garwin and\
 Maester Darwin talking, they believe\
 the pedestal of roses can only be\
@@ -7012,15 +7013,60 @@ name and the access point it figures it\
 must be between 5 degrees west and 5\
 degrees north of meridian and about 10\
 leagues out from the center")
-spawn("compass",30,31,1,0,"compass_1")
+spawn("compass",29,23,1,0,"compass_1")
 spawn("forest_heightmap",2,31,2,0,"forest_heightmap_7")
-spawn("starting_location",30,31,0,0,"starting_location_1")
+spawn("starting_location",29,23,0,0,"starting_location_1")
 spawn("timer",1,28,1,0,"timer_5")
 timer_5.timer:setTimerInterval(0)
 timer_5.timer:setDisableSelf(true)
 timer_5.timer:setTriggerOnStart(false)
 timer_5.timer:setCurrentLevelOnly(false)
 timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("letter",28,23,2,0,"letter_2")
+letter_2.scrollitem:setScrollText("Part of a letter, recording the minutes\
+of a meeting, it seems.\
+\
+... were discussing possibilities of recovering the red gems from the\
+tricksters domain\
+\
+now we know how to navigate inside it,\
+the question is then/becomes how to leave the Tricksters domain\
+\
+if it's like a dream, maybe waking up could do it...")
+spawn("castle_torch_holder",28,21,0,0,"castle_torch_holder_1")
+castle_torch_holder_1.controller:setHasTorch(true)
+spawn("castle_torch_holder",30,21,0,0,"castle_torch_holder_2")
+castle_torch_holder_2.controller:setHasTorch(true)
+spawn("dungeon_wall_01",27,18,2,0,"dungeon_wall_01_129")
+spawn("dungeon_wall_01",28,18,2,0,"dungeon_wall_01_130")
+spawn("dungeon_wall_01",30,18,2,0,"dungeon_wall_01_131")
+spawn("dungeon_wall_01",31,18,2,0,"dungeon_wall_01_132")
+spawn("dungeon_wall_01",29,19,3,0,"dungeon_wall_01_133")
+spawn("dungeon_wall_01",29,19,1,0,"dungeon_wall_01_134")
+spawn("forest_ruins_arch",29,19,0,0,"forest_ruins_arch_21")
+spawn("dungeon_wall_01",28,20,0,0,"dungeon_wall_01_135")
+spawn("dungeon_wall_01",30,20,0,0,"dungeon_wall_01_136")
+spawn("dungeon_wall_01",28,20,0,1,"dungeon_wall_01_137")
+spawn("dungeon_wall_01",29,19,3,1,"dungeon_wall_01_138")
+spawn("dungeon_wall_01",30,20,0,1,"dungeon_wall_01_139")
+spawn("dungeon_wall_01",29,19,1,1,"dungeon_wall_01_140")
+spawn("dungeon_wall_01",29,20,0,1,"dungeon_wall_01_141")
+spawn("dungeon_wall_01",29,19,2,1,"dungeon_wall_01_142")
+spawn("dungeon_pillar",30,20,0,0,"dungeon_pillar_16")
+spawn("dungeon_pillar",29,20,0,0,"dungeon_pillar_17")
+spawn("mine_floor_pit_light",29,24,2,0,"mine_floor_pit_light_5")
+spawn("dungeon_secret_door",29,18,3,0,"dungeon_secret_door_1")
+spawn("dungeon_secret_door",30,18,3,0,"dungeon_secret_door_4")
+spawn("dungeon_floor_dirt_01",29,18,2,0,"dungeon_floor_dirt_01_1")
+spawn("dungeon_ceiling",29,18,1,0,"dungeon_ceiling_8")
+spawn("invisible_teleporter",29,19,0,0,"invisible_teleporter_2")
+invisible_teleporter_2.teleporter:setTeleportTarget(14,10,17,0)
+invisible_teleporter_2.teleporter:setSpin("none")
+invisible_teleporter_2.teleporter:setTriggeredByParty(true)
+invisible_teleporter_2.teleporter:setTriggeredByMonster(false)
+invisible_teleporter_2.teleporter:setTriggeredByItem(false)
+invisible_teleporter_2.teleporter:setTriggeredBySpell(false)
+invisible_teleporter_2.controller:setInitialState("activate")
 
 --- level 15 ---
 

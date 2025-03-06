@@ -1186,10 +1186,31 @@ function onActivateSectionFloorTrigger(trigger)
     -- to look weird if that's the case, maybe put a safeguard in anyhow?
 end
 
+onWakeUpHookId = nil
+
+
+
+function exitTheDungeon(data)
+    party:setPosition(29, 21, 2, 0, start_pos.level)
+    spawn_blast(party)
+    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
+end
+
+function spawn_blast(pos)
+    local spawn_blast = spawn("dispel_blast", pos.level, pos.x, pos.y, pos.facing, pos.elevation)
+    local w_pos = spawn_blast:getWorldPosition()
+    w_pos = w_pos + vec(0, 0.5, 0)    
+    spawn_blast:setWorldPosition(w_pos)
+end
+
 function onEnterDungeon(trigger)
     --print("-----------------------------------")
     
-    dungeon_door_iron_barred_1.door:close()
+    spawn_blast(party)
+    
+    onWakeUpHookId = global_scripts.script.register_party_hook("onWakeUp", "tricksters_domain_script_entity", "exitTheDungeon", {})
+    
+    --dungeon_door_iron_barred_1.door:close()
     trigger = global_scripts.script.getGO(trigger)
     
     start_pos.facing = trigger.facing

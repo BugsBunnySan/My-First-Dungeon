@@ -13,5 +13,19 @@ import "mod_assets/scripts/spells.lua"
 import "mod_assets/scripts/materials.lua"
 import "mod_assets/scripts/sounds.lua"
 
+defineObject{
+    name = "party",
+    baseObject = "party",
 
+    components = {
+        {
+            class = "Party",
+            name = "party",
+            onWakeUp = function(self)
+                local script_entity = findEntity("global_scripts")
+                return script_entity.script.partyOnWakeUp(self)
+            end
+        }
+    }
+}
 
