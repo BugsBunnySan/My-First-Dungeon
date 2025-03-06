@@ -4562,7 +4562,7 @@ spawn("castle_wall_01",12,8,1,0,"castle_wall_01_114")
 spawn("castle_gate_outside",13,8,3,0,"castle_gate_outside_3")
 spawn("castle_wall_01",13,8,3,0,"castle_wall_01_115")
 spawn("forest_stairs_down",18,16,2,0,"forest_stairs_down_2")
-forest_stairs_down_2.stairs:setTeleportTarget(14,30,31,0)
+forest_stairs_down_2.stairs:setTeleportTarget(14,29,21,0)
 spawn("floor_trigger",23,8,0,0,"floor_trigger_22")
 floor_trigger_22.floortrigger:setTriggeredByParty(true)
 floor_trigger_22.floortrigger:setTriggeredByMonster(false)
@@ -4594,6 +4594,13 @@ Do not consume anything gained/given to\
 you during the trials, until you have completed them. DO not be alarmed, It will not harm you,only hinder you. \
 ")
 spawn("dungeon_wall_broken_02",18,14,0,-1,"dungeon_wall_broken_02_6")
+spawn("timer",1,28,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",22,8,1,0,"starting_location_1")
 
 --- level 10 ---
 
@@ -6852,7 +6859,6 @@ newMap{
 	ambientTrack = "dungeon",
 	tiles = {
 		"dungeon_floor",
-		"dungeon_wall",
 		"mine_floor_crystal",
 		"mine_wall_crystal",
 		"void",
@@ -6860,38 +6866,38 @@ newMap{
 }
 
 loadLayer("tiles", {
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,5,3,5,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,3,4,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,3,3,3,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,1,2,
-	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,1,1,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,2,3,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,2,2,2,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,2,2,2,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,2,2,2,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,2,2,2,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,2,2,2,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,2,2,2,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,2,3,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,1,4,3,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 })
 
 spawn("floor_trigger",10,17,0,0,"floor_trigger_26")
@@ -6910,18 +6916,17 @@ floor_trigger_init.floortrigger:setTriggeredByItem(false)
 floor_trigger_init.floortrigger:setTriggeredByDigging(false)
 floor_trigger_init.floortrigger:setDisableSelf(true)
 floor_trigger_init.floortrigger:addConnector("onActivate", "tricksters_domain_script_entity", "init")
-spawn("dungeon_wall_text",30,22,1,0,"dungeon_wall_text_2")
+spawn("dungeon_wall_text",30,23,1,0,"dungeon_wall_text_2")
 dungeon_wall_text_2.walltext:setWallText("The Cruel Maze")
-spawn("dungeon_door_iron_barred",30,31,0,0,"dungeon_door_iron_barred_1")
-dungeon_door_iron_barred_1.door:setDoorState("open")
+spawn("dungeon_door_iron_barred",29,29,0,0,"dungeon_door_iron_barred_1")
 spawn("invisible_wall",14,12,3,0,"invisible_wall_93")
 invisible_wall_93.projectilecollider:disable()
-spawn("teleporter",25,19,0,0,"teleporter_23")
+spawn("teleporter",29,29,0,0,"teleporter_23")
 teleporter_23.particle:disable()
 teleporter_23.light:disable()
 teleporter_23.sound:disable()
 teleporter_23.teleporter:setTeleportTarget(14,10,17,0)
-teleporter_23.teleporter:setSpin("none")
+teleporter_23.teleporter:setSpin("turn_around")
 teleporter_23.teleporter:setTriggeredByParty(true)
 teleporter_23.teleporter:setTriggeredByMonster(false)
 teleporter_23.teleporter:setTriggeredByItem(false)
@@ -7004,25 +7009,18 @@ spawn("invisible_wall",5,13,3,0,"invisible_wall_99")
 invisible_wall_99.projectilecollider:disable()
 spawn("invisible_wall",5,12,3,0,"invisible_wall_100")
 invisible_wall_100.projectilecollider:disable()
-spawn("note",28,23,1,0,"note_9")
+spawn("note",28,24,1,0,"note_9")
 note_9.scrollitem:setScrollText("Note: I overheard Maester Garwin and\
 Maester Darwin talking, they believe\
 the pedestal of roses can only be\
 accesed from the south. Knowing the\
 name and the access point it figures it\
 must be between 5 degrees west and 5\
-degrees north of meridian and about 10\
+degrees meast of meridian and about 10\
 leagues out from the center")
-spawn("compass",29,23,1,0,"compass_1")
+spawn("compass",29,24,1,0,"compass_1")
 spawn("forest_heightmap",2,31,2,0,"forest_heightmap_7")
-spawn("starting_location",29,23,0,0,"starting_location_1")
-spawn("timer",1,28,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("letter",28,23,2,0,"letter_2")
+spawn("letter",28,24,2,0,"letter_2")
 letter_2.scrollitem:setScrollText("Part of a letter, recording the minutes\
 of a meeting, it seems.\
 \
@@ -7033,33 +7031,16 @@ now we know how to navigate inside it,\
 the question is then/becomes how to leave the Tricksters domain\
 \
 if it's like a dream, maybe waking up could do it...")
-spawn("castle_torch_holder",28,21,0,0,"castle_torch_holder_1")
+spawn("castle_torch_holder",28,27,2,0,"castle_torch_holder_1")
 castle_torch_holder_1.controller:setHasTorch(true)
-spawn("castle_torch_holder",30,21,0,0,"castle_torch_holder_2")
+spawn("castle_torch_holder",30,27,2,0,"castle_torch_holder_2")
 castle_torch_holder_2.controller:setHasTorch(true)
-spawn("dungeon_wall_01",27,18,2,0,"dungeon_wall_01_129")
-spawn("dungeon_wall_01",28,18,2,0,"dungeon_wall_01_130")
-spawn("dungeon_wall_01",30,18,2,0,"dungeon_wall_01_131")
-spawn("dungeon_wall_01",31,18,2,0,"dungeon_wall_01_132")
-spawn("dungeon_wall_01",29,19,3,0,"dungeon_wall_01_133")
-spawn("dungeon_wall_01",29,19,1,0,"dungeon_wall_01_134")
-spawn("forest_ruins_arch",29,19,0,0,"forest_ruins_arch_21")
-spawn("dungeon_wall_01",28,20,0,0,"dungeon_wall_01_135")
-spawn("dungeon_wall_01",30,20,0,0,"dungeon_wall_01_136")
-spawn("dungeon_wall_01",28,20,0,1,"dungeon_wall_01_137")
-spawn("dungeon_wall_01",29,19,3,1,"dungeon_wall_01_138")
-spawn("dungeon_wall_01",30,20,0,1,"dungeon_wall_01_139")
-spawn("dungeon_wall_01",29,19,1,1,"dungeon_wall_01_140")
-spawn("dungeon_wall_01",29,20,0,1,"dungeon_wall_01_141")
-spawn("dungeon_wall_01",29,19,2,1,"dungeon_wall_01_142")
-spawn("dungeon_pillar",30,20,0,0,"dungeon_pillar_16")
-spawn("dungeon_pillar",29,20,0,0,"dungeon_pillar_17")
+spawn("dungeon_wall_01",17,29,2,0,"dungeon_wall_01_131")
+spawn("dungeon_wall_01",18,29,2,0,"dungeon_wall_01_132")
 spawn("mine_floor_pit_light",29,24,2,0,"mine_floor_pit_light_5")
-spawn("dungeon_secret_door",29,18,3,0,"dungeon_secret_door_1")
-spawn("dungeon_secret_door",30,18,3,0,"dungeon_secret_door_4")
-spawn("dungeon_floor_dirt_01",29,18,2,0,"dungeon_floor_dirt_01_1")
-spawn("dungeon_ceiling",29,18,1,0,"dungeon_ceiling_8")
-spawn("invisible_teleporter",29,19,0,0,"invisible_teleporter_2")
+spawn("dungeon_floor_dirt_01",29,29,2,0,"dungeon_floor_dirt_01_1")
+spawn("dungeon_ceiling",29,29,1,0,"dungeon_ceiling_8")
+spawn("invisible_teleporter",29,14,0,0,"invisible_teleporter_2")
 invisible_teleporter_2.teleporter:setTeleportTarget(14,10,17,0)
 invisible_teleporter_2.teleporter:setSpin("none")
 invisible_teleporter_2.teleporter:setTriggeredByParty(true)
@@ -7067,6 +7048,38 @@ invisible_teleporter_2.teleporter:setTriggeredByMonster(false)
 invisible_teleporter_2.teleporter:setTriggeredByItem(false)
 invisible_teleporter_2.teleporter:setTriggeredBySpell(false)
 invisible_teleporter_2.controller:setInitialState("activate")
+spawn("mine_stairs_up",29,21,0,0,"mine_stairs_up_1")
+mine_stairs_up_1.stairs:setTeleportTarget(9,18,16,0)
+spawn("dungeon_wall_01",27,30,0,0,"dungeon_wall_01_129")
+spawn("dungeon_wall_01",28,30,0,0,"dungeon_wall_01_130")
+spawn("dungeon_wall_01",30,30,0,0,"dungeon_wall_01_133")
+spawn("dungeon_wall_01",31,30,0,0,"dungeon_wall_01_134")
+spawn("forest_ruins_arch",29,29,2,0,"forest_ruins_arch_21")
+spawn("dungeon_wall_01",28,28,2,0,"dungeon_wall_01_135")
+spawn("dungeon_wall_01",30,28,2,0,"dungeon_wall_01_136")
+spawn("dungeon_wall_01",28,28,2,1,"dungeon_wall_01_137")
+spawn("dungeon_wall_01",30,28,2,1,"dungeon_wall_01_138")
+spawn("dungeon_wall_01",29,28,2,1,"dungeon_wall_01_139")
+spawn("dungeon_wall_01",29,29,0,1,"dungeon_wall_01_140")
+spawn("dungeon_pillar",30,29,2,0,"dungeon_pillar_16")
+spawn("dungeon_pillar",29,29,2,0,"dungeon_pillar_17")
+spawn("dungeon_wall_01",29,29,1,0,"dungeon_wall_01_141")
+spawn("dungeon_wall_01",29,29,3,0,"dungeon_wall_01_142")
+spawn("dungeon_wall_01",29,29,1,1,"dungeon_wall_01_143")
+spawn("dungeon_wall_01",29,29,3,1,"dungeon_wall_01_144")
+spawn("floor_trigger",29,27,2,0,"floor_trigger_31")
+floor_trigger_31.floortrigger:setTriggeredByParty(true)
+floor_trigger_31.floortrigger:setTriggeredByMonster(false)
+floor_trigger_31.floortrigger:setTriggeredByItem(false)
+floor_trigger_31.floortrigger:setTriggeredByDigging(false)
+floor_trigger_31.floortrigger:setDisableSelf(true)
+floor_trigger_31.floortrigger:addConnector("onActivate", "dungeon_door_iron_barred_1", "open")
+spawn("timer",0,31,0,0,"tricksters_domain_anim_timer")
+tricksters_domain_anim_timer.timer:setTimerInterval(0.01)
+tricksters_domain_anim_timer.timer:setDisableSelf(false)
+tricksters_domain_anim_timer.timer:setTriggerOnStart(false)
+tricksters_domain_anim_timer.timer:setCurrentLevelOnly(true)
+tricksters_domain_anim_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 
 --- level 15 ---
 
@@ -7236,7 +7249,7 @@ spawn("dungeon_ceiling",6,5,0,0,"dungeon_ceiling_4")
 spawn("dungeon_ceiling",6,4,2,0,"dungeon_ceiling_5")
 spawn("dungeon_ceiling",4,4,3,0,"dungeon_ceiling_7")
 spawn("dungeon_ceiling",5,4,2,0,"dungeon_ceiling_6")
-spawn("ornate_key",5,10,3,0,"ornate_key_2")
+spawn("ornate_key",11,7,3,0,"ornate_key_2")
 spawn("dungeon_pillar",7,8,0,0,"dungeon_pillar_8")
 spawn("dungeon_pillar",4,8,0,0,"dungeon_pillar_9")
 spawn("dungeon_pillar",4,2,0,0,"dungeon_pillar_10")

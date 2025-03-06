@@ -929,7 +929,7 @@ function count_farming(state_data)
     state_data.count = state_data.count - 1
     hudPrint(tostring(state_data.count))
     if state_data.count == 0 then
-        time_callbacks["blooddrop_cap"] = nil
+        time_callbacks["blooddrop_cap"] = nil        
         return state_data.next_state
     else
         local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)
@@ -978,43 +978,50 @@ onehour = 1/12
 
 function raise_robin_pedestal(key, callback)
     raisePedestal("robin_pedestal")
-    callback.name = "lower"
-    callback.start_time_of_day = morning + (3 * onehour)
-    callback.end_time_of_day = maxtime
-    callback.func = lower_robin_pedestal
-    callback.enabled = true
-    print("end set to "..tostring(callback.end_time_of_day).." "..tostring(callback.enabled))
+    local callback = {name="blooddrop_cap_lower", check_func=check_for_not_morning, func=lower_robin_pedestal, oneshot=true, enabled=true}
+    time_callbacks[callback.name] = callback
 end
 
 function lower_robin_pedestal(key, callback)
     raisePedestal("robin_pedestal", false, -1)
-    callback.name = "raise"
-    callback.start_time_of_day = morning
-    callback.end_time_of_day = morning + (3 * onehour)
-    callback.func = raise_robin_pedestal
-    callback.enabled = true
-    print("end set to "..tostring(callback.end_time_of_day).." "..tostring(callback.enabled))
+    local callback = {name="blooddrop_cap_raise", check_func=check_for_morning, func=raise_robin_pedestal, oneshot=true, enabled=true}
+    time_callbacks[callback.name] = callback    
 end
 
-function check_for_morning(key, callback, time_of_day)
+function check_for_not_morning(key, callback, time_of_day)    
+    local pass = not check_for_morning(key, callback, time_of_day)
+    return pass
+end
+
+function check_for_morning(key, callback, time_of_day)    
     local pass = false
-    if ((time_of_day >= max_time - onehour) or (time_of_day < morning + (3 * onehour))) then
+   
+    if ((time_of_day >= maxtime - onehour) or (time_of_day < morning + (3 * onehour))) then
         pass = true
-        callback.enabled = false
-    else
-        callback.enabled = true
     end
+    
+    return pass
 end
 
 function check_timed_events(animation)
     local time_of_day = GameMode.getTimeOfDay()
+    print("time of day "..tostring(time_of_day))
+    
+    local remove_callback_keys = {}
     
     for key,callback in pairs(time_callbacks) do
         if  callback.check_func(key, callback, time_of_day) == true then
             if callback.enabled == true then
-            callback.func(key, callback)  
+                callback.func(key, callback)
+                if callback.oneshot == true then
+                    table.insert(remove_callback_keys, key)
+                end
             end
         end
+    end
+    
+    for _,key in ipairs(remove_callback_keys) do
+        time_callbacks[key] = nil
     end
 end
 
@@ -1033,7 +1040,7 @@ function enterTheTrials(trigger)
     global_scripts.script.add_animation(trigger.go.level, animation)
 end
 
-time_callbacks = {blooddrop_cap = {name = "raise", check_func=check_for_morning, func=raise_robin_pedestal, oneshot=false, enabled=true}}
+time_callbacks = {blooddrop_cap_riase = {check_func=check_for_morning, func=raise_robin_pedestal, oneshot=true, enabled=true}}
 
 
 time_of_day = 1.5

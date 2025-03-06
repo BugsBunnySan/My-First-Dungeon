@@ -1188,16 +1188,24 @@ end
 
 onWakeUpHookId = nil
 
-
-
-function exitTheDungeon(data)
-    party:setPosition(29, 21, 2, 0, start_pos.level)
-    spawn_blast(party)
-    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
+function openCruelMaze(time_delta, animation)
+    local maze_door = findEntity(animation.door_id)
+    maze_door.door:open()
 end
 
-function spawn_blast(pos)
-    local spawn_blast = spawn("dispel_blast", pos.level, pos.x, pos.y, pos.facing, pos.elevation)
+function exitTheDungeon(data)
+    party:setPosition(29, 27, 2, 0, start_pos.level)
+    delayedCall("tricksters_domain_script_entity", .25, "spawnBlast", party.x, party.y, party.facing, party.elevation, party.level, true)
+    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
+    local animation = {func=nil, on_finish=openCruelMaze, step=3.1, duration=3, door_id=dungeon_door_iron_barred_1.id}    
+    global_scripts.script.add_animation(dungeon_door_iron_barred_1.level, animation)
+end
+
+function spawnBlast(x, y, facing, elevation, level, teleportation)
+    if teleportation == true then
+        spawn("teleportation_effect", level, x, y, facing, elevation)
+    end
+    local spawn_blast = spawn("dispel_blast", level, x, y, facing, elevation)    
     local w_pos = spawn_blast:getWorldPosition()
     w_pos = w_pos + vec(0, 0.5, 0)    
     spawn_blast:setWorldPosition(w_pos)
@@ -1206,11 +1214,11 @@ end
 function onEnterDungeon(trigger)
     --print("-----------------------------------")
     
-    spawn_blast(party)
+    spawnBlast(party.x, party.y, party.facing, party.elevation, party.level, true)
     
     onWakeUpHookId = global_scripts.script.register_party_hook("onWakeUp", "tricksters_domain_script_entity", "exitTheDungeon", {})
     
-    --dungeon_door_iron_barred_1.door:close()
+    dungeon_door_iron_barred_1.door:close()
     trigger = global_scripts.script.getGO(trigger)
     
     start_pos.facing = trigger.facing
