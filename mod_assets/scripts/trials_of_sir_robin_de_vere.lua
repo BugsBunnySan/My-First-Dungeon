@@ -929,7 +929,8 @@ function count_farming(state_data)
     state_data.count = state_data.count - 1
     hudPrint(tostring(state_data.count))
     if state_data.count == 0 then
-        time_callbacks["blooddrop_cap"] = nil        
+        time_callbacks["blooddrop_cap_lower"] = nil
+        time_callbacks["blooddrop_cap_raise"] = nil
         return state_data.next_state
     else
         local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)
