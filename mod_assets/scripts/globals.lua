@@ -68,12 +68,11 @@ function handle_animation(animation, now, tick_delta)
     return done
 end
 
-function animateTick(level, now)
+function animateTick(level, now, tick_delta)
     local animations = get_animations(level)    
     if animations == nil then
         return
     end
-    local tick_delta = now - last_tick
     for idx, animation in ipairs(animations) do         
         local done = handle_animation(animation, now, tick_delta)
         if done then
@@ -87,8 +86,14 @@ function globaAnimationTick(timer)
     if last_tick == -1 then
         last_tick = now
     end
-    animateTick(0, now)
-    animateTick(timer.go.level, now)
+    local tick_delta = now - last_tick
+    animateTick(0, now, tick_delta)
+    -- not refreshing now / time_delta here, keeps last_tick accurate for the first animations, it 
+    -- does move the extra time each animation takes into the next frame, when the
+    -- timer has had a chance to be called again, but also this makes sure
+    -- every animated entity is in sync, with respect to time_delta and time elapsed
+    -- which seems a good thing...
+    animateTick(timer.go.level, now, tick_delta)
     last_tick = now
 end
 

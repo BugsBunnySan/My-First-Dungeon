@@ -16,7 +16,7 @@ special_door_id = ""
 function spawn_wall(x, y, facing, elevation, level, section)
     local wall = spawn("dungeon_secret_door")
     wall:setPosition(x, y, facing, elevation, level)
-    --wall.door:disable()
+    wall.door:disable()
     table.insert(section.walls, wall.id)    
 end
 
@@ -1036,33 +1036,7 @@ special_script_entities = {pedestal_of_roses = "pedestal_of_roses_script_entity"
                            test_location = "test_location_script_entity",
                            tricksters_beach = "tricksters_beach_script_entity"}
 
-function stepTeleport(trigger_id)
-    local trigger = findEntity(trigger_id)       
-    
-    local enter_section = sections[trigger.id]    
-    
-    ---print("stepTeleport")
-    ---print("coming from "..enter_section.section_type)
-    
-    --global_scripts.script.print_pos(virtual_pos)    
-    virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
-    virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
-    virtual_pos.facing = trigger.facing      
-    --global_scripts.script.print_pos(virtual_pos)
-        
-    if enter_section.special_position ~= "" then
-        ---print("    from special place: "..enter_section.special_position)
-        --global_scripts.script.print_pos(virtual_pos)
-        local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
-        virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
-        virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
-        --global_scripts.script.print_pos(virtual_pos)
-    end
-    
-    local facing = enter_section.pos.facing 
-
-    start_pos.facing = facing
-    
+function cleanup_dungeon()
     for i, section in ipairs(dungeon_sections) do
         local go
         for _, go_id in ipairs(section.walls) do
@@ -1093,7 +1067,36 @@ function stepTeleport(trigger_id)
     dungeon_sections = {}
     sections = {}    
     special_entities = {}
+end
+
+function stepTeleport(trigger_id)
+    local trigger = findEntity(trigger_id)       
     
+    local enter_section = sections[trigger.id]    
+    
+    ---print("stepTeleport")
+    ---print("coming from "..enter_section.section_type)
+    
+    --global_scripts.script.print_pos(virtual_pos)    
+    virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
+    virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
+    virtual_pos.facing = trigger.facing      
+    --global_scripts.script.print_pos(virtual_pos)
+        
+    if enter_section.special_position ~= "" then
+        ---print("    from special place: "..enter_section.special_position)
+        --global_scripts.script.print_pos(virtual_pos)
+        local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
+        virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
+        virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
+        --global_scripts.script.print_pos(virtual_pos)
+    end
+    
+    local facing = enter_section.pos.facing 
+
+    start_pos.facing = facing
+    
+    cleanup_dungeon()    
     
     if not facing_is_reversed(facing, party.facing) then -- if the party enters a section backwards, they'd see the section they came from change, this prevents that
         enter_section.exit_types[1] = "empty"
@@ -1194,11 +1197,15 @@ function openCruelMaze(time_delta, animation)
 end
 
 function exitTheDungeon(data)
-    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
     party:setPosition(29, 27, 2, 0, start_pos.level)
+    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
+    cleanup_dungeon()
+        
     delayedCall("tricksters_domain_script_entity", .25, "spawnBlast", party.x, party.y, party.facing, party.elevation, party.level, true)
     local animation = {func=nil, on_finish=openCruelMaze, step=3.1, duration=3, door_id=dungeon_door_iron_barred_1.id}    
     global_scripts.script.add_animation(dungeon_door_iron_barred_1.level, animation)
+    
+    floor_trigger_enter_tricksters_domain.floortrigger:enable()
 end
 
 function spawnBlast(x, y, facing, elevation, level, teleportation)
@@ -1213,13 +1220,14 @@ end
 
 function onEnterDungeon(trigger)
     --print("-----------------------------------")
+    trigger = global_scripts.script.getGO(trigger)
+    trigger.floortrigger:disable() -- don't use disableSelf on the trigger, it will get it stuck in activated postion, with no means to deactivate it and it will retrigger as soon as it is enabled again in exitTheDungeon...
     
     spawnBlast(party.x, party.y, party.facing, party.elevation, party.level, true)
     
     onWakeUpHookId = global_scripts.script.register_party_hook("onWakeUp", "tricksters_domain_script_entity", "exitTheDungeon", {})
     
     dungeon_door_iron_barred_1.door:close()
-    trigger = global_scripts.script.getGO(trigger)
     
     start_pos.facing = trigger.facing
     start_pos.elevation = trigger.elevation
