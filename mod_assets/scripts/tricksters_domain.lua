@@ -16,7 +16,7 @@ special_door_id = ""
 function spawn_wall(x, y, facing, elevation, level, section)
     local wall = spawn("dungeon_secret_door")
     wall:setPosition(x, y, facing, elevation, level)
-    wall.door:disable()
+    --wall.door:disable()
     table.insert(section.walls, wall.id)    
 end
 
