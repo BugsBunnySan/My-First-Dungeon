@@ -15,10 +15,11 @@ function initDungeon()
     initIdioma()
     initHallOfHeroes()
     initMerchantsHQ()
+    initRoyalArchives()
 end
 
 function initGlobals()
-    GameMode.setTimeOfDay(0.5)
+    GameMode.setTimeOfDay(1.5)
     --global_scripts.script.last_tick = -1
 end
 
@@ -34,55 +35,81 @@ function levelUpParty()
     end
 end
 
+light_weapons_idx = 1
+heavy_weapons_idx = 2
+rogue_idx = 3
+wizard_idx = 4 
+equipment = {[light_weapons_idx] = {[ItemSlot.Weapon] = "bone_blade",
+                                    [ItemSlot.OffHand] = "meteor_shield",
+                                    [ItemSlot.Head] = "meteor_helmet",
+                                    [ItemSlot.Chest] = "meteor_cuirass",
+                                    [ItemSlot.Gloves] = "meteor_gauntlets",
+                                    [ItemSlot.Legs] = "meteor_cuisse",
+                                    [ItemSlot.Feet] = "meteor_boots"},
+            [heavy_weapons_idx] = {[ItemSlot.Weapon] = "bane",
+                                   [ItemSlot.OffHand] = "crystal_shield",
+                                   [ItemSlot.Head] = "crystal_helmet",
+                                   [ItemSlot.Chest] = "crystal_cuirass",
+                                   [ItemSlot.Gloves] = "crystal_gauntlets",
+                                   [ItemSlot.Legs] = "crystal_greaves",
+                                   [ItemSlot.Feet] = "crystal_boots"},
+            [rogue_idx] = {[ItemSlot.Weapon] = "moonblade",
+                           [ItemSlot.OffHand] = "moonblade",
+                           [ItemSlot.Head] = "rogue_hood",
+                           [ItemSlot.Chest] = "rogue_vest",
+                           [ItemSlot.Gloves] = "rogue_gloves",
+                           [ItemSlot.Legs] = "rogue_pants",
+                           [ItemSlot.Feet] = "rogue_boots"},
+            [wizard_idx] = {[ItemSlot.Weapon] = "acolyte_staff",
+                            [ItemSlot.OffHand] = "serpent_staff",
+                            [ItemSlot.Head] = "archmage_hat",
+                            [ItemSlot.Chest] = "archmage_scapular",
+                            [ItemSlot.Legs] = "archmage_mantle",
+                            [ItemSlot.Feet] = "archmage_loafers"}}
+             
 function initParty()
-    local light_weapons = party.party:getChampion(1)
+    local light_weapons = party.party:getChampion(light_weapons_idx)
     light_weapons:trainSkill("light_weapons", 5, false)
     light_weapons:trainSkill("accuracy", 5, false)
     light_weapons:trainSkill("armors", 5, false)
     light_weapons:trainSkill("critical", 5, false)
-    light_weapons:insertItem(ItemSlot.Weapon, spawn("bone_blade").item)  
-    light_weapons:insertItem(ItemSlot.OffHand, spawn("meteor_shield").item)   
-    light_weapons:insertItem(ItemSlot.Head, spawn("meteor_helmet").item)
-    light_weapons:insertItem(ItemSlot.Chest, spawn("meteor_cuirass").item) 
-    light_weapons:insertItem(ItemSlot.Gloves, spawn("meteor_gauntlets").item)    
-    light_weapons:insertItem(ItemSlot.Legs, spawn("meteor_cuisse").item)
-    light_weapons:insertItem(ItemSlot.Feet, spawn("meteor_boots").item)    
+    for item_slot, item_name in pairs(equipment[light_weapons_idx]) do
+        if light_weapons:getItem(item_slot) == nil then
+            light_weapons:insertItem(item_slot, spawn(item_name).item)
+        end
+    end  
     local heavy_weapons = party.party:getChampion(2)
     heavy_weapons:trainSkill("heavy_weapons", 5, false)
     heavy_weapons:trainSkill("accuracy", 5, false)
     heavy_weapons:trainSkill("armors", 5, false)    
     heavy_weapons:trainSkill("critical", 5, false)
-    heavy_weapons:insertItem(ItemSlot.Weapon, spawn("bane").item) 
-    heavy_weapons:insertItem(ItemSlot.OffHand, spawn("crystal_shield").item) 
-    heavy_weapons:insertItem(ItemSlot.Head, spawn("crystal_helmet").item)
-    heavy_weapons:insertItem(ItemSlot.Chest, spawn("crystal_cuirass").item) 
-    heavy_weapons:insertItem(ItemSlot.Gloves, spawn("crystal_gauntlets").item)    
-    heavy_weapons:insertItem(ItemSlot.Legs, spawn("crystal_greaves").item)
-    heavy_weapons:insertItem(ItemSlot.Feet, spawn("crystal_boots").item)
+    for item_slot, item_name in pairs(equipment[heavy_weapons_idx]) do
+        if heavy_weapons:getItem(item_slot) == nil then
+            heavy_weapons:insertItem(item_slot, spawn(item_name).item)
+        end
+    end  
     local rogue = party.party:getChampion(3)
     rogue:trainSkill("light_weapons", 5, false)
     rogue:trainSkill("accuracy", 5, false)
     rogue:trainSkill("armors", 5, false)
     rogue:trainSkill("critical", 5, false)
     rogue:trainSkill("dodge", 5, false)
-    rogue:insertItem(ItemSlot.Weapon, spawn("moonblade").item)
-    rogue:insertItem(ItemSlot.OffHand, spawn("moonblade").item)
-    rogue:insertItem(ItemSlot.Head, spawn("rogue_hood").item)
-    rogue:insertItem(ItemSlot.Chest, spawn("rogue_vest").item) 
-    rogue:insertItem(ItemSlot.Gloves, spawn("rogue_gloves").item)    
-    rogue:insertItem(ItemSlot.Legs, spawn("rogue_pants").item)
-    rogue:insertItem(ItemSlot.Feet, spawn("rogue_boots").item)
+    for item_slot, item_name in pairs(equipment[rogue_idx]) do
+        if rogue:getItem(item_slot) == nil then
+            rogue:insertItem(item_slot, spawn(item_name).item)
+        end
+    end  
     local wizard = party.party:getChampion(4)
     wizard:trainSkill("concentration", 5, false)
     wizard:trainSkill("fire_magic", 5, false)
     wizard:trainSkill("air_magic", 5, false)
     wizard:trainSkill("water_magic", 5, false)
     wizard:trainSkill("earth_magic", 5, false)
-    wizard:insertItem(ItemSlot.Weapon, spawn("acolyte_staff").item)        
-    wizard:insertItem(ItemSlot.Head, spawn("archmage_hat").item)
-    wizard:insertItem(ItemSlot.Chest, spawn("archmage_scapular").item)    
-    wizard:insertItem(ItemSlot.Legs, spawn("archmage_mantle").item)
-    wizard:insertItem(ItemSlot.Feet, spawn("archmage_loafers").item)
+    for item_slot, item_name in pairs(equipment[wizard_idx]) do
+        if wizard:getItem(item_slot) == nil then
+            wizard:insertItem(item_slot, spawn(item_name).item)
+        end
+    end  
     wizard:castSpell(25)
 end
 
@@ -137,4 +164,8 @@ end
 
 function initMerchantsHQ()
     merchants_script_entity.script.init()
+end
+
+function initRoyalArchives()
+    royal_archives_script_entity.script.init()
 end

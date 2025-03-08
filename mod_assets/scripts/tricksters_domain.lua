@@ -1194,9 +1194,9 @@ function openCruelMaze(time_delta, animation)
 end
 
 function exitTheDungeon(data)
+    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
     party:setPosition(29, 27, 2, 0, start_pos.level)
     delayedCall("tricksters_domain_script_entity", .25, "spawnBlast", party.x, party.y, party.facing, party.elevation, party.level, true)
-    global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
     local animation = {func=nil, on_finish=openCruelMaze, step=3.1, duration=3, door_id=dungeon_door_iron_barred_1.id}    
     global_scripts.script.add_animation(dungeon_door_iron_barred_1.level, animation)
 end

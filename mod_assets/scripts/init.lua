@@ -21,6 +21,10 @@ defineObject{
         {
             class = "Party",
             name = "party",
+            onCastSpell = function(self, champion, spell)
+                local script_entity = findEntity("global_scripts")
+                return script_entity.script.partyOnCastSpell(self, champion, spell)
+            end,
             onWakeUp = function(self)
                 local script_entity = findEntity("global_scripts")
                 return script_entity.script.partyOnWakeUp(self)

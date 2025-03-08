@@ -213,7 +213,8 @@ function party_conditions(champions, add_conditions, remove_conditions)
     end
 end
 
-party_hooks = {onWakeUp = {}}
+party_hooks = {onWakeUp = {},
+               onCastSpell = {}}
 
 function register_party_hook(hook_name, script_entity_id, func_name, data)
     local hook_id = math.random(500000)
@@ -226,6 +227,18 @@ end
          
 function deregister_party_hook(hook_name, hook_id)
     party_hooks[hook_name][hook_id] = nil
+end
+
+function partyOnCastSpell(party, champion, spell)
+    local script_entity
+    --print(tostring(champion).." cast "..tostring(spell))
+    for k,hook in pairs(party_hooks.onCastSpell) do
+        if hook.data.spell_name == spell then
+            script_entity = findEntity(hook.script_entity_id)
+            script_entity.script[hook.func_name](party, champion, spell, hook.data)
+        end
+    end
+    return true
 end
 
 function partyOnWakeUp(party)
