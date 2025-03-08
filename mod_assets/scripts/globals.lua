@@ -68,28 +68,28 @@ function handle_animation(animation, now, tick_delta)
     return done
 end
 
-function animateTick(level)
-    local animations = get_animations(level)
+function animateTick(level, now)
+    local animations = get_animations(level)    
     if animations == nil then
         return
     end
-    local now = Time.systemTime()
-    if last_tick == -1 then
-        last_tick = now
-    end
     local tick_delta = now - last_tick
-    for idx, animation in ipairs(animations) do        
+    for idx, animation in ipairs(animations) do         
         local done = handle_animation(animation, now, tick_delta)
         if done then
             table.remove(animations, idx)
         end
     end
-    last_tick = now
 end
 
 function globaAnimationTick(timer)
-    animateTick(0)
-    animateTick(timer.go.level)
+    local now = Time.systemTime()
+    if last_tick == -1 then
+        last_tick = now
+    end
+    animateTick(0, now)
+    animateTick(timer.go.level, now)
+    last_tick = now
 end
 
 -- Beginning Dungeon

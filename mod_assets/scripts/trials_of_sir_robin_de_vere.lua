@@ -130,12 +130,12 @@ function raise_bridge(time_delta, animation)
     end
     local start_pos = vec(animation.start_pos.x, animation.start_pos.y, animation.start_pos.z)
     local stop_pos = vec(animation.stop_pos.x, animation.stop_pos.y, animation.stop_pos.z)
-    local w_pos = ((stop_pos - start_pos) * percentage) + start_pos 
+    local w_pos = ((stop_pos - start_pos) * percentage) + start_pos     
     bridge:setWorldPosition(w_pos)
 end
 
 function onBridgePedestalInsertItem(pedestal, item)
-    hudPrint(item.go.name)
+    --hudPrint(item.go.name)
     if item.go.name == "meteorite" then
         local bridge = global_scripts.script.spawnAtObject("castle_bridge", robin_first_bridge)
         local bridge_w_pos = bridge:getWorldPosition()
@@ -524,7 +524,8 @@ function start_raise_pedestal(animation)
     global_scripts.script.playSoundAtObject(animation.sound_name, pedestal)    
 end
 
-function raisePedestal(pedestal_id, return_animation, direction)    
+function raisePedestal(pedestal_id, return_animation, direction)
+    --print("raise pedestal "..pedestal_id)
     local pedestal = findEntity(pedestal_id)
     local pedestal_w_pos = pedestal:getWorldPosition()
     
@@ -888,7 +889,7 @@ function destroyRatNest(trigger)
     trigger = global_scripts.script.getGO(trigger)
     
     local rat_spawn_pos    = findEntity(rat_spawn_connections[trigger.id])  
-    print(rat_spawn_connections[rat_spawn_pos.id])  
+    --print(rat_spawn_connections[rat_spawn_pos.id])  
     local teleport_pos = findEntity(rat_spawn_connections[rat_spawn_pos.id])
     
     party:setPosition(teleport_pos.x, teleport_pos.y, teleport_pos.facing, teleport_pos.elevation, teleport_pos.level)
@@ -927,7 +928,7 @@ end
 
 function count_farming(state_data)
     state_data.count = state_data.count - 1
-    hudPrint(tostring(state_data.count))
+    --hudPrint(tostring(state_data.count))
     if state_data.count == 0 then
         time_callbacks["blooddrop_cap_lower"] = nil
         time_callbacks["blooddrop_cap_raise"] = nil
@@ -1006,7 +1007,7 @@ end
 
 function check_timed_events(animation)
     local time_of_day = GameMode.getTimeOfDay()
-    print("time of day "..tostring(time_of_day))
+    --print("time of day "..tostring(time_of_day))
     
     local remove_callback_keys = {}
     
