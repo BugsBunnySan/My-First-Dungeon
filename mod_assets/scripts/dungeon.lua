@@ -2735,7 +2735,7 @@ spawn("tomb_wall_lantern",4,7,1,0,"tomb_wall_lantern_12")
 spawn("tomb_wall_ornament",4,7,1,0,"tomb_wall_ornament_12")
 spawn("tomb_wall_01",4,7,1,1,"tomb_wall_01_72")
 spawn("tomb_stairs_up",0,5,3,0,"tomb_stairs_up_1")
-tomb_stairs_up_1.stairs:setTeleportTarget(17,19,19,0)
+tomb_stairs_up_1.stairs:setTeleportTarget(18,19,19,0)
 spawn("tomb_wall_01",1,5,3,1,"tomb_wall_01_73")
 spawn("tomb_door_serpent",2,5,3,0,"tomb_door_serpent_1")
 spawn("tomb_wall_01",2,5,3,1,"tomb_wall_01_74")
@@ -4629,7 +4629,7 @@ spawn("castle_wall_01",12,8,1,0,"castle_wall_01_114")
 spawn("castle_gate_outside",13,8,3,0,"castle_gate_outside_3")
 spawn("castle_wall_01",13,8,3,0,"castle_wall_01_115")
 spawn("forest_stairs_down",18,16,2,0,"forest_stairs_down_2")
-forest_stairs_down_2.stairs:setTeleportTarget(14,29,21,0)
+forest_stairs_down_2.stairs:setTeleportTarget(15,29,21,0)
 spawn("floor_trigger",23,8,0,0,"floor_trigger_22")
 floor_trigger_22.floortrigger:setTriggeredByParty(true)
 floor_trigger_22.floortrigger:setTriggeredByMonster(false)
@@ -4661,6 +4661,19 @@ Do not consume anything gained/given to\
 you during the trials, until you have completed them. DO not be alarmed, It will not harm you,only hinder you. \
 ")
 spawn("dungeon_wall_broken_02",18,14,0,-1,"dungeon_wall_broken_02_6")
+spawn("timer",0,30,2,0,"cloister_global_anim_timer")
+cloister_global_anim_timer.timer:setTimerInterval(0.01)
+cloister_global_anim_timer.timer:setDisableSelf(false)
+cloister_global_anim_timer.timer:setTriggerOnStart(false)
+cloister_global_anim_timer.timer:setCurrentLevelOnly(true)
+cloister_global_anim_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("floor_trigger",16,8,1,0,"floor_trigger_26")
+floor_trigger_26.floortrigger:setTriggeredByParty(true)
+floor_trigger_26.floortrigger:setTriggeredByMonster(true)
+floor_trigger_26.floortrigger:setTriggeredByItem(true)
+floor_trigger_26.floortrigger:setTriggeredByDigging(false)
+floor_trigger_26.floortrigger:setDisableSelf(false)
+floor_trigger_26.floortrigger:addConnector("onActivate", "global_scripts", "fullHealParty")
 
 --- level 10 ---
 
@@ -6912,6 +6925,174 @@ pushable_block_floor_16.model:disable()
 --- level 14 ---
 
 newMap{
+	name = "Little Fihing Town Island",
+	width = 32,
+	height = 32,
+	levelCoord = {11,0,0},
+	ambientTrack = "beach",
+	tiles = {
+		"beach_ground",
+		"beach_ground_water",
+	}
+}
+
+loadLayer("heightmap", {
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-1,-2,-2,-1,-1,-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,-2,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-2,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,
+	-2,-2,-2,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,
+	-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,-2,
+	-2,-2,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-1,-1,-1,-1,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,-1,-1,-1,-1,-1,-1,-2,-2,-2,-2,-2,-2,-2,-1,-1,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+	-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,
+})
+
+loadLayer("noise", {
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+})
+
+loadLayer("tiles", {
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,1,2,2,1,1,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,2,2,2,2,
+	2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
+	2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,
+	2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
+	2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,
+	2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,
+	2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,1,1,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+})
+
+spawn("forest_heightmap",0,19,2,0,"forest_heightmap_14")
+spawn("forest_day_sky",0,20,3,0,"forest_day_sky_6")
+spawn("beach_ocean",0,31,2,0,"beach_ocean_7")
+spawn("beach_ocean",30,2,2,0,"beach_ocean_8")
+spawn("beach_ocean",0,31,0,0,"beach_ocean_9")
+spawn("portal",15,24,0,0,"portal_4")
+portal_4.frame:disable()
+portal_4.portal:disable()
+portal_4.shipSymbol:disable()
+portal_4.controller:disable()
+spawn("pushable_block_floor",15,24,1,0,"pushable_block_floor_17")
+spawn("tomb_pillar",16,25,0,0,"tomb_pillar_86")
+spawn("tomb_pillar",15,24,2,0,"tomb_pillar_87")
+spawn("tomb_wall_grating",15,24,1,0,"tomb_wall_grating_13")
+spawn("tomb_wall_grating",15,24,3,0,"tomb_wall_grating_14")
+spawn("tomb_pillar",15,25,2,0,"tomb_pillar_88")
+spawn("tomb_pillar",16,24,2,0,"tomb_pillar_89")
+spawn("tomb_door_stone",15,23,2,0,"tomb_door_stone_16")
+tomb_door_stone_16.door:setDoorState("open")
+spawn("tomb_door_stone",15,23,2,1,"tomb_door_stone_17")
+tomb_door_stone_17.door:setDoorState("open")
+tomb_door_stone_17.door:disable()
+tomb_door_stone_17.controller:disable()
+tomb_door_stone_17.cbox1:disable()
+tomb_door_stone_17.cbox2:disable()
+tomb_door_stone_17.model:disable()
+spawn("forest_ruins_dome",15,24,0,1,"forest_ruins_dome_9")
+spawn("tomb_wall_01",15,24,2,0,"tomb_wall_01_43")
+spawn("tomb_wall_01",15,24,2,1,"tomb_wall_01_44")
+spawn("tomb_wall_01",15,25,0,0,"tomb_wall_01_75")
+spawn("tomb_wall_01",15,25,0,1,"tomb_wall_01_76")
+spawn("castle_bridge",15,24,1,1,"castle_bridge_130")
+spawn("castle_wall_cloth",16,24,3,1,"castle_wall_cloth_19")
+spawn("castle_wall_cloth",14,24,1,1,"castle_wall_cloth_21")
+spawn("conjurers_hat",14,23,0,0,"conjurers_hat_1")
+spawn("dungeon_pillar",15,19,3,0,"dungeon_pillar_18")
+spawn("dungeon_pillar",15,18,3,0,"dungeon_pillar_19")
+spawn("dungeon_pillar",15,17,3,0,"dungeon_pillar_20")
+spawn("dungeon_wall_01",15,18,3,0,"dungeon_wall_01_35")
+spawn("dungeon_wall_01",15,17,3,0,"dungeon_wall_01_38")
+spawn("dungeon_wall_01",15,16,3,0,"dungeon_wall_01_41")
+spawn("forest_ruins_arch",14,15,1,0,"forest_ruins_arch_34")
+spawn("dungeon_pillar",15,14,1,0,"dungeon_pillar_21")
+spawn("dungeon_pillar",15,13,1,0,"dungeon_pillar_22")
+spawn("dungeon_pillar",15,12,1,0,"dungeon_pillar_23")
+spawn("dungeon_wall_01",15,14,3,0,"dungeon_wall_01_42")
+spawn("dungeon_wall_01",15,13,3,0,"dungeon_wall_01_47")
+spawn("dungeon_wall_01",15,12,3,0,"dungeon_wall_01_48")
+
+--- level 15 ---
+
+newMap{
 	name = "Tricksters Domain",
 	width = 32,
 	height = 32,
@@ -6985,7 +7166,7 @@ spawn("teleporter",29,29,0,0,"teleporter_23")
 teleporter_23.particle:disable()
 teleporter_23.light:disable()
 teleporter_23.sound:disable()
-teleporter_23.teleporter:setTeleportTarget(14,10,17,0)
+teleporter_23.teleporter:setTeleportTarget(15,10,17,0)
 teleporter_23.teleporter:setSpin("turn_around")
 teleporter_23.teleporter:setTriggeredByParty(true)
 teleporter_23.teleporter:setTriggeredByMonster(false)
@@ -7102,7 +7283,7 @@ spawn("mine_floor_pit_light",29,24,2,0,"mine_floor_pit_light_5")
 spawn("dungeon_floor_dirt_01",29,29,2,0,"dungeon_floor_dirt_01_1")
 spawn("dungeon_ceiling",29,29,1,0,"dungeon_ceiling_8")
 spawn("invisible_teleporter",29,14,0,0,"invisible_teleporter_2")
-invisible_teleporter_2.teleporter:setTeleportTarget(14,10,17,0)
+invisible_teleporter_2.teleporter:setTeleportTarget(15,10,17,0)
 invisible_teleporter_2.teleporter:setSpin("none")
 invisible_teleporter_2.teleporter:setTriggeredByParty(true)
 invisible_teleporter_2.teleporter:setTriggeredByMonster(false)
@@ -7141,13 +7322,6 @@ tricksters_domain_anim_timer.timer:setDisableSelf(false)
 tricksters_domain_anim_timer.timer:setTriggerOnStart(false)
 tricksters_domain_anim_timer.timer:setCurrentLevelOnly(true)
 tricksters_domain_anim_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
-spawn("timer",0,18,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
-spawn("starting_location",29,26,2,0,"starting_location_1")
 spawn("note",29,24,2,0,"note_11")
 note_11.scrollitem:setScrollText("An old nautical chart\
 \
@@ -7156,8 +7330,15 @@ of the entrance passage to \
 the pedestal of roses\
 \
 You guess it's about 20 leagues")
+spawn("starting_location",29,25,2,0,"starting_location_1")
+spawn("timer",0,18,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 
---- level 15 ---
+--- level 16 ---
 
 newMap{
 	name = "Tricksters Locations",
@@ -7364,7 +7545,7 @@ tricksters_location_global_anim_timer.timer:setTriggerOnStart(false)
 tricksters_location_global_anim_timer.timer:setCurrentLevelOnly(true)
 tricksters_location_global_anim_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 
---- level 16 ---
+--- level 17 ---
 
 newMap{
 	name = "Trixters Beach",
@@ -7515,7 +7696,7 @@ floor_trigger_30.floortrigger:addConnector("onActivate", "tricksters_beach_scrip
 spawn("ladder",15,19,0,0,"ladder_14")
 spawn("mine_ceiling_pit_light_bright",15,19,3,0,"mine_ceiling_pit_light_bright_2")
 
---- level 17 ---
+--- level 18 ---
 
 newMap{
 	name = "The Library And Royal Archives",
@@ -7732,8 +7913,8 @@ skeleton_commander_spirit_5.spiritParticles:disable()
 skeleton_commander_spirit_5.sound:disable()
 spawn("emperor_eamon",6,19,1,2,"emperor_eamon_1")
 emperor_eamon_1.brain:disable()
-spawn("castle_pillar_candle_holder",14,17,2,1,"castle_pillar_candle_holder_102")
-spawn("castle_pillar_candle_holder",14,23,0,2,"castle_pillar_candle_holder_108")
+spawn("castle_pillar_candle_holder_blue",14,17,2,1,"castle_pillar_candle_holder_blue_102")
+spawn("castle_pillar_candle_holder_blue",14,23,0,2,"castle_pillar_candle_holder_blue_108")
 spawn("snake_pillar",14,22,0,1,"snake_pillar_1")
 spawn("snake_pillar",8,22,1,1,"snake_pillar_7")
 spawn("snake_pillar",8,23,1,0,"snake_pillar_8")
@@ -7845,49 +8026,49 @@ spawn("tomb_wall_01",13,15,0,2,"tomb_wall_01_50")
 spawn("tomb_wall_01",14,15,0,2,"tomb_wall_01_51")
 spawn("tomb_wall_01",15,15,0,2,"tomb_wall_01_52")
 spawn("tomb_wall_01",16,15,0,2,"tomb_wall_01_53")
-spawn("castle_pillar_candle_holder",14,16,2,2,"castle_pillar_candle_holder_115")
+spawn("castle_pillar_candle_holder_blue",14,16,2,2,"castle_pillar_candle_holder_blue_115")
 spawn("tomb_wall_01",8,19,3,0,"tomb_wall_01_55")
-spawn("castle_pillar_candle_holder",15,17,2,1,"castle_pillar_candle_holder_17")
+spawn("castle_pillar_candle_holder_blue",15,17,2,1,"castle_pillar_candle_holder_blue_17")
 spawn("tomb_pillar",15,17,1,3,"tomb_pillar_51")
 spawn("tomb_pillar",15,17,1,1,"tomb_pillar_52")
 spawn("tomb_pillar",15,16,1,2,"tomb_pillar_53")
 spawn("tomb_pillar",15,17,1,4,"tomb_pillar_54")
-spawn("castle_pillar_candle_holder",15,16,2,2,"castle_pillar_candle_holder_22")
-spawn("castle_pillar_candle_holder",16,16,2,2,"castle_pillar_candle_holder_29")
+spawn("castle_pillar_candle_holder_blue",15,16,2,2,"castle_pillar_candle_holder_blue_22")
+spawn("castle_pillar_candle_holder_blue",16,16,2,2,"castle_pillar_candle_holder_blue_29")
 spawn("tomb_pillar",16,17,1,3,"tomb_pillar_55")
 spawn("tomb_pillar",16,17,1,1,"tomb_pillar_56")
 spawn("tomb_pillar",16,17,1,4,"tomb_pillar_57")
-spawn("castle_pillar_candle_holder",16,17,2,1,"castle_pillar_candle_holder_96")
+spawn("castle_pillar_candle_holder_blue",16,17,2,1,"castle_pillar_candle_holder_blue_96")
 spawn("tomb_pillar",16,16,1,2,"tomb_pillar_58")
 spawn("tomb_pillar",9,17,1,4,"tomb_pillar_59")
 spawn("tomb_pillar",9,17,1,3,"tomb_pillar_60")
-spawn("castle_pillar_candle_holder",9,16,2,2,"castle_pillar_candle_holder_101")
+spawn("castle_pillar_candle_holder_blue",9,16,2,2,"castle_pillar_candle_holder_blue_101")
 spawn("tomb_pillar",9,17,1,1,"tomb_pillar_61")
 spawn("tomb_pillar",9,16,1,2,"tomb_pillar_62")
-spawn("castle_pillar_candle_holder",9,17,2,1,"castle_pillar_candle_holder_109")
+spawn("castle_pillar_candle_holder_blue",9,17,2,1,"castle_pillar_candle_holder_blue_109")
 spawn("tomb_pillar",10,16,1,2,"tomb_pillar_63")
-spawn("castle_pillar_candle_holder",10,16,2,2,"castle_pillar_candle_holder_110")
+spawn("castle_pillar_candle_holder_blue",10,16,2,2,"castle_pillar_candle_holder_blue_110")
 spawn("tomb_pillar",10,17,1,3,"tomb_pillar_64")
 spawn("tomb_pillar",10,17,1,1,"tomb_pillar_65")
 spawn("tomb_pillar",10,17,1,4,"tomb_pillar_73")
-spawn("castle_pillar_candle_holder",10,17,2,1,"castle_pillar_candle_holder_113")
+spawn("castle_pillar_candle_holder_blue",10,17,2,1,"castle_pillar_candle_holder_blue_113")
 spawn("tomb_pillar",11,17,1,3,"tomb_pillar_74")
-spawn("castle_pillar_candle_holder",11,17,2,1,"castle_pillar_candle_holder_114")
+spawn("castle_pillar_candle_holder_blue",11,17,2,1,"castle_pillar_candle_holder_blue_114")
 spawn("tomb_pillar",11,17,1,1,"tomb_pillar_75")
-spawn("castle_pillar_candle_holder",11,16,2,2,"castle_pillar_candle_holder_116")
+spawn("castle_pillar_candle_holder_blue",11,16,2,2,"castle_pillar_candle_holder_blue_116")
 spawn("tomb_pillar",11,16,1,2,"tomb_pillar_76")
 spawn("tomb_pillar",11,17,1,4,"tomb_pillar_77")
 spawn("tomb_pillar",12,16,1,2,"tomb_pillar_78")
 spawn("tomb_pillar",12,17,1,3,"tomb_pillar_79")
-spawn("castle_pillar_candle_holder",12,17,2,1,"castle_pillar_candle_holder_117")
+spawn("castle_pillar_candle_holder_blue",12,17,2,1,"castle_pillar_candle_holder_blue_117")
 spawn("tomb_pillar",12,17,1,1,"tomb_pillar_80")
-spawn("castle_pillar_candle_holder",12,16,2,2,"castle_pillar_candle_holder_118")
+spawn("castle_pillar_candle_holder_blue",12,16,2,2,"castle_pillar_candle_holder_blue_118")
 spawn("tomb_pillar",12,17,1,4,"tomb_pillar_81")
 spawn("tomb_pillar",13,17,1,3,"tomb_pillar_82")
 spawn("tomb_pillar",13,16,1,2,"tomb_pillar_83")
 spawn("tomb_pillar",13,17,1,1,"tomb_pillar_84")
-spawn("castle_pillar_candle_holder",13,16,2,2,"castle_pillar_candle_holder_119")
-spawn("castle_pillar_candle_holder",13,17,2,1,"castle_pillar_candle_holder_120")
+spawn("castle_pillar_candle_holder_blue",13,16,2,2,"castle_pillar_candle_holder_blue_119")
+spawn("castle_pillar_candle_holder_blue",13,17,2,1,"castle_pillar_candle_holder_blue_120")
 spawn("tomb_pillar",13,17,1,4,"tomb_pillar_85")
 spawn("forest_ruins_ceiling",8,16,1,2,"forest_ruins_ceiling_1")
 spawn("forest_ruins_ceiling",9,16,1,2,"forest_ruins_ceiling_2")
@@ -7898,49 +8079,49 @@ spawn("forest_ruins_ceiling",13,16,1,2,"forest_ruins_ceiling_9")
 spawn("forest_ruins_ceiling",14,16,1,2,"forest_ruins_ceiling_10")
 spawn("forest_ruins_ceiling",15,16,1,2,"forest_ruins_ceiling_11")
 spawn("forest_ruins_ceiling",16,16,1,2,"forest_ruins_ceiling_12")
-spawn("castle_pillar_candle_holder",14,22,0,1,"castle_pillar_candle_holder_122")
-spawn("castle_pillar_candle_holder",15,23,0,2,"castle_pillar_candle_holder_103")
+spawn("castle_pillar_candle_holder_blue",14,22,0,1,"castle_pillar_candle_holder_blue_122")
+spawn("castle_pillar_candle_holder_blue",15,23,0,2,"castle_pillar_candle_holder_blue_103")
 spawn("snake_pillar",15,22,0,1,"snake_pillar_2")
 spawn("tomb_pillar",15,22,1,3,"tomb_pillar_32")
 spawn("tomb_pillar",15,23,1,2,"tomb_pillar_33")
 spawn("tomb_pillar",15,22,1,4,"tomb_pillar_34")
-spawn("castle_pillar_candle_holder",15,22,0,1,"castle_pillar_candle_holder_104")
+spawn("castle_pillar_candle_holder_blue",15,22,0,1,"castle_pillar_candle_holder_blue_104")
 spawn("snake_pillar",16,22,0,1,"snake_pillar_3")
-spawn("castle_pillar_candle_holder",16,23,0,2,"castle_pillar_candle_holder_105")
+spawn("castle_pillar_candle_holder_blue",16,23,0,2,"castle_pillar_candle_holder_blue_105")
 spawn("tomb_pillar",16,22,1,3,"tomb_pillar_35")
-spawn("castle_pillar_candle_holder",16,22,0,1,"castle_pillar_candle_holder_106")
+spawn("castle_pillar_candle_holder_blue",16,22,0,1,"castle_pillar_candle_holder_blue_106")
 spawn("tomb_pillar",16,23,1,2,"tomb_pillar_36")
 spawn("tomb_pillar",16,22,1,4,"tomb_pillar_37")
-spawn("castle_pillar_candle_holder",9,23,0,2,"castle_pillar_candle_holder_107")
+spawn("castle_pillar_candle_holder_blue",9,23,0,2,"castle_pillar_candle_holder_blue_107")
 spawn("tomb_pillar",9,22,1,3,"tomb_pillar_38")
-spawn("castle_pillar_candle_holder",9,22,0,1,"castle_pillar_candle_holder_111")
+spawn("castle_pillar_candle_holder_blue",9,22,0,1,"castle_pillar_candle_holder_blue_111")
 spawn("tomb_pillar",9,23,1,2,"tomb_pillar_39")
 spawn("snake_pillar",9,22,0,1,"snake_pillar_4")
 spawn("tomb_pillar",9,22,1,4,"tomb_pillar_40")
 spawn("tomb_pillar",10,22,1,4,"tomb_pillar_41")
-spawn("castle_pillar_candle_holder",10,22,0,1,"castle_pillar_candle_holder_112")
+spawn("castle_pillar_candle_holder_blue",10,22,0,1,"castle_pillar_candle_holder_blue_112")
 spawn("snake_pillar",10,22,0,1,"snake_pillar_5")
 spawn("tomb_pillar",10,22,1,3,"tomb_pillar_42")
-spawn("castle_pillar_candle_holder",10,23,0,2,"castle_pillar_candle_holder_121")
+spawn("castle_pillar_candle_holder_blue",10,23,0,2,"castle_pillar_candle_holder_blue_121")
 spawn("tomb_pillar",10,23,1,2,"tomb_pillar_43")
 spawn("tomb_pillar",11,22,1,4,"tomb_pillar_44")
 spawn("snake_pillar",11,22,0,1,"snake_pillar_6")
 spawn("tomb_pillar",11,22,1,3,"tomb_pillar_45")
 spawn("tomb_pillar",11,23,1,2,"tomb_pillar_46")
-spawn("castle_pillar_candle_holder",11,23,0,2,"castle_pillar_candle_holder_123")
-spawn("castle_pillar_candle_holder",11,22,0,1,"castle_pillar_candle_holder_124")
+spawn("castle_pillar_candle_holder_blue",11,23,0,2,"castle_pillar_candle_holder_blue_123")
+spawn("castle_pillar_candle_holder_blue",11,22,0,1,"castle_pillar_candle_holder_blue_124")
 spawn("snake_pillar",12,22,0,1,"snake_pillar_16")
 spawn("tomb_pillar",12,22,1,4,"tomb_pillar_47")
-spawn("castle_pillar_candle_holder",12,23,0,2,"castle_pillar_candle_holder_125")
+spawn("castle_pillar_candle_holder_blue",12,23,0,2,"castle_pillar_candle_holder_blue_125")
 spawn("tomb_pillar",12,22,1,3,"tomb_pillar_67")
 spawn("tomb_pillar",12,23,1,2,"tomb_pillar_68")
-spawn("castle_pillar_candle_holder",12,22,0,1,"castle_pillar_candle_holder_126")
+spawn("castle_pillar_candle_holder_blue",12,22,0,1,"castle_pillar_candle_holder_blue_126")
 spawn("tomb_pillar",13,22,1,4,"tomb_pillar_69")
 spawn("tomb_pillar",13,22,1,3,"tomb_pillar_70")
-spawn("castle_pillar_candle_holder",13,22,0,1,"castle_pillar_candle_holder_127")
+spawn("castle_pillar_candle_holder_blue",13,22,0,1,"castle_pillar_candle_holder_blue_127")
 spawn("tomb_pillar",13,23,1,2,"tomb_pillar_71")
 spawn("snake_pillar",13,22,0,1,"snake_pillar_23")
-spawn("castle_pillar_candle_holder",13,23,0,2,"castle_pillar_candle_holder_128")
+spawn("castle_pillar_candle_holder_blue",13,23,0,2,"castle_pillar_candle_holder_blue_128")
 spawn("tomb_wall_01",15,22,2,1,"tomb_wall_01_56")
 spawn("tomb_wall_01",16,22,2,1,"tomb_wall_01_57")
 spawn("tomb_wall_01",8,24,0,2,"tomb_wall_01_58")

@@ -24,7 +24,6 @@ function initGlobals()
 end
 
 
-
 function levelUpParty()
     local level = party.party:getChampion(1):getLevel()
     if level <= 28 then

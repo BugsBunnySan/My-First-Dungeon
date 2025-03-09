@@ -180,6 +180,12 @@ function party_gain_health(champions, amount)
     end
 end
 
+
+function fullHealParty()
+    party_gain_health({1,2,3,4}, 500)
+    party_gain_energy({1,2,3,4}, 500)
+end
+
 function party_take_damage(champions, amount, damage_type)
     for _, i in ipairs(champions) do
         local champion = party.party:getChampion(i)

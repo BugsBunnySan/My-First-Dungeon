@@ -4,7 +4,7 @@ end
 
 function tick()
     -- seems like an oofline tick is roughly between 41 and 44 seconds
-    hudPrint(tostring(Time.systemTime()) .. " - " .. tostring(Time.currentTime()))
+    --hudPrint(tostring(Time.systemTime()) .. " - " .. tostring(Time.currentTime()))
 end
 
 function blueCloudVision()

@@ -4,6 +4,7 @@
 start_pos = {x=10, y=17, facing=0, elevation=0}
 virtual_pos = {x=0, y=0, facing=9, elevation=0}
 null_pos = {x=0, y=0, facing=9, elevation=0}
+virtual_pos_reference = {}
 dungeon_sections = {}
 sections = {}
 
@@ -13,6 +14,14 @@ special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-9, entry_id=
 special_entities = {}
 special_door_id = ""
 
+function pos_to_virtual(x, y)
+    local pos = global_scripts.script.copy_pos(virtual_pos)
+    pos.x = pos.x + (x - virtual_pos_reference.x)
+    pos.y = pos.y + (y - virtual_pos_reference.y)
+    
+    return pos
+end
+
 function spawn_wall(x, y, facing, elevation, level, section)
     local wall = spawn("dungeon_secret_door")
     wall:setPosition(x, y, facing, elevation, level)
@@ -21,7 +30,17 @@ function spawn_wall(x, y, facing, elevation, level, section)
 end
 
 function spawn_floor(x, y, facing, elevation, level, section)
-    local dungeon_floor = spawn("dungeon_floor_dirt_01")
+    local dungeon_floor
+    local v_pos = pos_to_virtual(x, y)
+    if v_pos.x == 0 and v_pos.y == 0 then
+        dungeon_floor = spawn("castle_pressure_plate")
+        dungeon_floor.floortrigger:disable()
+        dungeon_floor.animation:disable()    
+    elseif v_pos.x == 0 or v_pos.y == 0 then
+        dungeon_floor = spawn("forest_ground_01")
+    else
+        dungeon_floor = spawn("dungeon_floor_dirt_01")
+    end
     dungeon_floor:setPosition(x, y, facing, elevation, level)
     table.insert(section.walls, dungeon_floor.id)       
     local dungeon_ceiling = spawn("dungeon_ceiling")
@@ -1153,6 +1172,7 @@ function stepTeleport(trigger_id)
    
    
     --local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, nil)
+    virtual_pos_reference = global_scripts.script.copy_pos(start_spawn_pos)
     enter_section:spawn_func(start_spawn_pos, true, nil, spawn_special)
     --table.insert(dungeon_sections, new_section)
     party:setPosition(party_pos.x, party_pos.y, party.facing, party_pos.elevation, party_pos.level)
@@ -1232,7 +1252,8 @@ function onEnterDungeon(trigger)
     start_pos.facing = trigger.facing
     start_pos.elevation = trigger.elevation
     start_pos.level = trigger.level
-    virtual_pos.level = trigger.level
+    virtual_pos = {x=0, y=0, facing=0, elevation=0, level=trigger.level}
+    virtual_pos_reference = global_scripts.script.copy_pos(start_pos)
     null_pos.level = trigger.level
     
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)
