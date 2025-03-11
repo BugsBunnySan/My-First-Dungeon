@@ -1,4 +1,31 @@
 defineObject{
+    name = "dungeon_floor_dirt_meridian_01",
+    baseObject = "dungeon_floor_dirt_01",
+    components = {
+        {
+            class = "Model",
+            material = "dungeon_floor_dirt_meridian_line",
+            model = "assets/models/env/dungeon_floor_dirt_01.fbx",
+            staticShadow = true,
+        }
+    }
+}
+
+defineObject{
+    name = "dungeon_floor_dirt_equator_01",
+    baseObject = "dungeon_floor_dirt_01",
+    components = {
+        {
+            class = "Model",
+            material = "dungeon_floor_dirt_equator_line",
+            model = "assets/models/env/dungeon_floor_dirt_01.fbx",
+            staticShadow = true,
+        }
+    }
+}
+
+
+defineObject{
 	name = "castle_ceiling_light_red",
 	components = {
 		{

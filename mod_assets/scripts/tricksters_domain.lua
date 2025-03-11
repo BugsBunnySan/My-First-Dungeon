@@ -7,6 +7,9 @@ null_pos = {x=0, y=0, facing=9, elevation=0}
 virtual_pos_reference = {}
 dungeon_sections = {}
 sections = {}
+turtle_ids = {}
+party_has_compass_equiped = false
+
 
 special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-9, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}},     --pedestal_of_roses_door"}}
                   ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
@@ -23,8 +26,7 @@ function pos_to_virtual(x, y)
 end
 
 function spawn_wall(x, y, facing, elevation, level, section)
-    local wall = spawn("dungeon_secret_door")
-    wall:setPosition(x, y, facing, elevation, level)
+    local wall = spawn("dungeon_secret_door", level, x, y, facing, elevation)
     --wall.door:disable()
     table.insert(section.walls, wall.id)    
 end
@@ -32,34 +34,34 @@ end
 function spawn_floor(x, y, facing, elevation, level, section)
     local dungeon_floor
     local v_pos = pos_to_virtual(x, y)
-    if v_pos.x == 0 and v_pos.y == 0 then
-        dungeon_floor = spawn("castle_pressure_plate")
+    if not party_has_compass_equiped then
+        dungeon_floor = spawn("dungeon_floor_dirt_01", level, x, y, facing, elevation)
+    elseif v_pos.x == 0 and v_pos.y == 0 then
+        dungeon_floor = spawn("castle_pressure_plate", level, x, y, facing, elevation)
         dungeon_floor.floortrigger:disable()
         dungeon_floor.animation:disable()    
-    elseif v_pos.x == 0 or v_pos.y == 0 then
-        dungeon_floor = spawn("forest_ground_01")
+    elseif v_pos.x == 0 then
+        dungeon_floor = spawn("dungeon_floor_dirt_meridian_01", level, x, y, facing, elevation)
+    elseif v_pos.y == 0 then
+        dungeon_floor = spawn("dungeon_floor_dirt_equator_01", level, x, y, facing, elevation)
     else
-        dungeon_floor = spawn("dungeon_floor_dirt_01")
+        dungeon_floor = spawn("dungeon_floor_dirt_01", level, x, y, facing, elevation)
     end
-    dungeon_floor:setPosition(x, y, facing, elevation, level)
     table.insert(section.walls, dungeon_floor.id)       
-    local dungeon_ceiling = spawn("dungeon_ceiling")
-    dungeon_ceiling:setPosition(x, y, facing, elevation, level)
+    local dungeon_ceiling = spawn("dungeon_ceiling", level, x, y, facing, elevation)
     table.insert(section.walls, dungeon_ceiling.id)       
 end
 
 function spawn_arch(x, y, facing, elevation, level, section)
-    local arch = spawn("forest_ruins_arch")
-    arch:setPosition(x, y, facing, elevation, level)
+    local arch = spawn("forest_ruins_arch",  level, x, y, facing, elevation)
     table.insert(section.walls, arch.id)
 end
 
 function spawn_floor_trigger(x, y, facing, elevation, level, section)
-    local floor_trigger = spawn("floor_trigger")
+    local floor_trigger = spawn("floor_trigger", level, x, y, facing, elevation)
     
     sections[floor_trigger.id] = section
     
-    floor_trigger:setPosition(x, y, facing, elevation, level)
     floor_trigger.floortrigger:setTriggeredByItem(false)
     floor_trigger.floortrigger:setTriggeredByMonster(false)
     floor_trigger.floortrigger:setTriggeredByDigging(false)
@@ -71,9 +73,8 @@ function spawn_floor_trigger(x, y, facing, elevation, level, section)
 end
 
 function spawn_projectile_catcher(x, y, facing, elevation, level, section)
-    local teleporter = spawn("invisible_teleporter")
+    local teleporter = spawn("invisible_teleporter", level, x, y, facing, elevation)
     
-    teleporter:setPosition(x, y, facing, elevation, level)
     teleporter.teleporter:setTeleportTarget(level, 31, 0, elevation)
     teleporter.teleporter:setSpin("north")
     teleporter.teleporter:setTriggeredByParty(false)
@@ -1172,9 +1173,15 @@ function stepTeleport(trigger_id)
    
    
     --local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, nil)
+    party_has_compass_equiped = global_scripts.script.party_is_weilding("compass")
+    
     virtual_pos_reference = global_scripts.script.copy_pos(start_spawn_pos)
+    virtual_pos_reference.y = virtual_pos_reference.y - 1
+    
     enter_section:spawn_func(start_spawn_pos, true, nil, spawn_special)
     --table.insert(dungeon_sections, new_section)
+
+    
     party:setPosition(party_pos.x, party_pos.y, party.facing, party_pos.elevation, party_pos.level)
     if special_door_id ~= "" then
         local special_door = findEntity(special_door_id)
@@ -1182,14 +1189,22 @@ function stepTeleport(trigger_id)
     end
 end
 
+function onTurtleDeath(turtle)
+    turtle = global_scripts.script.getGO(turtle)
+    
+    turtle_ids[turtle.id] = nil
+end
+
 function onActivateSectionFloorTrigger(trigger)    
     trigger = global_scripts.script.getGO(trigger)               
     
-    local chance = math.random(24)
+    local chance = math.random(2)
     if chance == 1 then
         local spawn_pos = global_scripts.script.findSpawnSpot(start_pos.x - 4, start_pos.x + 4, start_pos.y - 4, start_pos.y + 4, start_pos.elevation, start_pos.level, {["party"] = true, ["turtle"] = true})
-        local turtle = spawn("turtle")
-        turtle:setPosition(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level)
+        spawnBlast(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level, false)
+        local turtle = spawn("turtle", spawn_pos.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
+        turtle_ids[turtle.id] = true
+        turtle.monster:addConnector("onDie", "tricksters_domain_script_entity", "onTurtleDeath")
     elseif chance <= 12 then
         local facing = modulo_facing(party.facing + math.random(3))
         local sound_pos = global_scripts.script.copy_pos(party)
@@ -1254,10 +1269,13 @@ function onEnterDungeon(trigger)
     start_pos.level = trigger.level
     virtual_pos = {x=0, y=0, facing=0, elevation=0, level=trigger.level}
     virtual_pos_reference = global_scripts.script.copy_pos(start_pos)
+    virtual_pos_reference.y = virtual_pos_reference.y - 1
     null_pos.level = trigger.level
     
     local start_spawn_pos = global_scripts.script.copy_pos(start_pos)
-                                        
+                
+    party_has_compass_equiped = global_scripts.script.party_is_weilding("compass")
+    
     spawn_random_section("empty", start_spawn_pos, {"empty"}, true, nil, "")
 end
 

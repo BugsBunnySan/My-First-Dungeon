@@ -8,6 +8,7 @@ function initDungeon()
     initBeach()
     initBeginningDungeon()
     initFieldOfHerbs()
+    initLittleFishingVillage()
     initTrialsRobin()
     initTrickstersDomain()
     initTrickstersLocations()
@@ -15,11 +16,11 @@ function initDungeon()
     initIdioma()
     initHallOfHeroes()
     initMerchantsHQ()
-    initRoyalArchives()
+    initRoyalArchives()    
 end
 
 function initGlobals()
-    GameMode.setTimeOfDay(1.5)
+    GameMode.setTimeOfDay(0)
     --global_scripts.script.last_tick = -1
 end
 
@@ -134,6 +135,10 @@ end
 
 function initFieldOfHerbs()
     field_of_herbs_script_entity.script.init()
+end
+
+function initLittleFishingVillage()
+    little_fishing_village_script_entity.script.init()
 end
 
 function initTrialsRobin()

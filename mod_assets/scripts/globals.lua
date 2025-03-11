@@ -195,6 +195,20 @@ function party_take_damage(champions, amount, damage_type)
     end
 end
 
+function party_is_weilding(item_class)
+    for i = 1,4 do
+        local champion = party.party:getChampion(i)
+        if champion ~= nil then
+            local worn_item_weapon = champion:getItem(ItemSlot.Weapon)            
+            local worn_item_offhand = champion:getItem(ItemSlot.OffHand)
+            if (worn_item_weapon ~= nil and worn_item_weapon.go.name == item_class) or (worn_item_offhand ~= nil and worn_item_offhand.go.name == item_class) then
+                return true
+            end
+        end
+    end
+    return false
+end
+
 function party_wears_item(champions, item_slot, item_class)    
     local wearing_champions = {count = 0}
     for _, i in ipairs(champions) do
