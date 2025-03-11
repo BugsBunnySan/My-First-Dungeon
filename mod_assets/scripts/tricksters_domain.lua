@@ -4,6 +4,9 @@
 start_pos = {x=10, y=17, facing=0, elevation=0}
 virtual_pos = {x=0, y=0, facing=9, elevation=0}
 null_pos = {x=0, y=0, facing=9, elevation=0}
+step_teleport_data = {party_teleport_pos = {x=0, y=0, facing=9, elevation=0},
+                      start_spawn_pos = {x=0, y=0, facing=9, elevation=0},
+                      spawn_special = ""}
 virtual_pos_reference = {}
 dungeon_sections = {}
 sections = {}
@@ -1097,92 +1100,17 @@ function stepTeleport(trigger_id)
     ---print("stepTeleport")
     ---print("coming from "..enter_section.section_type)
     
-    --global_scripts.script.print_pos(virtual_pos)    
-    virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
-    virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
-    virtual_pos.facing = trigger.facing      
-    --global_scripts.script.print_pos(virtual_pos)
-        
-    if enter_section.special_position ~= "" then
-        ---print("    from special place: "..enter_section.special_position)
-        --global_scripts.script.print_pos(virtual_pos)
-        local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
-        virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
-        virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
-        --global_scripts.script.print_pos(virtual_pos)
-    end
-    
-    local facing = enter_section.pos.facing 
 
-    start_pos.facing = facing
     
     cleanup_dungeon()    
     
-    if not facing_is_reversed(facing, party.facing) then -- if the party enters a section backwards, they'd see the section they came from change, this prevents that
-        enter_section.exit_types[1] = "empty"
-    end
-   
-   
-    local check_pos = global_scripts.script.copy_pos(virtual_pos)  
-    check_pos.facing = enter_section.pos.facing
-    enter_section:make_exits_func(check_pos, true)
-   
-    local start_spawn_pos = global_scripts.script.copy_pos(start_pos)    
-    local party_pos = global_scripts.script.copy_pos(start_pos)
-    local spawn_special = ""
-    local spawn_special_entry_exit_idx = nil
-    local exit_idx = -1                                       
-    --print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
-            
-    for name, pos in pairs(special_places) do
-        local script_entity = findEntity(special_script_entities[name])
-        local entry_marker = findEntity(pos.entry_id)
-        if script_entity.script.in_range(virtual_pos, special_places[name], enter_section) then
-            spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them                
-            start_spawn_pos, party_pos, exit_idx = script_entity.script.check_exits(enter_section, entry_marker, start_spawn_pos, party_pos)
-            if exit_idx ~= -1 then
-                enter_section.exit_types[exit_idx] = "nop"
-                enter_section.exits[exit_idx] = tricksters_domain_script_entity.script.makeNop()
-            end
-        end
-        for x, exit_section in ipairs(enter_section.exits) do
-            local exit_positions = exit_section:get_exit_positions_func(exit_section.pos)
-            for i = 2, #exit_positions do
-                exit_exit_pos = exit_positions[i]
-                if script_entity.script.in_range(exit_exit_pos, special_places[name], nil) then
-                    spawn_special_entry_exit_idx = {x, i, name}
-                end
-            end
-        end       
-    end
-  
-    enter_section:make_exits_func(start_spawn_pos, true)
     
-    if spawn_special_entry_exit_idx ~= nil then
-        --print("exit "..tostring(spawn_special_entry_exit_idx[1]).." should spawn a special places special entry entities at its exit "..tostring(spawn_special_entry_exit_idx[2]))
-        local x = spawn_special_entry_exit_idx[1]
-        local i = spawn_special_entry_exit_idx[2]
-        local special_name = spawn_special_entry_exit_idx[3]
-        local torch_pos = enter_section.exits[x]:get_exit_positions_func(enter_section.exits[x].pos)[i]
-        local script_entity = findEntity(special_script_entities[special_name])
-        local special_light = script_entity.script.make_special_entry(torch_pos)
-        if special_light ~= nil then
-            table.insert(enter_section.walls, special_light.id)     
-        end
-    end
-   
-   
-    --local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, nil)
-    party_has_compass_equiped = global_scripts.script.party_is_weilding("compass")
     
-    virtual_pos_reference = global_scripts.script.copy_pos(start_spawn_pos)
-    virtual_pos_reference.y = virtual_pos_reference.y - 1
-    
-    enter_section:spawn_func(start_spawn_pos, true, nil, spawn_special)
+    enter_section:spawn_func(step_teleport_data.start_spawn_pos, true, nil, step_teleport_data.spawn_special)
     --table.insert(dungeon_sections, new_section)
 
     
-    party:setPosition(party_pos.x, party_pos.y, party.facing, party_pos.elevation, party_pos.level)
+    party:setPosition(step_teleport_data.party_teleport_pos.x, step_teleport_data.party_teleport_pos.y, party.facing, step_teleport_data.party_teleport_pos.elevation, step_teleport_data.party_teleport_pos.level)
     if special_door_id ~= "" then
         local special_door = findEntity(special_door_id)
         special_door.door:open()
@@ -1196,7 +1124,9 @@ function onTurtleDeath(turtle)
 end
 
 function onActivateSectionFloorTrigger(trigger)    
-    trigger = global_scripts.script.getGO(trigger)               
+    trigger = global_scripts.script.getGO(trigger)          
+    
+    local enter_section = sections[trigger.id]               
     
     local chance = math.random(2)
     if chance == 1 then
@@ -1222,6 +1152,83 @@ function onActivateSectionFloorTrigger(trigger)
     delayedCall("tricksters_domain_script_entity", .19, "stepTeleport", trigger.id) -- 0.19 seconds is exactly the right amount of time to let the step animation finish before moving the party
     -- it is also a lot of time to already prepare the landing place, if it takes longer than 0.19 seconds, that means we're at ~5 frames per second, some thinngs are going
     -- to look weird if that's the case, maybe put a safeguard in anyhow?
+    --global_scripts.script.print_pos(virtual_pos)    
+    virtual_pos.x = virtual_pos.x + (trigger.x - start_pos.x)
+    virtual_pos.y = virtual_pos.y + (trigger.y - start_pos.y)
+    virtual_pos.facing = trigger.facing      
+    --global_scripts.script.print_pos(virtual_pos)
+        
+    if enter_section.special_position ~= "" then
+        ---print("    from special place: "..enter_section.special_position)
+        --global_scripts.script.print_pos(virtual_pos)
+        local entry_marker = findEntity(special_places[enter_section.special_position].entry_id)
+        virtual_pos.x = virtual_pos.x + (start_pos.x - special_places[enter_section.special_position].spawn_pos.x)
+        virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
+        --global_scripts.script.print_pos(virtual_pos)
+    end
+    
+    local facing = enter_section.pos.facing 
+
+    start_pos.facing = facing
+    
+    if not facing_is_reversed(facing, party.facing) then -- if the party enters a section backwards, they'd see the section they came from change, this prevents that
+        enter_section.exit_types[1] = "empty"
+    end
+   
+    local check_pos = global_scripts.script.copy_pos(virtual_pos)  
+    check_pos.facing = enter_section.pos.facing
+    enter_section:make_exits_func(check_pos, true)
+   
+    step_teleport_data.start_spawn_pos = global_scripts.script.copy_pos(start_pos)    
+    step_teleport_data.party_teleport_pos = global_scripts.script.copy_pos(start_pos)
+    step_teleport_data.spawn_special = ""
+    local spawn_special_entry_exit_idx = nil
+    local exit_idx = -1                                       
+    --print(tostring(virtual_pos.x).." "..tostring(virtual_pos.y))
+            
+    for name, pos in pairs(special_places) do
+        local script_entity = findEntity(special_script_entities[name])
+        local entry_marker = findEntity(pos.entry_id)
+        if script_entity.script.in_range(virtual_pos, special_places[name], enter_section) then
+            step_teleport_data.spawn_special = name    -- also sections that don't exit to the special places need to remember they were in that area when we come back from them                
+            step_teleport_data.start_spawn_pos, step_teleport_data.party_teleport_pos, exit_idx = script_entity.script.check_exits(enter_section, entry_marker, step_teleport_data.start_spawn_pos, step_teleport_data.party_teleport_pos)
+            if exit_idx ~= -1 then
+                enter_section.exit_types[exit_idx] = "nop"
+                enter_section.exits[exit_idx] = tricksters_domain_script_entity.script.makeNop()
+            end
+        end
+        for x, exit_section in ipairs(enter_section.exits) do
+            local exit_positions = exit_section:get_exit_positions_func(exit_section.pos)
+            for i = 2, #exit_positions do
+                exit_exit_pos = exit_positions[i]
+                if script_entity.script.in_range(exit_exit_pos, special_places[name], nil) then
+                    spawn_special_entry_exit_idx = {x, i, name}
+                end
+            end
+        end       
+    end
+  
+    enter_section:make_exits_func(step_teleport_data.start_spawn_pos, true)
+    
+    if spawn_special_entry_exit_idx ~= nil then
+        --print("exit "..tostring(spawn_special_entry_exit_idx[1]).." should spawn a special places special entry entities at its exit "..tostring(spawn_special_entry_exit_idx[2]))
+        local x = spawn_special_entry_exit_idx[1]
+        local i = spawn_special_entry_exit_idx[2]
+        local special_name = spawn_special_entry_exit_idx[3]
+        local torch_pos = enter_section.exits[x]:get_exit_positions_func(enter_section.exits[x].pos)[i]
+        local script_entity = findEntity(special_script_entities[special_name])
+        local special_light = script_entity.script.make_special_entry(torch_pos)
+        if special_light ~= nil then
+            table.insert(enter_section.walls, special_light.id)     
+        end
+    end
+   
+   
+    --local new_section = spawn_functions[enter_section.section_type](enter_section.section_type, start_spawn_pos, exit_types, enter_section.arch_facing, true, nil)
+    party_has_compass_equiped = global_scripts.script.party_is_weilding("compass")
+    
+    virtual_pos_reference = global_scripts.script.copy_pos(step_teleport_data.start_spawn_pos)
+    virtual_pos_reference.y = virtual_pos_reference.y - 1
 end
 
 onWakeUpHookId = nil
@@ -1271,12 +1278,13 @@ function onEnterDungeon(trigger)
     virtual_pos_reference = global_scripts.script.copy_pos(start_pos)
     virtual_pos_reference.y = virtual_pos_reference.y - 1
     null_pos.level = trigger.level
-    
-    local start_spawn_pos = global_scripts.script.copy_pos(start_pos)
+    step_teleport_data.party_teleport_pos.level = trigger.level
+        
+    step_teleport_data.start_spawn_pos = global_scripts.script.copy_pos(start_pos)
                 
     party_has_compass_equiped = global_scripts.script.party_is_weilding("compass")
     
-    spawn_random_section("empty", start_spawn_pos, {"empty"}, true, nil, "")
+    spawn_random_section("empty", step_teleport_data.start_spawn_pos, {"empty"}, true, nil, "")
 end
 
 function init()    
