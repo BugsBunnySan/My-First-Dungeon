@@ -40,6 +40,19 @@ function liteUpPushblockFloorAnimation(trigger)
     end
 end
 
+function ladderFloorTrigger(trigger)
+    print("triggered")
+    party:setPosition(spawn_test.x, spawn_test.y, spawn_test.facing, spawn_test.elevation, spawn_test.level)
+    party.party:move(party.facing)
+    --local w_pos = spawn_test:getWorldPosition()
+    --party:setWorldPosition(w_pos)
+    --party:setWorldPositionY(w_pos.y)
+end
+
+function init()
+    --spawn_test:spawn("forest_ground_01"):destroyDelayed()
+   --spawn("mine_pit", spawn_test.levet, spawn_test.x, spawn_test.y, spawn_test.facing, spawn_test.elevation)    
+end
 
 morning = 0
 noon = 0.5

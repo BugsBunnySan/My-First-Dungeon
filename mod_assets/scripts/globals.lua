@@ -119,7 +119,7 @@ function clearRubble(pedestal, item)
         rubble:destroyDelayed()
     end
     if item ~= nil then
-        spawn(item.go.name, item.go.level, item.go.x, item.go.y, item.go.facing, item.go.elevation)
+        spawn(item.go.name, item.go.level, item.go.x, item.go.y, party.facing, item.go.elevation)
         item.go:destroyDelayed()        
         for _, kin_n in ipairs(rubble_pedestals[pedestal.id]["kin"]) do            
             local kin = findEntity(kin_n)            

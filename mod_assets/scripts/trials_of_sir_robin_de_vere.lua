@@ -581,6 +581,7 @@ end
 
 function on_finish_robin_castle_countdown(time_delta, animation)
     boss_fight_robin_castle.bossfight:deactivate()
+    global_scripts.script.faceObjext(pushblock_robin, 0)
     liteUpPushblockFloorAnimation(pushblock_trigger_robin_castle.floortrigger)
 end
                                
@@ -744,7 +745,6 @@ end
 
 function robinAtTheCastle(trigger)
     local monster = findEntity("robin_castle_ogre").monster
-    boss_fight_robin_castle.bossfight:addMonster(monster)    
     boss_fight_robin_castle.bossfight:activate()    
     local countdown_animation = {func=robin_castle_countdown, on_finish=on_finish_robin_castle_countdown, step=.1, duration=250000, elapsed=0, last_called=-1, starting_health=5000, health_tick=10, monster_id="robin_castle_ogre", health_tick_stages = {4500, 4000, 3500, 3000, 2500, 2000, 1500, 1000, 500}}
     global_scripts.script.add_animation(boss_fight_robin_castle.level, countdown_animation)
@@ -867,6 +867,9 @@ function start_journey(state_data)
 end
 
 rat_spawn_location_ids = {"spawn_robin_rats_01", "spawn_robin_rats_02", "spawn_robin_rats_03"}
+rat_spawn_dig_hole_ids = {floor_trigger_robin_rat_tunnels_01 = "robin_rat_hole_01",
+                          floor_trigger_robin_rat_tunnels_02 = "robin_rat_hole_02",
+                          floor_trigger_robin_rat_tunnels_03 = "robin_rat_hole_03"}
 rat_spawn_floor_trigger_ids = {"floor_trigger_robin_rats_01", "floor_trigger_robin_rats_02", "floor_trigger_robin_rats_03"}
 rat_spawn_connections = {floor_trigger_robin_rats_01 = "spawn_robin_rats_01",
                          floor_trigger_robin_rats_02 = "spawn_robin_rats_02",
@@ -877,49 +880,82 @@ rat_spawn_connections = {floor_trigger_robin_rats_01 = "spawn_robin_rats_01",
                          spawn_robin_rats_02 = "robin_rat_hole_02",
                          spawn_robin_rats_03 = "robin_rat_hole_03"}
 
+function ratInvasionRemoved(counter)
+    hudPrint("The rat invasion has stopped")
+    rat_spawn_connections.animation.duration = 0
+    rat_invasion_boss_fight.bossfight:deactivate()
+    rat_tunnels_boss_fight.bossfight:deactivate()
+end
+
 function spawn_rat_swarm(animation)
     local spawn_pos_id = rat_spawn_location_ids[math.random(3)]
     local spawn_pos = findEntity(spawn_pos_id)
-    if spawn_pos ~= nil then
-        spawn_pos:spawn("rat_swarm")
+    if spawn_pos.model:isEnabled() then
+        local rat_swarm = spawn_pos:spawn("rat_swarm")
+        rat_invasion_boss_fight.bossfight:addMonster(rat_swarm.monster)
+        --rat_invasion_boss_fight.bossfight:recomputeTotal()
+        
+        rat_tunnels_boss_fight.bossfight:addMonster(rat_swarm.monster)
+        --rat_tunnels_boss_fight.bossfight:recomputeTotal()
+        
+        rat_invasion_boss_fight_counter.counter:increment()
+        rat_swarm.monster:addConnector("onDie", "triels_robin_script_entitiy", "onDieRats")
     end
 end
 
-function destroyRatNest(trigger)
+function onDieRats(rats)
+    rats = global_scripts.script.getGO(rats)
+    rat_invasion_boss_fight_counter.counter:decrement()    
+end
+
+function enterRatNest(trigger)
     trigger = global_scripts.script.getGO(trigger)
-    
+      
     local rat_spawn_pos    = findEntity(rat_spawn_connections[trigger.id])  
+    
+    local trapdoor_pit = rat_spawn_dig_hole_ids[trigger.id]:spawn("mine_pit_trapdoor_diggable")
+    --local ladder = rat_spawn_dig_hole_ids[trigger.id]:spawn("ladder")
+    --ladder:setPosition(ladder.x, ladder.y, ladder.facing, ladder.elevation-1, ladder.level)
+    rat_spawn_dig_hole_ids[trigger.id].model:disable()
+    
     --print(rat_spawn_connections[rat_spawn_pos.id])  
     local teleport_pos = findEntity(rat_spawn_connections[rat_spawn_pos.id])
     
     party:setPosition(teleport_pos.x, teleport_pos.y, teleport_pos.facing, teleport_pos.elevation, teleport_pos.level)
     --spawn_pos:destroyDelayed()
-    --trigger:destroyDelayed()
-    
-    rat_spawn_connections.count = rat_spawn_connections.count - 1
-    
-    if rat_spawn_connections.count == 0 then
-        rat_spawn_connections.animation.duration = 0
-    end
+    --trigger:destroyDelayed()   
 end
 
 function start_spawn_rats()
+    global_scripts.script.playSoundAtObject("rat_swarm_attack", party)
+    for _, rats in ipairs({ratling1_1, ratling2_1, ratling3_1, rat_swarm_5, rat_swarm_6, rat_swarm_7, rat_swarm_8, rat_swarm_9, rat_swarm_10, rat_swarm_11, rat_swarm_12, rat_swarm_13}) do
+        rat_invasion_boss_fight.bossfight:addMonster(rats.monster)
+        rat_tunnels_boss_fight.bossfight:addMonster(rats.monster)
+    end
+    
+    
     for i = 1,3 do
-        local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, {"dig_hole"})
-        spawn("dig_hole", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, rat_spawn_location_ids[i]) -- beach_sandpile
+        local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, {"dig_hole"})        
         local floor_trigger = spawn("floor_trigger", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, rat_spawn_floor_trigger_ids[i])
+        
         floor_trigger.floortrigger:setTriggeredByDigging(true)
         floor_trigger.floortrigger:setTriggeredByItem(false)
         floor_trigger.floortrigger:setTriggeredByMonster(false)
         floor_trigger.floortrigger:setTriggeredByParty(false)
         floor_trigger.floortrigger:setTriggeredByPushableBlock(false)
-        floor_trigger.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "destroyRatNest")
+        floor_trigger.floortrigger:addConnector("onActivate", "triels_robin_script_entitiy", "enterRatNest")
+        
+        rat_spawn_dig_hole_ids[floor_trigger.id] = spawn("dig_hole", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, rat_spawn_location_ids[i]) -- beach_sandpile
     end
-    rat_spawn_connections.animation = {func=spawn_rat_swarm, step=12, duration=999999}
-    --global_scripts.script.add_animation(pushblock_robin.level, rat_spawn_connections.animation)
-    --spawn_rat_swarm(animation)
-    --spawn_rat_swarm(animation)
-    --spawn_rat_swarm(animation)
+    
+    rat_spawn_connections.animation = {func=spawn_rat_swarm, step=12, duration=-1}
+    global_scripts.script.add_animation(pushblock_robin.level, rat_spawn_connections.animation)
+    spawn_rat_swarm(animation)
+    spawn_rat_swarm(animation)
+    spawn_rat_swarm(animation)
+    
+    rat_invasion_boss_fight.bossfight:activate()
+    rat_tunnels_boss_fight.bossfight:activate()
 end
 
 function rats_defeated(state_data)
@@ -941,6 +977,7 @@ function count_farming(state_data)
 end
 
 function spawn_bandits(state_data)
+    global_scripts.script.playSoundAtObject("ogre_rush_begin", party)
     local spiked_club = spawn("spiked_club")
     local ogre = robin_bandit_spawner:spawn("forest_ogre")
     ogre.monster:addItem(spiked_club.item)

@@ -19,9 +19,11 @@ function delete_platform(time_delta, animation)
     platform:destroyDelayed()
 end
 
+boss_fight_force_field_id = nil
+
 function onEndBossFight()
     por_boss_fight.bossfight:deactivate()   
-    pedestal_of_roses_door.door:open()
+    findEntity(boss_fight_force_field_id):destroyDelayed()
 end
 
 function onRemoveItemPedestalOfRoses(pedestal, item)
@@ -44,7 +46,8 @@ function onRemoveItemPedestalOfRoses(pedestal, item)
             por_boss_fight.bossfight:addMonster(guardian.monster)            
         end
         por_boss_fight.bossfight:activate()
-        pedestal_of_roses_door.door:close()
+        local force_field = pedestal_of_roses_marker:spawn("force_field")
+        boss_fight_force_field_id = force_field.id
         for _, petrifying_slime_id in ipairs({"por_petrifying_slime_1", "por_petrifying_slime_2", "por_petrifying_slime_3", "por_petrifying_slime_4"}) do
             local petrifying_slime = findEntity(petrifying_slime_id)
             petrifying_slime.petrification_dustParticles:stop()

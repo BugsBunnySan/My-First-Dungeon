@@ -154,6 +154,7 @@ function initTrickstersLocations()
 end
 
 function initForest()
+    forest_script_entity.script.init()
     --forest_script_entity.script.time_of_day = GameMode.getTimeOfDay()
 end
 

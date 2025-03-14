@@ -1,3 +1,35 @@
+defineObject{
+	name = "mine_pit_trapdoor_diggable",
+	baseObject = "base_floor_decoration",	
+    replacesFloor = false,
+	killHeightmap = false,	
+    components = {
+		{
+			class = "Model",
+			model = "assets/models/env/mine_pit.fbx",
+			staticShadow = true,
+		},
+		{
+			class = "Model",
+			name = "trapDoorModel",
+			model = "assets/models/env/mine_pit_trapdoor.fbx",
+		},
+		{
+			class = "Animation",
+			model = "trapDoorModel",
+			animations = {
+				open = "assets/animations/env/mine_pit_trapdoor_open.fbx",
+				close = "assets/animations/env/mine_pit_trapdoor_close.fbx",
+			},
+		},
+		{
+			class = "Occluder",
+			model = "assets/models/env/dungeon_pit_occluder.fbx",
+		},
+	},
+}
+
+
 defineParticleSystem{
 	name = "wizard_lantern_red",
 	emitters = {
@@ -317,7 +349,7 @@ defineParticleSystem{
 			texture = "assets/textures/particles/teleporter.tga",
 			lifetime = {4, 8},
 			colorAnimation = false,
-			color0 = {0.5,0.5,0.5},
+			color0 = {1,1,1},
 			fadeIn = 0.1,
 			opacity = 1,
 			fadeOut = 0.1,
