@@ -105,8 +105,22 @@ rubble_pedestals = {["rubble_pedestal_2"] = {["rubble"] = {"rubble_2"},
                     ["rubble_pedestal_1"] = {["rubble"] = {"rubble_1"},
                                             ["kin"] = {"rubble_pedestal_2"},
                                             ["food"] = 250,
+                                            ["xp"] = 100},                                            
+                    ["merchants_hq_rubble_pedestal_1"] = {["rubble"] = {"merchants_hq_rubble_1"},
+                                            ["kin"] = {},
+                                            ["food"] = 250,
+                                            ["xp"] = 100},                                            
+                    ["merchants_hq_rubble_pedestal_2"] = {["rubble"] = {"merchants_hq_rubble_2", "merchants_hq_rubble_3"},
+                                            ["kin"] = {},
+                                            ["food"] = 250,
                                             ["xp"] = 100}
                    }
+
+function resetRubblePedestal(pedestal_id)
+    local pedestal = findEntity(pedestal_id)
+    pedestal.clickable:enable()
+    pedestal.surface:enable()
+end
 
 function clearRubble(pedestal, item)
     if item ~= nil and item.go.name ~= "pickaxe" then
@@ -128,7 +142,9 @@ function clearRubble(pedestal, item)
     end
     party_consume_food({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["food"])
     party_gain_xp({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["xp"])    
-    pedestal:destroyDelayed()
+    --pedestal:destroyDelayed()
+    pedestal.clickable:disable()
+    pedestal.surface:disable()
 end
 
 -- Fields Of Herbs

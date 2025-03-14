@@ -735,6 +735,7 @@ newMap{
 	ambientTrack = "dungeon",
 	tiles = {
 		"beach_ground_water",
+		"castle_wall",
 		"dungeon_floor",
 	}
 }
@@ -828,20 +829,20 @@ loadLayer("tiles", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	2,3,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 })
 
 spawn("timer",0,30,2,0,"merchants_timer")
@@ -875,6 +876,70 @@ teleporter_24.teleporter:setTriggeredByMonster(true)
 teleporter_24.teleporter:setTriggeredByItem(true)
 teleporter_24.teleporter:setTriggeredBySpell(true)
 spawn("beach_ocean",15,18,2,1,"beach_ocean_2")
+spawn("rubble_pedestal",4,25,3,1,"merchants_hq_rubble_pedestal_1")
+merchants_hq_rubble_pedestal_1.model:disable()
+merchants_hq_rubble_pedestal_1.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
+merchants_hq_rubble_pedestal_1.door:disable()
+merchants_hq_rubble_pedestal_1.itemconstrainbox:disable()
+merchants_hq_rubble_pedestal_1.projectilecollider:disable()
+spawn("dungeon_cave_in",3,25,3,1,"merchants_hq_rubble_1")
+spawn("dungeon_alcove",4,23,0,1,"dungeon_alcove_2")
+dungeon_alcove_2.surface:addConnector("onInsertItem", "merchants_script_entity", "onReturnPickaxe")
+spawn("invisible_wall",3,25,3,1,"merchants_hq_rubble_spawn_location_1")
+merchants_hq_rubble_spawn_location_1.obstacle:disable()
+merchants_hq_rubble_spawn_location_1.projectilecollider:disable()
+spawn("starting_location",5,26,3,0,"starting_location_1")
+spawn("timer",0,18,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("dungeon_door_iron",5,25,3,1,"merchants_hq_rubble_door_1")
+spawn("dungeon_door_iron",5,23,3,1,"merchants_hq_rubble_door_2")
+spawn("castle_wall_lever",5,26,3,1,"castle_wall_lever_4")
+castle_wall_lever_4.lever:setState("activated")
+castle_wall_lever_4.lever:setDisableSelf(false)
+castle_wall_lever_4.lever:addConnector("onActivate", "merchants_hq_rubble_door_1", "open")
+spawn("floor_trigger",4,25,2,1,"merchants_pickaxe_enter_floor_trigger")
+merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByParty(true)
+merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByMonster(false)
+merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByItem(false)
+merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByDigging(false)
+merchants_pickaxe_enter_floor_trigger.floortrigger:setDisableSelf(false)
+merchants_pickaxe_enter_floor_trigger.floortrigger:addConnector("onActivate", "merchants_script_entity", "onEnterMiningTurotial")
+spawn("floor_trigger",5,23,2,1,"merchants_pickaxe_exit_floor_trigger")
+merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByParty(true)
+merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByMonster(false)
+merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByItem(false)
+merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByDigging(false)
+merchants_pickaxe_exit_floor_trigger.floortrigger:setDisableSelf(false)
+merchants_pickaxe_exit_floor_trigger.floortrigger:addConnector("onActivate", "merchants_script_entity", "onExitMiningTutorial")
+merchants_pickaxe_exit_floor_trigger.floortrigger:disable()
+spawn("rubble_pedestal",2,23,1,1,"merchants_hq_rubble_pedestal_2")
+merchants_hq_rubble_pedestal_2.model:disable()
+merchants_hq_rubble_pedestal_2.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
+merchants_hq_rubble_pedestal_2.door:disable()
+merchants_hq_rubble_pedestal_2.itemconstrainbox:disable()
+merchants_hq_rubble_pedestal_2.projectilecollider:disable()
+spawn("dungeon_cave_in",3,23,1,1,"merchants_hq_rubble_2")
+spawn("invisible_wall",3,23,1,1,"merchants_hq_rubble_spawn_location_2")
+merchants_hq_rubble_spawn_location_2.obstacle:disable()
+merchants_hq_rubble_spawn_location_2.projectilecollider:disable()
+spawn("dungeon_alcove",4,25,2,1,"merchants_hq_pickaxe_dispenser")
+spawn("pickaxe",4,25,2,1,"pickaxe_2")
+merchants_hq_pickaxe_dispenser.surface:addItem(pickaxe_2.item)
+spawn("castle_ceiling_light",3,25,3,1,"castle_ceiling_light_2")
+spawn("castle_ceiling_light",1,24,1,1,"castle_ceiling_light_3")
+spawn("castle_ceiling_light",3,23,3,1,"castle_ceiling_light_4")
+spawn("dungeon_cave_in",4,23,3,1,"merchants_hq_rubble_3")
+spawn("invisible_wall",4,23,3,1,"merchants_hq_rubble_spawn_location_3")
+merchants_hq_rubble_spawn_location_3.obstacle:disable()
+merchants_hq_rubble_spawn_location_3.projectilecollider:disable()
+spawn("dungeon_wall_text",3,23,0,1,"dungeon_wall_text_4")
+dungeon_wall_text_4.walltext:setWallText("Please return the pickaxe \
+to its rightful owners so \
+you may leave.")
 
 --- level 6 ---
 
@@ -6568,13 +6633,6 @@ teleporter_25.teleporter:setTriggeredBySpell(true)
 spawn("ladder_metal",23,27,1,-1,"ladder_metal_13")
 spawn("castle_secret_door",25,31,3,0,"castle_secret_door_14")
 spawn("blooddrop_cap",17,29,1,0,"blooddrop_cap_1")
-spawn("starting_location",18,31,0,0,"starting_location_1")
-spawn("timer",0,18,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("mine_pit_trapdoor_diggable",10,20,1,0,"mine_pit_trapdoor_diggable_1")
 spawn("boss_fight",7,27,3,0,"rat_invasion_boss_fight")
 rat_invasion_boss_fight.bossfight:setBossName("Rat Invasion")
