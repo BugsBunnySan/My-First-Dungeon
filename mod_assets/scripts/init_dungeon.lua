@@ -20,7 +20,7 @@ function initDungeon()
 end
 
 function initGlobals()
-    GameMode.setTimeOfDay(0)
+    GameMode.setTimeOfDay(1.5)
     --global_scripts.script.last_tick = -1
 end
 

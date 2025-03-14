@@ -26,3 +26,17 @@ defineMaterial{
 	glossiness = 25,
 	depthBias = 0,
 }
+
+defineMaterial{
+	name = "medusa_stone",
+	diffuseMap = "mod_assets/textures/medusa_stone_dif.tga",
+	specularMap = "assets/textures/monsters/medusa_spec.tga",
+	normalMap = "assets/textures/monsters/medusa_normal.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 25,
+	depthBias = 0,
+}

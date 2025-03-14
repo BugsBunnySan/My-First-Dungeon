@@ -297,10 +297,67 @@ defineObject{
         {
 			class = "Model",
 			model = "assets/models/monsters/skeleton_knight_commander.fbx",
+            material = "medusa_stone",
 			storeSourceData = true, -- must be enabled for mesh particles to work
         }
     },
     minimalSaveState = false
+}
+
+defineParticleSystem{
+    name = "petrification_dust",
+    emitters = {		
+        {
+			emitterShape = "MeshShape",	
+			emissionRate = 50,
+			emissionTime = 0,		
+			maxParticles = 1500,
+			sprayAngle = {0,360},
+			velocity = {0.1, 0.1},
+			texture = "assets/textures/particles/teleporter.tga",
+			lifetime = {4, 8},
+			colorAnimation = false,
+			color0 = {0.5,0.5,0.5},
+			fadeIn = 0.1,
+			opacity = 1,
+			fadeOut = 0.1,
+			size = {0.05, 0.5},
+			gravity = {0,2,0},
+			airResistance = 2,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+            clampToGroundPlane = true
+		},
+    }
+}
+
+defineObject{
+	name = "petrifying_slime",
+	baseObject = "green_slime",
+    components = {  		
+        {
+			class = "Model",
+            model = "assets/models/monsters/green_slime.fbx",
+			storeSourceData = true,
+            material = "spirit_light", --"healing_crystal",            
+            dissolveStart = 1,
+            dissolveEnd = 1,
+		},  
+		{
+			class = "UggardianFlames",
+			particleSystem = "petrification_dust",
+            name = "petrification_dustParticles",
+			emitFromMaterial = "*",
+		},	
+		{
+			class = "Light",
+			parentNode = "light",
+			color = vec(0.5,0.5,0.5),
+			brightness = 5,
+			range = 3,
+			fillLight = true,
+		},
+    }
 }
 
 defineObject{

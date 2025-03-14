@@ -16,6 +16,7 @@ party_has_compass_equiped = false
 
 special_places = {["pedestal_of_roses"] = {x1=-5, y1=-12, x2=5, y2=-9, entry_id="pedestal_of_roses_marker", door_id="", spawn_pos={}},     --pedestal_of_roses_door"}}
                   ["test_location"] = {x1=-5, y1=8, x2=5, y2=12, entry_id="crystal_bridge_marker", door_id="", spawn_pos={}},
+                  ["map_room"] = {x1=-15, y1=10, x2=-10, y2=15, entry_id="map_room_marker", door_id="", spawn_pos={}},
                   ["tricksters_beach"] = {x1=-42, y1=-500, x2=-32, y2=500, entry_id="tricksters_beach_marker", door_id="", spawn_pos={}}}
 special_entities = {}
 special_door_id = ""
@@ -50,9 +51,9 @@ function spawn_floor(x, y, facing, elevation, level, section)
     else
         dungeon_floor = spawn("dungeon_floor_dirt_01", level, x, y, facing, elevation)
     end
-    table.insert(section.walls, dungeon_floor.id)       
+    table.insert(section.floors, dungeon_floor.id)       
     local dungeon_ceiling = spawn("dungeon_ceiling", level, x, y, facing, elevation)
-    table.insert(section.walls, dungeon_ceiling.id)       
+    table.insert(section.ceilings, dungeon_ceiling.id)       
 end
 
 function spawn_arch(x, y, facing, elevation, level, section)
@@ -86,6 +87,16 @@ function spawn_projectile_catcher(x, y, facing, elevation, level, section)
     teleporter.teleporter:setTriggeredBySpell(true)
     
     table.insert(section.floor_triggers, teleporter.id)    
+end
+
+function pos_equals(pos1, pos2)
+    local pos = {}
+    pos.x = pos1.x - pos2.x
+    pos.y = pos1.y - pos2.y 
+    pos.elevation = pos1.elevation - pos2.elevation 
+    pos.facing = pos1.facing - pos2.facing 
+    pos.level = pos1.level - pos2.level
+    return pos
 end
 
 function pos_straight_ahead(pos, steps)
@@ -226,6 +237,8 @@ function make_nothing(section_type, exit_types)
                      make_exits_func = make_nop_exits,
                      special_position = "",
                      walls = {},
+                     floors = {},
+                     ceilings = {},
                      floor_triggers = {},
                      arch_facings = {},
                      exit_types = {},
@@ -265,6 +278,8 @@ function make_straight(section_type, pos, exit_types, arch_facings, make_exits, 
                      make_exits_func = make_straight_exits,                     
                      special_position = "",
                      walls = {},
+                     floors = {},
+                     ceilings = {},
                      floor_triggers = {},
                      arch_facings = {"outward", "outward"},
                      exit_types = {"empty", "empty"},
@@ -375,6 +390,8 @@ function make_left_turn(section_type, pos, exit_types, arch_facings, make_exits,
                      make_exits_func = make_left_turn_exits,
                      special_position = "",
                      walls = {},
+                     floors = {},
+                     ceilings = {},
                      floor_triggers = {},
                      arch_facings = {"outward", "outward"},
                      exit_types = {"empty", "empty"},
@@ -489,6 +506,8 @@ function make_right_turn(section_type, pos, exit_types, arch_facings, make_exits
                      make_exits_func = make_right_turn_exits,
                      special_position = "",
                      walls = {},
+                     floors = {},
+                     ceilings = {},
                      floor_triggers = {},
                      arch_facings = {"outward", "outward"},
                      exit_types = {"empty", "empty"},
@@ -603,6 +622,8 @@ function make_T_junction(section_type, pos, exit_types, arch_facings, make_exits
                      make_exits_func = make_T_junction_exits,
                      special_position = "",
                      walls = {},
+                     floors = {},
+                     ceilings = {},
                      floor_triggers = {},
                      arch_facings = {"outward", "outward", "outward"},
                      exit_types = {"empty", "empty", "empty"},
@@ -844,6 +865,8 @@ function make_X_junction(section_type, pos, exit_types, arch_facings, make_exits
                      make_exits_func = make_X_junction_exits,
                      special_position = "",
                      walls = {},
+                     floors = {},
+                     ceilings = {},
                      floor_triggers = {},
                      arch_facings = {"outward", "outward", "outward", "outward"},
                      exit_types = {"empty", "empty", "empty", "empty"},
@@ -1057,6 +1080,7 @@ special_spawn_function = {pedestal_of_roses = spawn_pedestal_of_roses}
 
 special_script_entities = {pedestal_of_roses = "pedestal_of_roses_script_entity",
                            test_location = "test_location_script_entity",
+                           map_room = "map_room_script_entity",
                            tricksters_beach = "tricksters_beach_script_entity"}
 
 function cleanup_dungeon()
@@ -1068,8 +1092,18 @@ function cleanup_dungeon()
                 go.door:disable()
             end
             go:destroyDelayed()
+        end      
+        for _, go_id in ipairs(section.floors) do
+            go = findEntity(go_id)
+            go:destroyDelayed()
+        end
+        for _, go_id in ipairs(section.ceilings) do
+            go = findEntity(go_id)
+            go:destroyDelayed()
         end
         section.walls = {}
+        section.floors = {}
+        section.ceilings = {}
         for _, go_id in ipairs(section.floor_triggers) do
             go = findEntity(go_id)
             if go.floortrigger ~= nil then
@@ -1130,11 +1164,12 @@ function onActivateSectionFloorTrigger(trigger)
     
     local chance = math.random(2)
     if chance == 1 then
-        local spawn_pos = global_scripts.script.findSpawnSpot(start_pos.x - 4, start_pos.x + 4, start_pos.y - 4, start_pos.y + 4, start_pos.elevation, start_pos.level, {["party"] = true, ["turtle"] = true})
+        local spawn_pos = global_scripts.script.findSpawnSpot(start_pos.x - 4, start_pos.x + 4, start_pos.y - 4, start_pos.y + 4, start_pos.elevation, start_pos.level, {["party"] = true, ["turtle_spirit"] = true})
         spawnBlast(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level, false)
-        local turtle = spawn("turtle", spawn_pos.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
-        turtle_ids[turtle.id] = true
+        local turtle = spawn("turtle_spirit", spawn_pos.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
+        turtle_ids[turtle.id] = {}
         turtle.monster:addConnector("onDie", "tricksters_domain_script_entity", "onTurtleDeath")
+        turtle.brain:setAllAroundSight(true)
     elseif chance <= 12 then
         local facing = modulo_facing(party.facing + math.random(3))
         local sound_pos = global_scripts.script.copy_pos(party)
@@ -1166,7 +1201,7 @@ function onActivateSectionFloorTrigger(trigger)
         virtual_pos.y = virtual_pos.y + (start_pos.y - special_places[enter_section.special_position].spawn_pos.y)
         --global_scripts.script.print_pos(virtual_pos)
     end
-    
+    global_scripts.script.print_pos(virtual_pos)
     local facing = enter_section.pos.facing 
 
     start_pos.facing = facing
@@ -1229,6 +1264,12 @@ function onActivateSectionFloorTrigger(trigger)
     
     virtual_pos_reference = global_scripts.script.copy_pos(step_teleport_data.start_spawn_pos)
     virtual_pos_reference.y = virtual_pos_reference.y - 1
+    
+    for turtle_id, _ in pairs(turtle_ids) do
+        local turtle_spirit = findEntity(turtle_id)
+        turtle_ids[turtle_id] = global_scripts.script.copy_pos(turtle_spirit)        
+    end
+    
 end
 
 onWakeUpHookId = nil
@@ -1242,6 +1283,11 @@ function exitTheDungeon(data)
     party:setPosition(29, 27, 2, 0, start_pos.level)
     global_scripts.script.deregister_party_hook("onWakeUp", onWakeUpHookId)
     cleanup_dungeon()
+    for turtle_id, _ in pairs(turtle_ids) do
+        local turtle_spirit = findEntity(turtle_id)
+        turtle_spirit:destroyDelayed()
+    end
+    turtle_ids = {}
         
     delayedCall("tricksters_domain_script_entity", .25, "spawnBlast", party.x, party.y, party.facing, party.elevation, party.level, true)
     local animation = {func=nil, on_finish=openCruelMaze, step=3.1, duration=3, door_id=dungeon_door_iron_barred_1.id}    
@@ -1249,6 +1295,16 @@ function exitTheDungeon(data)
     
     floor_trigger_enter_tricksters_domain.floortrigger:enable()
 end
+
+function blobBlast(x, y, facing, elevation, level, teleportation)
+    if teleportation == true then
+        spawn("teleportation_effect", level, x, y, facing, elevation)
+    end
+    local spawn_blast = spawn("blob_blast", level, x, y, facing, elevation)    
+    local w_pos = spawn_blast:getWorldPosition()
+    w_pos = w_pos + vec(0, 0.5, 0)    
+    spawn_blast:setWorldPosition(w_pos)
+end 
 
 function spawnBlast(x, y, facing, elevation, level, teleportation)
     if teleportation == true then
@@ -1289,5 +1345,5 @@ end
 
 function init()    
     --tricksters_domain_sky.sky:setFogMode("dense")
-    --tricksters_domain_sky.sky:setFogRange({1,2})
+    --tricksters_domain_sky.sky:setFogRange({1,2} 
 end

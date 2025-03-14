@@ -7309,6 +7309,7 @@ castle_torch_holder_2.controller:setHasTorch(true)
 spawn("dungeon_wall_01",17,29,2,0,"dungeon_wall_01_131")
 spawn("dungeon_wall_01",18,29,2,0,"dungeon_wall_01_132")
 spawn("mine_floor_pit_light",29,24,2,0,"mine_floor_pit_light_5")
+mine_floor_pit_light_5.light:disable()
 spawn("dungeon_floor_dirt_01",29,29,2,0,"dungeon_floor_dirt_01_1")
 spawn("dungeon_ceiling",29,29,1,0,"dungeon_ceiling_8")
 spawn("invisible_teleporter",29,14,0,0,"invisible_teleporter_2")
@@ -7359,13 +7360,6 @@ of the entrance passage to \
 the pedestal of roses\
 \
 You guess it's about 20 leagues")
-spawn("starting_location",29,26,2,0,"starting_location_1")
-spawn("timer",0,18,1,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("cursed_compass",30,26,3,0,"cursed_compass_1")
 
 --- level 16 ---
@@ -7381,45 +7375,116 @@ newMap{
 		"dungeon_floor_tiles",
 		"dungeon_wall",
 		"forest_ground",
+		"forest_underwater",
 		"mine_floor_crystal",
 		"mine_wall_crystal",
 		"void",
 	}
 }
 
+loadLayer("floor_elevation", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,-1,-1,-1,-1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
+loadLayer("reflection", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+})
+
 loadLayer("tiles", {
-	3,3,3,3,3,3,3,3,3,3,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,2,2,2,1,1,1,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,2,1,2,1,1,1,2,1,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,2,2,2,2,2,2,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,1,1,2,4,4,4,2,1,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,1,1,2,4,4,4,2,1,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,1,1,2,2,2,2,2,1,1,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,2,2,2,1,1,1,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,2,1,2,1,1,1,2,1,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,2,2,2,1,1,1,2,2,2,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	3,3,3,3,3,1,3,3,3,3,3,7,7,7,7,7,7,7,7,7,7,7,7,7,6,7,1,7,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,5,6,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,5,5,5,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,6,6,6,6,6,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
-	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	3,3,3,3,3,3,3,3,3,3,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,2,2,2,1,1,1,2,2,2,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,2,1,2,1,1,1,2,1,2,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,2,2,2,2,2,2,2,2,2,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,1,1,2,4,4,4,2,1,1,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,1,1,2,4,4,4,2,1,1,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,1,1,2,2,2,2,2,1,1,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,2,2,2,1,1,1,2,2,2,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,2,1,2,1,1,1,2,1,2,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,2,2,2,1,1,1,2,2,2,3,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	3,3,3,3,3,1,3,3,3,3,3,8,8,8,8,8,8,8,8,8,8,8,8,8,7,8,1,8,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,7,6,7,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,7,8,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,7,5,5,5,5,5,7,7,8,8,8,8,8,8,7,6,6,6,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,7,5,5,5,5,5,5,7,7,8,8,8,8,8,7,7,7,7,7,8,8,8,
+	8,8,8,8,8,8,8,8,8,7,7,5,5,5,5,5,5,5,7,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,7,5,5,5,5,5,5,5,5,7,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,7,5,5,5,5,5,5,5,5,5,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,7,5,5,5,5,5,5,5,5,7,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,7,7,5,5,5,5,5,5,5,7,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,7,7,5,5,5,5,5,5,7,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,7,7,5,5,5,5,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
+	8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
 })
 
 spawn("script_entity",0,31,2,0,"tricksters_locations_script_entity")
@@ -7546,7 +7611,6 @@ spawn("dungeon_pillar",9,6,0,0,"dungeon_pillar_13")
 spawn("dungeon_pillar",2,4,0,0,"dungeon_pillar_14")
 spawn("dungeon_pillar",2,6,0,0,"dungeon_pillar_15")
 spawn("forest_ruins_dome",2,8,3,0,"forest_ruins_dome_1")
-spawn("forest_ruins_dome",8,8,3,0,"forest_ruins_dome_2")
 spawn("forest_ruins_dome",8,2,1,0,"forest_ruins_dome_6")
 spawn("forest_ruins_dome",2,2,3,0,"forest_ruins_dome_7")
 spawn("invisible_wall",8,8,3,0,"por_spawn_guardian_01")
@@ -7574,6 +7638,285 @@ tricksters_location_global_anim_timer.timer:setDisableSelf(false)
 tricksters_location_global_anim_timer.timer:setTriggerOnStart(false)
 tricksters_location_global_anim_timer.timer:setCurrentLevelOnly(true)
 tricksters_location_global_anim_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("invisible_wall",18,23,3,0,"map_room_marker")
+map_room_marker.obstacle:disable()
+map_room_marker.projectilecollider:disable()
+spawn("forest_day_sky",12,28,0,0,"map_room_forest_day_sky")
+map_room_forest_day_sky.model:disable()
+map_room_forest_day_sky.nightSky:disable()
+map_room_forest_day_sky.stars:disable()
+map_room_forest_day_sky.light:disable()
+map_room_forest_day_sky.ambient:disable()
+map_room_forest_day_sky.sky:disable()
+map_room_forest_day_sky.lensflare:disable()
+spawn("script_entity",14,28,0,0,"map_room_script_entity")
+map_room_script_entity.script:loadFile("mod_assets/scripts/map_room.lua")
+spawn("tomb_wall_painting_1",13,24,3,0,"tomb_wall_painting_1_1")
+spawn("tomb_wall_painting_1",13,23,3,0,"tomb_wall_painting_1_2")
+spawn("tomb_wall_painting_1",13,22,3,0,"tomb_wall_painting_1_3")
+spawn("pedestal",13,24,3,0,"pedestal_3")
+spawn("scroll",13,24,3,0,"nautica_chart_pedestal_of_roses")
+nautica_chart_pedestal_of_roses.scrollitem:setScrollText("")
+pedestal_3.surface:addItem(nautica_chart_pedestal_of_roses.item)
+spawn("pedestal",13,23,3,0,"pedestal_4")
+spawn("pedestal",13,22,3,0,"pedestal_12")
+spawn("script_entity",9,23,2,0,"map_room_charts_script_entity")
+map_room_charts_script_entity.script:setSource("nautica_chart_pedestal_of_roses.scrollitem:setScrollImage(\"mod_assets/textures/nautical map.pedestal_of_roses.dds\")")
+spawn("castle_pillar_light_red",13,25,3,0,"castle_pillar_light_red_5")
+spawn("castle_pillar_light_red",13,24,1,0,"castle_pillar_light_red_6")
+spawn("castle_pillar_light_red",13,23,0,0,"castle_pillar_light_red_7")
+spawn("castle_pillar_light_red",13,22,3,0,"castle_pillar_light_red_8")
+spawn("forest_ruins_pillar_03",13,22,2,0,"forest_ruins_pillar_03_1")
+spawn("forest_spruce_sapling_pillar",14,22,0,0,"forest_spruce_sapling_pillar_1")
+spawn("forest_ruins_pillar_03",13,23,2,0,"forest_ruins_pillar_03_2")
+spawn("forest_ruins_pillar_03",13,24,2,0,"forest_ruins_pillar_03_5")
+spawn("forest_ruins_pillar_03",13,25,2,0,"forest_ruins_pillar_03_6")
+spawn("forest_bridge",17,26,0,0,"forest_bridge_12")
+spawn("forest_bridge",17,25,0,0,"forest_bridge_13")
+spawn("forest_bridge",17,24,2,0,"forest_bridge_14")
+spawn("forest_bridge",17,23,1,0,"forest_bridge_15")
+spawn("forest_bridge",17,22,1,0,"forest_bridge_16")
+spawn("forest_bridge",17,21,3,0,"forest_bridge_17")
+spawn("forest_bridge",16,27,0,0,"forest_bridge_18")
+spawn("forest_bridge",16,26,0,0,"forest_bridge_19")
+spawn("forest_bridge",16,25,2,0,"forest_bridge_20")
+spawn("forest_bridge",16,24,1,0,"forest_bridge_21")
+spawn("forest_bridge",16,23,1,0,"forest_bridge_22")
+spawn("forest_bridge",16,22,3,0,"forest_bridge_23")
+spawn("forest_bridge",15,25,2,0,"forest_bridge_24")
+spawn("forest_bridge",15,24,1,0,"forest_bridge_25")
+spawn("forest_bridge",15,27,0,0,"forest_bridge_26")
+spawn("forest_bridge",15,23,1,0,"forest_bridge_27")
+spawn("forest_bridge",15,22,3,0,"forest_bridge_29")
+spawn("forest_bridge",14,27,0,0,"forest_bridge_30")
+spawn("forest_bridge",14,24,1,0,"forest_bridge_31")
+spawn("forest_bridge",14,26,0,0,"forest_bridge_32")
+spawn("forest_bridge",14,23,1,0,"forest_bridge_33")
+spawn("forest_bridge",14,22,3,0,"forest_bridge_34")
+spawn("forest_bridge",14,25,2,0,"forest_bridge_35")
+spawn("forest_bridge",13,25,1,0,"forest_bridge_37")
+spawn("forest_bridge",13,27,3,0,"forest_bridge_38")
+spawn("forest_bridge",13,26,3,0,"forest_bridge_41")
+spawn("forest_bridge",12,22,0,0,"forest_bridge_42")
+spawn("forest_bridge",12,21,2,0,"forest_bridge_43")
+spawn("forest_bridge",12,23,0,0,"forest_bridge_44")
+spawn("forest_bridge",12,24,1,0,"forest_bridge_45")
+spawn("forest_bridge",12,25,3,0,"forest_bridge_46")
+spawn("forest_bridge",12,26,3,0,"forest_bridge_47")
+spawn("forest_bridge",11,21,0,0,"forest_bridge_48")
+spawn("forest_bridge",11,25,3,0,"forest_bridge_49")
+spawn("forest_bridge",11,24,3,0,"forest_bridge_50")
+spawn("forest_bridge",11,20,2,0,"forest_bridge_51")
+spawn("forest_bridge",11,23,1,0,"forest_bridge_52")
+spawn("forest_bridge",11,22,0,0,"forest_bridge_53")
+spawn("forest_bridge",10,24,3,0,"forest_bridge_54")
+spawn("forest_bridge",10,23,1,0,"forest_bridge_55")
+spawn("forest_bridge",10,22,0,0,"forest_bridge_56")
+spawn("forest_bridge",12,20,2,0,"forest_bridge_57")
+spawn("forest_bridge",16,21,3,0,"forest_bridge_58")
+spawn("forest_bridge",15,21,3,0,"forest_bridge_59")
+spawn("forest_bridge",14,21,3,0,"forest_bridge_60")
+spawn("forest_bridge",13,21,2,0,"forest_bridge_61")
+spawn("forest_bridge",16,20,3,0,"forest_bridge_62")
+spawn("forest_bridge",15,20,3,0,"forest_bridge_63")
+spawn("forest_bridge",14,20,3,0,"forest_bridge_64")
+spawn("forest_bridge",13,20,2,0,"forest_bridge_65")
+spawn("forest_bridge",11,19,2,0,"forest_bridge_66")
+spawn("forest_bridge",12,19,2,0,"forest_bridge_67")
+spawn("forest_bridge",18,23,3,0,"forest_bridge_68")
+spawn("forest_bridge",15,19,3,0,"forest_bridge_69")
+spawn("forest_bridge",14,19,3,0,"forest_bridge_70")
+spawn("forest_bridge",13,19,2,0,"forest_bridge_71")
+spawn("ladder_metal",15,26,2,-1,"ladder_metal_14")
+spawn("mine_ceiling_01",13,24,2,0,"mine_ceiling_01_1")
+spawn("mine_ceiling_lantern",13,23,2,0,"mine_ceiling_lantern_1")
+spawn("mine_ceiling_02",13,22,2,0,"mine_ceiling_02_1")
+spawn("mine_ceiling_lantern",13,24,1,0,"mine_ceiling_lantern_2")
+spawn("mine_ceiling_lantern",13,22,2,0,"mine_ceiling_lantern_3")
+spawn("mine_ceiling_03",13,23,1,0,"mine_ceiling_03_1")
+spawn("mine_ceiling_03",10,24,3,0,"mine_ceiling_03_2")
+spawn("mine_ceiling_02",10,23,2,0,"mine_ceiling_02_2")
+spawn("mine_ceiling_01",10,22,2,0,"mine_ceiling_01_2")
+spawn("mine_ceiling_01",11,25,3,0,"mine_ceiling_01_3")
+spawn("mine_ceiling_01",11,20,2,0,"mine_ceiling_01_4")
+spawn("mine_ceiling_03",11,21,2,0,"mine_ceiling_03_3")
+spawn("mine_ceiling_02",11,19,2,0,"mine_ceiling_02_3")
+spawn("mine_ceiling_02",11,22,2,0,"mine_ceiling_02_4")
+spawn("mine_ceiling_01",11,23,3,0,"mine_ceiling_01_5")
+spawn("mine_ceiling_01",11,24,2,0,"mine_ceiling_01_6")
+spawn("mine_ceiling_01",12,19,0,0,"mine_ceiling_01_7")
+spawn("mine_ceiling_01",12,21,3,0,"mine_ceiling_01_8")
+spawn("mine_ceiling_01",11,24,2,0,"mine_ceiling_01_9")
+spawn("mine_ceiling_01",12,25,3,0,"mine_ceiling_01_10")
+spawn("mine_ceiling_02",12,20,3,0,"mine_ceiling_02_5")
+spawn("mine_ceiling_02",12,24,0,0,"mine_ceiling_02_6")
+spawn("mine_ceiling_02",12,22,3,0,"mine_ceiling_02_7")
+spawn("mine_ceiling_03",12,23,3,0,"mine_ceiling_03_4")
+spawn("mine_ceiling_03",12,26,3,0,"mine_ceiling_03_5")
+spawn("mine_ceiling_01",13,19,0,0,"mine_ceiling_01_11")
+spawn("mine_ceiling_01",13,24,1,0,"mine_ceiling_01_12")
+spawn("mine_ceiling_01",13,26,0,0,"mine_ceiling_01_13")
+spawn("mine_ceiling_02",13,25,2,0,"mine_ceiling_02_8")
+spawn("mine_ceiling_02",13,21,2,0,"mine_ceiling_02_9")
+spawn("mine_ceiling_03",13,20,2,0,"mine_ceiling_03_6")
+spawn("mine_ceiling_03",14,22,0,0,"mine_ceiling_03_7")
+spawn("mine_ceiling_03",14,20,0,0,"mine_ceiling_03_8")
+spawn("mine_ceiling_03",14,26,1,0,"mine_ceiling_03_9")
+spawn("mine_ceiling_02",14,24,2,0,"mine_ceiling_02_10")
+spawn("mine_ceiling_02",14,24,2,0,"mine_ceiling_02_11")
+spawn("mine_ceiling_02",14,21,3,0,"mine_ceiling_02_12")
+spawn("mine_ceiling_02",14,19,0,0,"mine_ceiling_02_13")
+spawn("mine_ceiling_01",14,23,1,0,"mine_ceiling_01_14")
+spawn("mine_ceiling_01",14,25,0,0,"mine_ceiling_01_15")
+spawn("mine_ceiling_02",13,27,1,0,"mine_ceiling_02_14")
+spawn("mine_ceiling_03",14,27,1,0,"mine_ceiling_03_10")
+spawn("mine_ceiling_03",15,19,3,0,"mine_ceiling_03_11")
+spawn("mine_ceiling_03",15,25,1,0,"mine_ceiling_03_12")
+spawn("mine_ceiling_03",15,24,3,0,"mine_ceiling_03_13")
+spawn("mine_ceiling_02",15,23,1,0,"mine_ceiling_02_15")
+spawn("mine_ceiling_02",15,21,3,0,"mine_ceiling_02_16")
+spawn("mine_ceiling_02",15,27,2,0,"mine_ceiling_02_17")
+spawn("mine_ceiling_01",15,25,2,0,"mine_ceiling_01_16")
+spawn("mine_ceiling_01",15,22,1,0,"mine_ceiling_01_17")
+spawn("mine_ceiling_01",15,26,0,0,"mine_ceiling_01_18")
+spawn("mine_ceiling_01",15,20,1,0,"mine_ceiling_01_19")
+spawn("mine_ceiling_02",16,20,1,0,"mine_ceiling_02_18")
+spawn("mine_ceiling_03",17,21,0,0,"mine_ceiling_03_14")
+spawn("mine_ceiling_03",16,27,1,0,"mine_ceiling_03_15")
+spawn("mine_ceiling_03",16,23,3,0,"mine_ceiling_03_16")
+spawn("mine_ceiling_03",17,25,2,0,"mine_ceiling_03_17")
+spawn("mine_ceiling_02",16,26,1,0,"mine_ceiling_02_19")
+spawn("mine_ceiling_02",17,26,0,0,"mine_ceiling_02_20")
+spawn("mine_ceiling_02",17,22,0,0,"mine_ceiling_02_21")
+spawn("mine_ceiling_02",16,21,2,0,"mine_ceiling_02_22")
+spawn("mine_ceiling_01",16,24,1,0,"mine_ceiling_01_20")
+spawn("mine_ceiling_01",16,22,2,0,"mine_ceiling_01_21")
+spawn("mine_ceiling_01",17,23,3,0,"mine_ceiling_01_22")
+spawn("mine_ceiling_01",17,24,2,0,"mine_ceiling_01_23")
+spawn("mine_ceiling_02",16,25,0,0,"mine_ceiling_02_23")
+spawn("dungeon_pillar",13,25,2,-1,"dungeon_pillar_24")
+spawn("dungeon_pillar",13,24,2,-1,"dungeon_pillar_25")
+spawn("dungeon_pillar",13,23,2,-1,"dungeon_pillar_26")
+spawn("dungeon_pillar",13,22,2,-1,"dungeon_pillar_27")
+spawn("tomb_wall_01",12,22,1,0,"tomb_wall_01_77")
+spawn("tomb_wall_01",12,23,1,0,"tomb_wall_01_78")
+spawn("tomb_wall_01",12,24,1,0,"tomb_wall_01_79")
+spawn("turtle_spirit",26,19,0,0,"turtle_spirit_1")
+spawn("timer",0,18,1,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",3,7,1,0,"starting_location_1")
+spawn("forest_ruins_dome",8,8,3,0,"forest_ruins_dome_2")
+spawn("petrifying_slime",8,8,3,-1,"por_petrifying_slime_1")
+por_petrifying_slime_1.gravity:disable()
+por_petrifying_slime_1.model:disable()
+por_petrifying_slime_1.animation:disable()
+por_petrifying_slime_1.monster:disable()
+por_petrifying_slime_1.brain:disable()
+por_petrifying_slime_1.move:disable()
+por_petrifying_slime_1.turn:disable()
+por_petrifying_slime_1.basicAttack:disable()
+por_petrifying_slime_1.light:disable()
+spawn("castle_wall_cloth",11,8,2,0,"castle_wall_cloth_22")
+spawn("castle_wall_cloth",11,8,1,0,"castle_wall_cloth_23")
+spawn("castle_wall_cloth",11,8,0,0,"castle_wall_cloth_24")
+spawn("beacon_furnace",8,8,1,0,"beacon_furnace_1")
+beacon_furnace_1.controller:setElement("fire")
+spawn("beacon_furnace_rune_earth",8,8,3,0,"beacon_furnace_rune_earth_1")
+spawn("castle_wall_cloth",0,8,0,0,"castle_wall_cloth_25")
+spawn("castle_wall_cloth",0,8,3,0,"castle_wall_cloth_26")
+spawn("castle_wall_cloth",0,8,2,0,"castle_wall_cloth_27")
+spawn("petrifying_slime",2,8,1,-1,"por_petrifying_slime_2")
+por_petrifying_slime_2.gravity:disable()
+por_petrifying_slime_2.model:disable()
+por_petrifying_slime_2.animation:disable()
+por_petrifying_slime_2.monster:disable()
+por_petrifying_slime_2.brain:disable()
+por_petrifying_slime_2.move:disable()
+por_petrifying_slime_2.turn:disable()
+por_petrifying_slime_2.basicAttack:disable()
+por_petrifying_slime_2.light:disable()
+spawn("beacon_furnace",2,8,1,0,"beacon_furnace_2")
+beacon_furnace_2.controller:setElement("fire")
+spawn("beacon_furnace_rune_earth",2,8,1,0,"beacon_furnace_rune_earth_2")
+spawn("petrifying_slime",2,2,1,-1,"por_petrifying_slime_3")
+por_petrifying_slime_3.gravity:disable()
+por_petrifying_slime_3.model:disable()
+por_petrifying_slime_3.animation:disable()
+por_petrifying_slime_3.monster:disable()
+por_petrifying_slime_3.brain:disable()
+por_petrifying_slime_3.move:disable()
+por_petrifying_slime_3.turn:disable()
+por_petrifying_slime_3.basicAttack:disable()
+por_petrifying_slime_3.light:disable()
+spawn("beacon_furnace",2,2,1,0,"beacon_furnace_3")
+beacon_furnace_3.controller:setElement("fire")
+spawn("beacon_furnace_rune_earth",2,2,1,0,"beacon_furnace_rune_earth_3")
+spawn("petrifying_slime",8,2,3,-1,"por_petrifying_slime_4")
+por_petrifying_slime_4.gravity:disable()
+por_petrifying_slime_4.model:disable()
+por_petrifying_slime_4.animation:disable()
+por_petrifying_slime_4.monster:disable()
+por_petrifying_slime_4.brain:disable()
+por_petrifying_slime_4.move:disable()
+por_petrifying_slime_4.turn:disable()
+por_petrifying_slime_4.basicAttack:disable()
+por_petrifying_slime_4.light:disable()
+spawn("beacon_furnace",8,2,3,0,"beacon_furnace_4")
+beacon_furnace_4.controller:setElement("fire")
+spawn("beacon_furnace_rune_earth",8,2,3,0,"beacon_furnace_rune_earth_4")
+spawn("castle_wall_cloth",0,2,0,0,"castle_wall_cloth_28")
+spawn("castle_wall_cloth",0,2,3,0,"castle_wall_cloth_29")
+spawn("castle_wall_cloth",0,2,2,0,"castle_wall_cloth_30")
+spawn("castle_wall_cloth",11,2,2,0,"castle_wall_cloth_31")
+spawn("castle_wall_cloth",11,2,1,0,"castle_wall_cloth_32")
+spawn("castle_wall_cloth",11,2,0,0,"castle_wall_cloth_33")
+spawn("castle_ceiling_light",8,8,0,0,"por_guardian_petrify_light_1")
+por_guardian_petrify_light_1.light:disable()
+por_guardian_petrify_light_1.particle:disable()
+por_guardian_petrify_light_1.controller:disable()
+spawn("castle_ceiling_light",2,8,0,0,"por_guardian_petrify_light_4")
+por_guardian_petrify_light_4.light:disable()
+por_guardian_petrify_light_4.particle:disable()
+por_guardian_petrify_light_4.controller:disable()
+spawn("castle_ceiling_light",2,2,0,0,"por_guardian_petrify_light_3")
+por_guardian_petrify_light_3.light:disable()
+por_guardian_petrify_light_3.particle:disable()
+por_guardian_petrify_light_3.controller:disable()
+spawn("castle_ceiling_light",8,2,0,0,"por_guardian_petrify_light_2")
+por_guardian_petrify_light_2.light:disable()
+por_guardian_petrify_light_2.particle:disable()
+por_guardian_petrify_light_2.controller:disable()
+spawn("castle_wall_cloth",11,8,3,0,"castle_wall_cloth_34")
+spawn("castle_wall_cloth",0,8,1,0,"castle_wall_cloth_35")
+spawn("castle_wall_cloth",0,2,1,0,"castle_wall_cloth_36")
+spawn("castle_wall_cloth",11,2,3,0,"castle_wall_cloth_37")
+spawn("medusa_guardian",8,8,3,0,"por_guardian_1")
+por_guardian_1.animation:disable()
+por_guardian_1.monster:addConnector("onDie", "por_boss_fight_counter", "decrement")
+por_guardian_1.brain:disable()
+spawn("medusa_guardian",8,2,3,0,"por_guardian_2")
+por_guardian_2.animation:disable()
+por_guardian_2.monster:addConnector("onDie", "por_boss_fight_counter", "decrement")
+por_guardian_2.brain:disable()
+spawn("medusa_guardian",2,2,1,0,"por_guardian_3")
+por_guardian_3.animation:disable()
+por_guardian_3.monster:addConnector("onDie", "por_boss_fight_counter", "decrement")
+por_guardian_3.brain:disable()
+spawn("medusa_guardian",2,8,1,0,"por_guardian_4")
+por_guardian_4.animation:disable()
+por_guardian_4.monster:addConnector("onDie", "por_boss_fight_counter", "decrement")
+por_guardian_4.brain:disable()
+spawn("boss_fight",10,6,2,0,"por_boss_fight")
+por_boss_fight.bossfight:setMusic("boss_fight_generic")
+por_boss_fight.bossfight:setBossName("Guardian Spirits of the Roses")
+por_boss_fight.bossfight:setAutoDeactivate(false)
+spawn("counter",10,9,3,0,"por_boss_fight_counter")
+por_boss_fight_counter.counter:setValue(4)
+por_boss_fight_counter.counter:addConnector("onActivate", "pedestal_of_roses_script_entity", "onEndBossFight")
 
 --- level 17 ---
 

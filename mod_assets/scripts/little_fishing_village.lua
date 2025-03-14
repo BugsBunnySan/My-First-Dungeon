@@ -13,7 +13,7 @@ end
 function init()
     local animation = {func=set_ocean_level, step=.01, duration=-1, ocean_entity_ids={"beach_ocean_7", "beach_ocean_8", "beach_ocean_9"}}
     global_scripts.script.add_animation(beach_ocean_7.level, animation)
-    triels_robin_script_entitiy.script.goTilMorning(party)
+   -- triels_robin_script_entitiy.script.goTilMorning(party)
     
     dungeon_tile_01.model:setMaterial("dungeon_floor_dirt_meridian_line")
 end

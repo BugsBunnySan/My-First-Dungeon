@@ -1,6 +1,29 @@
 roses_on_pedestal = 2
 pedestal_active = true
 
+function init()
+    for _, guardian_id in ipairs({"por_guardian_1", "por_guardian_2", "por_guardian_3", "por_guardian_4"}) do
+        local guardian = findEntity(guardian_id)
+        guardian.monster:setMonsterFlag("Invulnerable", true)
+        guardian.model:setMaterial("medusa_stone")
+        guardian:setWorldPositionY(.65)
+    end
+    for _, petrifying_light_id in ipairs({"por_guardian_petrify_light_1", "por_guardian_petrify_light_2", "por_guardian_petrify_light_3", "por_guardian_petrify_light_4"}) do
+        local petrifying_light = findEntity(petrifying_light_id)        
+        petrifying_light.pointlight:setColor(vec(0.5,0.5,0.5))
+    end
+end
+
+function delete_platform(time_delta, animation)
+    local platform = findEntity(animation.platform_id)
+    platform:destroyDelayed()
+end
+
+function onEndBossFight()
+    por_boss_fight.bossfight:deactivate()   
+    pedestal_of_roses_door.door:open()
+end
+
 function onRemoveItemPedestalOfRoses(pedestal, item)
     pedestal = global_scripts.script.getGO(pedestal)
     item = global_scripts.script.getGO(item)
@@ -11,10 +34,39 @@ function onRemoveItemPedestalOfRoses(pedestal, item)
     
     if roses_on_pedestal == 0 and pedestal_active then
         pedestal_active = false
-        for _, spawn_point_id in ipairs({"por_spawn_guardian_01", "por_spawn_guardian_02", "por_spawn_guardian_03", "por_spawn_guardian_04"}) do
-            local spawn_point = findEntity(spawn_point_id)
-            spawn_point:spawn("medusa")
+        for _, guardian_id in ipairs({"por_guardian_1", "por_guardian_2", "por_guardian_3", "por_guardian_4"}) do
+            local guardian = findEntity(guardian_id)
+            guardian:setWorldPositionY(0)
+            guardian.monster:setMonsterFlag("Invulnerable", false)
+            guardian.model:setMaterial("spirit_light")
+            guardian.animation:enable()
+            guardian.brain:enable()
+            por_boss_fight.bossfight:addMonster(guardian.monster)            
         end
+        por_boss_fight.bossfight:activate()
+        pedestal_of_roses_door.door:close()
+        for _, petrifying_slime_id in ipairs({"por_petrifying_slime_1", "por_petrifying_slime_2", "por_petrifying_slime_3", "por_petrifying_slime_4"}) do
+            local petrifying_slime = findEntity(petrifying_slime_id)
+            petrifying_slime.petrification_dustParticles:stop()
+        end
+        for _, petrifying_light_id in ipairs({"por_guardian_petrify_light_1", "por_guardian_petrify_light_2", "por_guardian_petrify_light_3", "por_guardian_petrify_light_4"}) do
+            local petrifying_light = findEntity(petrifying_light_id)
+            petrifying_light.pointlight:disable()
+        end
+        for _, platform_id in ipairs({"beacon_furnace_1", "beacon_furnace_2", "beacon_furnace_3", "beacon_furnace_4"}) do
+            local animation = triels_robin_script_entitiy.script.raisePedestal(platform_id, true, -1)
+            animation.platform_id = platform_id
+            animation.on_finish = delete_platform
+            global_scripts.script.add_animation(pedestal.level, animation)
+        end
+        for _, rune_id in ipairs({"beacon_furnace_rune_earth_1", "beacon_furnace_rune_earth_2", "beacon_furnace_rune_earth_3", "beacon_furnace_rune_earth_4"}) do
+            local rune = findEntity(rune_id)
+            rune:destroyDelayed()
+        end
+        -- for _, spawn_point_id in ipairs({"por_spawn_guardian_01", "por_spawn_guardian_02", "por_spawn_guardian_03", "por_spawn_guardian_04"}) do
+            -- local spawn_point = findEntity(spawn_point_id)
+            -- spawn_point:spawn("medusa")
+        -- end
     end
 end
 

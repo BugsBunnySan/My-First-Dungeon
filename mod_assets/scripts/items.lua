@@ -24,6 +24,20 @@ defineObject{
     }
 }
 
+defineObject{
+    name = "mine_wall_01_ajusted_placement",
+    baseObject = "mine_wall_01",
+    components = {
+        {
+            class = "Model",
+			model = "assets/models/env/mine_wall_01.fbx",
+			staticShadow = true,
+            offset = vec(0, 0, 0),
+            rotation = vec(0, 90, 0),
+        }
+    }
+    
+}
 
 defineObject{
 	name = "castle_ceiling_light_red",
