@@ -20,7 +20,7 @@ function initDungeon()
 end
 
 function initGlobals()
-    GameMode.setTimeOfDay(1.5)
+    GameMode.setTimeOfDay(0)
     --global_scripts.script.last_tick = -1
 end
 
@@ -110,7 +110,7 @@ function initParty()
             wizard:insertItem(item_slot, spawn(item_name).item)
         end
     end  
-    wizard:castSpell(25)
+    --wizard:castSpell(25)
 end
 
 function initCastleOfWater()

@@ -1,4 +1,80 @@
 defineObject{
+    name = "dialog_system_clickable",
+    baseObject = "forest_statue_wall_1",
+    components = {
+		{
+			class = "Model",
+			model = "assets/models/env/castle_wall_text_long.fbx",
+			offset = vec(0, -1, -0.1),
+		},
+		{
+			class = "Clickable",
+			offset = vec(0, .5, 0),
+			size = vec(1.5, 1.5, 1.5),
+        },
+		{
+			class = "Particle",
+			particleSystem = "castle_wall_text",
+			offset = vec(0, -1, -0.2),
+		},
+    }
+}
+
+defineObject{
+    name = "dialog_system_show_selectable_answer",
+    baseObject = "castle_wall_text",
+    components = {    
+		{
+			class = "Model",
+			model = "assets/models/env/castle_wall_text_long.fbx",
+			offset = vec(0, 0, -0.1),
+		},
+		{
+			class = "Particle",
+			particleSystem = "castle_wall_text",
+			offset = vec(0, 0, -0.2),
+		},
+		{
+			class = "Clickable",
+			offset = vec(0, 1.5, 0),
+			size = vec(1.2, 0.8, 0.2),
+			frontFacing = true,
+			--debugDraw = true,
+		},
+		{
+			class = "Light",
+			offset = vec(0, 1.5, -0.2),
+			range = 4,
+			color = vec(0.5, 1.0, 2.5),
+			brightness = 4,
+			fillLight = true,
+		},
+    }
+}
+
+defineObject{
+    name = "dialog_system_answer",
+    baseObject = "wall_button",
+    components = {
+		{
+			class = "Model",
+			model = "assets/models/env/wall_button.fbx",
+			offset = vec(1,.25,0),
+		},
+        {
+            class = "WallText",
+            style = "writer"
+        },
+        {
+			class = "Clickable",
+			offset = vec(1,1.625,0),
+			size = vec(0.25, 0.25, 0.25),
+        }
+    }    
+}
+
+
+defineObject{
 	name = "medusa_guardian",
 	baseObject = "medusa",
     components = {

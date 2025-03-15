@@ -1,3 +1,6 @@
+
+
+
 defineObject{
 	name = "mine_pit_trapdoor_diggable",
 	baseObject = "base_floor_decoration",	

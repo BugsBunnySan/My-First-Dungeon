@@ -40,6 +40,27 @@ function liteUpPushblockFloorAnimation(trigger)
     end
 end
 
+function spawnMinePit()
+    forest_heightmap_5:destroy()
+    spawn("mine_pit", invisible_wall_101.level, invisible_wall_101.x, invisible_wall_101.y, invisible_wall_101.facing, invisible_wall_101.elevation)
+    spawn("forest_heightmap", invisible_wall_101.level, 0, 0, 0, 0)
+end
+
+shop = {pedestal_13 = {blue_gem = {output_id = "dungeon_alcove_3", item_class = "long_sword"}}}
+
+function onInsertItem(surface, item)
+    surface = global_scripts.script.getGO(surface)
+    item = global_scripts.script.getGO(item)
+    local item_list = shop[surface.id][item.name]
+    if item_list ~= nil then               
+        local output_shelf = findEntity(item_list.output_id)
+        surface:spawn("blob_blast")
+        item:destroyDelayed()
+        output_shelf:spawn("blob_blast")
+        output_shelf.surface:addItem(spawn(item_list.item_class).item)        
+    end
+end
+
 function ladderFloorTrigger(trigger)
     print("triggered")
     party:setPosition(spawn_test.x, spawn_test.y, spawn_test.facing, spawn_test.elevation, spawn_test.level)

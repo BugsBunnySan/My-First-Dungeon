@@ -144,6 +144,32 @@ function pos_right(pos)
     pos.facing = modulo_facing(facing)
 end
 
+function pos_strafe_left(pos, steps)
+    steps = steps or 1
+    if pos.facing == 0 then
+        pos.x = pos.x - steps
+    elseif pos.facing == 1 then
+        pos.y = pos.y - steps
+    elseif pos.facing == 2 then
+        pos.x = pos.x + steps
+    elseif pos.facing == 3 then
+        pos.y = pos.y + steps
+    end
+end
+
+function pos_strafe_right(pos, steps)
+    steps = steps or 1
+    if pos.facing == 0 then
+        pos.x = pos.x + steps
+    elseif pos.facing == 1 then
+        pos.y = pos.y + steps
+    elseif pos.facing == 2 then
+        pos.x = pos.x - steps
+    elseif pos.facing == 3 then
+        pos.y = pos.y - steps
+    end
+end
+
 function pos_reverse(pos)
     local facing = pos.facing + 2
     pos.facing = modulo_facing(facing)
