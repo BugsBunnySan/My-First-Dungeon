@@ -1,5 +1,5 @@
 marea_multiplier = 6/9
-marea_height = 2
+marea_height = 0.5
 
 function set_ocean_level(time_delta, animation)    
     for _, ocean_entity_id in ipairs(animation.ocean_entity_ids) do
@@ -16,4 +16,8 @@ function init()
    -- triels_robin_script_entitiy.script.goTilMorning(party)
     
     dungeon_tile_01.model:setMaterial("dungeon_floor_dirt_meridian_line")
+    
+    merchants_script_entity.script.component_offset(forest_bridge_28.model, vec(0, 1, 0))
+    merchants_script_entity.script.component_offset(forest_bridge_pillar_8.model, vec(0, 1, 0))
+    merchants_script_entity.script.component_offset(forest_bridge_pillar_9.model, vec(0, 1, 0))
 end
