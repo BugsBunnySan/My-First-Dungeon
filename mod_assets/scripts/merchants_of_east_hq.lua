@@ -175,11 +175,18 @@ function set_npc_dialog_text(npc_id, state, print_answer)
     dialog_system_clickable.walltext:setWallText(say_text)
 end
 
+function spawnTownGuardDialogAnswers()
+    spawn_dialog_answers("Cheesefield_Town_Guard")
+end
+
+function cleanupTownGuardDialogAnswers()
+    cleanup_dialog_answer("Cheesefield_Town_Guard")
+end
+
 function init_dialog_system()
     for npc_id, state in pairs(dialog_states) do
         findEntity(npc_id).monster:setMonsterFlag("Invulnerable", true)
-        set_npc_dialog_text(npc_id, state, false)
-        spawn_dialog_answers(npc_id)
+        set_npc_dialog_text(npc_id, state, false)        
     end
 end
 
