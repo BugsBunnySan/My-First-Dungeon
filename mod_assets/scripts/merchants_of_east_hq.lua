@@ -54,6 +54,7 @@ function rat_attacks(npc_id)
     dialog_system_clickable.model:disable()
     dialog_system_clickable.particle:disable()
     findEntity(npc_id).monster:setMonsterFlag("Invulnerable", false)
+    floor_trigger_41.floortrigger:disable()
 end
 
 function openCheesefieldGate(npc_id)
@@ -80,6 +81,7 @@ dialog_system_clickable_ids = {Cheesefield_Town_Guard = "dialog_system_clickable
 dialog_button_next_states = {}
 dialog_button_funcs = {}
 dialog_answer_entity_ids = {Cheesefield_Town_Guard = {}}
+dialog_system_history = {Cheesefield_Town_Guard = ""}
 
 function component_offset(component, offset)
     local entity_offset = component:getOffset()
@@ -88,12 +90,17 @@ function component_offset(component, offset)
 end
 
 function onGiveDialogAnswer(button)    
-    button = global_scripts.script.getGO(button)    
-    hudPrint("Party: "..button.walltext:getWallText())    
+    button = global_scripts.script.getGO(button) 
+    local party_say = button.walltext:getWallText()
+    hudPrint("Party: "..party_say)
+    
     local state_info = dialog_button_next_states[button.id]
     if state_info.new_state ~= nil then
         dialog_states[state_info.npc_id] = state_info.new_state
     end
+    
+    dialog_system_history[state_info.npc_id] = dialog_system_history[state_info.npc_id] .. "\n" .. "Party: " .. party_say
+    
     local party_func = dialog_button_funcs[button.id]
     if party_func ~= nil then
         party_func(state_info.npc_id)
@@ -108,6 +115,7 @@ end
 
 function spawn_dialog_answer(npc_id, offset, answer)
     local npc = findEntity(npc_id)
+    
     local dialog_pos = global_scripts.script.copy_pos(npc)
     local dialog_offset = dialog_offset[npc_id]
     if dialog_offset == "left" then
@@ -142,18 +150,15 @@ function cleanup_dialog_answer(npc_id)
         end
         dialog_answer_entity_ids[npc_id] = {}
     end
+    
+    local dialog_system_clickable = findEntity(dialog_system_clickable_ids[npc_id]) 
+    dialog_system_clickable.dialog_particles:stop()
 end
-
-function spawn_dialog_answers(npc_id)
-    local state = dialog_states[npc_id]
     
-    cleanup_dialog_answer(npc_id)    
-        
+function doSpawnDialogAnswers(npc_id) 
+    local state = dialog_states[npc_id]        
     local answers = dialog_state_machines[npc_id][state].answers
-    if answers == nil then
-        return
-    end
-    
+   
     local offset = vec(0, -0.6, 0)
     for _,answer in ipairs(answers) do
         local dialog_text_id, dialog_button_id = spawn_dialog_answer(npc_id, offset, answer.say)
@@ -165,28 +170,49 @@ function spawn_dialog_answers(npc_id)
     end
 end
 
+function spawn_dialog_answers(npc_id)    
+    cleanup_dialog_answer(npc_id)    
+
+    local state = dialog_states[npc_id]        
+    local answers = dialog_state_machines[npc_id][state].answers
+    if answers == nil then
+        return
+    end
+    
+    --local dialog_system_clickable = findEntity(dialog_system_clickable_ids[npc_id])   
+    --dialog_system_clickable.dialog_particles:restart()    
+    
+    delayedCall("merchants_script_entity", 1, "doSpawnDialogAnswers", npc_id) 
+end
+
 function set_npc_dialog_text(npc_id, state, print_answer)
     local dialog_system_clickable_id = dialog_system_clickable_ids[npc_id]
     local dialog_system_clickable = findEntity(dialog_system_clickable_id)
     local say_text = dialog_state_machines[npc_id][state].say    
     if print_answer == true then
         hudPrint(npc_id..": "..dialog_state_machines[npc_id][state].say)
-    end
+    end    
+    dialog_system_history[npc_id] = dialog_system_history[npc_id] .. "\n" .. npc_id..": "..dialog_state_machines[npc_id][state].say
+    
     dialog_system_clickable.walltext:setWallText(say_text)
 end
 
-function spawnTownGuardDialogAnswers()
+function spawnTownGuardDialogAnswers(trigger)
     spawn_dialog_answers("Cheesefield_Town_Guard")
+    floor_trigger_41.floortrigger:disable()
 end
 
-function cleanupTownGuardDialogAnswers()
+function cleanupTownGuardDialogAnswers(trigger)
     cleanup_dialog_answer("Cheesefield_Town_Guard")
+    floor_trigger_41.floortrigger:enable()
 end
 
 function init_dialog_system()
     for npc_id, state in pairs(dialog_states) do
         findEntity(npc_id).monster:setMonsterFlag("Invulnerable", true)
-        set_npc_dialog_text(npc_id, state, false)        
+        set_npc_dialog_text(npc_id, state, false)  
+        local dialog_system_clickable = findEntity(dialog_system_clickable_ids[npc_id])   
+        dialog_system_clickable.dialog_particles:stop()        
     end
 end
 
