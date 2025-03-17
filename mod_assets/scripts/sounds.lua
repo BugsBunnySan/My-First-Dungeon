@@ -89,3 +89,12 @@ defineSound{
 	minDistance = 1,
 	maxDistance = 8,
 }
+
+defineSound{
+    name = "cannon_shot",
+    filename = "mod_assets/sounds/cannon_shot.wav",       
+    loop = false,
+    volume = 2,
+    minDistance = 12,
+    maxDistance = 32
+}

@@ -62,7 +62,7 @@ defineParticleSystem{
 }
 
 defineParticleSystem{
-    name = "dialog_system_from_npc",
+    name = "dialog_system_from_npc_left",
     emitters = {
         {
 			emissionRate = 15,
@@ -90,7 +90,7 @@ defineParticleSystem{
 			rotationSpeed = 1,
 			blendMode = "Additive",
 			depthBias = 0.1,
-			objectSpace = false, 
+			objectSpace = true, 
         },
         {
 			emissionRate = 15,
@@ -116,7 +116,7 @@ defineParticleSystem{
 			airResistance = 1,
 			rotationSpeed = 1,
 			blendMode = "Additive",
-			objectSpace = false, 
+			objectSpace = true, 
         },   
 		{
 			emissionRate = 40,
@@ -138,7 +138,7 @@ defineParticleSystem{
 			airResistance = 1,
 			rotationSpeed = 2,
 			blendMode = "Additive",
-			objectSpace = false, 
+			objectSpace = true, 
 		},
 		{
 			emissionRate = 10,
@@ -149,7 +149,7 @@ defineParticleSystem{
 			boxMax = {0.6, .5,  -0.03},
 			sprayAngle = {0,10},
 			velocity = {0.1, 1.4},
-			objectSpace = false,
+			objectSpace = true,
 			texture = "assets/textures/particles/fog.tga",
 			lifetime = {3.5, 4},
 			color0 = {0.152941, 0.352941, 0.803922},
@@ -158,6 +158,110 @@ defineParticleSystem{
 			fadeOut = 2.2,
 			size = {0.15, 0.5},
 			gravity = {-.1, 0.2, -1},
+			airResistance = 1,
+			rotationSpeed = 0.3,
+			blendMode = "Additive",
+		},	            
+    }
+}
+
+defineParticleSystem{
+    name = "dialog_system_from_npc_right",
+    emitters = {
+        {
+			emissionRate = 15,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {-0.6, -0.5, 0.03},
+			boxMax = {0.6, .5,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.1, 1.4},
+			--texture = "assets/textures/particles/castle_wall_text.tga",
+			texture = "assets/textures/env/castle_wall_text_dif.tga",
+			frameRate = 2,
+			frameSize = 43,
+			frameCount = 9,
+			lifetime = {3.5, 4},
+			colorAnimation = false,
+			color0 = {1, 1, 1},
+			opacity = .45,
+			fadeIn = 0.5,
+			fadeOut = 0.3,
+			size = {.1, .1},
+			gravity = {-.1, 0.2, 1},
+			airResistance = 1,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = 0.1,
+			objectSpace = true, 
+        },
+        {
+			emissionRate = 15,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {-0.6, -0.5, 0.03},
+			boxMax = {0.6, .5,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.1, 1.4},
+			texture = "assets/textures/particles/castle_wall_text.tga",
+			frameRate = 2,
+			frameSize = 32,
+			frameCount = 9,
+			lifetime = {3.5, 4},
+			colorAnimation = false,
+			color0 = {1, 1, 1},
+			opacity = .45,
+			fadeIn = 0.5,
+			fadeOut = 0.3,
+			size = {.1, .1},
+			gravity = {-.1, 0.2, 1},
+			airResistance = 1,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			objectSpace = true, 
+        },   
+		{
+			emissionRate = 40,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {-0.6, -0.5, 0.03},
+			boxMax = {0.6, .5,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.1, 1.4},
+			texture = "assets/textures/particles/teleporter.tga",
+			lifetime = {3.5, 4},
+			color0 = {2.0,2.0,2.0},
+			opacity = .25,
+			fadeIn = 0.5,
+			fadeOut = 0.3,
+			size = {0.05, 0.5},
+			gravity = {-.1, 0.2, 1},
+			airResistance = 1,
+			rotationSpeed = 2,
+			blendMode = "Additive",
+			objectSpace = true, 
+		},
+		{
+			emissionRate = 10,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {0.2, -0.5, 0.03},
+			boxMax = {0.6, .5,  -0.03},
+			sprayAngle = {0,10},
+			velocity = {0.1, 1.4},
+			objectSpace = true,
+			texture = "assets/textures/particles/fog.tga",
+			lifetime = {3.5, 4},
+			color0 = {0.152941, 0.352941, 0.803922},
+			opacity = 1,
+			fadeIn = 2.2,
+			fadeOut = 2.2,
+			size = {0.15, 0.5},
+			gravity = {-.1, 0.2, 1},
 			airResistance = 1,
 			rotationSpeed = 0.3,
 			blendMode = "Additive",
@@ -177,7 +281,7 @@ defineObject{
 		{
 			class = "Clickable",
 			offset = vec(0, .5, 0),
-			size = vec(1.5, 1.5, 1.5),
+			size = vec(1.5, 1, 1.5),
         },
 		{
 			class = "Particle",
@@ -186,13 +290,42 @@ defineObject{
 		},
 		{
 			class = "Particle",
-            name = "dialog_particles",
-			particleSystem = "dialog_system_from_npc",
+            name = "dialog_particles_left",
+			particleSystem = "dialog_system_from_npc_left",
+			offset = vec(0,0.25, 0),
+            enabled = false
+		},
+		{
+			class = "Particle",
+            name = "dialog_particles_right",
+			particleSystem = "dialog_system_from_npc_right",
 			offset = vec(0,0.25, 0),
             enabled = false
 		},
     }
 }
+
+defineObject{
+    name = "dialog_system_show_history_button",    
+    baseObject = "wall_button",
+    components = {
+		{
+			class = "Model",
+			model = "assets/models/env/wall_button.fbx",
+			offset = vec(1,-.25,1.2),
+		},
+        {
+            class = "WallText",
+            style = "writer"
+        },
+        {
+			class = "Clickable",
+			offset = vec(1,1.125,1.2),
+			size = vec(0.25, 0.25, 0.25),
+        }
+    }    
+}
+
 
 defineObject{
     name = "dialog_system_show_selectable_answer",
@@ -1076,23 +1209,23 @@ defineObject{
 			class = "Controller",
 			onActivate = function(self)
 				self.go.light:enable()
-				self.go.leftTorch:enable()
-				self.go.rightTorch:enable()
+				self.go.leftTorch:start()
+				self.go.rightTorch:start()
 			end,
 			onDeactivate = function(self)
 				self.go.light:disable()
-				self.go.leftTorch:disable()
-				self.go.rightTorch:disable()
+				self.go.leftTorch:stop()
+				self.go.rightTorch:stop()
 			end,
 			onToggle = function(self)
 				if self.go.light:isEnabled() then
 					self.go.light:disable()
-                    self.go.leftTorch:disable()
-                    self.go.rightTorch:disable()
+                    self.go.leftTorch:stop()
+                    self.go.rightTorch:stop()
 				else
 					self.go.light:enable()
-                    self.go.leftTorch:enable()
-                    self.go.rightTorch:enable()
+                    self.go.leftTorch:start()
+                    self.go.rightTorch:start()
 				end
 			end,
 		},

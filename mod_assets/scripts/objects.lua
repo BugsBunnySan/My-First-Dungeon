@@ -1,3 +1,5 @@
+
+
 defineObject{
 	name = "mine_pit_trapdoor_diggable",
 	baseObject = "base_floor_decoration",	
@@ -442,6 +444,7 @@ defineObject{
 			staticShadow = true,
 		},
 	},
+	placement = "wall",
 	editorIcon = 108,
 	minimalSaveState = true,
 }

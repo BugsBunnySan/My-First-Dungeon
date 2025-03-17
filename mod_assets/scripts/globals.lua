@@ -1,4 +1,117 @@
+--global timed events and time keeping
+morning = 0
+noon = 0.5
+evening = 1
+midnight = 1.5
+maxtime = 1.9999 -- this then becomes morning
+onehour = 1/12
 
+time_callbacks = {}
+
+function add_time_callback(level, time_callback)
+    if time_callbacks[level] == nil then
+        time_callbacks[level] = {}
+    end
+    time_callbacks[level][time_callback.name] = time_callback
+end
+
+function remove_time_callback(level, name)
+    time_callbacks[level][name] = nil
+end
+
+function get_time_callbacks(level)
+    return time_callbacks[level]
+end
+
+function check_timed_events(level)
+    local level_time_callbacks = get_time_callbacks(level)
+    if level_time_callbacks == nil then
+        return
+    end
+    
+    local time_of_day = GameMode.getTimeOfDay()
+    --print("time of day "..tostring(time_of_day))
+    
+    local remove_callback_keys = {}
+    
+    for key,callback in pairs(level_time_callbacks) do
+        --print(tostring(callback.check_func))
+        if  callback.check_func(key, callback, time_of_day) == true then
+            if callback.enabled == true then
+                --print("calling "..key)
+                callback.func(key, callback)
+                if callback.oneshot == true then
+                    table.insert(remove_callback_keys, key)
+                end
+            end
+        end
+    end
+    
+    for _,key in ipairs(remove_callback_keys) do
+        level_time_callbacks[key] = nil
+    end
+end
+
+function check_for_not_morning(key, callback, time_of_day)    
+    local pass = not check_for_morning(key, callback, time_of_day)
+    return pass
+end
+
+function check_for_morning(key, callback, time_of_day)    
+    local pass = false
+   
+    if ((time_of_day >= morning) and (time_of_day < morning + (3 * onehour))) then
+        pass = true
+    end
+    
+    return pass
+end
+
+function check_for_not_noon(key, callback, time_of_day)    
+    local pass = not check_for_noon(key, callback, time_of_day)
+    return pass
+end
+
+function check_for_noon(key, callback, time_of_day)    
+    local pass = false
+   
+    if ((time_of_day >= noon) and (time_of_day < noon + onehour)) then
+        pass = true
+    end
+    
+    return pass
+end
+
+
+function check_for_not_evening(key, callback, time_of_day)    
+    local pass = not check_for_evening(key, callback, time_of_day)
+    return pass
+end
+
+function check_for_evening(key, callback, time_of_day)    
+    local pass = false
+   
+    if ((time_of_day >= evening - onehour) and (time_of_day < evening + onehour)) then
+        pass = true
+    end
+    
+    return pass
+end
+
+function check_for_not_midnight(key, callback, time_of_day)    
+    local pass = not check_for_midnight(key, callback, time_of_day)
+    return pass
+end
+
+function check_for_midnight(key, callback, time_of_day)    
+    local pass = false
+   
+    if ((time_of_day >= midnight - onehour) and (time_of_day < midnight + onehour)) then
+        pass = true
+    end
+    
+    return pass
+end
 -- global animation
 animations = {}
 
@@ -36,6 +149,7 @@ function bezier(curve, t)
 end
 
 last_tick = -1
+last_time_callback_tick = -1
 
 function handle_animation(animation, now, tick_delta)
     local done = false
@@ -68,7 +182,7 @@ function handle_animation(animation, now, tick_delta)
     return done
 end
 
-function animateTick(level, now, tick_delta)
+function animateTick(level, now, tick_delta)  
     local animations = get_animations(level)    
     if animations == nil then
         return
@@ -78,13 +192,16 @@ function animateTick(level, now, tick_delta)
         if done then
             table.remove(animations, idx)
         end
-    end
+    end    
 end
 
 function globaAnimationTick(timer)
     local now = Time.systemTime()
     if last_tick == -1 then
         last_tick = now
+    end
+    if last_time_callback_tick == -1 then
+        last_time_callback_tick = now
     end
     local tick_delta = now - last_tick
     animateTick(0, now, tick_delta)
@@ -95,6 +212,13 @@ function globaAnimationTick(timer)
     -- which seems a good thing...
     animateTick(timer.go.level, now, tick_delta)
     last_tick = now
+    
+    local time_callback_time_delta = now - last_time_callback_tick
+    if time_callback_time_delta >= 1 then -- don't do this too often, for something that depends on time of day, every second is good
+        check_timed_events(0)
+        check_timed_events(timer.go.level)
+        last_time_callback_tick = now
+    end
 end
 
 -- Beginning Dungeon

@@ -17,7 +17,7 @@ function init()
     
     dungeon_tile_01.model:setMaterial("dungeon_floor_dirt_meridian_line")
     
-    merchants_script_entity.script.component_offset(forest_bridge_28.model, vec(0, 1, 0))
-    merchants_script_entity.script.component_offset(forest_bridge_pillar_8.model, vec(0, 1, 0))
-    merchants_script_entity.script.component_offset(forest_bridge_pillar_9.model, vec(0, 1, 0))
+    --merchants_script_entity.script.component_offset(forest_bridge_28.model, vec(0, 1, 0))
+   -- merchants_script_entity.script.component_offset(forest_bridge_pillar_8.model, vec(0, 1, 0))
+   -- merchants_script_entity.script.component_offset(forest_bridge_pillar_9.model, vec(0, 1, 0))
 end
