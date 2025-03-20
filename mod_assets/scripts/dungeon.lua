@@ -771,45 +771,45 @@ loadLayer("floor_elevation", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,0,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,0,0,1,1,1,0,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,0,1,1,1,0,1,0,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 })
 
 loadLayer("ceiling_elevation", {
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,3,3,3,3,3,2,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,3,3,3,3,3,2,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
+	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,
+	2,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
+	2,3,2,2,2,2,2,2,2,2,2,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,2,2,3,2,
+	2,3,3,2,2,2,2,2,2,2,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
+	3,3,3,2,2,2,2,2,2,2,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 })
 
@@ -832,19 +832,19 @@ loadLayer("tiles", {
 	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
 	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
-	5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
-	5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
-	2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,2,3,2,2,2,2,2,2,2,
-	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,2,3,3,3,3,3,2,
-	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,3,3,3,3,3,2,
-	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
-	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
-	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,
-	2,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
-	2,5,6,6,1,1,1,6,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,3,2,
-	2,5,5,6,1,1,1,6,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
-	5,5,5,6,1,1,1,6,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
+	2,2,2,2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5,2,3,3,3,2,3,2,2,2,2,2,2,2,
+	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,3,3,3,3,3,2,5,5,5,5,5,2,
+	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,5,5,5,5,5,2,
+	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,
+	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,
+	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,
+	2,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,3,3,3,3,2,
+	2,5,6,6,1,1,1,6,5,6,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,2,2,2,3,2,
+	2,5,5,6,1,1,1,6,5,6,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,3,3,3,3,2,
+	5,5,5,6,1,1,1,6,5,5,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 })
 
@@ -889,16 +889,16 @@ spawn("dungeon_cave_in",29,29,1,1,"merchants_hq_rubble_1")
 spawn("invisible_wall",29,29,1,1,"merchants_hq_rubble_spawn_location_1")
 merchants_hq_rubble_spawn_location_1.obstacle:disable()
 merchants_hq_rubble_spawn_location_1.projectilecollider:disable()
-spawn("dungeon_door_iron",27,29,1,1,"merchants_hq_rubble_door_1")
-spawn("dungeon_door_iron",27,27,1,1,"merchants_hq_rubble_door_2")
-spawn("floor_trigger",28,29,2,1,"merchants_pickaxe_enter_floor_trigger")
+spawn("dungeon_door_iron",26,29,1,1,"merchants_hq_rubble_door_1")
+spawn("dungeon_door_iron",26,27,1,1,"merchants_hq_rubble_door_2")
+spawn("floor_trigger",27,29,2,1,"merchants_pickaxe_enter_floor_trigger")
 merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByParty(true)
 merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByMonster(false)
 merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByItem(false)
 merchants_pickaxe_enter_floor_trigger.floortrigger:setTriggeredByDigging(false)
 merchants_pickaxe_enter_floor_trigger.floortrigger:setDisableSelf(false)
 merchants_pickaxe_enter_floor_trigger.floortrigger:addConnector("onActivate", "merchants_script_entity", "onEnterMiningTurotial")
-spawn("floor_trigger",27,27,2,1,"merchants_pickaxe_exit_floor_trigger")
+spawn("floor_trigger",26,27,2,1,"merchants_pickaxe_exit_floor_trigger")
 merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByParty(true)
 merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByMonster(false)
 merchants_pickaxe_exit_floor_trigger.floortrigger:setTriggeredByItem(false)
@@ -916,8 +916,8 @@ spawn("dungeon_cave_in",29,27,3,1,"merchants_hq_rubble_2")
 spawn("invisible_wall",29,27,3,1,"merchants_hq_rubble_spawn_location_2")
 merchants_hq_rubble_spawn_location_2.obstacle:disable()
 merchants_hq_rubble_spawn_location_2.projectilecollider:disable()
-spawn("dungeon_alcove",28,29,2,1,"merchants_hq_pickaxe_dispenser")
-spawn("pickaxe",28,29,2,1,"pickaxe_2")
+spawn("dungeon_alcove",27,29,2,1,"merchants_hq_pickaxe_dispenser")
+spawn("pickaxe",27,29,2,1,"pickaxe_2")
 merchants_hq_pickaxe_dispenser.surface:addItem(pickaxe_2.item)
 spawn("castle_ceiling_light",29,29,1,1,"castle_ceiling_light_2")
 spawn("castle_ceiling_light",30,28,1,1,"castle_ceiling_light_3")
@@ -926,12 +926,12 @@ spawn("dungeon_cave_in",28,27,1,1,"merchants_hq_rubble_3")
 spawn("invisible_wall",28,27,1,1,"merchants_hq_rubble_spawn_location_3")
 merchants_hq_rubble_spawn_location_3.obstacle:disable()
 merchants_hq_rubble_spawn_location_3.projectilecollider:disable()
-spawn("dungeon_wall_text",29,27,0,1,"dungeon_wall_text_4")
+spawn("dungeon_wall_text",28,27,0,1,"dungeon_wall_text_4")
 dungeon_wall_text_4.walltext:setWallText("Please return the pickaxe \
 to its rightful owners so \
 you may leave.")
 spawn("castle_entrance_door",0,30,1,1,"castle_entrance_door_2")
-spawn("castle_wall_button",27,30,1,1,"castle_wall_button_2")
+spawn("castle_wall_button",26,30,1,1,"castle_wall_button_2")
 castle_wall_button_2.button:setDisableSelf(false)
 castle_wall_button_2.button:addConnector("onActivate", "merchants_hq_rubble_door_1", "open")
 spawn("ladder_metal",5,17,2,0,"ladder_metal_16")
@@ -946,14 +946,13 @@ dialog_system_clickable_2.bounceLight:disable()
 dialog_system_clickable_2.sound:setSound("power_attack_yell_ratling_female")
 dialog_system_clickable_2.stonephilosophercontroller:disable()
 dialog_system_clickable_2.walltext:setWallText("")
+dialog_system_clickable_2.button:setDisableSelf(false)
+dialog_system_clickable_2.button:addConnector("onActivate", "merchants_script_entity", "onClickDialog")
+dialog_system_clickable_2.timer:setTimerInterval(1)
+dialog_system_clickable_2.timer:setDisableSelf(true)
+dialog_system_clickable_2.timer:setTriggerOnStart(false)
+dialog_system_clickable_2.timer:setCurrentLevelOnly(false)
 dialog_system_clickable_2.dialog_particles_right:enable()
-spawn("floor_trigger",1,30,1,0,"floor_trigger_37")
-floor_trigger_37.floortrigger:setTriggeredByParty(true)
-floor_trigger_37.floortrigger:setTriggeredByMonster(false)
-floor_trigger_37.floortrigger:setTriggeredByItem(false)
-floor_trigger_37.floortrigger:setTriggeredByDigging(false)
-floor_trigger_37.floortrigger:setDisableSelf(false)
-floor_trigger_37.floortrigger:addConnector("onActivate", "merchants_script_entity", "spawnMechantsReceptionistAnswers")
 spawn("floor_trigger",1,28,0,0,"floor_trigger_38")
 floor_trigger_38.floortrigger:setTriggeredByParty(true)
 floor_trigger_38.floortrigger:setTriggeredByMonster(false)
@@ -984,13 +983,6 @@ floor_trigger_39.floortrigger:setDisableSelf(false)
 floor_trigger_39.floortrigger:addConnector("onActivate", "merchants_hq_entry_fence", "close")
 spawn("ratling1",7,18,2,1,"Merchants_Fisher")
 Merchants_Fisher.brain:disable()
-spawn("floor_trigger",7,19,1,1,"floor_trigger_33")
-floor_trigger_33.floortrigger:setTriggeredByParty(true)
-floor_trigger_33.floortrigger:setTriggeredByMonster(false)
-floor_trigger_33.floortrigger:setTriggeredByItem(false)
-floor_trigger_33.floortrigger:setTriggeredByDigging(false)
-floor_trigger_33.floortrigger:setDisableSelf(false)
-floor_trigger_33.floortrigger:addConnector("onActivate", "merchants_script_entity", "spawnTownGuardDialogAnswers")
 spawn("floor_trigger",8,18,0,1,"floor_trigger_34")
 floor_trigger_34.floortrigger:setTriggeredByParty(true)
 floor_trigger_34.floortrigger:setTriggeredByMonster(false)
@@ -998,34 +990,6 @@ floor_trigger_34.floortrigger:setTriggeredByItem(false)
 floor_trigger_34.floortrigger:setTriggeredByDigging(false)
 floor_trigger_34.floortrigger:setDisableSelf(false)
 floor_trigger_34.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupTownGuardDialogAnswers")
-spawn("floor_trigger",6,19,0,1,"floor_trigger_35")
-floor_trigger_35.floortrigger:setTriggeredByParty(true)
-floor_trigger_35.floortrigger:setTriggeredByMonster(false)
-floor_trigger_35.floortrigger:setTriggeredByItem(false)
-floor_trigger_35.floortrigger:setTriggeredByDigging(false)
-floor_trigger_35.floortrigger:setDisableSelf(false)
-floor_trigger_35.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupTownGuardDialogAnswers")
-spawn("floor_trigger",8,20,0,1,"floor_trigger_41")
-floor_trigger_41.floortrigger:setTriggeredByParty(true)
-floor_trigger_41.floortrigger:setTriggeredByMonster(false)
-floor_trigger_41.floortrigger:setTriggeredByItem(false)
-floor_trigger_41.floortrigger:setTriggeredByDigging(false)
-floor_trigger_41.floortrigger:setDisableSelf(false)
-floor_trigger_41.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupTownGuardDialogAnswers")
-spawn("floor_trigger",9,19,0,1,"floor_trigger_42")
-floor_trigger_42.floortrigger:setTriggeredByParty(true)
-floor_trigger_42.floortrigger:setTriggeredByMonster(false)
-floor_trigger_42.floortrigger:setTriggeredByItem(false)
-floor_trigger_42.floortrigger:setTriggeredByDigging(false)
-floor_trigger_42.floortrigger:setDisableSelf(false)
-floor_trigger_42.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupTownGuardDialogAnswers")
-spawn("floor_trigger",7,20,0,1,"floor_trigger_43")
-floor_trigger_43.floortrigger:setTriggeredByParty(true)
-floor_trigger_43.floortrigger:setTriggeredByMonster(false)
-floor_trigger_43.floortrigger:setTriggeredByItem(false)
-floor_trigger_43.floortrigger:setTriggeredByDigging(false)
-floor_trigger_43.floortrigger:setDisableSelf(false)
-floor_trigger_43.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupTownGuardDialogAnswers")
 spawn("forest_bridge",6,17,2,1,"forest_bridge_28")
 spawn("forest_bridge_pillar",6,17,0,0,"forest_bridge_pillar_8")
 spawn("forest_bridge_pillar",7,17,0,0,"forest_bridge_pillar_9")
@@ -1035,6 +999,12 @@ dialog_system_clickable_1.bounceLight:disable()
 dialog_system_clickable_1.sound:setSound("ratling_happy")
 dialog_system_clickable_1.stonephilosophercontroller:disable()
 dialog_system_clickable_1.walltext:setWallText("")
+dialog_system_clickable_1.button:setDisableSelf(false)
+dialog_system_clickable_1.button:addConnector("onActivate", "merchants_script_entity", "onClickDialog")
+dialog_system_clickable_1.timer:setTimerInterval(1)
+dialog_system_clickable_1.timer:setDisableSelf(true)
+dialog_system_clickable_1.timer:setTriggerOnStart(false)
+dialog_system_clickable_1.timer:setCurrentLevelOnly(false)
 dialog_system_clickable_1.dialog_particles_left:enable()
 dialog_system_clickable_1.dialog_particles_right:enable()
 spawn("dialog_system_show_history_button",7,19,0,1,"dialog_system_show_history_button_2")
@@ -1122,7 +1092,13 @@ dialog_system_clickable_3.bounceLight:disable()
 dialog_system_clickable_3.sound:setSound("ratling_boss_alert")
 dialog_system_clickable_3.stonephilosophercontroller:disable()
 dialog_system_clickable_3.walltext:setWallText("")
-dialog_system_clickable_3.dialog_particles_right:enable()
+dialog_system_clickable_3.button:setDisableSelf(false)
+dialog_system_clickable_3.button:addConnector("onActivate", "merchants_script_entity", "onClickDialog")
+dialog_system_clickable_3.timer:setTimerInterval(1)
+dialog_system_clickable_3.timer:setDisableSelf(true)
+dialog_system_clickable_3.timer:setTriggerOnStart(false)
+dialog_system_clickable_3.timer:setCurrentLevelOnly(false)
+dialog_system_clickable_3.dialog_particles_left:enable()
 spawn("dialog_system_show_history_button",5,27,2,1,"dialog_system_show_history_button_3")
 dialog_system_show_history_button_3.button:setDisableSelf(false)
 dialog_system_show_history_button_3.button:addConnector("onActivate", "merchants_script_entity", "showDialogHistory")
@@ -1137,31 +1113,11 @@ merchants_resource_master_dog.brain:disable()
 spawn("dungeon_wall_broken_02",5,27,2,0,"dungeon_wall_broken_02_16")
 spawn("dungeon_wall_broken_02",4,27,2,0,"dungeon_wall_broken_02_17")
 spawn("dungeon_wall_broken_02",6,27,2,0,"dungeon_wall_broken_02_18")
-spawn("dungeon_alcove",28,27,0,1,"dungeon_alcove_2")
+spawn("dungeon_alcove",27,27,0,1,"dungeon_alcove_2")
 dungeon_alcove_2.surface:addConnector("onInsertItem", "merchants_script_entity", "onReturnPickaxe")
 spawn("pedestal",6,28,0,1,"merchants_resource_master_pedestal")
 merchants_resource_master_pedestal.surface:addConnector("onInsertItem", "merchants_script_entity", "onPutItem")
-spawn("floor_trigger",5,27,1,1,"floor_trigger_36")
-floor_trigger_36.floortrigger:setTriggeredByParty(true)
-floor_trigger_36.floortrigger:setTriggeredByMonster(false)
-floor_trigger_36.floortrigger:setTriggeredByItem(false)
-floor_trigger_36.floortrigger:setTriggeredByDigging(false)
-floor_trigger_36.floortrigger:setDisableSelf(false)
-floor_trigger_36.floortrigger:addConnector("onActivate", "merchants_script_entity", "spawnMechantsResourceMasterDialogAnswers")
-spawn("floor_trigger",5,26,1,1,"floor_trigger_40")
-floor_trigger_40.floortrigger:setTriggeredByParty(true)
-floor_trigger_40.floortrigger:setTriggeredByMonster(false)
-floor_trigger_40.floortrigger:setTriggeredByItem(false)
-floor_trigger_40.floortrigger:setTriggeredByDigging(false)
-floor_trigger_40.floortrigger:setDisableSelf(false)
-floor_trigger_40.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupMechantsResourceMasterDialogAnswers")
-spawn("floor_trigger",6,27,2,1,"floor_trigger_44")
-floor_trigger_44.floortrigger:setTriggeredByParty(true)
-floor_trigger_44.floortrigger:setTriggeredByMonster(false)
-floor_trigger_44.floortrigger:setTriggeredByItem(false)
-floor_trigger_44.floortrigger:setTriggeredByDigging(false)
-floor_trigger_44.floortrigger:setDisableSelf(false)
-floor_trigger_44.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupMechantsResourceMasterDialogAnswers")
+merchants_resource_master_pedestal.surface:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItem")
 spawn("hand_cannon",4,29,2,1,"hand_cannon_1")
 spawn("cannon_ball",5,28,2,1,"cannon_ball_3")
 spawn("cannon_ball",5,28,3,1,"cannon_ball_4")
@@ -1236,7 +1192,7 @@ wall_trigger_2.walltrigger:addConnector("onActivate", "merchants_script_entity",
 spawn("wall_trigger",24,1,0,0,"wall_trigger_3")
 wall_trigger_3.walltrigger:setEntityType("fireball_large_fadeout")
 wall_trigger_3.walltrigger:addConnector("onActivate", "merchants_script_entity", "waterSplash")
-spawn("starting_location",20,19,2,1,"starting_location_1")
+spawn("starting_location",1,30,1,1,"starting_location_1")
 spawn("timer",0,11,0,0,"timer_5")
 timer_5.timer:setTimerInterval(0)
 timer_5.timer:setDisableSelf(true)
@@ -1248,20 +1204,6 @@ spawn("tomb_pillar",0,20,3,1,"tomb_pillar_94")
 spawn("tomb_pillar",0,19,0,1,"tomb_pillar_95")
 spawn("tomb_pillar",0,18,3,1,"tomb_pillar_96")
 spawn("tomb_pillar",0,21,3,1,"tomb_pillar_97")
-spawn("floor_trigger",4,26,2,1,"floor_trigger_46")
-floor_trigger_46.floortrigger:setTriggeredByParty(true)
-floor_trigger_46.floortrigger:setTriggeredByMonster(false)
-floor_trigger_46.floortrigger:setTriggeredByItem(false)
-floor_trigger_46.floortrigger:setTriggeredByDigging(false)
-floor_trigger_46.floortrigger:setDisableSelf(false)
-floor_trigger_46.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupMechantsResourceMasterDialogAnswers")
-spawn("floor_trigger",3,27,2,1,"floor_trigger_47")
-floor_trigger_47.floortrigger:setTriggeredByParty(true)
-floor_trigger_47.floortrigger:setTriggeredByMonster(false)
-floor_trigger_47.floortrigger:setTriggeredByItem(false)
-floor_trigger_47.floortrigger:setTriggeredByDigging(false)
-floor_trigger_47.floortrigger:setDisableSelf(false)
-floor_trigger_47.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupMechantsResourceMasterDialogAnswers")
 spawn("dungeon_door_iron",21,20,2,1,"dungeon_door_iron_2")
 spawn("dungeon_door_iron",20,22,0,0,"dungeon_door_iron_3")
 spawn("dungeon_door_iron",22,22,0,0,"dungeon_door_iron_4")
@@ -1282,6 +1224,80 @@ merchants_hq_cannons.projectilecollider:disable()
 spawn("castle_wall_outside_01",19,20,2,1,"castle_wall_outside_01_130")
 spawn("castle_wall_outside_01",23,20,2,1,"castle_wall_outside_01_150")
 spawn("castle_wall_outside_01",25,20,2,1,"castle_wall_outside_01_151")
+spawn("dungeon_wall_broken_02",6,21,0,0,"dungeon_wall_broken_02_19")
+spawn("dungeon_wall_broken_02",7,21,0,0,"dungeon_wall_broken_02_20")
+spawn("dungeon_wall_broken_02",8,21,0,0,"dungeon_wall_broken_02_21")
+spawn("dungeon_wall_broken_02",9,21,0,0,"dungeon_wall_broken_02_22")
+spawn("dungeon_wall_broken_02",10,21,0,0,"dungeon_wall_broken_02_23")
+spawn("dungeon_wall_broken_02",11,21,0,0,"dungeon_wall_broken_02_24")
+spawn("dungeon_wall_broken_02",12,21,0,0,"dungeon_wall_broken_02_25")
+spawn("dungeon_wall_broken_02",13,21,0,0,"dungeon_wall_broken_02_26")
+spawn("dungeon_wall_broken_02",14,21,0,0,"dungeon_wall_broken_02_27")
+spawn("dungeon_wall_broken_02",15,21,0,0,"dungeon_wall_broken_02_28")
+spawn("dungeon_wall_broken_02",16,21,0,0,"dungeon_wall_broken_02_29")
+spawn("dungeon_wall_broken_02",17,21,0,0,"dungeon_wall_broken_02_30")
+spawn("dungeon_wall_broken_02",18,21,0,0,"dungeon_wall_broken_02_31")
+spawn("tomb_pillar",8,21,0,1,"tomb_pillar_90")
+spawn("tomb_pillar",17,21,0,1,"tomb_pillar_91")
+spawn("tomb_pillar",14,21,0,1,"tomb_pillar_92")
+spawn("tomb_pillar",11,21,0,1,"tomb_pillar_93")
+spawn("tomb_door_portcullis",8,27,2,1,"tomb_door_portcullis_3")
+tomb_door_portcullis_3.door:setDoorState("open")
+tomb_door_portcullis_3.model:disable()
+spawn("dungeon_wall_text",8,27,1,1,"dungeon_wall_text_5")
+dungeon_wall_text_5.walltext:setWallText("Quartermaster's Office")
+spawn("tomb_door_portcullis",9,30,1,1,"tomb_door_portcullis_4")
+tomb_door_portcullis_4.door:setDoorState("open")
+tomb_door_portcullis_4.model:disable()
+spawn("ratling2",11,28,2,1,"ratling2_2")
+ratling2_2.brain:disable()
+spawn("castle_wall_bookshelf_01",15,29,0,1,"castle_wall_bookshelf_01_1")
+spawn("castle_wall_bookshelf_01",14,29,0,1,"castle_wall_bookshelf_01_2")
+spawn("castle_wall_bookshelf_02",13,29,0,1,"castle_wall_bookshelf_02_1")
+spawn("castle_pillar_01",15,29,2,1,"castle_pillar_01_215")
+spawn("castle_pillar_01",14,29,0,1,"castle_pillar_01_216")
+spawn("castle_pillar_01",13,29,0,1,"castle_pillar_01_217")
+spawn("castle_wall_bookshelf_02",11,28,1,1,"castle_wall_bookshelf_02_2")
+spawn("castle_pillar_01",16,29,0,1,"castle_pillar_01_219")
+spawn("castle_wall_bookshelf_01",15,29,2,1,"castle_wall_bookshelf_01_3")
+spawn("castle_wall_bookshelf_01",14,29,2,1,"castle_wall_bookshelf_01_4")
+spawn("castle_wall_bookshelf_02",13,29,2,1,"castle_wall_bookshelf_02_3")
+spawn("castle_pillar_01",15,30,2,1,"castle_pillar_01_220")
+spawn("castle_pillar_01",14,30,0,1,"castle_pillar_01_221")
+spawn("castle_pillar_01",13,30,0,1,"castle_pillar_01_222")
+spawn("castle_pillar_01",16,30,0,1,"castle_pillar_01_223")
+spawn("castle_wall_bookshelf_02",10,30,1,1,"castle_wall_bookshelf_02_4")
+spawn("castle_pillar_01",11,31,2,1,"castle_pillar_01_224")
+spawn("castle_pillar_candle_holder",11,28,2,1,"castle_pillar_candle_holder_17")
+spawn("castle_pillar_candle_holder",12,28,3,1,"castle_pillar_candle_holder_22")
+spawn("beacon_furnace",10,28,2,1,"beacon_furnace_5")
+spawn("sack",10,28,2,1,"merchants_token_sack_1")
+beacon_furnace_5.surface:addItem(merchants_token_sack_1.item)
+beacon_furnace_5.controller:setElement("fire")
+beacon_furnace_5.controller:disable()
+spawn("castle_pillar_candle_holder",12,29,3,1,"castle_pillar_candle_holder_96")
+spawn("castle_pillar_01",12,29,0,1,"castle_pillar_01_226")
+spawn("castle_wall_bookshelf_02",12,29,0,1,"castle_wall_bookshelf_02_5")
+spawn("castle_wall_bookshelf_01",12,29,2,1,"castle_wall_bookshelf_01_6")
+spawn("castle_wall_bookshelf_02",11,29,2,1,"castle_wall_bookshelf_02_6")
+spawn("castle_pillar_01",12,30,0,1,"castle_pillar_01_218")
+spawn("castle_pillar_01",11,30,0,1,"castle_pillar_01_225")
+spawn("invisible_wall",12,30,3,1,"invisible_wall_102")
+spawn("invisible_wall",11,30,3,1,"invisible_wall_104")
+spawn("invisible_wall",13,30,1,1,"invisible_wall_105")
+spawn("invisible_wall",14,30,2,1,"invisible_wall_106")
+spawn("invisible_wall",15,30,2,1,"invisible_wall_107")
+spawn("invisible_wall",15,28,2,1,"invisible_wall_108")
+spawn("invisible_wall",14,28,1,1,"invisible_wall_109")
+spawn("invisible_wall",13,28,0,1,"invisible_wall_110")
+spawn("invisible_wall",12,28,1,1,"invisible_wall_111")
+spawn("castle_ceiling_lantern",15,29,1,2,"castle_ceiling_lantern_1")
+spawn("castle_ceiling_lantern",13,29,1,2,"castle_ceiling_lantern_2")
+spawn("castle_ceiling_lantern",11,29,1,2,"castle_ceiling_lantern_3")
+spawn("castle_door_portcullis_keep_pillars",10,28,2,1,"castle_door_portcullis_keep_pillars_1")
+castle_door_portcullis_keep_pillars_1.door:setPullChain(true)
+castle_door_portcullis_keep_pillars_1.frame:disable()
+spawn("castle_pillar_01",11,29,0,1,"castle_pillar_01_227")
 
 --- level 6 ---
 
@@ -7426,7 +7442,6 @@ spawn("castle_bridge",20,24,2,1,"castle_bridge_132")
 spawn("receptor",17,12,3,0,"receptor_2")
 receptor_2.walltrigger:setEntityType("blue_gem")
 spawn("sack",16,14,0,0,"merchants_token_sack_2")
-spawn("sack",16,14,2,0,"merchants_token_sack_1")
 spawn("pedestal",18,12,0,0,"pedestal_13")
 pedestal_13.surface:addConnector("onInsertItem", "forest_script_entity", "onInsertItem")
 spawn("dungeon_alcove",19,12,0,0,"dungeon_alcove_3")

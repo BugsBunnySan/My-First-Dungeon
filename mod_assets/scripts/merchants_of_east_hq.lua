@@ -61,7 +61,6 @@ function rat_attacks(npc_id)
     dialog_system_clickable.model:disable()
     dialog_system_clickable.particle:disable()
     findEntity(npc_id).monster:setMonsterFlag("Invulnerable", false)
-    floor_trigger_41.floortrigger:disable()
 end
 
 function openCheesefieldGate(npc_id)
@@ -95,7 +94,7 @@ function onTakeEntryScroll(pedestal, item)
 end
 
 function onFinishRaiseDesk(time_delta, animation)
-    print("onFinishRaiseDesk")
+    print("onFinishRaiseDesk "..animation.work_as)
     local entry_scroll_id
     if animation.work_as == "look_for_work_pirates" then
         entry_scroll_id = "merchants_entry_scroll_pirates"
@@ -110,11 +109,10 @@ function onFinishRaiseDesk(time_delta, animation)
     
 end
 
-function raiseDesk(npc_id, state_info)
+function raiseDesk(npc_id, state, state_info)
     merchants_receptionist_trapdoor.pit:open()
     local animation = triels_robin_script_entitiy.script.raisePedestal("merchants_receptionist_desk", true)
-    print(state_info.new_state)
-    animation.work_as = state_info.new_state
+    animation.work_as = state
     animation.on_finish=onFinishRaiseDesk
     global_scripts.script.add_animation(merchants_receptionist_desk.level, animation)
 end
@@ -122,14 +120,18 @@ end
 function onPutItem(pedestal, item)
     pedestal = global_scripts.script.getGO(pedestal)
     item = global_scripts.script.getGO(item)
-    
+        
     print(item.id)
     if item.id == "merchants_entry_scroll_pirates" or item.id == "merchants_entry_scroll_driftwood" then
+        item:destroyDelayed()
+        cleanup_dialog_answer("Merchants_Resources_Master")   
         dialog_states["Merchants_Resources_Master"] = "scroll_placed"
-        set_npc_dialog_text("Merchants_Resources_Master", dialog_states["Merchants_Resources_Master"], true, false)
-        spawn_dialog_answers("Merchants_Resources_Master")   
+        set_npc_dialog_text("Merchants_Resources_Master", false)
     elseif item.id == "merchants_pickaxe_token" then
-        
+        item:destroyDelayed()
+        cleanup_dialog_answer("Merchants_Resources_Master")   
+        dialog_states["Merchants_Resources_Master"] = "pickaxe_trial_done"
+        set_npc_dialog_text("Merchants_Resources_Master", false)
     end   
 end
 
@@ -208,38 +210,84 @@ function fireCannons(key, callback)
 end
 
 function dog_growl()
-    global_scripts.script.playSoundAtObject("warg_attack", merchants_resource_master_dog)
+    global_scripts.script.playSoundAtObject("warg_howl", merchants_resource_master_dog)
 end
+
+function onRemoveItem(pedestal, item)
+    pedestal = global_scripts.script.getGO(pedestal)
+    item = global_scripts.script.getGO(item)
+    if item.id == "merchants_quartermaster_token" then
+        dialog_states["Merchants_Resources_Master"] = "dont_bother_me"
+        set_npc_dialog_text("Merchants_Resources_Master", dialog_states["Merchants_Resources_Master"], false, false)
+    end
+end
+
+function spawn_quartermaster_token()
+    local token = spawn("blue_gem", merchants_resource_master_pedestal.level, 0, 0, 0, 0, "merchants_quartermaster_token")
+    merchants_resource_master_pedestal.surface:addItem(token.item)
+end
+
+function countdown(time_delta, animation)
+    print_npc_text("Merchants_Resources_Master", tostring(animation.counter))
+    add_history("Merchants_Resources_Master", "Merchants_Resources_Master", tostring(animation.counter))
+    animation.counter = animation.counter - 1
+end
+
+function doResourcesMasterBoom()
+    Merchants_Resources_Master.brain:enable()
+    Merchants_Resources_Master.brain:performAction("rangedAttack")
+    Merchants_Resources_Master.brain:disable()
+    party:spawn("cannon_ball")
+end
+
+function resources_master_boom()
+    Merchants_Resources_Master.animation:play("alert", false)
+    local animation = {func=countdown, on_finish=doResourcesMasterBoom, step=1, duration=3.1, counter=3}
+    global_scripts.script.add_animation(Merchants_Resources_Master.level, animation)
+end
+
+merchants_npcs = {Merchants_Resources_Master = {}}
 
 dialog_states = {Merchants_Fisher = "init", Merchants_HQ_Receptionist = "init", Merchants_Resources_Master = "init"}
 dialog_offset = {Merchants_Fisher = "left", Merchants_HQ_Receptionist = "right", Merchants_Resources_Master = "left"} 
 dialog_state_machines = {Merchants_Fisher = {init = {say = "Hello, Adventurers!\nNice day for fishing, ain't it?", 
                                                    answers = {{say = "We think so, too!", new_state = "happy", func=happyParty},
                                                               {say = "We don't like fishing...", new_state = "sad"},
-                                                              {say = "Wow! A monster that can talk!", new_state = "angry"}}},
-                                       happy = {say = "You're nice Adventurers! Welcome to the town of Cheesefield!", func=openCheesefieldGate},
+                                                              {say = "We have no time for fishing...", new_state = "sad"}}},
+                                       happy = {say = "You're nice Adventurers! Welcome to the town of Cheesefield!", one_time_func=openCheesefieldGate, func_called=false, new_state="chit_chat"},
+                                       chit_chat = {say = "Hello, Adventurers!", 
+                                                    answers = {{say = "Do you know where the Pickaxe Trial is?", new_state="give_directions_to_pickaxe_trial"},
+                                                               {say = "Why the cannon shots?", new_state="explain_time_keeping"}}},
+                                       give_directions_to_pickaxe_trial = {say = "That is between the morning and noon. I'm sure it's easy to find", new_state = "chit_chat"},
+                                       explain_time_keeping = {say = "The cannon daemons fire to mark the time. Because people kept getting blown to bits, we sound a horn just before.", new_state = "chit_chat"},
                                        sad = {say = "You make me sad!",
                                               answers = {{say = "We're sorry you're sad!", new_state = "happy"},
-                                                          {say = "We don't care you're sad!", new_state = "angry"}}},
-                                       angry = {say = "You anger the monster that can talk!", func=rat_attacks}},
+                                                         {say = "We don't care you're sad!", new_state = "angry"}}},
+                                       angry = {say = "You anger the monster that can talk!", func=rat_attacks, new_state = "angry"}},
                         Merchants_HQ_Receptionist = {init = {say = "What do you lowlifes want??",
                                                              answers = {{say = "We're looking for work.", new_state = "look_for_work_work"},
                                                                          {say = "Actually, nothing, from you. Goodday!", new_state = "init", func=leaveGame},
                                                                          {say = "We want to be pirates!", new_state = "look_for_work_pirates"}}},
-                                                     look_for_work_work = {say = "Great, more wood to toss on the fire.\nTake this scroll and present\nyourself to the resources master!", new_state = "leave_me_alone", func=raiseDesk},
-                                                     look_for_work_pirates = {say = "Well, great, more bodies to bury at sea.\nTake this scroll and present\nyourself to the resources master!", new_state = "leave_me_alone", func=raiseDesk},
-                                                     leave_me_alone = {say = "Be off!"}},
-                         Merchants_Resources_Master = {init = {say = "If you ain't got business with me, go away"},
+                                                     look_for_work_work = {say = "Great, more wood to toss on the fire.\nTake this scroll and present\nyourself to the resources master!", new_state = "leave_me_alone", one_time_func=raiseDesk, func_called=false},
+                                                     look_for_work_pirates = {say = "Well, great, more bodies to bury at sea.\nTake this scroll and present\nyourself to the resources master!", new_state = "leave_me_alone", one_time_func=raiseDesk, func_called=false},
+                                                     leave_me_alone = {say = "Be off!", new_state = "leave_me_alone"}},
+                         Merchants_Resources_Master = {init = {say = "If you ain't got business with me, go away", func=dog_growl, new_state="init"},
                                                        scroll_placed = {say = "Ok, ya resources, go and do the pickaxe trial.\nReturn the token.\nDon't even think about running away with it.", 
                                                                         answers = {{say = "We're on it!", new_state="pickaxe_trial"},
                                                                                    {say = "Where's the trial?", new_state="pre_pickaxe_trial"}}},
                                                         pre_pickaxe_trial = {say = "If ya driftwood can't e'en find a pickaxe in a house, you might only be good for dog food after all.", new_state="pickaxe_trial", func=dog_growl},
-                                                        pickaxe_trial = {say = "Are you still here?", func=dog_growl}}
+                                                        pickaxe_trial = {say = "Are you still here?", func=dog_growl, new_state="pickaxe_trial"},
+                                                        pickaxe_trial_done = {say = "Here's my final quest: Take this to the Quater Master and don't bother me no more!", one_time_func=spawn_quartermaster_token, func_called=false, new_state="dont_bother_me"},
+                                                        dont_bother_me = {say = "Me dog is hungry, ya looks like food and y're about to fail my final quest.", func=dog_growl, one_time_func=dialog_system_next_state, func_called=false, new_state="annoyed"},
+                                                        annoyed = {say = "You fail the quest of Don't Bother Me No More.\nYour reward will be a cannonball.", func=resources_master_boom, new_state="annoyed"}}
                                                     
                        }
 dialog_system_clickable_ids = {Merchants_Fisher = "dialog_system_clickable_1",
                                Merchants_HQ_Receptionist = "dialog_system_clickable_2",
                                Merchants_Resources_Master = "dialog_system_clickable_3"}
+dialog_system_clickable_npc_ids = {dialog_system_clickable_1 = "Merchants_Fisher",
+                                   dialog_system_clickable_2 = "Merchants_HQ_Receptionist",
+                                   dialog_system_clickable_3 = "Merchants_Resources_Master"}
 dialog_system_show_history_button_ids = {dialog_system_show_history_button_2 = "Merchants_Fisher", dialog_system_show_history_button_1 = "Merchants_HQ_Receptionist", dialog_system_show_history_button_3 = "Merchants_Resources_Master"}
 dialog_button_next_states = {}
 dialog_button_funcs = {}
@@ -252,35 +300,17 @@ function showDialogHistory(button)
     button.walltext:setWallText(dialog_system_history[npc_id])
 end
 
+function add_history(npc_id, speaker_id, text)    
+    dialog_system_history[npc_id] = dialog_system_history[npc_id] .. "\n" .. speaker_id .. ": " .. text
+end
+
 function component_offset(component, offset)
     local entity_offset = component:getOffset()
     entity_offset = entity_offset + offset
     component:setOffset(entity_offset)
 end
 
-function onGiveDialogAnswer(button)    
-    button = global_scripts.script.getGO(button) 
-    local party_say = button.walltext:getWallText()
-    hudPrint("Party: "..party_say)
-    
-    local state_info = dialog_button_next_states[button.id]
-    if state_info.new_state ~= nil then
-        dialog_states[state_info.npc_id] = state_info.new_state
-    end
-    
-    dialog_system_history[state_info.npc_id] = dialog_system_history[state_info.npc_id] .. "\n" .. "Party: " .. party_say
-    
-    local party_func = dialog_button_funcs[button.id]
-    if party_func ~= nil then
-        party_func(state_info.npc_id, state_info)
-    end
-    local npc_func = dialog_state_machines[state_info.npc_id][dialog_states[state_info.npc_id]].func
-    if npc_func ~= nil then
-        npc_func(state_info.npc_id, state_info)
-    end
-    set_npc_dialog_text(state_info.npc_id, dialog_states[state_info.npc_id], true, false)
-    spawn_dialog_answers(state_info.npc_id)
-end
+
 
 function spawn_dialog_answer(npc_id, offset, answer)
     local npc = findEntity(npc_id)
@@ -320,7 +350,8 @@ function cleanup_dialog_answer(npc_id)
         dialog_answer_entity_ids[npc_id] = {}
     end
     
-    local dialog_system_clickable = findEntity(dialog_system_clickable_ids[npc_id])    if dialog_offset[npc_id] == "left" then
+    local dialog_system_clickable = findEntity(dialog_system_clickable_ids[npc_id])   
+    if dialog_offset[npc_id] == "left" then
         dialog_system_clickable.dialog_particles_left:stop()
     elseif dialog_offset[npc_id] == "right" then
         dialog_system_clickable.dialog_particles_right:stop()
@@ -342,8 +373,7 @@ function doSpawnDialogAnswers(npc_id)
     end
 end
 
-function spawn_dialog_answers(npc_id)    
-    cleanup_dialog_answer(npc_id)    
+function spawn_dialog_answers(npc_id) 
 
     local state = dialog_states[npc_id]        
     local answers = dialog_state_machines[npc_id][state].answers
@@ -361,76 +391,108 @@ function spawn_dialog_answers(npc_id)
     delayedCall("merchants_script_entity", 1, "doSpawnDialogAnswers", npc_id) 
 end
 
-function set_npc_dialog_text(npc_id, state, print_answer, run_func)
+
+function print_npc_text(npc_id, text)
+    hudPrint(npc_id..": "..text)
+end
+
+function set_npc_dialog_text(npc_id, print_answer, state)
     local dialog_system_clickable_id = dialog_system_clickable_ids[npc_id]
-    local dialog_system_clickable = findEntity(dialog_system_clickable_id)
-    local say_text = dialog_state_machines[npc_id][state].say    
-    if print_answer == true then
-        hudPrint(npc_id..": "..dialog_state_machines[npc_id][state].say)
-    end    
-    if run_func == true then
-        local func = dialog_state_machines[npc_id][state].func
-        if func ~= nil then
-            func(npc_id, state)
-        end
-    end
-    dialog_system_history[npc_id] = dialog_system_history[npc_id] .. "\n" .. npc_id..": "..dialog_state_machines[npc_id][state].say
+    local dialog_system_clickable = findEntity(dialog_system_clickable_id)      
+    state = state or dialog_states[npc_id] 
+    
+    local say_text = dialog_state_machines[npc_id][state].say  
     
     dialog_system_clickable.walltext:setWallText(say_text)
 end
 
-function spawnMechantsReceptionistAnswers(tigger)
-    spawn_dialog_answers("Merchants_HQ_Receptionist")
-    floor_trigger_37.floortrigger:disable()
+function dialogSystemNextState(npc_id, state_info)
+    cleanup_dialog_answer(npc_id)   
+    local state = dialog_states[npc_id]
+    state_info = state_info or dialog_state_machines[npc_id][state]
+    print("next state for "..npc_id.." from "..dialog_states[npc_id].." to ".. state_info.new_state)
+    if state_info.new_state ~= dialog_states[npc_id] then
+        state_info.last_clicked = false
+    end
+    dialog_states[npc_id] = state_info.new_state
+     
+        
+    
 end
 
-function cleanupMechantsReceptionistAnswers(tigger)
-    cleanup_dialog_answer("Merchants_HQ_Receptionist")
-    floor_trigger_37.floortrigger:enable()
+function onGiveDialogAnswer(button)    
+    button = global_scripts.script.getGO(button) 
+    local state_info = dialog_button_next_states[button.id]
+    
+    local party_say = button.walltext:getWallText()
+    print_npc_text("Party", party_say)    
+    add_history(state_info.npc_id, "Party", party_say)
+        
+    local party_func = dialog_button_funcs[button.id]
+    if party_func ~= nil then
+        party_func(state_info.npc_id, state_info)
+    end       
+    
+    local npc_func = dialog_state_machines[state_info.npc_id][dialog_states[state_info.npc_id]].func
+    if npc_func ~= nil then
+        npc_func(state_info.npc_id, state_info)
+    end
+        
+    dialogSystemNextState(state_info.npc_id, state_info)
 end
 
-function spawnTownGuardDialogAnswers(trigger)
-    spawn_dialog_answers("Merchants_Fisher")
-    floor_trigger_33.floortrigger:disable()
-end
-
-function cleanupTownGuardDialogAnswers(trigger)
-    cleanup_dialog_answer("Merchants_Fisher")
-    floor_trigger_33.floortrigger:enable()
-end
-
-function spawnMechantsResourceMasterDialogAnswers(trigger)
-    spawn_dialog_answers("Merchants_Resources_Master")
-    floor_trigger_36.floortrigger:disable()
-end
-
-function cleanupMechantsResourceMasterDialogAnswers(trigger)
-    cleanup_dialog_answer("Merchants_Resources_Master")
-    floor_trigger_36.floortrigger:enable()
+function onClickDialog(button)
+    local dialog_system_clickable = global_scripts.script.getGO(button)
+    local npc_id = dialog_system_clickable_npc_ids[dialog_system_clickable.id] 
+    set_npc_dialog_text(npc_id, false)  
+    
+    local state = dialog_states[npc_id]
+    local state_info = dialog_state_machines[npc_id][state]
+    
+    local npc_say = dialog_state_machines[npc_id][state].say
+        
+    if not state_info.last_clicked == true then
+        add_history(npc_id, npc_id, npc_say)
+        state_info.last_clicked = true
+    end
+    
+    print_npc_text(npc_id, npc_say)
+    
+    if state_info.func ~= nil then
+        state_info.func(npc_id, state, state_info)
+    end
+    
+    if state_info.one_time_func ~= nil and state_info.func_called == false then
+        state_info.one_time_func(npc_id, state, state_info)
+        state_info.func_called = true
+    end
+        
+    if state_info.answers ~= nil then
+        spawn_dialog_answers(npc_id)
+    else
+        dialogSystemNextState(npc_id)
+    end
 end
 
 function init_dialog_system()
     for npc_id, state in pairs(dialog_states) do
         findEntity(npc_id).monster:setMonsterFlag("Invulnerable", true)
-        set_npc_dialog_text(npc_id, state, false)  
+        set_npc_dialog_text(npc_id, false)
+        
         local dialog_system_clickable = findEntity(dialog_system_clickable_ids[npc_id])   
         dialog_system_clickable.dialog_particles_left:stop()        
         dialog_system_clickable.dialog_particles_right:stop()
         if dialog_system_clickable.facing == 0 then        
             dialog_system_clickable.dialog_particles_left:setRotationAngles(0, 90, 0) 
             dialog_system_clickable.dialog_particles_right:setRotationAngles(0, 270, 0)
+        elseif dialog_system_clickable.facing == 1 then    
+            dialog_system_clickable.dialog_particles_left:setRotationAngles(0, 90, 0) 
+            dialog_system_clickable.dialog_particles_right:setRotationAngles(0, 90, 0)
         elseif dialog_system_clickable.facing == 2 then        
             dialog_system_clickable.dialog_particles_left:setRotationAngles(0, 90, 0) 
             dialog_system_clickable.dialog_particles_right:setRotationAngles(0, 90, 0)
         end        
     end
-end
-
-function dialog_system(npc_id)
-    local dialog_state = dialog_states[npc_id]
-    local dialog_state_machine = dialog_state_machines[npc_id]
-    
-    
 end
 
 merchants_marea_multiplier = 6/9

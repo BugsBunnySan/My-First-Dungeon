@@ -284,6 +284,38 @@ defineObject{
 			size = vec(1.5, 1, 1.5),
         },
 		{
+			class = "Button",
+		},
+        {
+            class = "Timer",
+            name = "timer",
+            timerInterval = 1, -- this needs to sync with cooldown of the monsterattack (there is not onCooldownReset on the attack)
+            disableSelf = true,
+            enabled = false,
+            onActivate = function(self)
+                self.go.button:enable()
+                self.go.clickable:enable()                    
+            end
+        },            
+        {
+            class = "WallText",
+            onShowText = function(self)
+                self.go.button:disable()
+                self.go.clickable:disable()
+                if self.go.dialog_particles_left:isEnabled() then
+                    self.go.dialog_particles_left:restart()
+                end
+                if self.go.dialog_particles_right:isEnabled() then
+                    self.go.dialog_particles_right:restart()
+                end
+            end,
+            onDismissText = function(self) 
+                self.go.timer:setTimerInterval(1) 
+                self.go.timer:enable()
+                self.go.timer:start()
+            end,
+        },
+		{
 			class = "Particle",
 			particleSystem = "castle_wall_text",
 			offset = vec(0, -1, -0.2),

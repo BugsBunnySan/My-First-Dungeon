@@ -1,4 +1,18 @@
-
+defineObject{
+    name = "castle_door_portcullis_keep_pillars",
+    baseObject = "castle_door_portcullis",
+    components = {    
+		{
+			class = "Door",
+			openVelocity = 1.3,
+			closeVelocity = 0,
+			closeAcceleration = -10,
+			sparse = false,
+			killPillars = false,
+			pullchainObject = "castle_door_button",
+		},
+    }
+}
 
 defineObject{
 	name = "mine_pit_trapdoor_diggable",
