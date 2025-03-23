@@ -681,16 +681,16 @@ loadLayer("tiles", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -702,16 +702,9 @@ loadLayer("tiles", {
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 })
 
-spawn("teleporter",16,18,3,0,"teleporter_27")
-teleporter_27.teleporter:setTeleportTarget(5,16,22,1)
-teleporter_27.teleporter:setSpin("none")
-teleporter_27.teleporter:setTriggeredByParty(true)
-teleporter_27.teleporter:setTriggeredByMonster(true)
-teleporter_27.teleporter:setTriggeredByItem(true)
-teleporter_27.teleporter:setTriggeredBySpell(true)
-spawn("mine_wall_text",15,19,0,0,"heroes_level_up_text")
+spawn("mine_wall_text",3,25,0,0,"heroes_level_up_text")
 heroes_level_up_text.walltext:setWallText("")
-spawn("mine_lever",14,19,0,0,"mine_lever_4")
+spawn("mine_lever",2,25,0,0,"mine_lever_4")
 mine_lever_4.lever:setDisableSelf(false)
 mine_lever_4.lever:addConnector("onToggle", "hall_of_heroes_script_entity", "leverPulled")
 spawn("script_entity",0,31,3,0,"hall_of_heroes_script_entity")
@@ -722,8 +715,27 @@ hall_of_heroes_timer.timer:setDisableSelf(false)
 hall_of_heroes_timer.timer:setTriggerOnStart(false)
 hall_of_heroes_timer.timer:setCurrentLevelOnly(true)
 hall_of_heroes_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
-spawn("tomb_torch_holder",15,18,0,0,"tomb_torch_holder_1")
+spawn("tomb_torch_holder",17,19,1,0,"tomb_torch_holder_1")
 tomb_torch_holder_1.controller:setHasTorch(true)
+spawn("castle_entrance_door",18,18,3,0,"castle_entrance_door_1")
+castle_entrance_door_1.door:setPullChain(true)
+spawn("tomb_torch_holder",17,17,1,0,"tomb_torch_holder_2")
+tomb_torch_holder_2.controller:setHasTorch(true)
+spawn("castle_floor_01",18,18,2,0,"castle_floor_01_1")
+spawn("castle_wall_01",18,18,0,0,"castle_wall_01_118")
+spawn("castle_wall_01",18,18,2,0,"castle_wall_01_116")
+spawn("castle_wall_01",17,19,1,0,"castle_wall_01_119")
+spawn("tomb_stairs_up",18,18,1,0,"tomb_stairs_up_2")
+tomb_stairs_up_2.stairs:setTeleportTarget(5,0,30,1)
+spawn("starting_location",15,18,1,1,"starting_location_1")
+spawn("timer",0,12,0,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("castle_wall_01",17,16,1,0,"castle_wall_01_120")
+spawn("castle_wall_01",17,17,1,0,"castle_wall_01_117")
 
 --- level 5 ---
 
@@ -737,6 +749,7 @@ newMap{
 		"castle_floor",
 		"castle_wall",
 		"dungeon_floor",
+		"dungeon_floor_tiles",
 		"forest_underwater",
 		"tomb_floor",
 		"tomb_wall",
@@ -806,46 +819,46 @@ loadLayer("ceiling_elevation", {
 	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
 	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
 	2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,
-	2,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
-	2,3,2,2,2,2,2,2,2,2,2,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,2,2,3,2,
-	2,3,3,2,2,2,2,2,2,2,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,
-	3,3,3,2,2,2,2,2,2,2,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,2,2,2,2,
+	2,3,3,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,3,3,3,3,3,2,
+	2,3,2,2,2,2,2,2,2,2,2,3,3,3,3,3,2,2,2,3,3,3,3,3,3,2,3,2,2,2,3,2,
+	2,3,2,2,2,2,2,2,2,2,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,2,3,3,3,3,3,2,
+	3,3,2,2,2,2,2,2,2,2,3,3,3,3,3,3,2,2,2,3,3,3,3,3,3,2,3,2,2,2,2,2,
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 })
 
 loadLayer("tiles", {
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
-	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,6,
-	2,2,2,2,2,2,5,5,5,5,5,5,5,5,5,5,5,5,5,2,3,3,3,2,3,2,2,2,2,2,2,2,
-	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,3,3,3,3,3,2,5,5,5,5,5,2,
-	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,5,5,5,5,5,2,
-	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,
-	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,
-	2,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,
-	2,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,3,3,3,3,2,
-	2,5,6,6,1,1,1,6,5,6,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,2,2,2,3,2,
-	2,5,5,6,1,1,1,6,5,6,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,3,3,3,3,2,
-	5,5,5,6,1,1,1,6,5,5,5,5,5,5,5,5,6,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,
-	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,
+	3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,
+	2,2,2,2,2,2,6,6,6,6,6,6,6,6,6,6,6,6,6,2,3,3,3,2,3,2,2,2,2,2,2,2,
+	2,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,3,3,3,3,3,2,6,6,6,6,6,2,
+	2,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,2,2,6,6,6,6,6,2,
+	2,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,
+	2,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,
+	2,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,2,2,2,2,2,
+	2,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,4,2,4,2,2,2,2,2,2,6,3,3,3,3,2,
+	2,6,7,7,1,1,1,7,6,7,6,6,6,6,6,6,7,4,2,4,4,4,4,4,4,2,6,2,2,2,3,2,
+	2,6,6,7,1,1,1,7,6,7,6,6,6,6,6,6,7,4,2,4,4,4,4,4,4,2,6,3,3,3,3,2,
+	6,6,6,7,1,1,1,7,6,6,6,6,6,6,6,6,7,4,2,4,4,4,4,4,4,2,6,2,2,2,2,2,
+	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 })
 
 spawn("timer",0,15,2,0,"merchants_timer")
@@ -856,7 +869,7 @@ merchants_timer.timer:setCurrentLevelOnly(true)
 merchants_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 spawn("script_entity",0,16,3,0,"merchants_script_entity")
 merchants_script_entity.script:loadFile("mod_assets/scripts/merchants_of_east_hq.lua")
-spawn("floor_trigger",16,22,0,1,"floor_trigger_28")
+spawn("floor_trigger",15,21,0,1,"floor_trigger_28")
 floor_trigger_28.floortrigger:setTriggeredByParty(true)
 floor_trigger_28.floortrigger:setTriggeredByMonster(false)
 floor_trigger_28.floortrigger:setTriggeredByItem(false)
@@ -868,17 +881,17 @@ beach_wall_text_9.walltext:setWallText("Equip Party with optional equipment\
 bought with blue gems from a chest\
 and a bag of essential items, before\
 setting of")
-spawn("forest_heightmap",1,16,1,0,"forest_heightmap_11")
-spawn("forest_day_sky",2,16,1,0,"forest_day_sky_1")
-spawn("teleporter",15,18,0,1,"teleporter_24")
-teleporter_24.teleporter:setTeleportTarget(10,14,30,1)
-teleporter_24.teleporter:setSpin("south")
-teleporter_24.teleporter:setTriggeredByParty(true)
-teleporter_24.teleporter:setTriggeredByMonster(true)
-teleporter_24.teleporter:setTriggeredByItem(true)
-teleporter_24.teleporter:setTriggeredBySpell(true)
-spawn("beach_ocean",15,18,2,1,"merchants_beach_ocean")
-merchants_beach_ocean.bottom:disable()
+spawn("teleporter",16,14,0,1,"merchants_boat_teleporter")
+merchants_boat_teleporter.particle:disable()
+merchants_boat_teleporter.light:disable()
+merchants_boat_teleporter.sound:disable()
+merchants_boat_teleporter.teleporter:setTeleportTarget(10,14,30,1)
+merchants_boat_teleporter.teleporter:setSpin("south")
+merchants_boat_teleporter.teleporter:setTriggeredByParty(true)
+merchants_boat_teleporter.teleporter:setTriggeredByMonster(false)
+merchants_boat_teleporter.teleporter:setTriggeredByItem(false)
+merchants_boat_teleporter.teleporter:setTriggeredBySpell(false)
+merchants_boat_teleporter.controller:setInitialState("deactivate")
 spawn("rubble_pedestal",28,29,1,1,"merchants_hq_rubble_pedestal_1")
 merchants_hq_rubble_pedestal_1.model:disable()
 merchants_hq_rubble_pedestal_1.surface:addConnector("onInsertItem", "global_scripts", "clearRubble")
@@ -931,6 +944,7 @@ dungeon_wall_text_4.walltext:setWallText("Please return the pickaxe \
 to its rightful owners so \
 you may leave.")
 spawn("castle_entrance_door",0,30,1,1,"castle_entrance_door_2")
+castle_entrance_door_2.door:setDoorState("open")
 spawn("castle_wall_button",26,30,1,1,"castle_wall_button_2")
 castle_wall_button_2.button:setDisableSelf(false)
 castle_wall_button_2.button:addConnector("onActivate", "merchants_hq_rubble_door_1", "open")
@@ -983,13 +997,6 @@ floor_trigger_39.floortrigger:setDisableSelf(false)
 floor_trigger_39.floortrigger:addConnector("onActivate", "merchants_hq_entry_fence", "close")
 spawn("ratling1",7,18,2,1,"Merchants_Fisher")
 Merchants_Fisher.brain:disable()
-spawn("floor_trigger",8,18,0,1,"floor_trigger_34")
-floor_trigger_34.floortrigger:setTriggeredByParty(true)
-floor_trigger_34.floortrigger:setTriggeredByMonster(false)
-floor_trigger_34.floortrigger:setTriggeredByItem(false)
-floor_trigger_34.floortrigger:setTriggeredByDigging(false)
-floor_trigger_34.floortrigger:setDisableSelf(false)
-floor_trigger_34.floortrigger:addConnector("onActivate", "merchants_script_entity", "cleanupTownGuardDialogAnswers")
 spawn("forest_bridge",6,17,2,1,"forest_bridge_28")
 spawn("forest_bridge_pillar",6,17,0,0,"forest_bridge_pillar_8")
 spawn("forest_bridge_pillar",7,17,0,0,"forest_bridge_pillar_9")
@@ -1012,9 +1019,6 @@ dialog_system_show_history_button_2.button:setDisableSelf(false)
 dialog_system_show_history_button_2.button:addConnector("onActivate", "merchants_script_entity", "showDialogHistory")
 dialog_system_show_history_button_2.walltext:setWallText("")
 spawn("ladder_metal",5,17,2,-1,"ladder_metal_17")
-spawn("beach_ocean",15,18,2,0,"beach_ocean_2")
-beach_ocean_2.model:disable()
-beach_ocean_2.watersurface:disable()
 spawn("boat_small",15,17,1,2,"merchants_boat_small")
 spawn("dungeon_wall_01",0,17,2,-1,"dungeon_wall_01_162")
 spawn("dungeon_wall_01",0,17,2,0,"dungeon_wall_01_163")
@@ -1115,9 +1119,6 @@ spawn("dungeon_wall_broken_02",4,27,2,0,"dungeon_wall_broken_02_17")
 spawn("dungeon_wall_broken_02",6,27,2,0,"dungeon_wall_broken_02_18")
 spawn("dungeon_alcove",27,27,0,1,"dungeon_alcove_2")
 dungeon_alcove_2.surface:addConnector("onInsertItem", "merchants_script_entity", "onReturnPickaxe")
-spawn("pedestal",6,28,0,1,"merchants_resource_master_pedestal")
-merchants_resource_master_pedestal.surface:addConnector("onInsertItem", "merchants_script_entity", "onPutItem")
-merchants_resource_master_pedestal.surface:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItem")
 spawn("hand_cannon",4,29,2,1,"hand_cannon_1")
 spawn("cannon_ball",5,28,2,1,"cannon_ball_3")
 spawn("cannon_ball",5,28,3,1,"cannon_ball_4")
@@ -1192,13 +1193,6 @@ wall_trigger_2.walltrigger:addConnector("onActivate", "merchants_script_entity",
 spawn("wall_trigger",24,1,0,0,"wall_trigger_3")
 wall_trigger_3.walltrigger:setEntityType("fireball_large_fadeout")
 wall_trigger_3.walltrigger:addConnector("onActivate", "merchants_script_entity", "waterSplash")
-spawn("starting_location",1,30,1,1,"starting_location_1")
-spawn("timer",0,11,0,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("forest_cage_01",6,29,3,1,"forest_cage_01_3")
 spawn("tomb_pillar",0,20,3,1,"tomb_pillar_94")
 spawn("tomb_pillar",0,19,0,1,"tomb_pillar_95")
@@ -1245,12 +1239,12 @@ spawn("tomb_door_portcullis",8,27,2,1,"tomb_door_portcullis_3")
 tomb_door_portcullis_3.door:setDoorState("open")
 tomb_door_portcullis_3.model:disable()
 spawn("dungeon_wall_text",8,27,1,1,"dungeon_wall_text_5")
-dungeon_wall_text_5.walltext:setWallText("Quartermaster's Office")
+dungeon_wall_text_5.walltext:setWallText("Quartermaster's Office ->")
 spawn("tomb_door_portcullis",9,30,1,1,"tomb_door_portcullis_4")
 tomb_door_portcullis_4.door:setDoorState("open")
 tomb_door_portcullis_4.model:disable()
-spawn("ratling2",11,28,2,1,"ratling2_2")
-ratling2_2.brain:disable()
+spawn("ratling2",11,28,2,1,"Merchants_Quarter_Master")
+Merchants_Quarter_Master.brain:disable()
 spawn("castle_wall_bookshelf_01",15,29,0,1,"castle_wall_bookshelf_01_1")
 spawn("castle_wall_bookshelf_01",14,29,0,1,"castle_wall_bookshelf_01_2")
 spawn("castle_wall_bookshelf_02",13,29,0,1,"castle_wall_bookshelf_02_1")
@@ -1295,9 +1289,236 @@ spawn("castle_ceiling_lantern",15,29,1,2,"castle_ceiling_lantern_1")
 spawn("castle_ceiling_lantern",13,29,1,2,"castle_ceiling_lantern_2")
 spawn("castle_ceiling_lantern",11,29,1,2,"castle_ceiling_lantern_3")
 spawn("castle_door_portcullis_keep_pillars",10,28,2,1,"castle_door_portcullis_keep_pillars_1")
-castle_door_portcullis_keep_pillars_1.door:setPullChain(true)
 castle_door_portcullis_keep_pillars_1.frame:disable()
 spawn("castle_pillar_01",11,29,0,1,"castle_pillar_01_227")
+spawn("dungeon_door_iron",19,26,2,1,"dungeon_door_iron_6")
+spawn("lock",20,26,2,1,"lock_3")
+lock_3.lock:setOpenedBy("iron_key")
+lock_3.lock:addConnector("onActivate", "dungeon_door_iron_6", "open")
+spawn("dungeon_wall_text",18,26,2,1,"dungeon_wall_text_6")
+dungeon_wall_text_6.walltext:setWallText("<- Resource Aptitude Test Office")
+spawn("dungeon_wall_text",26,28,1,1,"dungeon_wall_text_7")
+dungeon_wall_text_7.walltext:setWallText("Pickaxing Trial Chambers")
+spawn("dialog_system_socket",5,27,2,1,"merchants_resource_master_socket")
+merchants_resource_master_socket.socket:addConnector("onInsertItem", "merchants_script_entity", "onPutItem")
+merchants_resource_master_socket.socket:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItem")
+spawn("forest_heightmap",1,16,1,0,"forest_heightmap_11")
+spawn("forest_day_sky",2,16,1,0,"forest_day_sky_1")
+spawn("beach_ocean",15,18,2,1,"merchants_beach_ocean")
+merchants_beach_ocean.bottom:disable()
+spawn("lever",24,29,1,1,"lever_3")
+lever_3.lever:setDisableSelf(false)
+lever_3.lever:addConnector("onActivate", "dungeon_door_iron_6", "open")
+spawn("forest_ruins_ceiling_flat",24,30,1,2,"forest_ruins_ceiling_flat_16")
+spawn("forest_ruins_ceiling_flat",24,29,3,2,"forest_ruins_ceiling_flat_18")
+spawn("forest_ruins_ceiling_flat",24,28,2,2,"forest_ruins_ceiling_flat_19")
+spawn("forest_ruins_ceiling_flat",22,30,0,2,"forest_ruins_ceiling_flat_20")
+spawn("forest_ruins_ceiling_flat",22,29,1,2,"forest_ruins_ceiling_flat_21")
+spawn("forest_ruins_ceiling_flat",22,28,1,2,"forest_ruins_ceiling_flat_22")
+spawn("forest_ruins_ceiling_flat",20,30,0,2,"forest_ruins_ceiling_flat_23")
+spawn("forest_ruins_ceiling_flat",20,29,1,2,"forest_ruins_ceiling_flat_24")
+spawn("forest_ruins_ceiling_flat",20,28,1,2,"forest_ruins_ceiling_flat_25")
+spawn("dungeon_pressure_plate",19,27,1,1,"dungeon_pressure_plate_2")
+dungeon_pressure_plate_2.floortrigger:setTriggeredByParty(true)
+dungeon_pressure_plate_2.floortrigger:setTriggeredByMonster(false)
+dungeon_pressure_plate_2.floortrigger:setTriggeredByItem(true)
+dungeon_pressure_plate_2.floortrigger:setTriggeredByDigging(false)
+dungeon_pressure_plate_2.floortrigger:setDisableSelf(false)
+dungeon_pressure_plate_2.floortrigger:addConnector("onActivate", "dungeon_door_iron_6", "close")
+spawn("boss_fight",21,27,1,0,"combat_trial_boss_fight")
+combat_trial_boss_fight.bossfight:setMusic("boss_fight_generic")
+combat_trial_boss_fight.bossfight:setBossName("Resources Combat Trial")
+combat_trial_boss_fight.bossfight:setAutoDeactivate(false)
+spawn("tomb_pit_trapdoor",17,24,2,1,"merchants_hq_trapdoor_2")
+spawn("tomb_pit_trapdoor",7,23,2,1,"merchants_hq_trapdoor_3")
+spawn("tomb_pit_trapdoor",3,25,0,1,"merchants_hq_trapdoor_4")
+spawn("mine_lever",3,23,3,1,"mine_lever_5")
+mine_lever_5.lever:setDisableSelf(false)
+mine_lever_5.lever:addConnector("onActivate", "merchants_script_entity", "raiseGuards")
+spawn("tomb_pit_trapdoor",12,25,2,1,"merchants_hq_trapdoor_1")
+spawn("merchants_hq_guard1",12,25,0,0,"merchants_hq_guard_1")
+merchants_hq_guard_1.gravity:disable()
+merchants_hq_guard_1.brain:disable()
+spawn("merchants_hq_guard1",17,24,3,0,"merchants_hq_guard_2")
+merchants_hq_guard_2.gravity:disable()
+merchants_hq_guard_2.brain:disable()
+spawn("merchants_hq_guard1",7,23,2,0,"merchants_hq_guard_3")
+merchants_hq_guard_3.gravity:disable()
+merchants_hq_guard_3.brain:disable()
+spawn("merchants_hq_guard1",3,25,0,0,"merchants_hq_guard_4")
+merchants_hq_guard_4.gravity:disable()
+merchants_hq_guard_4.brain:disable()
+spawn("tomb_pit_trapdoor",25,25,2,1,"merchants_hq_trapdoor_5")
+spawn("merchants_hq_guard1",25,25,3,0,"merchants_hq_guard_5")
+merchants_hq_guard_5.gravity:disable()
+merchants_hq_guard_5.brain:disable()
+spawn("invisible_wall",24,28,3,1,"merchants_combat_quest_spawn_pos_1")
+merchants_combat_quest_spawn_pos_1.obstacle:disable()
+merchants_combat_quest_spawn_pos_1.projectilecollider:disable()
+spawn("invisible_wall",24,30,3,1,"merchants_combat_quest_spawn_pos_2")
+merchants_combat_quest_spawn_pos_2.obstacle:disable()
+merchants_combat_quest_spawn_pos_2.projectilecollider:disable()
+spawn("invisible_wall",20,28,3,1,"merchants_combat_quest_spawn_pos_4")
+merchants_combat_quest_spawn_pos_4.obstacle:disable()
+merchants_combat_quest_spawn_pos_4.projectilecollider:disable()
+spawn("invisible_wall",20,30,3,1,"merchants_combat_quest_spawn_pos_3")
+merchants_combat_quest_spawn_pos_3.obstacle:disable()
+merchants_combat_quest_spawn_pos_3.projectilecollider:disable()
+spawn("dungeon_stairs_down",17,31,2,1,"dungeon_stairs_down_1")
+spawn("dungeon_door_portcullis",17,30,0,1,"dungeon_door_portcullis_1")
+spawn("forest_ruins_ceiling",24,28,3,1,"forest_ruins_ceiling_13")
+spawn("forest_ruins_ceiling",24,30,0,1,"forest_ruins_ceiling_16")
+spawn("forest_ruins_ceiling",20,28,3,1,"forest_ruins_ceiling_19")
+spawn("forest_ruins_ceiling",20,30,3,1,"forest_ruins_ceiling_20")
+spawn("forest_ruins_pillar_03",21,29,3,1,"forest_ruins_pillar_03_9")
+spawn("forest_ruins_pillar_03",20,29,3,1,"forest_ruins_pillar_03_10")
+spawn("forest_ruins_pillar_03",20,30,3,1,"forest_ruins_pillar_03_11")
+spawn("forest_ruins_pillar_03",21,30,2,1,"forest_ruins_pillar_03_12")
+spawn("forest_ruins_pillar_03",24,30,1,1,"forest_ruins_pillar_03_13")
+spawn("forest_ruins_pillar_03",24,29,1,1,"forest_ruins_pillar_03_14")
+spawn("forest_ruins_secret_door",20,28,3,1,"forest_ruins_secret_door_4")
+spawn("forest_ruins_secret_door",20,30,3,1,"forest_ruins_secret_door_16")
+spawn("twigroot",24,22,3,1,"twigroot_2")
+twigroot_2.monster:addConnector("onDie", "counter_3", "decrement")
+spawn("twigroot",22,22,1,1,"twigroot_1")
+twigroot_1.monster:addConnector("onDie", "counter_3", "decrement")
+spawn("herder_small",23,22,3,1,"herder_small_1")
+herder_small_1.monster:addConnector("onDie", "counter_3", "decrement")
+spawn("cemetery_fence_01",19,29,1,1,"cemetery_fence_01_3")
+cemetery_fence_01_3.door:setDoorState("open")
+spawn("dungeon_pressure_plate",22,29,1,1,"dungeon_pressure_plate_3")
+dungeon_pressure_plate_3.floortrigger:setTriggeredByParty(true)
+dungeon_pressure_plate_3.floortrigger:setTriggeredByMonster(false)
+dungeon_pressure_plate_3.floortrigger:setTriggeredByItem(false)
+dungeon_pressure_plate_3.floortrigger:setTriggeredByDigging(false)
+dungeon_pressure_plate_3.floortrigger:setDisableSelf(true)
+dungeon_pressure_plate_3.floortrigger:addConnector("onActivate", "merchants_script_entity", "startCombatTrial")
+spawn("herder_small",20,22,3,1,"herder_small_2")
+herder_small_2.monster:addConnector("onDie", "counter_3", "decrement")
+spawn("counter",22,27,3,0,"counter_3")
+counter_3.counter:setValue(4)
+counter_3.counter:addConnector("onActivate", "merchants_script_entity", "finishCombatTrial")
+spawn("dialog_system_clickable",11,29,0,1,"dialog_system_clickable_4")
+dialog_system_clickable_4.eyesModel:disable()
+dialog_system_clickable_4.bounceLight:disable()
+dialog_system_clickable_4.sound:setSound("ratling_happy")
+dialog_system_clickable_4.stonephilosophercontroller:disable()
+dialog_system_clickable_4.walltext:setWallText("")
+dialog_system_clickable_4.button:setDisableSelf(false)
+dialog_system_clickable_4.button:addConnector("onActivate", "merchants_script_entity", "onClickDialog")
+dialog_system_clickable_4.timer:setTimerInterval(1)
+dialog_system_clickable_4.timer:setDisableSelf(true)
+dialog_system_clickable_4.timer:setTriggerOnStart(false)
+dialog_system_clickable_4.timer:setCurrentLevelOnly(false)
+dialog_system_clickable_4.dialog_particles_left:enable()
+spawn("dungeon_wall_broken_02",11,29,0,0,"dungeon_wall_broken_02_32")
+spawn("dialog_system_socket",16,19,0,1,"merchants_captain_socket")
+merchants_captain_socket.socket:addConnector("onInsertItem", "merchants_script_entity", "onPutItem")
+merchants_captain_socket.socket:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItem")
+spawn("dialog_system_show_history_button",11,29,0,1,"dialog_system_show_history_button_6")
+dialog_system_show_history_button_6.button:setDisableSelf(false)
+dialog_system_show_history_button_6.button:addConnector("onActivate", "merchants_script_entity", "showDialogHistory")
+dialog_system_show_history_button_6.walltext:setWallText("")
+spawn("blue_gem",11,29,3,0,"not_merchants_quartermaster_token")
+spawn("tomb_alcove",26,23,3,1,"merchants_shop_healing_potion_alcove")
+merchants_shop_healing_potion_alcove.surface:addConnector("onInsertItem", "merchants_script_entity", "onPutToken")
+merchants_shop_healing_potion_alcove.surface:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItemShop")
+spawn("tomb_alcove",26,22,3,1,"merchants_shop_healing_crystal_alcove")
+merchants_shop_healing_crystal_alcove.surface:addConnector("onInsertItem", "merchants_script_entity", "onPutToken")
+merchants_shop_healing_crystal_alcove.surface:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItemShop")
+spawn("tomb_alcove",27,22,0,1,"tomb_alcove_4")
+spawn("tomb_alcove",28,22,0,1,"tomb_alcove_5")
+spawn("tomb_alcove",29,22,0,1,"tomb_alcove_6")
+spawn("tomb_alcove",30,22,0,1,"tomb_alcove_7")
+spawn("tomb_alcove",30,22,1,1,"tomb_alcove_8")
+spawn("tomb_alcove",30,23,1,1,"tomb_alcove_9")
+spawn("dungeon_wall_text",26,23,3,1,"merchants_shop_healing_potion_text")
+merchants_shop_healing_potion_text.walltext:setWallText("Healing Potion / 1")
+spawn("dungeon_wall_text",26,22,3,1,"merchants_shop_healing_crystal_text")
+merchants_shop_healing_crystal_text.walltext:setWallText("Crystal Shard of Healing / 3")
+spawn("barrel_crate_block",1,22,1,1,"barrel_crate_block_6")
+spawn("barrel_crate_block",2,22,2,1,"barrel_crate_block_7")
+spawn("barrel_crate_block",3,22,0,1,"barrel_crate_block_8")
+spawn("barrel_crate_block",4,22,1,1,"barrel_crate_block_9")
+spawn("barrel_crate_block",2,24,1,1,"barrel_crate_block_10")
+spawn("barrel_crate_block",1,24,1,1,"barrel_crate_block_11")
+spawn("terracotta_jars_block",1,23,3,1,"terracotta_jars_block_4")
+spawn("terracotta_jars_block",2,25,3,1,"terracotta_jars_block_5")
+spawn("terracotta_jars_block",3,23,1,1,"terracotta_jars_block_6")
+spawn("terracotta_jars_block",2,23,3,1,"terracotta_jars_block_7")
+spawn("invisible_platform",15,17,1,1,"invisible_platform_1")
+invisible_platform_1.controller:setInitialState("activate")
+spawn("invisible_platform",16,17,1,1,"invisible_platform_2")
+invisible_platform_2.controller:setInitialState("activate")
+spawn("invisible_platform",14,17,1,1,"invisible_platform_3")
+invisible_platform_3.controller:setInitialState("activate")
+spawn("ratling3",16,18,2,1,"Merchants_Captain")
+Merchants_Captain.brain:disable()
+spawn("dialog_system_clickable",16,19,0,1,"dialog_system_clickable_5")
+dialog_system_clickable_5.eyesModel:disable()
+dialog_system_clickable_5.bounceLight:disable()
+dialog_system_clickable_5.sound:setSound("ratling_happy")
+dialog_system_clickable_5.stonephilosophercontroller:disable()
+dialog_system_clickable_5.walltext:setWallText("")
+dialog_system_clickable_5.button:setDisableSelf(false)
+dialog_system_clickable_5.button:addConnector("onActivate", "merchants_script_entity", "onClickDialog")
+dialog_system_clickable_5.timer:setTimerInterval(1)
+dialog_system_clickable_5.timer:setDisableSelf(true)
+dialog_system_clickable_5.timer:setTriggerOnStart(false)
+dialog_system_clickable_5.timer:setCurrentLevelOnly(false)
+dialog_system_clickable_5.dialog_particles_left:enable()
+spawn("dungeon_wall_broken_02",16,19,0,0,"dungeon_wall_broken_02_33")
+spawn("dialog_system_show_history_button",16,19,0,1,"dialog_system_show_history_button_5")
+dialog_system_show_history_button_5.button:setDisableSelf(false)
+dialog_system_show_history_button_5.button:addConnector("onActivate", "merchants_script_entity", "showDialogHistory")
+dialog_system_show_history_button_5.walltext:setWallText("")
+spawn("note",16,19,0,1,"merchants_travel_pass_island")
+merchants_travel_pass_island.scrollitem:setScrollText("To archae-site #23\
+/Quater Master")
+spawn("note",16,19,0,1,"merchants_travel_pass_hunt_beasts")
+merchants_travel_pass_hunt_beasts.scrollitem:setScrollText("To the Island of Beasts\
+/QuaterMaster")
+spawn("invisible_wall",16,18,2,1,"merchants_captain_spawn")
+spawn("floor_trigger",15,17,1,1,"merchants_hq_boat_trigger")
+merchants_hq_boat_trigger.floortrigger:setTriggeredByParty(true)
+merchants_hq_boat_trigger.floortrigger:setTriggeredByMonster(false)
+merchants_hq_boat_trigger.floortrigger:setTriggeredByItem(false)
+merchants_hq_boat_trigger.floortrigger:setTriggeredByDigging(false)
+merchants_hq_boat_trigger.floortrigger:setDisableSelf(false)
+merchants_hq_boat_trigger.floortrigger:addConnector("onActivate", "merchants_script_entity", "merchantsCaptainTravel")
+merchants_hq_boat_trigger.floortrigger:disable()
+spawn("castle_bridge",17,24,3,0,"merchants_hq_guard_platform_2")
+spawn("castle_bridge",12,25,3,0,"merchants_hq_guard_platform_1")
+spawn("castle_bridge",7,23,3,0,"merchants_hq_guard_platform_3")
+spawn("castle_bridge",3,25,3,0,"merchants_hq_guard_platform_4")
+spawn("castle_bridge",25,25,3,0,"merchants_hq_guard_platform_5")
+spawn("tomb_alcove",26,22,0,1,"merchants_shop_antidote_alcove")
+merchants_shop_antidote_alcove.surface:addConnector("onInsertItem", "merchants_script_entity", "onPutToken")
+merchants_shop_antidote_alcove.surface:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItemShop")
+spawn("dungeon_wall_text",26,22,0,1,"merchants_shop_antidote_text")
+merchants_shop_antidote_text.walltext:setWallText(" Antivenom / 1")
+spawn("dialog_system_socket",11,29,0,1,"merchants_quarter_master_socket")
+merchants_quarter_master_socket.socket:addConnector("onInsertItem", "merchants_script_entity", "onPutItem")
+merchants_quarter_master_socket.socket:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItem")
+spawn("tomb_stairs_down",0,30,3,1,"tomb_stairs_down_2")
+tomb_stairs_down_2.stairs:setTeleportTarget(5,0,30,0)
+spawn("invisible_wall",2,30,2,1,"invisible_wall_103")
+spawn("invisible_wall",5,28,2,1,"invisible_wall_112")
+spawn("invisible_wall",7,18,2,1,"invisible_wall_113")
+spawn("castle_ceiling_lantern",2,30,1,1,"castle_ceiling_lantern_4")
+spawn("tomb_pillar",2,30,0,2,"tomb_pillar_98")
+spawn("tomb_door_stone",1,30,1,1,"tomb_door_stone_18")
+tomb_door_stone_18.door:disable()
+tomb_door_stone_18.controller:disable()
+tomb_door_stone_18.cbox1:disable()
+tomb_door_stone_18.cbox2:disable()
+tomb_door_stone_18.model:disable()
+spawn("tomb_door_stone",1,29,1,1,"tomb_door_stone_19")
+tomb_door_stone_19.door:disable()
+tomb_door_stone_19.controller:disable()
+tomb_door_stone_19.cbox1:disable()
+tomb_door_stone_19.cbox2:disable()
+tomb_door_stone_19.model:disable()
 
 --- level 6 ---
 
@@ -9307,3 +9528,226 @@ spawn("tomb_floor_01",9,19,3,0,"tomb_floor_01_9")
 spawn("small_fish",8,19,0,-1,"small_fish_2")
 spawn("small_fish",8,19,1,-1,"small_fish_3")
 spawn("small_fish",8,19,2,-1,"small_fish_4")
+
+--- level 19 ---
+
+newMap{
+	name = "Hunting Island",
+	width = 32,
+	height = 32,
+	levelCoord = {12,0,0},
+	ambientTrack = "forest",
+	tiles = {
+		"beach_ground",
+		"beach_ground_water",
+		"forest_ground",
+		"forest_hedge",
+		"forest_trees",
+		"swamp_trees",
+	}
+}
+
+loadLayer("ceiling_elevation", {
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+	7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+})
+
+loadLayer("heightmap", {
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+	0,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,0,
+	0,0,0,0,-1,-1,-1,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,-1,-1,0,0,0,
+	0,0,0,0,-1,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-2,-1,-1,-1,0,
+})
+
+loadLayer("tiles", {
+	4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,3,3,3,5,5,5,5,5,3,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,5,5,5,5,5,3,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,3,5,5,5,5,5,5,5,5,5,5,3,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,5,5,5,3,3,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,3,3,5,5,5,3,5,5,5,5,5,5,5,5,3,3,3,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,3,3,3,3,5,5,3,5,5,5,5,5,5,5,5,3,3,6,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,3,3,3,3,3,5,5,3,5,5,5,5,5,5,5,3,3,3,3,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,5,5,5,3,3,3,3,3,3,3,3,3,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,3,3,3,3,5,3,3,5,5,3,3,5,5,5,5,5,3,3,3,5,4,
+	4,5,5,5,5,5,3,3,3,5,5,3,3,3,5,5,5,3,3,3,3,5,5,5,5,5,5,3,5,3,5,4,
+	4,5,5,5,3,3,3,3,3,5,5,3,3,5,5,5,5,5,5,5,3,5,5,5,5,5,5,3,5,5,5,4,
+	4,5,5,5,5,3,3,3,3,5,5,3,3,5,5,5,5,5,5,3,3,5,5,5,5,5,5,3,5,5,5,4,
+	4,5,5,5,5,5,5,3,3,3,3,3,3,5,5,5,5,5,5,3,5,5,5,5,5,5,5,3,5,5,5,4,
+	4,5,5,5,5,5,5,3,3,3,3,3,5,5,5,5,5,5,3,3,5,5,5,5,5,5,5,3,5,5,5,4,
+	4,5,5,5,5,5,5,5,3,3,3,5,5,5,5,5,3,3,3,3,3,3,3,3,3,3,3,3,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,3,3,3,3,3,3,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,3,3,3,5,5,5,5,5,5,5,5,5,5,5,5,5,4,
+	5,5,5,5,5,5,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,5,5,5,5,5,
+	5,5,5,5,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,5,5,5,
+	5,5,5,5,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,5,
+})
+
+spawn("forest_heightmap",1,31,1,0,"forest_heightmap_15")
+spawn("forest_day_sky",2,31,1,0,"hunting_island_forest_sky")
+spawn("beach_ocean",16,16,0,0,"beach_ocean_2")
+beach_ocean_2.bottom:disable()
+spawn("forest_bridge",16,29,0,0,"forest_bridge_36")
+spawn("forest_bridge",16,30,1,0,"forest_bridge_39")
+spawn("forest_bridge",16,31,1,0,"forest_bridge_40")
+spawn("twigroot_dormant",12,12,2,0,"twigroot_dormant_1")
+spawn("twigroot_dormant",13,12,2,0,"twigroot_dormant_2")
+spawn("forest_willow",7,18,1,0,"forest_willow_2")
+spawn("forest_heather",6,18,0,0,"forest_heather_2")
+spawn("forest_heather",7,17,1,0,"forest_heather_3")
+spawn("forest_heather",6,17,1,0,"forest_heather_4")
+spawn("forest_heather",8,17,3,0,"forest_heather_5")
+spawn("forest_heather",8,18,2,0,"forest_heather_6")
+spawn("forest_heather",8,20,0,0,"forest_heather_7")
+spawn("forest_heather",8,20,0,0,"forest_heather_8")
+spawn("forest_heather",8,19,1,0,"forest_heather_9")
+spawn("forest_heather",9,20,3,0,"forest_heather_10")
+spawn("forest_heather",9,21,0,0,"forest_heather_11")
+spawn("forest_heather",10,20,0,0,"forest_heather_12")
+spawn("forest_heather",11,19,0,0,"forest_heather_13")
+spawn("forest_heather",11,17,2,0,"forest_heather_14")
+spawn("forest_heather",11,18,3,0,"forest_heather_15")
+spawn("forest_lantern",12,15,0,0,"forest_lantern_1")
+spawn("forest_lantern",11,15,1,0,"forest_lantern_2")
+spawn("forest_lantern",12,16,0,0,"forest_lantern_3")
+spawn("forest_lantern",13,15,3,0,"forest_lantern_4")
+spawn("forest_ruins_dome",19,22,0,0,"forest_ruins_dome_10")
+spawn("spider_walker",11,14,2,0,"spider_walker_1")
+spawn("spider",14,15,3,0,"spider_1")
+spawn("mine_moss_rockpile_01",14,13,2,0,"mine_moss_rockpile_01_1")
+spawn("forest_willow",19,21,2,0,"forest_willow_3")
+spawn("forest_willow",18,22,2,0,"forest_willow_4")
+spawn("beach_thicket_01",13,12,2,0,"beach_thicket_01_1")
+spawn("beach_thicket_01",12,12,2,0,"beach_thicket_01_2")
+spawn("forest_hedge_01",31,11,2,0,"forest_hedge_01_1")
+spawn("forest_hedge_01",31,10,2,0,"forest_hedge_01_2")
+spawn("forest_hedge_01",31,9,2,0,"forest_hedge_01_3")
+spawn("forest_hedge_01",31,8,2,0,"forest_hedge_01_4")
+spawn("forest_hedge_01",31,7,2,0,"forest_hedge_01_5")
+spawn("forest_hedge_01",31,6,2,0,"forest_hedge_01_6")
+spawn("forest_hedge_01",31,4,2,0,"forest_hedge_01_7")
+spawn("forest_hedge_01",31,5,2,0,"forest_hedge_01_8")
+spawn("forest_hedge_01",31,3,2,0,"forest_hedge_01_9")
+spawn("forest_hedge_01",31,2,2,0,"forest_hedge_01_10")
+spawn("forest_hedge_01",31,1,2,0,"forest_hedge_01_11")
+spawn("forest_hedge_01",31,0,2,0,"forest_hedge_01_12")
+spawn("forest_hedge_01",31,23,2,0,"forest_hedge_01_13")
+spawn("forest_hedge_01",31,22,2,0,"forest_hedge_01_14")
+spawn("forest_hedge_01",31,21,2,0,"forest_hedge_01_15")
+spawn("forest_hedge_01",31,20,2,0,"forest_hedge_01_16")
+spawn("forest_hedge_01",31,19,2,0,"forest_hedge_01_17")
+spawn("forest_hedge_01",31,18,2,0,"forest_hedge_01_18")
+spawn("forest_hedge_01",31,16,2,0,"forest_hedge_01_19")
+spawn("forest_hedge_01",31,17,2,0,"forest_hedge_01_20")
+spawn("forest_hedge_01",31,15,2,0,"forest_hedge_01_21")
+spawn("forest_hedge_01",31,14,2,0,"forest_hedge_01_22")
+spawn("forest_hedge_01",31,13,2,0,"forest_hedge_01_23")
+spawn("forest_hedge_01",31,12,2,0,"forest_hedge_01_24")
+spawn("forest_hedge_01",31,27,2,0,"forest_hedge_01_25")
+spawn("forest_hedge_01",31,26,2,0,"forest_hedge_01_26")
+spawn("forest_hedge_01",31,25,2,0,"forest_hedge_01_27")
+spawn("forest_hedge_01",31,24,2,0,"forest_hedge_01_28")
+spawn("forest_hedge_01",31,28,2,0,"forest_hedge_01_29")
+spawn("timer",0,30,2,0,"hunting_island_timer")
+hunting_island_timer.timer:setTimerInterval(0.01)
+hunting_island_timer.timer:setDisableSelf(false)
+hunting_island_timer.timer:setTriggerOnStart(false)
+hunting_island_timer.timer:setCurrentLevelOnly(true)
+hunting_island_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
+spawn("script_entity",0,31,0,0,"hunting_island_script_entity")
+hunting_island_script_entity.script:loadFile("mod_assets/scripts/hunting_island.lua")
+spawn("swamp_sky",3,31,2,0,"hunting_island_swamp_sky")
+hunting_island_swamp_sky.model:disable()
+hunting_island_swamp_sky.nightSky:disable()
+hunting_island_swamp_sky.stars:disable()
+hunting_island_swamp_sky.light:disable()
+hunting_island_swamp_sky.ambient:disable()
+hunting_island_swamp_sky.sky:disable()
+hunting_island_swamp_sky.fogparticles:disable()
+spawn("swamp_heather_low",21,16,0,0,"swamp_heather_low_1")
+spawn("swamp_heather_low",22,15,3,0,"swamp_heather_low_2")
+spawn("swamp_heather_low",23,15,3,0,"swamp_heather_low_3")
+spawn("swamp_heather_low",23,14,2,0,"swamp_heather_low_4")
+spawn("swamp_heather_low",23,15,1,0,"swamp_heather_low_5")
+spawn("swamp_heather_low",24,15,3,0,"swamp_heather_low_6")
+spawn("thorn_wall",23,15,2,0,"thorn_wall_1")
+thorn_wall_1.thornwall:disable()
+spawn("boat_small",15,31,1,1,"boat_small_3")
+spawn("invisible_wall",16,28,0,0,"hunters_merchants_captain_spawn")
+spawn("floor_trigger",15,31,2,0,"hunting_island_boat_trigger")
+hunting_island_boat_trigger.floortrigger:setTriggeredByParty(true)
+hunting_island_boat_trigger.floortrigger:setTriggeredByMonster(false)
+hunting_island_boat_trigger.floortrigger:setTriggeredByItem(false)
+hunting_island_boat_trigger.floortrigger:setTriggeredByDigging(false)
+hunting_island_boat_trigger.floortrigger:setDisableSelf(false)
+hunting_island_boat_trigger.floortrigger:addConnector("onActivate", "merchants_script_entity", "merchantsCaptainTravel")
+hunting_island_boat_trigger.floortrigger:disable()

@@ -1,3 +1,71 @@
+defineObject{
+	name = "merchants_hq_guard1",
+    baseObject = "ratling3",
+    components = {
+        {
+			class = "Monster",				
+            meshName = "ratling_mesh",
+			hitSound = "ratling_hit",
+			dieSound = "ratling_die",
+			footstepSound = "ratling_footstep",
+			hitEffect = "hit_blood_small",
+			capsuleHeight = 0.2,
+			capsuleRadius = 0.7,		
+			health = 1000,
+			protection = 10,
+			evasion = 12,
+			exp = 1500,
+		},
+		{
+			class = "RangedBrain",
+			name = "brain",
+			sight = 32,
+		},
+		{
+			class = "MonsterMove",
+			name = "move",
+			sound = "ratling_walk",
+			cooldown = 3,
+			dashChance = 80,
+		},
+		{
+			class = "MonsterAttack",
+			name = "rangedAttack",
+			attackType = "firearm",
+			attackPower = 150,
+			accuracy = 75,
+			woundChance = 25,
+			cooldown = 5,
+			sound = "ratling3_attack",
+			screenEffect = "damage_screen",
+			onAttack = function(self)
+				self.go.muzzleFlash:restart()
+				self.go.muzzleFlashLight:enable()
+				self.go.muzzleFlashLight:fadeIn(0)
+				self.go.muzzleFlashLight:fadeOut(0.1)
+			end,
+		},
+		{
+			class = "Particle",
+			parentNode = "muzzle_flash",
+			name = "muzzleFlash",
+			particleSystem = "muzzle_flash_small",
+			enabled = false,
+		},
+		{
+			class = "Light",
+			parentNode = "muzzle_flash",
+			name = "muzzleFlashLight",
+			color = vec(1.0, 0.5, 0.2),
+			brightness = 20,
+			range = 4,
+			disableSelf = true,
+			enabled = false,
+			fillLight = true,
+		},
+	},
+}
+
 defineParticleSystem{
     name = "spirit_fire_pillar",
     emitters = {
@@ -270,6 +338,26 @@ defineParticleSystem{
 }
 
 defineObject{
+    name = "dialog_system_socket",
+    components = {
+		{
+			class = "Clickable",
+			offset = vec(0.0, 1.5, 0.0),
+			size = vec(1, 1, 0.15),
+			--debugDraw = true,
+		},
+		{
+			class = "Socket",
+			offset = vec(0.05, 1.1, -0.25),
+			--rotation = vec(0, -20, -90),
+			--debugDraw = true,
+		},
+    },
+	placement = "wall",
+	editorIcon = 84,
+}
+
+defineObject{
     name = "dialog_system_clickable",
     baseObject = "forest_statue_wall_1",
     components = {
@@ -280,8 +368,9 @@ defineObject{
 		},
 		{
 			class = "Clickable",
-			offset = vec(0, .5, 0),
-			size = vec(1.5, 1, 1.5),
+			offset = vec(0, .7, 0),
+			size = vec(1.5, .6, 1.5),
+            --debugDraw = true
         },
 		{
 			class = "Button",
@@ -289,7 +378,7 @@ defineObject{
         {
             class = "Timer",
             name = "timer",
-            timerInterval = 1, -- this needs to sync with cooldown of the monsterattack (there is not onCooldownReset on the attack)
+            timerInterval = .1,
             disableSelf = true,
             enabled = false,
             onActivate = function(self)
@@ -310,7 +399,7 @@ defineObject{
                 end
             end,
             onDismissText = function(self) 
-                self.go.timer:setTimerInterval(1) 
+                self.go.timer:setTimerInterval(.1)  -- this timer protects the button and clickable from the dismiss click and the system from unintended activation of the next state in the dialog
                 self.go.timer:enable()
                 self.go.timer:start()
             end,
@@ -388,6 +477,157 @@ defineObject{
 			brightness = 4,
 			fillLight = true,
 		},
+    }
+}
+
+defineObject{
+    name = "dialog_system_selected_answer_left",
+    components = {
+        {
+            class = "Particle",
+            name = "particle_answer_left",
+            particleSystem = "dialog_system_answer_to_left",
+			offset = vec(0, 1.5, -0.2),
+            enabled = false,
+        }
+    },
+	placement = "wall",
+	editorIcon = 84,
+}
+
+defineObject{
+    name = "dialog_system_selected_answer_left",
+    components = {
+        {
+            class = "Particle",
+            name = "particle_answer",
+            particleSystem = "dialog_system_answer",
+			offset = vec(0, 1.5, -0.2),
+            rotation = vec(90, -90, 0),
+            enabled = false,
+        }
+    },
+	placement = "wall",
+	editorIcon = 84,
+}
+
+defineObject{
+    name = "dialog_system_selected_answer_right",
+    components = {
+        {
+            class = "Particle",
+            name = "particle_answer",
+            particleSystem = "dialog_system_answer",
+			offset = vec(0, 1.5, -0.2),
+            rotation = vec(90, 90, 0),
+            enabled = false,
+        }
+    },
+	placement = "wall",
+	editorIcon = 84,
+}
+
+defineParticleSystem{
+    name = "dialog_system_answer",
+    emitters = {
+        {
+			emissionRate = 15,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {0,0,-0.1},
+			boxMax = {0,0,0.1},
+			sprayAngle = {0,0},
+			velocity = {.1, 1.4},
+			texture = "assets/textures/env/castle_wall_text_dif.tga",
+			frameRate = 2,
+			frameSize = 43,
+			frameCount = 9,
+			lifetime = {2.5, 3},
+			colorAnimation = false,
+			color0 = {1, 1, 1},
+			opacity = .45,
+			fadeIn = 0.5,
+			fadeOut = 0.3,
+			size = {.1, .1},
+			gravity = {0, 1, -.2},
+			airResistance = 1,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = 0.1,
+			objectSpace = true, 
+        },
+        {
+			emissionRate = 15,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,0},
+			velocity = {.1, 1.4},
+			texture = "assets/textures/particles/castle_wall_text.tga",
+			frameRate = 2,
+			frameSize = 32,
+			frameCount = 9,
+			lifetime = {2.5, 3},
+			colorAnimation = false,
+			color0 = {1, 1, 1},
+			opacity = .45,
+			fadeIn = 0.5,
+			fadeOut = 0.3,
+			size = {.1, .1},
+			--gravity = {-.1, 1, 0.2},
+			gravity = {0, 1,  -.2},
+			airResistance = 1,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			objectSpace = true, 
+        },   
+		{
+			emissionRate = 40,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,0},
+			velocity = {.1, 1.4},
+			texture = "assets/textures/particles/teleporter.tga",
+			lifetime = {2.5, 3},
+			color0 = {2.0,2.0,2.0},
+			opacity = .25,
+			fadeIn = 0.5,
+			fadeOut = 0.3,
+			size = {0.05, 0.5},
+			gravity = {0, 1,  -.2},
+			airResistance = 1,
+			rotationSpeed = 2,
+			blendMode = "Additive",
+			objectSpace = true, 
+		},
+		{
+			emissionRate = 10,
+			emissionTime = 0,
+			maxParticles = 30,
+			spawnBurst = true,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,0},
+			velocity = {.1, 1.4},
+			objectSpace = true,
+			texture = "assets/textures/particles/fog.tga",
+			lifetime = {2.5, 3},
+			color0 = {0.152941, 0.352941, 0.803922},
+			opacity = 1,
+			fadeIn = 2.2,
+			fadeOut = 2.2,
+			size = {0.15, 0.5},
+			gravity = {0, 1,  -.2},
+			airResistance = 1,
+			rotationSpeed = 0.3,
+			blendMode = "Additive",
+		},	            
     }
 }
 
