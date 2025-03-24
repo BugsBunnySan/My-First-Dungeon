@@ -411,6 +411,11 @@ function enable_boat_trigger(npc_id, state_info)
     floor_trigger.floortrigger:enable()
 end
 
+function doMerchantsCaptainTravel(time_delta, animation)
+    GameMode.fadeIn(1, 1)
+    GameMode.setEnableControls(true)    
+end
+
 function merchantsCaptainTravel(trigger)
     trigger = global_scripts.script.getGO(trigger)
     --print("going to "..merchants_npcs["Merchants_Captain"].travel_target)
@@ -435,9 +440,19 @@ function merchantsCaptainTravel(trigger)
         dialog_states["Merchants_Captain"] = travel_info.new_state
         dialog_clickable.particle:restart()
         set_npc_dialog_text("Merchants_Captain", false)        
-    end    
+    end        
     local pos = global_scripts.script.copy_pos(travel_info)
+    
+    --playSound("chonghoizatsingsiu_short")
+    GameMode.fadeOut(0, 1)
+    GameMode.setEnableControls(false)
+    GameMode.playVideo("mod_assets/cinematics/travelin_with_merchant_captain.v002.ivf")
+    --GameMode.showImage("mod_assets/cinematics/boat_ride_with_rat_captain.v001.dds") -- this is not so good, the player has to press a key to dismiss
+    -- the image, it would be nicer if that wasn't needed
+    
     party:setPosition(pos.x, pos.y, pos.facing, pos.elevation, pos.level)
+    local animation = {on_finish=doMerchantsCaptainTravel, step=16.2, duration=16.1, pos=pos} -- the video above is about 16 seconds long
+    global_scripts.script.add_animation(0, animation)    
 end
 
 function give_hunting_island_pass()

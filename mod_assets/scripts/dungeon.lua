@@ -884,13 +884,6 @@ dungeon_wall_text_long_1.walltext:setWallText("")
 spawn("wall_portrait",3,8,0,0,"wall_portrait_1")
 wall_portrait_1.walltext:setWallText("")
 spawn("wooden_box",4,9,1,0,"wooden_box_2")
-spawn("starting_location",4,9,0,0,"starting_location_1")
-spawn("timer",0,18,0,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 
 --- level 5 ---
 
@@ -1016,12 +1009,6 @@ loadLayer("tiles", {
 	2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 })
 
-spawn("timer",0,15,2,0,"merchants_timer")
-merchants_timer.timer:setTimerInterval(0.01)
-merchants_timer.timer:setDisableSelf(false)
-merchants_timer.timer:setTriggerOnStart(false)
-merchants_timer.timer:setCurrentLevelOnly(true)
-merchants_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 spawn("script_entity",0,16,3,0,"merchants_script_entity")
 merchants_script_entity.script:loadFile("mod_assets/scripts/merchants_of_east_hq.lua")
 spawn("floor_trigger",15,21,0,1,"floor_trigger_28")
@@ -1682,6 +1669,12 @@ floor_trigger_33.floortrigger:setTriggeredByItem(false)
 floor_trigger_33.floortrigger:setTriggeredByDigging(false)
 floor_trigger_33.floortrigger:setDisableSelf(true)
 floor_trigger_33.floortrigger:addConnector("onActivate", "merchants_script_entity", "enterLevel")
+spawn("timer",0,15,2,0,"merchants_animation_timer")
+merchants_animation_timer.timer:setTimerInterval(0.01)
+merchants_animation_timer.timer:setDisableSelf(false)
+merchants_animation_timer.timer:setTriggerOnStart(false)
+merchants_animation_timer.timer:setCurrentLevelOnly(true)
+merchants_animation_timer.timer:addConnector("onActivate", "global_scripts", "globaAnimationTick")
 
 --- level 6 ---
 
@@ -7388,6 +7381,13 @@ spawn("counter",7,28,0,0,"rat_invasion_boss_fight_counter")
 rat_invasion_boss_fight_counter.counter:setValue(12)
 rat_invasion_boss_fight_counter.counter:addConnector("onActivate", "triels_robin_script_entitiy", "ratInvasionRemoved")
 spawn("camera_placeable",12,8,0,0,"camera_placeable_1")
+spawn("timer",0,18,0,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",18,31,0,0,"starting_location_1")
 
 --- level 12 ---
 

@@ -591,7 +591,7 @@ end
 
 function on_finish_robin_castle_countdown(time_delta, animation)
     boss_fight_robin_castle.bossfight:deactivate()
-    global_scripts.script.faceObjext(pushblock_robin, 0)
+    global_scripts.script.faceObject(pushblock_robin, 0)
     liteUpPushblockFloorAnimation(pushblock_trigger_robin_castle.floortrigger)
 end
                                
@@ -755,6 +755,7 @@ end
 
 function robinAtTheCastle(trigger)
     local monster = findEntity("robin_castle_ogre").monster
+    boss_fight_robin_castle.bossfight:addMonster(monster)
     boss_fight_robin_castle.bossfight:activate()    
     local countdown_animation = {func=robin_castle_countdown, on_finish=on_finish_robin_castle_countdown, step=.1, duration=250000, elapsed=0, last_called=-1, starting_health=5000, health_tick=10, monster_id="robin_castle_ogre", health_tick_stages = {4500, 4000, 3500, 3000, 2500, 2000, 1500, 1000, 500}}
     global_scripts.script.add_animation(boss_fight_robin_castle.level, countdown_animation)
