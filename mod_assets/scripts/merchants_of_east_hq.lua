@@ -196,6 +196,25 @@ function raiseDesk(npc_id, state_info)
     global_scripts.script.add_animation(merchants_receptionist_desk.level, animation)
 end
 
+function onRemoveItem(pedestal, item)
+    pedestal = global_scripts.script.getGO(pedestal)
+    item = global_scripts.script.getGO(item)
+    if pedestal.id == "merchants_resource_master_socket" then
+        if item.id == "merchants_quartermaster_token" then
+            dialog_states["Merchants_Resources_Master"] = "dont_bother_me"
+            set_npc_dialog_text("Merchants_Resources_Master", dialog_states["Merchants_Resources_Master"], false, false)
+        end
+    elseif pedestal.id == "merchants_quarter_master_socket" then
+        local dialog_clickable = findEntity(dialog_system_clickable_ids["Merchants_Quarter_Master"])
+        if item.id == "merchants_travel_pass_hunt_beasts" then
+            cleanup_dialog_answer("Merchants_Quarter_Master")   
+            dialog_states["Merchants_Quarter_Master"] = "wait_for_trophies"
+            dialog_clickable.particle:restart()
+            set_npc_dialog_text("Merchants_Quarter_Master", false)    
+        end
+    end
+end
+
 function onPutItem(pedestal, item)
     pedestal = global_scripts.script.getGO(pedestal)
     item = global_scripts.script.getGO(item)
@@ -231,7 +250,12 @@ function onPutItem(pedestal, item)
             dialog_clickable.particle:restart()
             set_npc_dialog_text("Merchants_Quarter_Master", false)
         elseif item.id == "merchants_token_sack_1" then
-                --return  sack to dispenser platform, close door and fill sack, do the same if the sack is placed on the platform
+            beacon_furnace_5.surface:addItem(item.item)
+            castle_door_portcullis_keep_pillars_1.door:close()              
+            cleanup_dialog_answer("Merchants_Quarter_Master")   
+            dialog_states["Merchants_Quarter_Master"] = "give_hunting_island_pass"
+            dialog_clickable.particle:restart()
+            set_npc_dialog_text("Merchants_Quarter_Master", false)            
         end
     elseif pedestal.id == "merchants_captain_socket" then    
         local dialog_clickable = findEntity(dialog_system_clickable_ids["Merchants_Captain"])
@@ -332,15 +356,6 @@ function dog_growl()
     global_scripts.script.playSoundAtObject("warg_howl", merchants_resource_master_dog)
 end
 
-function onRemoveItem(pedestal, item)
-    pedestal = global_scripts.script.getGO(pedestal)
-    item = global_scripts.script.getGO(item)
-    if item.id == "merchants_quartermaster_token" then
-        dialog_states["Merchants_Resources_Master"] = "dont_bother_me"
-        set_npc_dialog_text("Merchants_Resources_Master", dialog_states["Merchants_Resources_Master"], false, false)
-    end
-end
-
 function spawn_quartermaster_token()
     local token = spawn("blue_gem", merchants_resource_master_socket.level, 0, 0, 0, 0, "merchants_quartermaster_token")  
     merchants_resource_master_socket:spawn("dispel_blast")  
@@ -425,6 +440,12 @@ function merchantsCaptainTravel(trigger)
     party:setPosition(pos.x, pos.y, pos.facing, pos.elevation, pos.level)
 end
 
+function give_hunting_island_pass()
+    local hunting_island_pass = spawn("note", merchants_quarter_master_socket.level, 0, 0, 0, 0, "merchants_travel_pass_hunt_beasts")
+    hunting_island_pass.scrollitem:setScrollText("To the Island of Beasts\n/QuaterMaster")          
+    merchants_quarter_master_socket.socket:addItem(hunting_island_pass.item)
+end
+
 merchants_npcs = {Merchants_Resources_Master = {}, 
                   Merchants_Captain = {dialog_clickable_id="dialog_system_clickable_5", 
                                        dialog_history_button_id="dialog_system_show_history_button_5", 
@@ -474,8 +495,11 @@ dialog_state_machines = {Merchants_Fisher = {init = {say = "Hello, Adventurers!\
                                                         dont_bother_me = {say = "Me dog is hungry, ya looks like food and y're about to fail my final quest.", func=dog_growl, one_time_func=dialog_system_next_state, func_called=false, new_state="annoyed"},
                                                         annoyed = {say = "You fail the quest of Don't Bother Me No More.\nYour reward will be a cannonball.", func=resources_master_boom, new_state="annoyed"}},
                         Merchants_Quarter_Master = {init = {say = "Doo you have a tooken? If noot, goo away!", new_state = "init"},
-                                                    token_given = {say = "Very gooood, take these tookens and goo buy equiipment. Briing back the saack.", one_time_func=quarter_master_gives_tokens, func_called=false, new_state="stay_a_while"},
-                                                    stay_a_while = {say = "I oonce caught a cheeeesefish! It was soooo gooood!", func=change_story, new_state="stay_a_while"}
+                                                    token_given = {say = "Very gooood, take these tookens and goo buy equiipment. Briing back the saack.", one_time_func=quarter_master_gives_tokens, func_called=false, new_state="wait_for_sack"},
+                                                    stay_a_while = {say = "I oonce caught a cheeeesefish! It was soooo gooood!", func=change_story, new_state="stay_a_while"},
+                                                    wait_for_sack = {say = "Pleease retoorn the saack!", new_state="wait_for_sack"},
+                                                    give_hunting_island_pass = {say = "Teeaak this paaass tooo the captaiin. Goo huntiing, retuurn with troophies!", one_time_func=give_hunting_island_pass, func_called=false, new_state="wait_for_trophies"},
+                                                    wait_for_trophies = {say = "Goooo huuunt", new_state="wait_for_trophies"},
                                                    },
                         Merchants_Captain = {init = {say = "Ahoy!", answers = {{say = "Ahoy, can we travel with your boat, captain?", new_state="explain_travel"}}},
                                              explain_travel = {say = "If you have a travel pass, you can come along.", new_state="ready_to_travel"},
@@ -801,6 +825,10 @@ function merchants_set_ocean_level(time_delta, animation)
         w_pos.y = merchants_marea_height * math.sin(animation.elapsed/2) + merchants_marea_ref_heights[ocean_entity_id]
         ocean_entity:setWorldPosition(w_pos)
     end
+end
+
+function enterLevel()
+    GameMode.setTimeOfDay(1.98)
 end
 
 function init()    

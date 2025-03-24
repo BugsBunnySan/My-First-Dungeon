@@ -1,3 +1,42 @@
+defineMaterial{
+	name = "wall_portrait_sakaura",
+	diffuseMap = "mod_assets/textures/wall_portrait_sakura_dif.tga",
+	normalMap = "mod_assets/textures/wall_portrait_sakura_normal.tga",
+	specularMap = "mod_assets/textures/wall_portrait_sakura_spec.tga",
+	doubleSided = false,
+	lighting = true,
+	alphaTest = false,
+	ambientOcclusion = true,
+	blendMode = "Opaque",
+	textureAddressMode = "Wrap",
+	glossiness = 20,
+	depthBias = 0,
+}
+
+
+defineObject{
+    name = "wall_portrait",
+    baseObject = "dungeon_wall_text_long",
+    components = {
+        {
+			class = "Model",
+			model = "assets/models/env/dungeon_wall_text_long.fbx",
+            material = "wall_portrait_sakaura",
+			staticShadow = true,
+		},
+    }
+}
+
+defineObject{
+    name = "camera_placeable",
+    baseObject = "base_floor_decoration",
+    components = {
+        {
+            class = "Camera",         
+        }
+    }
+}
+
 defineObject{
     name = "castle_door_portcullis_keep_pillars",
     baseObject = "castle_door_portcullis",

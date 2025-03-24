@@ -3,5 +3,10 @@ function leverPulled(lever)
 end
     
 
+function buttonPressed()
+    --context.drawGuiItem("EnterTextDialog", 100, 100)
+end
+
 function init()
 end
+

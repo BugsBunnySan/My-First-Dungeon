@@ -21,7 +21,7 @@ end
    
 language_table = {heroes_level_up_text = {component = "walltext", english = "Choose Heroes and level up enough\nfor the adventure", 
                                                                   espanol = "Eliga tus heroes y suba bastante niveles\npara la aventura", 
-                                                                  deutsch = "Waehle deine Helden und levele sie genuegend\n hoch fuer das Abent3euer"}}
+                                                                  deutsch = "Waehle deine Helden und levele sie genuegend\n hoch fuer das Abenteuer"}}
                                     
 function init()
 

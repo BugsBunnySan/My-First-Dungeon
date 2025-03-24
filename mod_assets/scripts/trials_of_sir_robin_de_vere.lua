@@ -432,7 +432,8 @@ function finish_build_castle(animation)
     -- deactivate pushblock trigger, keep light ofc
     global_scripts.script.faceObject(pushblock_robin, 1)
     global_scripts.script.party_level_up_champions({1,2,3,4})
-    goTilNoon(well_of_caral)    
+    goTilNoon(well_of_caral)   
+    GameMode.setCamera()
 end
 
 function light_up(well_of_caral_id)
@@ -495,6 +496,15 @@ end
 function buildCastle()  
     --hudPrint("A gentle force moves you")
     --global_scripts.script.moveObjectToObject(party, robin_build_castle_observe)
+    
+     
+    local w_pos = camera_placeable_1:getWorldPosition()
+    w_pos.y = w_pos.y + 1.5
+    camera_placeable_1:setWorldPosition(w_pos)
+    global_scripts.script.aim_camera(camera_placeable_1, well_of_caral)
+    camera_placeable_1.camera:setFov(90)
+    GameMode.setCamera(camera_placeable_1.camera)   
+    
     for _,pedestal_id in ipairs(castle_of_caral.pedestals) do
         local animation = raisePedestal(pedestal_id, true)
         animation.stop_pos.y = animation.stop_pos.y + - 6
@@ -548,7 +558,7 @@ function raisePedestal(pedestal_id, return_animation, direction)
     end
 end
 
-function robinBuildsCastle(trigger)            
+function robinBuildsCastle(trigger)        
     pushblock_trigger_r47.controller:deactivate()
     pushblock_trigger_r47.light:enable()
     for _,pedestal_id in ipairs(castle_of_caral.pedestals) do
@@ -966,8 +976,8 @@ function count_farming(state_data)
     state_data.count = state_data.count - 1
     --hudPrint(tostring(state_data.count))
     if state_data.count == 0 then
-        global_scripts.script.remove_time_callback("blooddrop_cap_lower")
-        global_scripts.script.remove_time_callback("blooddrop_cap_raise")
+        global_scripts.script.remove_time_callback(pushblock_robin.level, "blooddrop_cap_lower")
+        global_scripts.script.remove_time_callback(pushblock_robin.level, "blooddrop_cap_raise")
         return state_data.next_state
     else
         local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)

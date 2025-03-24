@@ -1,3 +1,19 @@
+function aim_camera(camera, target)
+    local camera_w_pos = camera:getWorldPosition()
+    local target_w_pos = target:getWorldPosition()
+    local delta_w_pos = target_w_pos - camera_w_pos
+    local dist = math.sqrt((delta_w_pos.x * delta_w_pos.x) + (delta_w_pos.y * delta_w_pos.y) + (delta_w_pos.z * delta_w_pos.z))
+    local rotations = vec()
+    
+    rotations.x = math.asin(delta_w_pos.x / dist)
+    rotations.y = math.asin(delta_w_pos.y / dist)
+    rotations.z = math.asin(delta_w_pos.z / dist)
+    
+    rotations = (rotations / math.pi) * 180
+    
+    camera:setWorldRotationAngles(rotations.y, -1 * rotations.x, 0) 
+end
+
 --global timed events and time keeping
 morning = 0
 noon = 0.5
@@ -222,11 +238,11 @@ function globaAnimationTick(timer)
 end
 
 -- Beginning Dungeon
-rubble_pedestals = {["rubble_pedestal_2"] = {["rubble"] = {"rubble_2"},
+rubble_pedestals = {["rubble_pedestal_2"] = {["rubble"] = {"rubble_2", "rubble_1"},
                                             ["kin"] = {"rubble_pedestal_1"},
                                             ["food"] = 250,
                                             ["xp"] = 100},
-                    ["rubble_pedestal_1"] = {["rubble"] = {"rubble_1"},
+                    ["rubble_pedestal_1"] = {["rubble"] = {"rubble_1", "rubble_2"},
                                             ["kin"] = {"rubble_pedestal_2"},
                                             ["food"] = 250,
                                             ["xp"] = 100},                                            
@@ -246,29 +262,56 @@ function resetRubblePedestal(pedestal_id)
     pedestal.surface:enable()
 end
 
-function clearRubble(pedestal, item)
-    if item ~= nil and item.go.name ~= "pickaxe" then
-        return
-    end
-    pedestal = getGO(pedestal)
+function rubbleCleared(time_delta, animation) 
+    GameMode.fadeIn(1, 1)
+    GameMode.setEnableControls(true)
+    party_consume_food({1, 2, 3, 4}, animation.food_consumed)
+    party_gain_xp({1, 2, 3, 4}, animation.xp_gained)    
+    --pedestal:destroyDelayed()
+end
+
+function doClearRubble(time_delta, animation)
+    local pedestal = findEntity(animation.pedestal_id)
     for _, rubble_n in ipairs(rubble_pedestals[pedestal.id]["rubble"]) do
         local rubble = findEntity(rubble_n)
-        playSound("mining")
         rubble:destroyDelayed()
     end
-    if item ~= nil then
-        spawn(item.go.name, item.go.level, item.go.x, item.go.y, party.facing, item.go.elevation)
-        item.go:destroyDelayed()        
-        for _, kin_n in ipairs(rubble_pedestals[pedestal.id]["kin"]) do            
-            local kin = findEntity(kin_n)            
-            clearRubble(kin, nil)
-        end
-    end
-    party_consume_food({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["food"])
-    party_gain_xp({1, 2, 3, 4}, rubble_pedestals[pedestal.id]["xp"])    
-    --pedestal:destroyDelayed()
+    
+    local item = findEntity(animation.item_id)
+    local food_consumed = rubble_pedestals[pedestal.id]["food"]
+    local xp_gained = rubble_pedestals[pedestal.id]["xp"]
+    spawn(item.name, item.level, item.x, item.y, party.facing, item.elevation)
+    item:destroyDelayed()   
     pedestal.clickable:disable()
-    pedestal.surface:disable()
+    pedestal.surface:disable() 
+    pedestal.projectilecollider:disable()
+    for _, kin_id in ipairs(rubble_pedestals[pedestal.id]["kin"]) do            
+        local kin = findEntity(kin_id)   
+        kin.clickable:disable()
+        kin.surface:disable() 
+        kin.projectilecollider:disable()
+        food_consumed = food_consumed + rubble_pedestals[kin_id]["food"]
+        xp_gained = xp_gained + rubble_pedestals[kin_id]["xp"]
+    end       
+    local animation = {on_finish=rubbleCleared, step=1.2, duration=1.1, food_consumed=food_consumed, xp_gained=xp_gained}
+    add_animation(0, animation)
+
+end
+
+function clearRubble(pedestal, item)
+    pedestal = getGO(pedestal)
+    item = getGO(item)
+    
+    if item.name ~= "pickaxe" then
+        return
+    end
+   
+    playSound("mining")
+    GameMode.fadeOut(0, 1)
+    GameMode.setEnableControls(false)
+
+    local animation = {on_finish=doClearRubble, step=1.2, duration=1.1, pedestal_id=pedestal.id, item_id=item.id}
+    add_animation(0, animation)
 end
 
 -- Fields Of Herbs
