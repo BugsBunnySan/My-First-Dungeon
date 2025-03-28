@@ -1,7 +1,7 @@
 function initDungeon()    
     initGlobals()    
-    initParty()
-    levelUpParty()
+    --initPartyOP()
+    --levelUpParty()
     initCastleOfWater()
     initMoistCatacombs()
     initCloister()
@@ -66,50 +66,201 @@ equipment = {[light_weapons_idx] = {[ItemSlot.Weapon] = "bone_blade",
                             [ItemSlot.Chest] = "archmage_scapular",
                             [ItemSlot.Legs] = "archmage_mantle",
                             [ItemSlot.Feet] = "archmage_loafers"}}
+
+trait_names = {
+    "head_hunter",
+    "skilled",
+    "fast_learner",
+    "rag",
+    "fast_metabolism",
+    "endure_elements",
+    "poison_immunity",
+    "chitin_armor",
+    "quick",
+    "mutation",
+    "aggressive",
+    "agile",
+    "healthy",
+    "athletic",
+    "strong_mind",
+    "aura",
+    "tough",
+    "cold_resistant",
+    "evasive",
+    "fire_resistant",
+    "weapon_specialization",
+    "endurance",
+    "lightning_speed",
+    "natural_armor",
+    "poison_resistant",
+    "uncanny_speed",
+    "leadership",
+    "nightstalker",
+    "pack_mule",
+    "meditation",
+    "two_handed_mastery",
+    "light_armor_proficiency",
+    "heavy_armor_proficiency",
+    "armor_expert",
+    "shield_expert",
+    "staff_defence",
+    "improved_alchemy",
+    "bomb_expert",
+    "backstab",
+    "assassin",
+    "firearm_mastery",
+    "dual_wield",
+    "improved_dual_wield",
+    "piercing_arrows",
+    "double_throw",
+    "reach",
+    "uncanny_speed",
+    "fire_mastery",
+    "air_mastery",
+    "earth_mastery",
+    "water_mastery",
+    "cleric_added_damage",
+    "cleric_divine_regeneration",
+    "paladin_shield",
+    "paladin_aura_receive_protection",
+    "paladin_aura_receive_evasion"}
+
+skill_names = {
+    "alchemy",
+    "athletics",
+    "concentration",
+    "light_weapons",
+    "heavy_weapons",
+    "missile_weapons",
+    "poison_immunity",
+    "throwing",
+    "firearms",
+    "accuracy",
+    "critical",
+    "armors",
+    "dodge",
+    "fire_magic",
+    "air_magic",
+    "earth_magic",
+    "water_magic",
+    "divine_magic",
+    "aura",    
+}
+
+default_stats = {
+    strength=10, 
+    dexterity=10, 
+    vitality=10, 
+    willpower=10,
+    evasion=0,
+    protection=0,
+    resist_shock=0,
+    resist_poison=0,
+    resist_fire=0,
+    resist_cold=0
+}
+
+function removeTraits(champion)
+    for _,trait_name in ipairs(trait_names) do
+        champion:removeTrait(trait_name)
+    end
+end
              
+function resetSkills(champion)
+    for _,skill_name in ipairs(skill_names) do
+        for i=1,champion:getSkillLevel(skill_name) do
+            champion:trainSkill(skill_name, -1, false)
+        end
+    end
+end             
+            
+function resetStats(champion)
+    for stat_name, value in pairs(default_stats) do
+        champion:setBaseStat(stat_name, value)
+    end
+end
+          
+function removeItems(champion)
+    for i=1,ItemSlot.MaxSlots do
+        champion:removeItemFromSlot(i)
+    end
+end
+          
+function initChampion(champion_idx)
+    local champion = party.party:getChampion(champion_idx)
+    champion:resetExp()
+    champion:setRace("sprite")
+    champion:setClass("sprite")
+    champion:setPortrait("assets/textures/particles/teleporter.tga")
+    removeTraits(champion)
+    resetSkills(champion)
+    resetStats(champion)
+    removeItems(champion)
+end          
+          
 function initParty()
+    for i=1,4 do
+        initChampion(i)
+    end
+ end
+             
+function initPartyOP()
     local light_weapons = party.party:getChampion(light_weapons_idx)
+    light_weapons:setClass("fighter")    
     light_weapons:trainSkill("light_weapons", 5, false)
     light_weapons:trainSkill("accuracy", 5, false)
     light_weapons:trainSkill("armors", 5, false)
     light_weapons:trainSkill("critical", 5, false)
     for item_slot, item_name in pairs(equipment[light_weapons_idx]) do
-        if light_weapons:getItem(item_slot) == nil then
-            light_weapons:insertItem(item_slot, spawn(item_name).item)
+        if light_weapons:getItem(item_slot) ~= nil then
+            local item = light_weapons:removeItemFromSlot(item_slot)
+            global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
+        
+        light_weapons:insertItem(item_slot, spawn(item_name).item)        
     end  
     local heavy_weapons = party.party:getChampion(2)
+    heavy_weapons:setClass("barbarian")
     heavy_weapons:trainSkill("heavy_weapons", 5, false)
     heavy_weapons:trainSkill("accuracy", 5, false)
     heavy_weapons:trainSkill("armors", 5, false)    
     heavy_weapons:trainSkill("critical", 5, false)
     for item_slot, item_name in pairs(equipment[heavy_weapons_idx]) do
-        if heavy_weapons:getItem(item_slot) == nil then
-            heavy_weapons:insertItem(item_slot, spawn(item_name).item)
+        if heavy_weapons:getItem(item_slot) ~= nil then
+            local item = heavy_weapons:removeItemFromSlot(item_slot)
+            global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
+        heavy_weapons:insertItem(item_slot, spawn(item_name).item)
     end  
     local rogue = party.party:getChampion(3)
+    rogue:setClass("rogue")
     rogue:trainSkill("light_weapons", 5, false)
     rogue:trainSkill("accuracy", 5, false)
     rogue:trainSkill("armors", 5, false)
     rogue:trainSkill("critical", 5, false)
-    rogue:trainSkill("dodge", 5, false)
+    rogue:trainSkill("dodge", 5, false)    
     for item_slot, item_name in pairs(equipment[rogue_idx]) do
-        if rogue:getItem(item_slot) == nil then
-            rogue:insertItem(item_slot, spawn(item_name).item)
+        if rogue:getItem(item_slot) ~= nil then
+            local item = rogue:removeItemFromSlot(item_slot)
+            global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
-    end  
+        rogue:insertItem(item_slot, spawn(item_name).item)
+    end     
     local wizard = party.party:getChampion(4)
+    wizard:setClass("wizard")
     wizard:trainSkill("concentration", 5, false)
     wizard:trainSkill("fire_magic", 5, false)
     wizard:trainSkill("air_magic", 5, false)
     wizard:trainSkill("water_magic", 5, false)
     wizard:trainSkill("earth_magic", 5, false)
     for item_slot, item_name in pairs(equipment[wizard_idx]) do
-        if wizard:getItem(item_slot) == nil then
-            wizard:insertItem(item_slot, spawn(item_name).item)
+        if wizard:getItem(item_slot) ~= nil then
+            local item = wizard:removeItemFromSlot(item_slot)
+            global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
-    end  
+        wizard:insertItem(item_slot, spawn(item_name).item)
+    end   
+    levelUpParty()
     --wizard:castSpell(25)
 end
 

@@ -123,18 +123,39 @@ function finishCombatTrial()
     cemetery_fence_01_3.door:open()
 end
 
+combat_trial_first = "herder_small_2"
+combat_trial_order = {herder_small_2 = {spawn_point_id="merchants_combat_quest_spawn_pos_1", next_id="twigroot_1"},
+                      twigroot_1 = {spawn_point_id="merchants_combat_quest_spawn_pos_2", next_id="herder_small_1"},
+                      herder_small_1 = {spawn_point_id="merchants_combat_quest_spawn_pos_3", next_id="twigroot_2"},
+                      twigroot_2 = {spawn_point_id="merchants_combat_quest_spawn_pos_4", next_id=nil}}
+
+function nextInCombatTrail(monster)
+    monster = global_scripts.script.getGO(monster)
+    local monster_data = combat_trial_order[monster.id]    
+    if monster_data.next_id ~= nil then
+        local next_monster_data = combat_trial_order[monster_data.next_id]
+        local monster = findEntity(monster_data.next_id)
+        local spawn_point = findEntity(next_monster_data.spawn_point_id)
+        spawn_point:spawn("dispel_blast")
+        global_scripts.script.moveObjectToObject(monster, spawn_point)
+        monster.brain:enable()
+    end
+end
+
 function startCombatTrial()
     cemetery_fence_01_3.door:close()
-    for monster_id, spawn_point_id in pairs({herder_small_2 = "merchants_combat_quest_spawn_pos_1", 
-                                             twigroot_1 = "merchants_combat_quest_spawn_pos_2", 
-                                             herder_small_1 = "merchants_combat_quest_spawn_pos_3", 
-                                             twigroot_2 = "merchants_combat_quest_spawn_pos_4"}) do
-        local monster = findEntity(monster_id)
-        local spawn_point = findEntity(spawn_point_id)
-        --print(monster_id.." "..spawn_point_id)
-        global_scripts.script.moveObjectToObject(monster, spawn_point)
+    local monster
+    for monster_id,_ in pairs(combat_trial_order) do
+        monster = findEntity(monster_id)
         combat_trial_boss_fight.bossfight:addMonster(monster.monster)        
     end
+    
+    monster = findEntity(combat_trial_first)
+    local monster_data = combat_trial_order[monster.id]
+    local spawn_point = findEntity(monster_data.spawn_point_id)
+    global_scripts.script.moveObjectToObject(monster, spawn_point)
+    monster.brain:enable()
+    
     combat_trial_boss_fight.bossfight:activate()
 end
 
@@ -163,10 +184,24 @@ end
 
 function onTakeEntryScroll(pedestal, item)
     pedestal = global_scripts.script.getGO(pedestal)
+    
+    local dialog_clickable = findEntity(dialog_system_clickable_ids["Merchants_HQ_Receptionist"])
+    if pedestal.surface:count() ~= 0 then
+        cleanup_dialog_answer("Merchants_HQ_Receptionist") 
+        dialog_states["Merchants_HQ_Receptionist"] = "take_your_things"
+        dialog_clickable.particle:restart()
+        set_npc_dialog_text("Merchants_HQ_Receptionist", "take_your_things", false)
+        return
+    else
+        cleanup_dialog_answer("Merchants_HQ_Receptionist") 
+        dialog_states["Merchants_HQ_Receptionist"] = "leave_me_alone"
+        dialog_clickable.particle:restart()
+        set_npc_dialog_text("Merchants_HQ_Receptionist", "leave_me_alone", false)
+    end
+    
     pedestal.surface:disable()
     
-    dialog_states["Merchants_HQ_Receptionist"] = "leave_me_alone"
-    set_npc_dialog_text("Merchants_HQ_Receptionist", "leave_me_alone", false)
+
     merchants_receptionist_trapdoor.pit:open()
     local animation = triels_robin_script_entitiy.script.raisePedestal("merchants_receptionist_desk", true, -1)
     animation.on_finish=closeReceptionistPit
@@ -185,6 +220,13 @@ function onFinishRaiseDesk(time_delta, animation)
     
     merchants_receptionist_pedestal.surface:addItem(scroll.item)
     merchants_receptionist_trapdoor.pit:close()
+    
+    if merchants_npcs["Merchants_HQ_Receptionist"]["handed_in_free_lunch_ticket"] == true then
+        for i=1,4 do
+            local food = spawn("cheese")
+            merchants_receptionist_pedestal.surface:addItem(food.item)
+        end
+    end
     
 end
 
@@ -269,6 +311,18 @@ function onPutItem(pedestal, item)
             cleanup_dialog_answer("Merchants_Captain")   
             table.insert(dialog_state_machines["Merchants_Captain"]["ready_to_travel"].answers, 
                         {say = "We're off to follow Malek's squad.", func=set_captain_target, target="beginning_beach", new_state = "off_we_go"})                
+        end
+    elseif pedestal.id == "merchants_receptionist_socket" then
+        local dialog_clickable = findEntity(dialog_system_clickable_ids["Merchants_HQ_Receptionist"])
+        if item.id == "merchants_recruiter_free_lunch_ticket" then
+            item:destroyDelayed()             
+            merchants_npcs["Merchants_HQ_Receptionist"]["handed_in_free_lunch_ticket"] = true
+            local dialog_state =  dialog_states["Merchants_HQ_Receptionist"]
+            dialog_state_machines["Merchants_HQ_Receptionist"]["handed_in_free_lunch_ticket"].new_state = dialog_state
+            cleanup_dialog_answer("Merchants_HQ_Receptionist")   
+            dialog_states["Merchants_HQ_Receptionist"] = "handed_in_free_lunch_ticket"
+            dialog_clickable.particle:restart()
+            set_npc_dialog_text("Merchants_HQ_Receptionist", false)  
         end
     end
 end
@@ -461,7 +515,18 @@ function give_hunting_island_pass()
     merchants_quarter_master_socket.socket:addItem(hunting_island_pass.item)
 end
 
-merchants_npcs = {Merchants_Resources_Master = {}, 
+function recruiter_give_note()
+    local recruitment_drive_note = spawn("note", merchants_quarter_master_socket.level, 0, 0, 0, 0, "merchants_recruiter_free_lunch_ticket")
+    recruitment_drive_note.scrollitem:setScrollText("One free lunch.\n/Recruiter #35")
+    merchants_recruiter_socket.socket:addItem(recruitment_drive_note.item)
+end
+
+function receptionist_receive_lunch_ticket()
+    
+end
+
+merchants_npcs = {Merchants_Resources_Master = {},
+                  Merchants_HQ_Receptionist = {},
                   Merchants_Captain = {dialog_clickable_id="dialog_system_clickable_5", 
                                        dialog_history_button_id="dialog_system_show_history_button_5", 
                                        dialog_socket_id="merchants_captain_socket", 
@@ -470,8 +535,8 @@ merchants_npcs = {Merchants_Resources_Master = {},
                                                        beginning_beach={x=14, y=30, level=10, elevation=1, facing=2}, 
                                                        merchants_hq={x=15, y=18, level=5, elevation=1, facing=2, captains_spawn_id="merchants_captain_spawn", floor_trigger_id="merchants_hq_boat_trigger", new_state="ready_to_travel"}}}}
 
-dialog_states = {Merchants_Fisher = "init", Merchants_HQ_Receptionist = "init", Merchants_Resources_Master = "init", Merchants_Quarter_Master = "init", Merchants_Captain = "init"}
-dialog_offset = {Merchants_Fisher = "left", Merchants_HQ_Receptionist = "right", Merchants_Resources_Master = "left", Merchants_Quarter_Master = "left", Merchants_Captain = "left"} 
+dialog_states = {Merchants_Fisher = "init", Merchants_HQ_Receptionist = "init", Merchants_Resources_Master = "init", Merchants_Quarter_Master = "init", Merchants_Captain = "init", Merchants_Recruiter = "init"}
+dialog_offset = {Merchants_Fisher = "left", Merchants_HQ_Receptionist = "right", Merchants_Resources_Master = "left", Merchants_Quarter_Master = "left", Merchants_Captain = "left", Merchants_Recruiter = "right"} 
 dialog_state_machines = {Merchants_Fisher = {init = {say = "Hello, Adventurers!\nNice day for fishing, ain't it?", 
                                                    answers = {{say = "We think so, too!", new_state = "happy", func=happyParty},
                                                               {say = "We don't like fishing...", new_state = "sad"},
@@ -494,7 +559,10 @@ dialog_state_machines = {Merchants_Fisher = {init = {say = "Hello, Adventurers!\
                                                                          {say = "We want to be pirates!", new_state = "look_for_work_pirates"}}},
                                                      look_for_work_work = {say = "Great, more wood to toss on the fire.\nTake this scroll and present\nyourself to the resources master!", new_state = "leave_me_alone", one_time_func=raiseDesk, func_called=false},
                                                      look_for_work_pirates = {say = "Well, great, more bodies to bury at sea.\nTake this scroll and present\nyourself to the resources master!", new_state = "leave_me_alone", one_time_func=raiseDesk, func_called=false},
-                                                     leave_me_alone = {say = "Be off!", new_state = "leave_me_alone"}},
+                                                     leave_me_alone = {say = "Be off!", new_state = "leave_me_alone"},
+                                                     take_your_things = {say = "Take your things and be off!", new_state = "take_your_things"},
+                                                     handed_in_free_lunch_ticket = {say = "Great, you sign on, we give you the food.", new_state = nil}
+                                                     },
                          Merchants_Resources_Master = {init = {say = "If you ain't got business with me, go away", func=dog_growl, new_state="init"},
                                                        scroll_placed = {say = "Ok, ya resources, go and do the pickaxe trial.\nReturn the token.\nDon't even think about running away with it.", 
                                                                         answers = {{say = "We're on it!", new_state="pickaxe_trial"},
@@ -523,24 +591,29 @@ dialog_state_machines = {Merchants_Fisher = {init = {say = "Hello, Adventurers!\
                                              ready_to_return = {say = "Ready to go back?", 
                                                                 answers = {{say = "Yeah!", func=set_captain_target, target="merchants_hq", new_state="off_we_go"}, 
                                                                            {say = "We need to stay a while longer.", new_state="ready_to_return"}}}
-                                            }
-                                                    
+                                            },
+                        Merchants_Recruiter = {init = {say = "Hey!\nYou looks like the curious sort!\nYou should go to the Merchants of East HQ and hire on!\nTake this note, for one free meal if you signs on", one_time_func=recruiter_give_note, func_called=false, new_state="here_again"},
+                                               here_again = {say = "Hey!\nYou looks like...\n\n...the party what were here just now!\nThe HQ is just towards noon from here!\nOf you go!", new_state="off_you_go"},
+                                               off_you_go = {say = "Well, offs you go!", new_state="off_you_go"}
+                                           },
                        }
 dialog_system_clickable_ids = {Merchants_Fisher = "dialog_system_clickable_1",
                                Merchants_HQ_Receptionist = "dialog_system_clickable_2",
                                Merchants_Resources_Master = "dialog_system_clickable_3",
                                Merchants_Quarter_Master = "dialog_system_clickable_4",
-                               Merchants_Captain = "dialog_system_clickable_5"}
+                               Merchants_Captain = "dialog_system_clickable_5",
+                               Merchants_Recruiter = "dialog_system_clickable_6"}
 dialog_system_clickable_npc_ids = {dialog_system_clickable_1 = "Merchants_Fisher",
                                    dialog_system_clickable_2 = "Merchants_HQ_Receptionist",
                                    dialog_system_clickable_3 = "Merchants_Resources_Master",
                                    dialog_system_clickable_4 = "Merchants_Quarter_Master",
-                                   dialog_system_clickable_5 = "Merchants_Captain"}
-dialog_system_show_history_button_ids = {dialog_system_show_history_button_2 = "Merchants_Fisher", dialog_system_show_history_button_1 = "Merchants_HQ_Receptionist", dialog_system_show_history_button_3 = "Merchants_Resources_Master", dialog_system_show_history_button_6 = "Merchants_Quarter_Master",dialog_system_show_history_button_5 = "Merchants_Captain"}
+                                   dialog_system_clickable_5 = "Merchants_Captain",
+                                   dialog_system_clickable_6 = "Merchants_Recruiter"}
+dialog_system_show_history_button_ids = {dialog_system_show_history_button_2 = "Merchants_Fisher", dialog_system_show_history_button_1 = "Merchants_HQ_Receptionist", dialog_system_show_history_button_3 = "Merchants_Resources_Master", dialog_system_show_history_button_6 = "Merchants_Quarter_Master",dialog_system_show_history_button_5 = "Merchants_Captain", dialog_system_show_history_button_4 = "Merchants_Recruiter"}
 dialog_button_next_states = {}
 dialog_button_funcs = {}
-dialog_answer_entity_ids = {Merchants_Fisher = {}, Merchants_HQ_Receptionist = {}, Merchants_Resources_Master={}, Merchants_Quarter_Master={}, Merchants_Captain={}}
-dialog_system_history = {Merchants_Fisher = "", Merchants_HQ_Receptionist = "", Merchants_Resources_Master = "", Merchants_Quarter_Master = "", Merchants_Captain = ""}
+dialog_answer_entity_ids = {Merchants_Fisher = {}, Merchants_HQ_Receptionist = {}, Merchants_Resources_Master={}, Merchants_Quarter_Master={}, Merchants_Captain={}, Merchants_Recruiter={}}
+dialog_system_history = {Merchants_Fisher = "", Merchants_HQ_Receptionist = "", Merchants_Resources_Master = "", Merchants_Quarter_Master = "", Merchants_Captain = "", Merchants_Recruiter=""}
 
 function showDialogHistory(button)
     button = global_scripts.script.getGO(button) 
@@ -861,4 +934,18 @@ function init()
     local callback = {name="fire_cannons", check_func=global_scripts.script.check_for_morning, func=fireCannons, oneshot=false, enabled=true, check_for="morning"}
     global_scripts.script.add_time_callback(merchants_script_entity.level, callback) 
     init_shop_system()
+    local w_pos = tomb_torch_holder_2:getWorldPosition()
+    w_pos.y = w_pos.y - 1
+    tomb_torch_holder_2:setWorldPosition(w_pos)
+    local torch = tomb_torch_holder_1.socket:getItem()
+    w_pos = torch.go:getWorldPosition()
+    w_pos.y = w_pos.y - 1
+    torch.go:setWorldPosition(w_pos)
+    w_pos = tomb_torch_holder_1:getWorldPosition()
+    w_pos.y = w_pos.y - 1
+    tomb_torch_holder_1:setWorldPosition(w_pos)
+    torch = tomb_torch_holder_2.socket:getItem()
+    w_pos = torch.go:getWorldPosition()
+    w_pos.y = w_pos.y - 1
+    torch.go:setWorldPosition(w_pos)
 end

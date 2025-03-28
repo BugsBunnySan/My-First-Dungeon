@@ -19,9 +19,9 @@ function floorTriggerSteppedOn(trigger)
     end
 end
    
-language_table = {heroes_level_up_text = {component = "walltext", english = "Choose Heroes and level up enough\nfor the adventure", 
-                                                                  espanol = "Eliga tus heroes y suba bastante niveles\npara la aventura", 
-                                                                  deutsch = "Waehle deine Helden und levele sie genuegend\n hoch fuer das Abenteuer"}}
+language_table = {heroes_level_up_text = {component = "walltext", english = "Choose your Heroes for the adventure", 
+                                                                  espanol = "Eliga tus heroes para la aventura", 
+                                                                  deutsch = "Waehle deine Helden fuer das Abenteuer"}}
                                     
 function init()
 

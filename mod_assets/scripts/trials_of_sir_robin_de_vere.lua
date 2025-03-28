@@ -865,7 +865,7 @@ function wrongMove(trigger)
     local damage_flags = DamageFlags.CameraShake
     damageTile(party.level, party.x, party.y, party.facing, party.elevation, damage_flags, "shock", 10)
     hudPrint("Though he never forgot his farming origins, neither did he ever return to them.")
-    local animation = {func=nil, on_finish=reset_sir_robin, step=1.7, duration=1.8, elapsed=0, last_called=-1} -- wait till the pushblock miovng finishes movbing pushblock_robin before teleporting him
+    local animation = {func=nil, on_finish=reset_sir_robin, step=1.7, duration=1.8} -- wait till the pushblock miovng finishes movbing pushblock_robin before teleporting him
     global_scripts.script.add_animation(pushblock_robin.level, animation)
     pushblock_trigger_rs4.controller:deactivate()
     pushblock_trigger_rs4.light:enable()

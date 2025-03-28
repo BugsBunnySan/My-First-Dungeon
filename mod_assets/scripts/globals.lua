@@ -1,3 +1,5 @@
+champions_last_item_used = {[1] = "", [2] = "", [3] = "", [4] = ""}
+
 function aim_camera(camera, target)
     local camera_w_pos = camera:getWorldPosition()
     local target_w_pos = target:getWorldPosition()
@@ -439,7 +441,10 @@ end
 
 function partyOnCastSpell(party, champion, spell)
     local script_entity
-    --print(tostring(champion).." cast "..tostring(spell))
+    
+    local item_name = champions_last_item_used[champion:getOrdinal()]
+                
+    print(tostring(champion).." cast "..tostring(spell).." with "..item_name)
     for k,hook in pairs(party_hooks.onCastSpell) do
         if hook.data.spell_name == spell then
             script_entity = findEntity(hook.script_entity_id)
