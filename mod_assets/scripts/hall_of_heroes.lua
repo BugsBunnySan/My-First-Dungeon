@@ -7,13 +7,44 @@ function buttonPressed()
     --context.drawGuiItem("EnterTextDialog", 100, 100)
 end
 
+function offset_button(button_id, offset)
+    local button = findEntity(button_id)
+    --button.clickable:setDebugDraw(true)
+    for _, component in ipairs({button.model, button.clickable, button.light, button.particle}) do
+        if component ~= nil then
+            local base_offset = component:getOffset() or vec(0, 0, 0)        
+            base_offset = base_offset + offset
+            component:setOffset(base_offset)
+        end
+   end
+end
+
+
+function openMerchantsHQDoor(time_delta, animation)
+    castle_entrance_door_1.door:open()
+end
+
+function ringDoorBell(button)
+    button = global_scripts.script.getGO(button)
+    global_scripts.script.playSoundAtObject("doorbell_bigbennish", button)
+    local animation = {on_finish=openMerchantsHQDoor, step=5.1, duration=5}
+    global_scripts.script.add_animation(button.level, animation)
+end
+
 function init()
+    for button_id, _ in pairs(hero_button_ids) do
+        offset_button(button_id, vec(0, -0.5, 0))    
+    end
+    offset_button("heroes_reset_button", vec(0, -0.5, 0))
+    
+    offset_button("merchants_hq_doorbell", vec(1.5, 0, -0.2))
 end
 
 hero_button_ids = {heroes_cleric_button = "cleric",
                    heroes_paladin_button = "paladin",
                    heroes_ranger_button = "ranger",
-                   heroes_barbarian_button = "barbarian"}
+                   heroes_barbarian_button = "barbarian",
+                   heroes_firearmer_button = "firearmer"}
 
 heroes = {cleric = {name = "Kavadoc",
                     class = "cleric",
@@ -69,27 +100,28 @@ heroes = {cleric = {name = "Kavadoc",
                                  [ItemSlot.Gloves] = nil,
                                  [ItemSlot.Legs] = "torn_breeches",
                                  [ItemSlot.Feet] = "pointy_shoes"},
-                     pack = {dart = {type="stack", count=5}}          
+                     pack = {dart = {type="stack", count=10}}          
         },
-        firearmer = {name = "",
-                    class = "",
+        firearmer = {name = "Billy",
+                    class = "alchemist",
                      race = "lizardman",
                      sex = "female",
-                     portrait = "",
+                     portrait = "assets/textures/portraits/lizardman_female_03.tga",
                      skills = {alchemy = 1,
                                firearms = 1,
                                dodge = 1},
-                     traits = {"immune_poison", "fast_metabolism"},
+                     traits = {"poison_immunity", "fast_metabolism"},
                      stats = {strength=10, dexterity=10, vitality=10, willpower=10},
                      equipment = {[ItemSlot.Weapon] = "flintlock",
                                  [ItemSlot.OffHand] = nil,
+                                 [ItemSlot.Cloak] = "tattered_cloak",
                                  [ItemSlot.Head] = nil,
-                                 [ItemSlot.Chest] = nil,
-                                 [ItemSlot.Gloves] = nil,
-                                 [ItemSlot.Legs] = nil,
+                                 [ItemSlot.Chest] = "tattered_shirt",
+                                 [ItemSlot.Gloves] = "leather_gloves",
+                                 [ItemSlot.Legs] = "torn_breeches",
                                  [ItemSlot.Feet] = nil},
-                     pack = {mortal_and_pestal = {type="single", count=1},
-                             pellets = {type="stack", count=50}}
+                     pack = {mortar = {type="single", count=1},
+                             pellet_box = {type="stack", count=50}}
         },
         barbarian = {name = "Torre'on",
                     class = "barbarian",
@@ -147,6 +179,13 @@ function HeroResetButtonPressed(button)
     init_dungeon.script.initChampion(1)
 end
 
+function HeroRegainHealthAndEnergy(champion_ordinal)
+    local champion = party.party:getChampionByOrdinal(champion_ordinal)
+    
+    champion:regainHealth(champion:getMaxHealth())
+    champion:regainEnergy(champion:getMaxEnergy())      
+end
+
 function HeroButtonPressed(button)
     button = global_scripts.script.getGO(button)
     local hero_class = hero_button_ids[button.id]
@@ -201,6 +240,10 @@ function HeroButtonPressed(button)
             item = spawn(item_class).item
             item:setStackSize(item_data.count)
         end
-        champion:insertItem(item_slot, item)        
+        champion:insertItem(item_slot, item)
+        item_slot = item_slot + 1
     end
+   
+    delayedCall("hall_of_heroes_script_entity", 0.1, "HeroRegainHealthAndEnergy", champion:getOrdinal()) -- give champion time to recomputestats
+   
 end

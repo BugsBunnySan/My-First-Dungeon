@@ -1171,7 +1171,16 @@ function stepTeleport(trigger_id)
 
     
     party:setPosition(step_teleport_data.party_teleport_pos.x, step_teleport_data.party_teleport_pos.y, party.facing, step_teleport_data.party_teleport_pos.elevation, step_teleport_data.party_teleport_pos.level)
-    if special_door_id ~= "" then
+
+    local map = party.map
+
+    for turtle_id, turtle_pos in pairs(turtle_ids) do
+        if map:checkLineOfSight(party.x, party.y, turtle_pos.x, turtle_pos.y, party.elevation) then
+            spawnBlast(turtle_pos.x, turtle_pos.y, turtle_pos.facing, turtle_pos.elevation, turtle_pos.level, false)
+        end
+    end
+
+   if special_door_id ~= "" then
         local special_door = findEntity(special_door_id)
         special_door.door:open()
     end
@@ -1188,20 +1197,28 @@ function onActivateSectionFloorTrigger(trigger)
     
     local enter_section = sections[trigger.id]               
     
-    local chance = math.random(2)
+    
+    local max_chance = 6
+    local chance = math.random(max_chance)
     if chance == 1 then
         local spawn_pos = global_scripts.script.findSpawnSpot(start_pos.x - 4, start_pos.x + 4, start_pos.y - 4, start_pos.y + 4, start_pos.elevation, start_pos.level, {["party"] = true, ["turtle_spirit"] = true})
-        spawnBlast(spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation, spawn_pos.level, false)
         local turtle = spawn("turtle_spirit", spawn_pos.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
-        turtle_ids[turtle.id] = {}
+        turtle_ids[turtle.id] = global_scripts.script.copy_pos(turtle)
         turtle.monster:addConnector("onDie", "tricksters_domain_script_entity", "onTurtleDeath")
         turtle.brain:setAllAroundSight(true)
-    elseif chance <= 12 then
+    elseif chance <= (max_chance / 2) then
         local facing = modulo_facing(party.facing + math.random(3))
         local sound_pos = global_scripts.script.copy_pos(party)
         pos_straight_ahead(sound_pos)
             
         playSoundAt("trickster_walk_low", sound_pos.level, sound_pos.x, sound_pos.y)
+    end
+
+    local map = party.map
+    for turtle_id, turtle_pos in pairs(turtle_ids) do
+        if map:checkLineOfSight(party.x, party.y, turtle_pos.x, turtle_pos.y, party.elevation) then
+            spawnBlast(turtle_pos.x, turtle_pos.y, turtle_pos.facing, turtle_pos.elevation, turtle_pos.level, false)
+        end
     end
 
     if special_door_id ~= "" then
@@ -1336,7 +1353,7 @@ function spawnBlast(x, y, facing, elevation, level, teleportation)
     if teleportation == true then
         spawn("teleportation_effect", level, x, y, facing, elevation)
     end
-    local spawn_blast = spawn("dispel_blast", level, x, y, facing, elevation)    
+    local spawn_blast = spawn("blob_blast", level, x, y, facing, elevation) -- used to be dispell blast, there needs to be a dispell blast, which doesn't hurt spirits, which the turtels are  although, blob_blast looks better for the turtle spirits
     local w_pos = spawn_blast:getWorldPosition()
     w_pos = w_pos + vec(0, 0.5, 0)    
     spawn_blast:setWorldPosition(w_pos)

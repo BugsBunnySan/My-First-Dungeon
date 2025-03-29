@@ -61,7 +61,7 @@ equipment = {[light_weapons_idx] = {[ItemSlot.Weapon] = "bone_blade",
                            [ItemSlot.Legs] = "rogue_pants",
                            [ItemSlot.Feet] = "rogue_boots"},
             [wizard_idx] = {[ItemSlot.Weapon] = "acolyte_staff",
-                            [ItemSlot.OffHand] = "serpent_staff",
+                            [ItemSlot.OffHand] = "compass" ,
                             [ItemSlot.Head] = "archmage_hat",
                             [ItemSlot.Chest] = "archmage_scapular",
                             [ItemSlot.Legs] = "archmage_mantle",
@@ -212,9 +212,11 @@ function initPartyOP()
     light_weapons:trainSkill("armors", 5, false)
     light_weapons:trainSkill("critical", 5, false)
     for item_slot, item_name in pairs(equipment[light_weapons_idx]) do
-        if light_weapons:getItem(item_slot) ~= nil then
-            local item = light_weapons:removeItemFromSlot(item_slot)
-            global_scripts.script.moveObjectToObject(item.go.id, party.id)
+        local item_check = light_weapons:getItem(item_slot)
+        if item_check ~= nil then
+            local item = light_weapons:getItem(item_slot)            
+            light_weapons:removeItem(item)            
+            --global_scripts.script.moveObjectToObject(item.go, party)
         end
         
         light_weapons:insertItem(item_slot, spawn(item_name).item)        
@@ -226,9 +228,10 @@ function initPartyOP()
     heavy_weapons:trainSkill("armors", 5, false)    
     heavy_weapons:trainSkill("critical", 5, false)
     for item_slot, item_name in pairs(equipment[heavy_weapons_idx]) do
-        if heavy_weapons:getItem(item_slot) ~= nil then
+    local item_check = heavy_weapons:getItem(item_slot)
+        if item_check ~= nil then
             local item = heavy_weapons:removeItemFromSlot(item_slot)
-            global_scripts.script.moveObjectToObject(item.go.id, party.id)
+            --global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
         heavy_weapons:insertItem(item_slot, spawn(item_name).item)
     end  
@@ -240,9 +243,10 @@ function initPartyOP()
     rogue:trainSkill("critical", 5, false)
     rogue:trainSkill("dodge", 5, false)    
     for item_slot, item_name in pairs(equipment[rogue_idx]) do
-        if rogue:getItem(item_slot) ~= nil then
+    local item_check = rogue:getItem(item_slot)
+        if item_check ~= nil then
             local item = rogue:removeItemFromSlot(item_slot)
-            global_scripts.script.moveObjectToObject(item.go.id, party.id)
+            --global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
         rogue:insertItem(item_slot, spawn(item_name).item)
     end     
@@ -254,14 +258,19 @@ function initPartyOP()
     wizard:trainSkill("water_magic", 5, false)
     wizard:trainSkill("earth_magic", 5, false)
     for item_slot, item_name in pairs(equipment[wizard_idx]) do
-        if wizard:getItem(item_slot) ~= nil then
+        local item_check = wizard:getItem(item_slot)
+        if item_check ~= nil then
             local item = wizard:removeItemFromSlot(item_slot)
-            global_scripts.script.moveObjectToObject(item.go.id, party.id)
+            --global_scripts.script.moveObjectToObject(item.go.id, party.id)
         end
         wizard:insertItem(item_slot, spawn(item_name).item)
     end   
     levelUpParty()
     --wizard:castSpell(25)
+    
+    for i=1,4 do
+        delayedCall("hall_of_heroes_script_entity", 0.1, "HeroRegainHealthAndEnergy", i) -- give champion time to recomputestats
+    end
 end
 
 function initCastleOfWater()

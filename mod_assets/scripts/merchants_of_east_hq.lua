@@ -64,56 +64,71 @@ function rat_attacks(npc_id)
 end
 
 function close_trapdoor(time_delta, animation)    
-    for _, trapdoor_id in ipairs({"merchants_hq_trapdoor_1", "merchants_hq_trapdoor_2", "merchants_hq_trapdoor_3", "merchants_hq_trapdoor_4", "merchants_hq_trapdoor_5"}) do
-        local trapdoor = findEntity(trapdoor_id)
-        trapdoor.pit:close()
-    end
+    local trapdoor = findEntity(animation.trapdoor_id)
+    trapdoor.pit:close()    
 end
 
 function lower_guard_platform(time_delta, animation)    
-    local animation = triels_robin_script_entitiy.script.raisePedestal(animation.platform_id, true, -1)
-    animation.trapdoor_id = "mine_pit_trapdoor_1"
-    animation.on_finish = close_trapdoor
+    local run_animation = triels_robin_script_entitiy.script.raisePedestal(animation.platform_id, true, -1)   
+    run_animation.trapdoor_id = animation.trapdoor_id
+    --run_animation.on_finish = close_trapdoor   
+    close_trapdoor(time_delta, animation) 
     
-    global_scripts.script.add_animation(merchants_script_entity.level, animation)
+    global_scripts.script.add_animation(merchants_script_entity.level, run_animation)
 end
 
 function activate_guard(time_delta, animation)
     local guard = findEntity(animation.guard_id)
     guard:setPosition(animation.on_finish_pos.x, animation.on_finish_pos.y, animation.on_finish_pos.facing, animation.on_finish_pos.elevation, animation.on_finish_pos.level)
     guard.brain:enable()
-    guard.alert:enable()
+    if guard.alert ~= nil then
+        guard.alert:enable()
+    end
 end
 
-function raiseGuards()
-    local animation = {}
+raise_monster_infos = {merchants_hq_guard_1 = {platform_id = "merchants_hq_guard_platform_1", trapdoor_id = "merchants_hq_trapdoor_1"},
+                    merchants_hq_guard_2 = {platform_id = "merchants_hq_guard_platform_2", trapdoor_id = "merchants_hq_trapdoor_2"},
+                    merchants_hq_guard_3 = {platform_id = "merchants_hq_guard_platform_3", trapdoor_id = "merchants_hq_trapdoor_3"},
+                    merchants_hq_guard_4 = {platform_id = "merchants_hq_guard_platform_4", trapdoor_id = "merchants_hq_trapdoor_4"},
+                    merchants_hq_guard_5 = {platform_id = "merchants_hq_guard_platform_5", trapdoor_id = "merchants_hq_trapdoor_5"},
+                    herder_small_2 = {platform_id = "merchants_combat_1_platform", trapdoor_id = "merchants_combat_1_trapdoor"},
+                    twigroot_1 = {platform_id = "merchants_combat_4_platform", trapdoor_id = "merchants_combat_4_trapdoor"},
+                    herder_small_1 = {platform_id = "merchants_combat_3_platform", trapdoor_id = "merchants_combat_3_trapdoor"},
+                    twigroot_2 = {platform_id = "merchants_combat_2_platform", trapdoor_id = "merchants_combat_2_trapdoor"}}
+                    
+function raiseMonster(monster_id, animations)
+    local animation
+    
+    animations[monster_id] = {}
+    
+    local raise_monster_info = raise_monster_infos[monster_id]
+    
+    animation = triels_robin_script_entitiy.script.raisePedestal(raise_monster_info.platform_id, true)
+    animation.platform_id = raise_monster_info.platform_id
+    animation.trapdoor_id = raise_monster_info.trapdoor_id
+    animation.on_finish = lower_guard_platform 
+    animations[monster_id]["move_platform"] = animation
+    
+    animation = triels_robin_script_entitiy.script.raisePedestal(monster_id, true)
+    animation.guard_id = monster_id
+    animation.on_finish = activate_guard
+    animations[monster_id]["move_monster"] = animation
+    
+    local trapdoor = findEntity(raise_monster_info.trapdoor_id)
+    trapdoor.pit:open()
+end
+
+function raiseGuards()    
     local animations = {}
     
-    for _, platform_id in ipairs({"merchants_hq_guard_platform_1", "merchants_hq_guard_platform_2", "merchants_hq_guard_platform_3", "merchants_hq_guard_platform_4", "merchants_hq_guard_platform_5"}) do
-        --local platform = findEntity(platform_id)
-        --local w_pos_y = platform:getWorldPositionY()
-        --platform:setWorldPositionY(w_pos_y-0.7)
-        
-        animation = triels_robin_script_entitiy.script.raisePedestal(platform_id, true)
-        animation.platform_id = platform_id
-        animation.on_finish = lower_guard_platform
-        table.insert(animations, animation)
-    end
+    for _, monster_id in ipairs({"merchants_hq_guard_1", "merchants_hq_guard_2", "merchants_hq_guard_3", "merchants_hq_guard_4", "merchants_hq_guard_5"}) do
+        raiseMonster(monster_id, animations)
+    end      
     
-    for _, guard_id in ipairs({"merchants_hq_guard_1", "merchants_hq_guard_2", "merchants_hq_guard_3", "merchants_hq_guard_4", "merchants_hq_guard_5"}) do      
-        animation = triels_robin_script_entitiy.script.raisePedestal(guard_id, true)
-        animation.guard_id = guard_id
-        animation.on_finish = activate_guard
-        table.insert(animations, animation)
-    end    
-
-    for _, trapdoor_id in ipairs({"merchants_hq_trapdoor_1", "merchants_hq_trapdoor_2", "merchants_hq_trapdoor_3", "merchants_hq_trapdoor_4", "merchants_hq_trapdoor_5"}) do
-        local trapdoor = findEntity(trapdoor_id)
-        trapdoor.pit:open()
-    end
-    
-    for _, animation in ipairs(animations) do
-        global_scripts.script.add_animation(merchants_script_entity.level, animation)
+    for monster_id, monster_animations in pairs(animations) do
+        for _, animation in pairs(monster_animations) do
+            global_scripts.script.add_animation(merchants_script_entity.level, animation)
+        end
     end
 end
 
@@ -124,21 +139,32 @@ function finishCombatTrial()
 end
 
 combat_trial_first = "herder_small_2"
-combat_trial_order = {herder_small_2 = {spawn_point_id="merchants_combat_quest_spawn_pos_1", next_id="twigroot_1"},
-                      twigroot_1 = {spawn_point_id="merchants_combat_quest_spawn_pos_2", next_id="herder_small_1"},
-                      herder_small_1 = {spawn_point_id="merchants_combat_quest_spawn_pos_3", next_id="twigroot_2"},
-                      twigroot_2 = {spawn_point_id="merchants_combat_quest_spawn_pos_4", next_id=nil}}
+combat_trial_order = {herder_small_2 = "twigroot_1",
+                      twigroot_1 = "herder_small_1",
+                      herder_small_1 = "twigroot_2",
+                      twigroot_2 = ""}
+combat_trial_doors = {herder_small_2 = "mine_door_spear_7",
+                      twigroot_1 = "mine_door_spear_10",
+                      herder_small_1 = "mine_door_spear_8",
+                      twigroot_2 = "mine_door_spear_9"}
+
+function onFinishMoveCombatMonster(time_delta, animation)
+    activate_guard(time_delta, animation)
+    local door = findEntity(animation.door_id)
+    door.door:open()
+end
 
 function nextInCombatTrail(monster)
     monster = global_scripts.script.getGO(monster)
-    local monster_data = combat_trial_order[monster.id]    
-    if monster_data.next_id ~= nil then
-        local next_monster_data = combat_trial_order[monster_data.next_id]
-        local monster = findEntity(monster_data.next_id)
-        local spawn_point = findEntity(next_monster_data.spawn_point_id)
-        spawn_point:spawn("dispel_blast")
-        global_scripts.script.moveObjectToObject(monster, spawn_point)
-        monster.brain:enable()
+    local next_monster_id = combat_trial_order[monster.id]    
+    if next_monster_id ~= "" then
+        local animations = {}
+        raiseMonster(next_monster_id, animations)
+        animations[next_monster_id]["move_monster"].door_id = combat_trial_doors[next_monster_id]
+        animations[next_monster_id]["move_monster"].on_finish = onFinishMoveCombatMonster
+        for _, animation in pairs(animations[next_monster_id]) do
+            global_scripts.script.add_animation(merchants_script_entity.level, animation)
+        end 
     end
 end
 
@@ -150,13 +176,17 @@ function startCombatTrial()
         combat_trial_boss_fight.bossfight:addMonster(monster.monster)        
     end
     
-    monster = findEntity(combat_trial_first)
-    local monster_data = combat_trial_order[monster.id]
-    local spawn_point = findEntity(monster_data.spawn_point_id)
-    global_scripts.script.moveObjectToObject(monster, spawn_point)
-    monster.brain:enable()
-    
     combat_trial_boss_fight.bossfight:activate()
+    
+    local animations = {}
+       
+    raiseMonster(combat_trial_first, animations) 
+    animations[combat_trial_first]["move_monster"].door_id = combat_trial_doors[combat_trial_first]
+    animations[combat_trial_first]["move_monster"].on_finish = onFinishMoveCombatMonster  
+    
+    for _, animation in pairs(animations[combat_trial_first]) do
+        global_scripts.script.add_animation(merchants_script_entity.level, animation)
+    end
 end
 
 function openCheesefieldGate(npc_id)
@@ -845,17 +875,42 @@ function init_dialog_system()
     end
 end
 
-shop_system = {merchants_shop_healing_potion_alcove = {cost = 1, paid = 0, item = "potion_healing"},
-               merchants_shop_healing_crystal_alcove = {cost = 3, paid = 0, item = "crystal_shard_healing"},
-               merchants_shop_antidote_alcove = {cost = 1, paid = 0, item = "potion_cure_poison"}}
+shop_system = {merchants_shop_healing_potion_alcove = {cost = 1, paid = 0, item_data = {class = "potion_healing", type = "single", count = 1}},
+               merchants_shop_healing_crystal_alcove = {cost = 3, paid = 0, item_data = {class = "crystal_shard_healing", type = "single", count = 1}},
+               merchants_shop_energy_potion_alcove = {cost = 1, paid = 0, item_data = {class = "potion_energy", type = "stack", count = 2}},
+               merchants_shop_antidote_alcove = {cost = 1, paid = 0, item_data = {class = "potion_cure_poison", type = "single", count = 1}},
+               merchants_shop_pellets_alcove = {cost = 1, paid = 0, item_data = {class = "pellet_box", type = "stack", count = 50}},
+               merchants_shop_darts_alcove = {cost = 1, paid = 0, item_data = {class = "dart", type = "stack", count = 10}},
+               merchants_shop_arrows_alcove = {cost = 1, paid = 0, item_data = {class = "arrow", type = "stack", count = 5}},
+               merchants_shop_lunch_alcove = {cost = 1, paid = 0, item_data = {class = "cheese", type = "single", count = 4}}}
 
 shop_system_paid_tokens = {merchants_shop_healing_potion_alcove = {},
                            merchants_shop_healing_crystal_alcove = {},
-                           merchants_shop_antidote_alcove = {}}
+                           merchants_shop_energy_potion_alcove = {},
+                           merchants_shop_antidote_alcove = {},
+                           merchants_shop_pellets_alcove = {},
+                           merchants_shop_darts_alcove = {},
+                           merchants_shop_arrows_alcove = {},
+                           merchants_shop_lunch_alcove = {}}
+
+merchants_shop_text_ids = {"merchants_shop_healing_potion_text", "merchants_shop_healing_crystal_text", "merchants_shop_energy_potion_text","merchants_shop_antidote_text", "merchants_shop_pellets_text", "merchants_shop_darts_text", "merchants_shop_arrows_text", "merchants_shop_lunch_text"}
+
+
+function init_shop_system()
+    for _, text_id in ipairs(merchants_shop_text_ids) do
+        local text = findEntity(text_id)
+        local w_pos_y = text:getWorldPositionY()
+        text:setWorldPositionY(w_pos_y+0.5)
+    end
+end
 
 function onRemoveItemShop(surface, item)
     local item = global_scripts.script.getGO(item)
     local shop_alcove = global_scripts.script.getGO(surface)
+    
+    if shop_system[shop_alcove.id] == nil then
+        return
+    end
     
     if item.name == "blue_gem" then
         shop_system_paid_tokens[shop_alcove.id][item.id] = nil        
@@ -874,6 +929,10 @@ function onPutToken(surface, item)
     local item = global_scripts.script.getGO(item)
     local shop_alcove = global_scripts.script.getGO(surface)
     
+    if shop_system[shop_alcove.id] == nil then
+        return
+    end
+    
     --print(tostring(shop_system[shop_alcove.id].paid))
     
     if item.name == "blue_gem" then
@@ -886,20 +945,24 @@ function onPutToken(surface, item)
                 token:destroyDelayed()
             end            
             shop_system_paid_tokens[shop_alcove.id] = {}
-            
-            local shop_item = spawn(shop_system[shop_alcove.id].item)
+                        
             shop_alcove:spawn("dispel_blast")
-            surface:addItem(shop_item.item)
+                        
+            local shop_item_data = shop_system[shop_alcove.id].item_data
+            local shop_item
+            if shop_item_data.type == "single" then
+                for i=1,shop_item_data.count do
+                    shop_item = spawn(shop_item_data.class).item
+                    surface:addItem(shop_item)
+                end
+            elseif shop_item_data.type == "stack" then                    
+                shop_item = spawn(shop_item_data.class).item
+                shop_item:setStackSize(shop_item_data.count)
+                surface:addItem(shop_item)
+            end
+                        
             shop_system[shop_alcove.id].paid = 0
         end
-    end
-end
-
-function init_shop_system()
-    for _, text_id in ipairs({"merchants_shop_healing_potion_text", "merchants_shop_healing_crystal_text", "merchants_shop_antidote_text"}) do
-        local text = findEntity(text_id)
-        local w_pos_y = text:getWorldPositionY()
-        text:setWorldPositionY(w_pos_y+0.5)
     end
 end
 

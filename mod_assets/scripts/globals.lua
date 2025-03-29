@@ -444,7 +444,7 @@ function partyOnCastSpell(party, champion, spell)
     
     local item_name = champions_last_item_used[champion:getOrdinal()]
                 
-    print(tostring(champion).." cast "..tostring(spell).." with "..item_name)
+    --print(tostring(champion).." cast "..tostring(spell).." with "..item_name)
     for k,hook in pairs(party_hooks.onCastSpell) do
         if hook.data.spell_name == spell then
             script_entity = findEntity(hook.script_entity_id)

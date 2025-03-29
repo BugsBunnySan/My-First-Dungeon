@@ -14,6 +14,15 @@ defineSound{
 }
 
 defineSound{
+    name = "doorbell_bigbennish",
+    filename = "mod_assets/sounds/doorbell_bigbennish.wav",	
+    loop = false,
+	volume = 0.55,
+	minDistance = 5,
+	maxDistance = 12,
+}
+
+defineSound{
     name = "evil_whisper",
     filename = "mod_assets/sounds/evil_whisper.wav",
     loop = true,
