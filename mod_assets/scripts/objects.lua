@@ -224,6 +224,20 @@ defineObject{
 	placement = "pillar",
 	editorIcon = 108,
 }
+
+defineObject{
+	name = "cemetery_fence_01_sl",
+	baseObject = "cemetery_wall_01",
+	components = {
+		{
+			class = "Model",
+			model = "assets/models/env/cemetery_fence_01.fbx",
+			staticShadow = true,
+		}
+	},
+	minimalSaveState = false,
+}
+
 defineParticleSystem{
 	name = "flames_on_wall",
 	emitters = {

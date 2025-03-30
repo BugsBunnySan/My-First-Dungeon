@@ -726,7 +726,7 @@ loadLayer("tiles", {
 	2,1,1,1,1,1,1,1,1,1,1,2,1,4,4,1,2,1,1,1,2,1,3,3,1,1,1,1,1,1,1,1,
 	2,1,1,1,1,1,1,1,1,1,1,2,1,4,4,1,2,1,1,1,2,1,3,3,1,2,1,1,1,1,1,1,
 	2,1,1,1,1,1,1,1,1,1,1,2,1,4,4,1,2,2,2,2,2,1,3,3,1,2,1,1,1,1,1,1,
-	2,2,2,2,2,2,2,2,2,2,2,2,1,4,4,1,1,3,3,1,2,1,3,3,1,2,1,1,1,1,1,1,
+	2,2,2,2,2,2,2,2,2,2,2,2,1,4,4,1,1,1,1,1,2,1,3,3,1,2,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,2,1,1,1,4,4,1,1,3,3,1,2,1,3,3,1,2,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,2,1,1,1,4,4,1,1,3,3,1,2,1,3,3,1,2,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,3,3,1,1,1,3,3,1,2,1,1,1,1,1,1,
@@ -840,9 +840,13 @@ spawn("castle_pillar_candle_holder",30,5,3,0,"castle_pillar_candle_holder_148")
 spawn("mine_support_pillar_01",30,5,3,0,"mine_support_pillar_01_25")
 spawn("castle_pillar_candle_holder",30,5,1,0,"castle_pillar_candle_holder_149")
 spawn("dungeon_wall_text",1,8,0,0,"dungeon_wall_text_8")
-dungeon_wall_text_8.walltext:setWallText("Cleric\
-Can cast healing and buffing spells\
-Is good with armor, not so good at hitting things. ")
+dungeon_wall_text_8.walltext:setWallText("Peace upon you!\
+I'm Omar, the cleric. \
+I come from the lands of the deserts,\
+seeking to know more about the world.\
+I'm in touch with the divine powers\
+and can channel them to aid myself and\
+others. ")
 spawn("castle_ceiling_lantern",1,8,1,0,"castle_ceiling_lantern_5")
 spawn("castle_ceiling_lantern",2,8,2,0,"castle_ceiling_lantern_6")
 spawn("castle_ceiling_lantern",3,8,1,0,"castle_ceiling_lantern_7")
@@ -851,7 +855,7 @@ spawn("dungeon_wall_text_long",2,8,0,0,"dungeon_wall_text_long_1")
 dungeon_wall_text_long_1.walltext:setWallText("Paladin\
 Stands as a pillar of protection of\
 their party.")
-spawn("wall_portrait",1,10,3,0,"wall_portrait_1")
+spawn("wall_portrait",1,13,3,0,"wall_portrait_1")
 wall_portrait_1.walltext:setWallText("")
 spawn("castle_wall_button",1,8,0,0,"heroes_cleric_button")
 heroes_cleric_button.button:setDisableSelf(false)
@@ -990,15 +994,15 @@ floor_trigger_34.floortrigger:setTriggeredByItem(false)
 floor_trigger_34.floortrigger:setTriggeredByDigging(false)
 floor_trigger_34.floortrigger:setDisableSelf(false)
 floor_trigger_34.floortrigger:addConnector("onActivate", "hall_of_heroes_script_entity", "checkHeroesSelected")
-spawn("dungeon_wall_text",7,8,0,0,"dungeon_wall_text_12")
+spawn("dungeon_wall_text",1,10,3,0,"dungeon_wall_text_12")
 dungeon_wall_text_12.walltext:setWallText("If you want to let the\
 Person go from your party,\
 to chose someone else to\
 go on the adventure, press\
 this button")
-spawn("castle_wall_button",7,8,0,0,"heroes_reset_button")
-heroes_reset_button.button:setDisableSelf(false)
-heroes_reset_button.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroResetButtonPressed")
+spawn("castle_wall_button",1,10,3,0,"heroes_reset_button_1")
+heroes_reset_button_1.button:setDisableSelf(false)
+heroes_reset_button_1.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroResetButtonPressed")
 spawn("floor_trigger",8,21,2,0,"floor_trigger_35")
 floor_trigger_35.floortrigger:setTriggeredByParty(true)
 floor_trigger_35.floortrigger:setTriggeredByMonster(false)
@@ -1162,13 +1166,66 @@ spawn("castle_pillar_candle_holder",9,19,1,0,"castle_pillar_candle_holder_173")
 spawn("wall_button",24,11,1,0,"merchants_hq_doorbell")
 merchants_hq_doorbell.button:setDisableSelf(false)
 merchants_hq_doorbell.button:addConnector("onActivate", "hall_of_heroes_script_entity", "ringDoorBell")
-spawn("starting_location",5,26,0,0,"starting_location_1")
+spawn("castle_ceiling_light",1,10,3,0,"castle_ceiling_light_18")
+spawn("castle_wall_button",6,8,0,0,"heroes_fighter_button")
+heroes_fighter_button.button:setDisableSelf(false)
+heroes_fighter_button.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroButtonPressed")
+spawn("dungeon_wall_text_long",6,8,0,0,"dungeon_wall_text_long_5")
+dungeon_wall_text_long_5.walltext:setWallText("Fighter\
+Good with swords!")
+spawn("castle_ceiling_lantern",6,8,2,0,"castle_ceiling_lantern_10")
+spawn("starting_location",1,9,0,0,"starting_location_1")
 spawn("timer",0,19,0,0,"timer_5")
 timer_5.timer:setTimerInterval(0)
 timer_5.timer:setDisableSelf(true)
 timer_5.timer:setTriggerOnStart(false)
 timer_5.timer:setCurrentLevelOnly(false)
 timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("castle_wall_button",7,8,0,0,"heroes_rogue_button")
+heroes_rogue_button.button:setDisableSelf(false)
+heroes_rogue_button.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroButtonPressed")
+spawn("dungeon_wall_text_long",7,8,0,0,"dungeon_wall_text_long_6")
+dungeon_wall_text_long_6.walltext:setWallText("Rogue\
+We're sneaky and shady, our backstabs the best!")
+spawn("castle_ceiling_lantern",7,8,2,0,"castle_ceiling_lantern_11")
+spawn("pedestal",1,8,0,0,"pedestal_15")
+spawn("scroll",1,8,0,0,"scroll_1")
+scroll_1.scrollitem:setScrollText("The cleric can cast divine magic of\
+two schools, the divine shield and the\
+divine sword. Depending on which way they\
+hold their divine symbol, their channeled\
+divine energy has different effects:\
+\
+Divine Shield casts healing and regeneration,\
+while Divine Sword imfuses accuracy and better\
+critical hits. \
+\
+They can learn and cast wizarding spells, but\
+only at 75% power.\
+\
+Spells they know:\
+Regeneration: divine shield, rune of balance\
+Healing: divine shield, from rune of balance,\
+go up or down depending on the row of champions\
+you wish to cast on, then chose left or right.")
+pedestal_15.surface:addItem(scroll_1.item)
+spawn("scroll_spell_5",1,8,0,0,"scroll_spell_5_1")
+pedestal_15.surface:addItem(scroll_spell_5_1.item)
+spawn("castle_wall_button",1,10,3,0,"heroes_reset_button_2")
+heroes_reset_button_2.button:setDisableSelf(false)
+heroes_reset_button_2.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroResetButtonPressed")
+spawn("castle_wall_button",1,10,3,0,"heroes_reset_button_3")
+heroes_reset_button_3.button:setDisableSelf(false)
+heroes_reset_button_3.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroResetButtonPressed")
+spawn("castle_wall_button",1,10,3,0,"heroes_reset_button_4")
+heroes_reset_button_4.button:setDisableSelf(false)
+heroes_reset_button_4.button:addConnector("onActivate", "hall_of_heroes_script_entity", "HeroResetButtonPressed")
+spawn("pedestal",2,8,0,0,"pedestal_17")
+spawn("pedestal",3,8,0,0,"pedestal_20")
+spawn("pedestal",4,8,0,0,"pedestal_21")
+spawn("pedestal",5,8,0,0,"pedestal_22")
+spawn("pedestal",6,8,0,0,"pedestal_23")
+spawn("pedestal",7,8,0,0,"pedestal_24")
 
 --- level 5 ---
 
@@ -1362,9 +1419,6 @@ to its rightful owners so \
 you may leave.")
 spawn("castle_entrance_door",0,30,1,1,"castle_entrance_door_2")
 castle_entrance_door_2.door:setDoorState("open")
-spawn("castle_wall_button",26,30,1,1,"castle_wall_button_2")
-castle_wall_button_2.button:setDisableSelf(false)
-castle_wall_button_2.button:addConnector("onActivate", "merchants_hq_rubble_door_1", "open")
 spawn("ladder_metal",5,17,2,0,"ladder_metal_16")
 spawn("mine_door_spear",1,28,0,1,"merchants_hq_entry_fence")
 spawn("ratling2",2,30,3,1,"Merchants_HQ_Receptionist")
@@ -1719,8 +1773,6 @@ dungeon_wall_text_7.walltext:setWallText("Pickaxing Trial Chambers")
 spawn("dialog_system_socket",5,27,2,1,"merchants_resource_master_socket")
 merchants_resource_master_socket.socket:addConnector("onInsertItem", "merchants_script_entity", "onPutItem")
 merchants_resource_master_socket.socket:addConnector("onRemoveItem", "merchants_script_entity", "onRemoveItem")
-spawn("forest_heightmap",1,16,1,0,"forest_heightmap_11")
-spawn("forest_day_sky",2,16,1,0,"forest_day_sky_1")
 spawn("beach_ocean",15,18,2,1,"merchants_beach_ocean")
 merchants_beach_ocean.bottom:disable()
 spawn("lever",24,29,1,1,"lever_3")
@@ -1798,8 +1850,6 @@ herder_small_1.gravity:disable()
 herder_small_1.monster:addConnector("onDie", "counter_3", "decrement")
 herder_small_1.monster:addConnector("onDie", "merchants_script_entity", "nextInCombatTrail")
 herder_small_1.brain:disable()
-spawn("cemetery_fence_01",19,29,1,1,"cemetery_fence_01_3")
-cemetery_fence_01_3.door:setDoorState("open")
 spawn("dungeon_pressure_plate",22,29,1,1,"dungeon_pressure_plate_3")
 dungeon_pressure_plate_3.floortrigger:setTriggeredByParty(true)
 dungeon_pressure_plate_3.floortrigger:setTriggeredByMonster(false)
@@ -1892,9 +1942,6 @@ spawn("dialog_system_show_history_button",16,19,0,1,"dialog_system_show_history_
 dialog_system_show_history_button_5.button:setDisableSelf(false)
 dialog_system_show_history_button_5.button:addConnector("onActivate", "merchants_script_entity", "showDialogHistory")
 dialog_system_show_history_button_5.walltext:setWallText("")
-spawn("note",16,19,0,1,"merchants_travel_pass_island")
-merchants_travel_pass_island.scrollitem:setScrollText("To archae-site #23\
-/Quater Master")
 spawn("invisible_wall",16,18,2,1,"merchants_captain_spawn")
 spawn("floor_trigger",15,17,1,1,"merchants_hq_boat_trigger")
 merchants_hq_boat_trigger.floortrigger:setTriggeredByParty(true)
@@ -2002,6 +2049,18 @@ spawn("mine_door_spear",23,28,1,1,"mine_door_spear_8")
 spawn("mine_door_spear",20,28,1,1,"mine_door_spear_9")
 spawn("mine_door_spear",20,30,1,1,"mine_door_spear_10")
 spawn("dungeon_wall_broken_02",17,27,0,0,"dungeon_wall_broken_02_34")
+spawn("dungeon_wall_broken_02",27,29,3,0,"dungeon_wall_broken_02_35")
+spawn("dungeon_wall_broken_02",26,27,1,0,"dungeon_wall_broken_02_36")
+spawn("cemetery_fence_01_sl",20,29,3,1,"cemetery_fence_01_sl_1")
+cemetery_fence_01_sl_1.door:setDoorState("open")
+spawn("wall_button",26,30,1,1,"wall_button_2")
+wall_button_2.button:setDisableSelf(false)
+wall_button_2.button:addConnector("onActivate", "merchants_hq_rubble_door_1", "open")
+spawn("note",17,19,0,1,"note_10")
+note_10.scrollitem:setScrollText("To archae-site #23\
+/Quater Master")
+spawn("forest_heightmap",1,16,1,0,"forest_heightmap_11")
+spawn("forest_day_sky",2,16,1,0,"forest_day_sky_1")
 
 --- level 6 ---
 

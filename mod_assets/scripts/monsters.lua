@@ -432,8 +432,22 @@ defineObject{
     components = {
 		{
 			class = "Model",
-			model = "assets/models/env/wall_button.fbx",
-			offset = vec(1,-.25,1.2),
+			model = "assets/models/env/castle_wall_button.fbx",
+			--offset = vec(1,-.25,1.2),
+            offset = vec(1, 1.125, 1.2)
+		},		
+        {
+			class = "Particle",
+			particleSystem = "castle_button",
+			offset = vec(1, 1.125, 1.2),
+		},
+		{
+			class = "Light",
+			offset = vec(1, 1.125, 1.2),
+			range = 1,
+			color = vec(0.5, 1.0, 2.5),
+			brightness = .2,
+			fillLight = true,
 		},
         {
             class = "WallText",
@@ -443,6 +457,7 @@ defineObject{
 			class = "Clickable",
 			offset = vec(1,1.125,1.2),
 			size = vec(0.25, 0.25, 0.25),
+            --debugDraw = true
         }
     }    
 }
@@ -637,8 +652,22 @@ defineObject{
     components = {
 		{
 			class = "Model",
-			model = "assets/models/env/wall_button.fbx",
-			offset = vec(1,.25,0),
+			model = "assets/models/env/castle_wall_button.fbx",
+			--offset = vec(1,.25,0),
+            offset = vec(1, 1.5, 0)
+		},		
+        {
+			class = "Particle",
+			particleSystem = "castle_button",
+			offset = vec(1, 1.5, 0),
+		},
+		{
+			class = "Light",
+			offset = vec(1, 1.5, 0),
+			range = 1,
+			color = vec(0.5, 1.0, 2.5),
+			brightness = .2,
+			fillLight = true,
 		},
         {
             class = "WallText",
@@ -646,8 +675,9 @@ defineObject{
         },
         {
 			class = "Clickable",
-			offset = vec(1,1.625,0),
+			offset = vec(1,1.475,0),
 			size = vec(0.25, 0.25, 0.25),
+            debugDraw = true
         }
     }    
 }

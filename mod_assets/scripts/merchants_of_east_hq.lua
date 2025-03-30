@@ -135,7 +135,7 @@ end
 function finishCombatTrial()
     combat_trial_boss_fight.bossfight:deactivate()
     spawn("cannon_ball", party.level, party.x, party.y, party.facing, party.elevation, "merchants_resource_master_combat_token")
-    cemetery_fence_01_3.door:open()
+    cemetery_fence_01_sl_1.door:open()
 end
 
 combat_trial_first = "herder_small_2"
@@ -169,7 +169,7 @@ function nextInCombatTrail(monster)
 end
 
 function startCombatTrial()
-    cemetery_fence_01_3.door:close()
+    cemetery_fence_01_sl_1.door:close()
     local monster
     for monster_id,_ in pairs(combat_trial_order) do
         monster = findEntity(monster_id)
@@ -437,6 +437,7 @@ function fireCannons(key, callback)
 end
 
 function dog_growl()
+    merchants_resource_master_dog.animation:play("attack", false)
     global_scripts.script.playSoundAtObject("warg_howl", merchants_resource_master_dog)
 end
 
@@ -688,6 +689,8 @@ function spawn_dialog_answer(npc_id, offset, answer)
     local button = spawn("dialog_system_answer", dialog_pos.level, dialog_pos.x, dialog_pos.y, dialog_pos.facing, dialog_pos.elevation)
     component_offset(button.model, offset)
     component_offset(button.clickable, offset)
+    component_offset(button.particle, offset)
+    component_offset(button.light, offset)
     button.walltext:setWallText(answer)
     
     button.button:addConnector("onActivate", "merchants_script_entity", "onGiveDialogAnswer")

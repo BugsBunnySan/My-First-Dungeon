@@ -189,13 +189,14 @@ end
 function initChampion(champion_idx)
     local champion = party.party:getChampion(champion_idx)
     champion:resetExp()
+    champion:setName("Sprite")
     champion:setRace("sprite")
     champion:setClass("sprite")
     champion:setPortrait("assets/textures/particles/teleporter.tga")
     removeTraits(champion)
     resetSkills(champion)
     resetStats(champion)
-    removeItems(champion)
+    removeItems(champion)    
 end          
           
 function initParty()
