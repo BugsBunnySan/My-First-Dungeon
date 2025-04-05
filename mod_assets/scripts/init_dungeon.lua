@@ -20,7 +20,7 @@ function initDungeon()
 end
 
 function initGlobals()
-    GameMode.setTimeOfDay(1.98)
+    GameMode.setTimeOfDay(.5)
     --global_scripts.script.last_tick = -1
 end
 
@@ -189,9 +189,9 @@ end
 function initChampion(champion_idx)
     local champion = party.party:getChampion(champion_idx)
     champion:resetExp()
-    champion:setName("Sprite")
-    champion:setRace("sprite")
-    champion:setClass("sprite")
+    champion:setName("Fate")
+    champion:setRace("fate")
+    champion:setClass("fate")
     champion:setPortrait("assets/textures/particles/teleporter.tga")
     removeTraits(champion)
     resetSkills(champion)

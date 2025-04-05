@@ -1,3 +1,78 @@
+defineTrait{
+    name = "ice_guardian_protection",
+    uiName = "Iceguardian cold protection",
+    description = "The little ice guardian figurine protect you from cold",
+    onRecomputeStats = function(champion, level)
+        champion:addStatModifier("resist_cold", 10)
+    end
+}
+
+defineObject{
+    name = "guardian_ice_protection",
+    baseObject = "figure_ice_guardian",    
+    components = {
+		{
+			class = "Item",
+			uiName = "Ice Guardian Figurine",
+			description = "This figurine depicts an armor clad spirit covered in icicles.",
+			gfxIndex = 434,
+			weight = 0.2,
+            traits = {"cold_resistant"},
+            onEquipItem = function(self, champion, slot) -- this is not called, when the item is passed into a characters inventory by their portait in the party interface, QQ
+                --print(tostring(champion).." equips "..self.go.name.." in slot "..tostring(slot))
+                champion:addTrait("ice_guardian_protection")
+            end,
+            onUnequipItem = function(self, champion, slot)
+                --print(tostring(champion).." un equips "..self.go.name.." in slot "..tostring(slot))
+                champion:removeTrait("ice_guardian_protection")
+            end,
+		},
+    }
+}
+
+
+defineParticleSystem{
+	name = "leadership",
+	emitters = {
+        {
+			emitterShape = "MeshShape",
+			emissionRate = 400,
+			emissionTime = 0,
+			maxParticles = 1000,
+			sprayAngle = {0,360},
+			velocity = {0, 0},
+			objectSpace = false,
+			texture = "assets/textures/particles/teleporter.tga",
+			lifetime = {2,3},
+			color0 = {2.0,2.0,2.0},
+			opacity = .45,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {0.05, 0.5},
+			gravity = {0,1,0},
+			airResistance = 1,
+			rotationSpeed = 2,
+			blendMode = "Additive",
+		},
+    }
+}
+
+defineObject{
+    name = "long_sword_of_leadership",
+    baseObject = "long_sword",
+    components = {
+        {    
+			class = "Model",
+			model = "assets/models/items/long_sword.fbx",
+			storeSourceData = true,
+		},
+        {
+            class = "Particle",            
+			particleSystem = "leadership",
+        }, 
+    }        
+}
+
 defineObject{
     name = "dungeon_floor_dirt_meridian_01",
     baseObject = "dungeon_floor_dirt_01",

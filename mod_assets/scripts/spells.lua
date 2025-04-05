@@ -116,26 +116,26 @@ defineTrait{
 }
 
 defineCharClass{
-    name = "sprite",
-    uiName = "Sprite",
+    name = "fate",
+    uiName = "Fate",
     optionaTraits = 0
 }
 
 defineTrait{
-    name = "sprite",
-    uiName = "Sprite",
+    name = "fate",
+    uiName = "Fate",
     icon = 33,
-    description = "A sprite, a spark of life, that can become a person.",
+    description = "A spark of Fate",
     gameEffect = [[
-    Reincarnate as a person in the world. ]],
+    Chooses a person and takes their future thread of life in their hands ]],
     onRecomputeStats = function(champion, level)
         
     end
 }
 
 defineRace{
-	name = "sprite",
-	uiName = "Sprite",
+	name = "fate",
+	uiName = "Fate",
 	inventoryBackground = "assets/textures/gui/inventory_backgrounds/human_$sex.tga",
 	traits = { "sprite" },
 }

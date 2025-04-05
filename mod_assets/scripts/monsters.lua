@@ -1,4 +1,81 @@
 defineObject{
+    name = "zarchton_npc",
+    baseObject = "zarchton",
+    components = {
+		{
+			class = "Model",
+			model = "assets/models/monsters/zarchton.fbx",
+			storeSourceData = true, -- must be enabled for mesh particles to work
+		},
+		{
+			class = "Monster",
+			meshName = "zarchton_mesh",
+			hitSound = "zarchton_hit",
+			dieSound = "zarchton_die",
+			footstepSound = "zarchton_footstep",
+			hitEffect = "hit_blood",
+			capsuleHeight = 0.2,
+			capsuleRadius = 0.7,
+			health = 90,
+			evasion = 0,
+			exp = 75,
+			--lootDrop = { 100, "zarchton_harpoon"},
+			resistances = { ["shock"] = "weak" },
+		},
+		{
+			class = "Animation",
+			animations = {
+				idle = "assets/animations/monsters/zarchton/zarchton_idle.fbx",
+				moveForward = "assets/animations/monsters/zarchton/zarchton_walk.fbx",
+				moveForward2 = "assets/animations/monsters/zarchton/zarchton_walk.fbx",
+				moveForward3 = "assets/animations/monsters/zarchton/zarchton_walk.fbx",
+				moveBackward = "assets/animations/monsters/zarchton/zarchton_move_backward.fbx",
+				turnLeft = "assets/animations/monsters/zarchton/zarchton_turn_left.fbx",
+				turnRight = "assets/animations/monsters/zarchton/zarchton_turn_right.fbx",
+				attack = "assets/animations/monsters/zarchton/zarchton_attack.fbx",
+				leapAttack = "assets/animations/monsters/zarchton/zarchton_move_attack.fbx",
+				getHitFrontLeft = "assets/animations/monsters/zarchton/zarchton_get_hit_front_left.fbx",
+				getHitFrontRight = "assets/animations/monsters/zarchton/zarchton_get_hit_front_right.fbx",
+				getHitBack = "assets/animations/monsters/zarchton/zarchton_get_hit_back.fbx",
+				getHitLeft = "assets/animations/monsters/zarchton/zarchton_get_hit_left.fbx",
+				getHitRight = "assets/animations/monsters/zarchton/zarchton_get_hit_right.fbx",
+				fall = "assets/animations/monsters/zarchton/zarchton_get_hit_front_left.fbx",
+				riseFromWater = "assets/animations/monsters/zarchton/zarchton_rise_from_water.fbx",
+                openLock = "mod_assets/animations/zarchton_attack_operate.fbx",
+				pullLever = "mod_assets/animations/zarchton_attack_operate.fbx",
+				pushLever = "mod_assets/animations/zarchton_attack_operate.fbx",
+			},
+			currentLevelOnly = true,
+		},
+		
+		{
+			class = "ZarchtonBrain",
+			name = "brain",
+			sight = 5,
+            onThink = function(self)
+                local npc_script_entity = findEntity("npc_script_entity").script
+                npc_script_entity.onThinkZarchtonNpc(self)
+            end,
+            onThinkSpecial = function(self)
+                local npc_script_entity = findEntity("npc_script_entity").script
+                npc_script_entity.onThinkZarchtonNpc(self)
+            end,
+		},
+        {
+            class = "MonsterOperateDevice",
+			name = "operateDevice",
+			animation = "openLock",
+        },
+    }
+}
+
+defineAnimationEvent{
+	animation = "mod_assets/animations/zarchton_attack_operate.fbx",
+	event = "operateDevice",
+	frame = 30,
+}
+
+defineObject{
 	name = "merchants_hq_guard1",
     baseObject = "ratling3",
     components = {
@@ -348,8 +425,11 @@ defineObject{
 		},
 		{
 			class = "Socket",
-			offset = vec(0.05, 1.1, -0.25),
+			offset = vec(0.05, 1.1, -0.25),            
 			--rotation = vec(0, -20, -90),
+            onAcceptItem = function(self, item)
+                return self:count() == 0
+            end
 			--debugDraw = true,
 		},
     },
@@ -422,6 +502,35 @@ defineObject{
 			particleSystem = "dialog_system_from_npc_right",
 			offset = vec(0,0.25, 0),
             enabled = false
+		},
+        
+        {
+			class = "Light",
+			name = "leftEyeLight",
+			offset = vec(0.4, 1.55, 0),
+			range = 0.7,
+			--debugDraw = true,
+            enabled = false,
+		},
+        {
+			class = "Light",
+			name = "rightEyeLight",
+			offset = vec(0.4, 1.55, 0),
+			range = 0.7,
+			--debugDraw = true,
+            enabled = false,
+		},
+		{
+			class = "Model",
+			name = "eyesModel",
+			model = "assets/models/env/forest_statue_wall_eyes_1.fbx",
+			offset = vec(0, 0, -1.5),
+			staticShadow = true,
+            enabled = false,
+		},		
+        {
+			class = "StonePhilosopherController",
+            enabled = false,
 		},
     }
 }
@@ -692,7 +801,8 @@ defineObject{
 			model = "assets/models/monsters/medusa.fbx",
 			storeSourceData = true,
             material = "spirit_light", 
-		}, 		{
+		}, 		
+        {
 			class = "Monster",
 			meshName = "medusa_mesh",
 			hitSound = "medusa_hit",

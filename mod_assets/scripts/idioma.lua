@@ -4,6 +4,10 @@ floor_trigger_idiomas = {floor_trigger_english = "english",
                          floor_trigger_espanol = "espanol",
                          floor_trigger_deutsch = "deutsch"}
 
+idiomas_scripts = {english = "idioma_english",
+                   espanol = "idioma_espanol",
+                   deutsch = "idioma_deutsch"}
+
 teleporter_ids = {"teleporter_english", "teleporter_espanol", "teleporter_deutsch"}
 
 function floorTriggerSteppedOn(trigger)
@@ -11,7 +15,7 @@ function floorTriggerSteppedOn(trigger)
     
     idioma = floor_trigger_idiomas[trigger.id]
     
-    set_language()
+    --set_language()
     
     for _,teleporter_id in ipairs(teleporter_ids) do
         local teleporter = findEntity(teleporter_id)
@@ -27,9 +31,6 @@ function init()
 
 end
 
-function set_language()
-    for id, language_data in pairs(language_table) do
-        local text = findEntity(id):getComponent(language_data.component)
-        text:setWallText(language_data[idioma]) 
-    end    
+function get_idioma()
+    return findEntity(idiomas_scripts[idioma]).script
 end

@@ -1,3 +1,101 @@
+
+defineMaterial{
+	name = "blue_beam_wall",
+	diffuseMap = "assets/textures/effects/wall_fire.tga",
+	doubleSided = true,
+	lighting = false,
+	alphaTest = false,
+	blendMode = "Additive",
+	textureAddressMode = "Wrap",
+	glossiness = 60,
+	depthBias = 0,
+	onUpdate = function(self, time)
+		self:setTexcoordScaleOffset(0.5, 1, time*0.05, 0)
+	end,
+}
+
+defineObject{
+    name = "magic_wall",
+    baseObject = "base_wall",
+    components = {
+        {
+			class = "Model",
+			model = "assets/models/env/background_hill_01.fbx",
+            material = "blue_beam_wall",
+			staticShadow = true,
+		},
+    }
+}
+
+defineObject{
+	name = "base_wall_text_i18n",
+	components = {
+		{
+			class = "WallText",
+            onShowText = function(self)
+                local text = self.getWallText()
+                print(string.sub(text, 1, 6))
+                if string.sub(text, 1, 6) == "$i18n$" then
+                    text = idioma.language_script_entity.translate(text)
+                    if text ~= nil then
+                        self.setWallText(text)
+                    end
+                end
+            end
+		},
+		{
+			class = "Clickable",
+			offset = vec(0, 1.5, 0),
+			size = vec(1.2, 0.8, 0.2),
+			frontFacing = true,
+			--debugDraw = true,
+		},
+	},
+	placement = "wall",
+	replacesWall = true,
+	editorIcon = 28,
+}
+
+defineObject{
+	name = "castle_wall_text_i18n",
+	baseObject = "base_wall_text_i18n",
+	components = {
+		{
+			class = "Model",
+			model = "assets/models/env/castle_wall_text_long.fbx",
+			offset = vec(0, 0, -0.1),
+		},
+		{
+			class = "Particle",
+			particleSystem = "castle_wall_text",
+		},
+		{
+			class = "Light",
+			offset = vec(0, 1.5, -0.2),
+			range = 4,
+			color = vec(0.5, 1.0, 2.5),
+			brightness = 4,
+			fillLight = true,
+		},
+		{
+			class = "WallText",
+			height = 0.447,
+            onShowText = function(self)
+                local text = self:getWallText()
+                if string.sub(text, 1, 6) == "$i18n$" then
+                    print(text)
+                    text = idioma_script_entity.script.get_idioma().translate(text)
+                    print(text)
+                    if text ~= nil then
+                        self:setWallText(text)
+                    end
+                end
+            end
+		},
+	},
+	replacesWall = false,
+}
+
 defineMaterial{
 	name = "wall_portrait_sakaura",
 	diffuseMap = "mod_assets/textures/wall_portrait_sakura_dif.tga",

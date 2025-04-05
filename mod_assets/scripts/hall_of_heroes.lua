@@ -43,6 +43,42 @@ function init()
     offset_button("merchants_hq_doorbell", vec(1.5, 0, -0.2))
 end
 
+function init_wizard(champion)
+    local letter = spawn("letter", 1, 0, 0, 0, 0, "letter_from_merchants_fisher")
+    letter.scrollitem:setScrollText([[
+Hello Br'er!
+Hope your doing okay, catching lots of fish!
+I've asked this nice human to deliver this letter,
+if she can find you, heading to Port City as she seems.
+
+Mom is doing alright and dad is, well, dad.
+Both send their greetings!
+I'm fine, finishing school soon! I made a
+little figurine for you, hope it'll keep
+you safe in the cold winters and cool in
+the summers :D!
+
+Look after yourself, eh?
+Love,
+/Your Sister
+]])
+    
+    local item_slot = ItemSlot.BackpackFirst
+    local item_inserted = false
+    while not item_inserted do   
+        if champion:getItem(item_slot) == nil then
+            champion:insertItem(item_slot, letter.item)
+            item_inserted = true
+        elseif item_slot >= ItemSlot.BackpackLast then
+            global_scripts.script.moveObjectToObject(letter, party)
+            item_inserted = true
+        else
+            item_slot = item_slot + 1
+        end
+    end
+    
+end
+
 hero_button_ids = {heroes_cleric_button = "cleric",
                    heroes_rogue_button = "rogue",
                    heroes_fighter_button = "fighter",
@@ -50,36 +86,59 @@ hero_button_ids = {heroes_cleric_button = "cleric",
                    heroes_firearmer_button = "firearmer",
                    heroes_barbarian_button = "barbarian",
                    heroes_paladin_button = "paladin",
+                   heroes_wizard_button = "wizard",
                    }
 
 button_id_heroes = {["Omar"] = "heroes_cleric_button",
-                   ["Grimrick"] = "heroes_rogue_button",
-                   ["Cristóbal"] = "heroes_fighter_button",
-                   ["Lauryn"] = "heroes_ranger_button",
-                   ["Billy"] = "heroes_firearmer_button",
-                   ["Torre'on"] = "heroes_barbarian_button",
-                   ["Palad'in"] = "heroes_paladin_button",
+                    ["Grimrick"] = "heroes_rogue_button",
+                    ["Cristóbal"] = "heroes_fighter_button",
+                    ["Lauryn"] = "heroes_ranger_button",
+                    ["Billy"] = "heroes_firearmer_button",
+                    ["Torre'on"] = "heroes_barbarian_button",
+                    ["Palad'in"] = "heroes_paladin_button",
+                    ["Willow"] = "heroes_wizard_button",
 }
 
-heroes = {cleric = {name = "Omar",
-                    class = "cleric",
-                    race = "human",
-                    sex = "male",
-                    portrait = "mod_assets/textures/portraits/omar_khayyam.tga",
-                    skills = {divine_magic = 1,
-                              concentration = 1,
-                              armors = 1},
-                    traits = {"natural_armor", "meditation"},
-                    stats = {strength=9, dexterity=9, vitality=10, willpower=12},
-                    equipment = {[ItemSlot.Weapon] = nil,
-                                 [ItemSlot.OffHand] = "whitewood_cleric_wand",
-                                 [ItemSlot.Head] = "xafi_shemagh",
-                                 [ItemSlot.Chest] = "xafi_robe",
-                                 [ItemSlot.Gloves] = nil,
-                                 [ItemSlot.Legs] = "xafi_khakis",
-                                 [ItemSlot.Feet] = "sandals"},
-                     pack = {potion_healing = {type="stack", count=1},
-                             bread = {type="single", count=1}},
+heroes = {
+        wizard = {name = "Willow",
+                  class = "wizard",
+                  race = "human",
+                  sex = "female",
+                  portrait = "assets/textures/portraits/human_female_07.tga",
+                  init_func = init_wizard,
+                  skills = {concentration = 1,
+                            air_magic = 1,
+                            fire_magic = 1},
+                  traits = {"fast_learner", "strong_mind"},
+                  stats = {strength=8, dexterity=10, vitality=10, willpower=12},
+                  equipment = {[ItemSlot.Weapon] = "whitewood_wand",
+                               [ItemSlot.OffHand] = nil,
+                               [ItemSlot.Head] = "conjurers_hat",
+                               [ItemSlot.Chest] = "tattered_shirt",
+                               [ItemSlot.Gloves] = nil,
+                               [ItemSlot.Legs] = "torn_breeches",
+                               [ItemSlot.Feet] = "shoes"},
+                  pack = {guardian_ice_protection = {type="single", count=1, id="fishers_ice_guardian"}},
+        },
+        cleric = {name = "Omar",
+                  class = "cleric",
+                  race = "human",
+                  sex = "male",
+                  portrait = "mod_assets/textures/portraits/omar_khayyam.tga",
+                  skills = {divine_magic = 1,
+                            concentration = 1,
+                            armors = 1},
+                  traits = {"natural_armor", "meditation"},
+                  stats = {strength=9, dexterity=9, vitality=10, willpower=12},
+                  equipment = {[ItemSlot.Weapon] = nil,
+                               [ItemSlot.OffHand] = "whitewood_cleric_wand",
+                               [ItemSlot.Head] = "xafi_shemagh",
+                               [ItemSlot.Chest] = "xafi_robe",
+                               [ItemSlot.Gloves] = nil,
+                               [ItemSlot.Legs] = "xafi_khakis",
+                               [ItemSlot.Feet] = "sandals"},
+                   pack = {potion_healing = {type="stack", count=1},
+                           bread = {type="single", count=1}},
                     
         },
         rogue = {
@@ -213,7 +272,7 @@ function checkHeroesSelected(button)
     local number_of_sprites = 0   
     for i=1,4 do
         local champion = party.party:getChampion(i)
-        if champion:getClass() == "sprite" then
+        if champion:getClass() == "fate" then
             number_of_sprites = number_of_sprites + 1
         end
     end
@@ -221,7 +280,7 @@ function checkHeroesSelected(button)
         dungeon_door_wooden_9.door:open()
     else
         dungeon_door_wooden_9.door:close()
-        hudPrint("Four were the heroes that set out on this adventure!")
+        hudPrint("Four were the heroes that fate selected to set out on this adventure!")
     end
 end
 
@@ -275,7 +334,7 @@ function HeroButtonPressed(button)
     local champion
     for i=1,4 do
         champion = party.party:getChampion(i)
-        if champion:getClass() == "sprite" and champion_idx == 0 then
+        if champion:getClass() == "fate" and champion_idx == 0 then
             champion_idx = i
         end
     end
@@ -313,14 +372,22 @@ function HeroButtonPressed(button)
     local item_slot = ItemSlot.BackpackFirst
     local item
     for item_class, item_data in pairs(hero.pack) do
-        if item_data.type == "single" then
+        local item
+        if item_data.id ~= nil then
+            item = spawn(item_class, 1, 0, 0, 0, 0, item_data.id).item
+        else
             item = spawn(item_class).item
-        elseif item_data.type == "stack" then                    
-            item = spawn(item_class).item
+        end
+        if item_data.type == "stack" then                               
             item:setStackSize(item_data.count)
         end
         champion:insertItem(item_slot, item)
         item_slot = item_slot + 1
+    end
+   
+    print("call hero function? "..tostring(hero.init_func))
+    if hero.init_func ~= nil then
+        hero.init_func(champion)
     end
    
     delayedCall("hall_of_heroes_script_entity", 0.1, "HeroRegainHealthAndEnergy", champion:getOrdinal()) -- give champion time to recomputestats

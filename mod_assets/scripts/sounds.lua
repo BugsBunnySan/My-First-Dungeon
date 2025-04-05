@@ -113,3 +113,12 @@ defineSound{
     minDistance = 12,
     maxDistance = 32
 }
+
+defineSound{
+    name = "angels_choir",
+    filename = "mod_assets/sounds/angels_chois.wav",        
+    loop = false,
+    volume = 1,
+    minDistance = 12,
+    maxDistance = 32   
+}

@@ -427,13 +427,136 @@ function light_up_well(animation)
     light.particle:enable()    
 end
 
+function fade_light(time_delta, animation)
+    local light = findEntity(animation.light_id)
+    if light.light ~= nil then
+        light.light:setBrightness(animation.duration * animation.brightness.light)
+    end
+    if light.pointlight ~= nil then
+        light.pointlight:setBrightness(animation.duration * animation.brightness.pointlight)
+    end
+    
+end
+
+function fight_sir_robin(sir_robin_de_vere_id, state_info)
+    local sir_robin_de_vere = findEntity(sir_robin_de_vere_id)
+    sir_robin_de_vere.breain:enable()
+    sir_robin_de_vere.sound:enable()
+    sir_robin_de_vere.handLeftParticle:enable()
+    sir_robin_de_vere.handRightParticle:enable()
+    hudPrint("Then I will make you be afraid!")
+end
+
+function spawn_rune_scroll(sir_robin_de_vere_id, state_info)
+    local rune_scroll = spawn("scroll")
+    rune_scroll.scrollitem:setScrollText("1 2 3 4 5")
+    sir_robin_de_vere_socket.socket:addItem(rune_scroll.item)
+end
+
+Sir_Robin_De_Vere = {
+    id = "Sir_Robin_De_Vere",
+    state = "init",
+    offset = "right",
+    clickable_id = "sir_robin_de_vere_dialog",
+    history_button_id = "sir_robin_de_vere_history_button",
+    dialog = {
+        init = {say = "Greetings, brave souls, after a thousand years arriving!",
+                answers = {{say = "Greetings, Sir Robin De Vere!", new_state="cordial_greeting_given"},
+                           {say = "We ain't afraid of no ghost!", new_state="fight_sir_robin", func=fight_sir_robin}}},
+        cordial_greeting_given = {say = "Much water has sprung from this well, enough to fill an ocean of time, since a soul my trials completed.", new_state="gratitude"},
+        gratitude = {say = "In gratitude for letting my restless spirit\nrelive its life one time more,\nI shall grant you the runes that open\nthe Trickster's Domain and thereby charge you\nwith a most holy quest.\nThe completion whereof will grant thee much fame and honor.", new_state="history1"},
+        history1 = {say = "Hark! Where of old the champions of their family's trials would further prove themselves, now the Trickster, vile thief and knavish rogue, dwells holed up. Of the noble ancestral spirits, erstwhile at rest in their cold tombs, he robbed the emperors gifts.", new_state="history2"},
+        history2 = {say = "Five runes are they that must be spoken in their order, to open the door to the underground lair: 1 2 3 4 5", new_state="history3"},
+        history3 = {say = "Great was their grief and sorrow and thus their council they withdrew from those of the living that sought it. Giving way and leaving space for those ignoble and deranged spirits that, I must admit it, are there also lain to rest, thus the Tricksters vile deed led to the poisoning of the hearts of the people and the downfall of our world.", new_state="history4"},        
+        history4 = {say = "If ye are able people, to do good and mighty work upon the mortal world, return the Emperor's gifts to my family's ancestors, that they may rest and renew their benevolent influence on the world. To our opposers though give nothing, that we, the people of Caral, at whose wellspring you stand today, may overcome, e'en after such long years, our rivals of the north.", new_state="history5"},        
+        history5 = {say = "Will ye accept the gift of this quest?", answers = {{say = "We'll do it!", new_state="quest_accepted", func=spawn_rune_scroll},
+                                                                               {say = "We have no time for quests!", new_state="quest_no_time", func= spawn_rune_scroll},
+                                                                               {say = "What's in it for us?", new_state="quest_want_reward", func= spawn_rune_scroll}}},                                                                              
+        quest_no_time = {say = "Take this scroll all the same. Who knows what strange fates might still guide you to my purpose.", new_state="farewell"},
+        quest_want_reward = {say = "If the honour of restoring peace upon a whole world is not enough, take this scroll all the same and pray to the fates that they may yet reward you in their way.", new_state="farewell"},
+        quest_accepted = {say = "Take this scroll and my thanks!", new_state="farewell"},
+        farewell = {say = "Fare ye well!", new_state="farewell"}
+    }
+}
+
+function spawnSirRobinDeVereSpirit()
+    local sir_robin_de_vere = spawn("skeleton_commander_spirit", well_of_caral.level, 0, 0, well_of_caral.facing, 0, "Sir_Robin_De_Vere")
+    sir_robin_de_vere.brain:disable()
+    sir_robin_de_vere.gravity:disable()
+    sir_robin_de_vere.sound:disable()
+    sir_robin_de_vere.handLeftParticle:disable()
+    sir_robin_de_vere.handRightParticle:disable()
+    global_scripts.script.moveObjectToObject(sir_robin_de_vere, well_of_caral)
+  
+    local dialog_clickable_facing = tricksters_domain_script_entity.script.modulo_facing(well_of_caral.facing + 2)
+    local sir_robin_de_vere_dialog = spawn("dialog_system_clickable", robin_dialog_spawn.level, robin_dialog_spawn.x, robin_dialog_spawn.y, dialog_clickable_facing, robin_dialog_spawn.elevation, "sir_robin_de_vere_dialog") 
+    sir_robin_de_vere_dialog.sound:setSound("stone_philosopher_eyes")
+    
+    local sir_robin_de_vere_history_button = spawn("dialog_system_show_history_button", robin_dialog_spawn.level, robin_dialog_spawn.x, robin_dialog_spawn.y, dialog_clickable_facing, robin_dialog_spawn.elevation, "sir_robin_de_vere_history_button")
+    
+    local sir_robin_de_vere_socket = spawn("dialog_system_socket", robin_dialog_spawn.level, robin_dialog_spawn.x, robin_dialog_spawn.y, dialog_clickable_facing, robin_dialog_spawn.elevation, "sir_robin_de_vere_socket")
+    
+    dialog_system.script.add_npc(Sir_Robin_De_Vere, true)
+end
+
+function takeSword(socket, item)
+    socket = global_scripts.script.getGO(socket)
+    pushblock_robin_socket.socket:disable()
+    pushblock_robin_socket.clickable:disable()    
+    local blob_blast = pushblock_robin_socket:spawn("blob_blast") 
+    global_scripts.script.objectWorldPositionOffset(blob_blast, vec(-1.5, 1.2, 0))
+    setMouseItem(nil)
+        
+    pushblock_robin_light.light:enable()
+    pushblock_robin_light.pointlight:enable()
+    pushblock_robin_light.light:fadeOut(1)
+    pushblock_robin_light.pointlight:fadeOut(1)
+
+    
+    for i=1,4 do
+        local champion = party.party:getChampion(i)
+        champion:addTrait("leadership")
+        champion:playSound("discover_spell")
+    end
+    
+    hudPrint("You feel infused with a spark of Sir Robin De Vere's Leadership")
+    
+    spawnSirRobinDeVereSpirit()
+end
+
+function finish_lowering_sword(time_delta, animation)
+    finish_raise_bridge(time_delta, animation)
+    pushblock_robin_socket:setWorldPositionY(1)
+    pushblock_robin_socket.socket:enable()
+    pushblock_robin_socket.clickable:enable()
+    pushblock_robin_socket.socket:addItem(sword_of_leadership.item)
+    sword_of_leadership:setWorldRotationAngles(0, 0,-90)
+    
+end
+
+function lowerSword()
+    local sword_of_leadership = spawn("long_sword_of_leadership", 1, 0, 0, 0, 0, "sword_of_leadership")
+    sword_of_leadership.particle:setEmitterMesh("assets/models/items/long_sword.fbx")
+    global_scripts.script.moveObjectToObject(sword_of_leadership, sword_of_leadership_spawn)
+    global_scripts.script.objectWorldPositionOffset(sword_of_leadership, vec(-1.23,8.1,0))
+    sword_of_leadership:setWorldRotationAngles(0, 0,-90)
+    
+    local animation = raisePedestal("sword_of_leadership", true, -2)
+    animation.on_finish = finish_lowering_sword
+    animation.sound_name = "angels_choir"
+    global_scripts.script.add_animation(pushblock_robin_socket.level, animation)
+end
+
 function finish_build_castle(animation)
     local well_of_caral = findEntity(animation.well_of_caral_id)    
     -- deactivate pushblock trigger, keep light ofc
     global_scripts.script.faceObject(pushblock_robin, 1)
     global_scripts.script.party_level_up_champions({1,2,3,4})
-    goTilNoon(well_of_caral)   
+    
+    lowerSword()
+    
     GameMode.setCamera()
+    
 end
 
 function light_up(well_of_caral_id)
@@ -514,6 +637,9 @@ function buildCastle()
     playSound("blow_horn")    
     local well_of_caral = findEntity("well_of_caral")  
     lay_floors(well_of_caral)
+    
+          
+    goTilMorning(well_of_caral, 0.025)   
 end
 
 function castleCornerStonePedestalOnInsertItem(pedestal, item)
@@ -582,7 +708,8 @@ function onGiveDesertProvisions(pedestal, item)
     end
 end
 
-function inTheDesert(trigger)           
+function inTheDesert(trigger)  
+    goTilMidnight(well_of_caral)          
     pushblock_trigger_r41.controller:deactivate()
     pushblock_trigger_r41.light:enable()
     raisePedestal("pedestal_robin_desert_s")
@@ -973,16 +1100,21 @@ function rats_defeated(state_data)
     return state_data.next_state
 end
 
-function count_farming(state_data)
-    state_data.count = state_data.count - 1
+function count_farming(item, state_data)
+    local count = 0
+    if item.item:getStackable() then
+        count = item.item:getStackSize()
+    else
+        count = 1
+    end
+    state_data.count = state_data.count - count
     --hudPrint(tostring(state_data.count))
     if state_data.count == 0 then
         global_scripts.script.remove_time_callback(pushblock_robin.level, "blooddrop_cap_lower")
         global_scripts.script.remove_time_callback(pushblock_robin.level, "blooddrop_cap_raise")
+        global_scripts.script.remove_time_callback(pushblock_robin.level, blooddrop_cap_spawn)    
         return state_data.next_state
     else
-        local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)
-        spawn("blooddrop_cap", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
         return state
     end
 end
@@ -996,13 +1128,14 @@ function spawn_bandits(state_data)
 end
 
 function onPutItem(surface, item)
+    item = global_scripts.script.getGO(item)
     --hudPrint(item.go.name)
     --hudPrint(tostring(surface:count()))
     local state_data = states[state]
-    if state_data[item.go.name] == nil then
+    if state_data[item.name] == nil then
         return
     end
-    state = state_data[item.go.name].func(state_data[item.go.name])
+    state = state_data[item.name].func(item, state_data[item.name])
     local state_data = states[state]
     if state_data ~= nil and state_data.init_func ~= nil then
         state_data.init_func()
@@ -1011,7 +1144,7 @@ function onPutItem(surface, item)
 end
 
 state = "initial" 
-states = {["initial"] = {["blooddrop_cap"] = {func = count_farming, next_state = "rat_plague", count = 1},
+states = {["initial"] = {["blooddrop_cap"] = {func = count_farming, next_state = "rat_plague", count = 5},
                          init_func = nil},
           ["rat_plague"] = {["rat_shank"] = {func = rats_defeated, next_state = "bandits", count = 1},
                             init_func = start_spawn_rats},
@@ -1029,7 +1162,10 @@ onehour = 1/12
 function raise_robin_pedestal(key, callback)
     raisePedestal("robin_pedestal")
     local callback = {name="blooddrop_cap_lower", check_func=global_scripts.script.check_for_not_morning, func=lower_robin_pedestal, oneshot=true, enabled=true}
-    global_scripts.script.add_time_callback(pushblock_robin.level, callback)  
+    global_scripts.script.add_time_callback(pushblock_robin.level, callback) 
+    
+    local timed_event = {name="blooddrop_cap_spawn", check_func=global_scripts.script.check_for_night, func=spawn_blooddrop_cap, oneshot=true, enabled=true}
+    global_scripts.script.add_time_callback(pushblock_robin.level, timed_event)    
 end
 
 function lower_robin_pedestal(key, callback)
@@ -1038,25 +1174,59 @@ function lower_robin_pedestal(key, callback)
     global_scripts.script.add_time_callback(pushblock_robin.level, callback)  
 end
 
+blooddrop_cap_pickup_hook = -1
+
+function checkBlooddropPickup(item, data)    
+    item = global_scripts.script.getGO(item)
+    local time_of_day = GameMode.getTimeOfDay()
+    local good_to_harvest = (time_of_day > (evening + onehour)) and (time_of_day < (maxtime - onehour))
+    if not good_to_harvest and item.name == "blooddrop_cap" and global_scripts.script.object_in_area(item, 7, 9, 24, 30, 0, pushblock_robin.level) then
+        local dispel_blast = item:spawn("dispel_blast")
+        global_scripts.script.matchSubtileOffset(dispel_blast, item)
+        item:destroyDelayed()
+    end
+    return good_to_harvest
+end
+
+function spawn_blooddrop_cap(key, callback)
+    local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, {"blooddrop_cap"})
+    spawn("blooddrop_cap", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)    
+end
+
+function finishBlodddropQuest()
+    global_scripts.script.deregister_party_hook("onPickUpItem", blooddrop_cap_pickup_hook)
+end
+
+function startBlooddropQuest()
+    for i=1,12 do
+        local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, {"blooddrop_cap"})
+        spawn("blooddrop_cap", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
+    end   
+
+    local blooddrop_cap_pickup_hook = global_scripts.script.register_party_hook("onPickUpItem", "triels_robin_script_entitiy", "checkBlooddropPickup", {})
+               
+    local timed_event = {name="blooddrop_cap_raise", check_func=global_scripts.script.check_for_morning, func=raise_robin_pedestal, oneshot=true, enabled=true}
+    global_scripts.script.add_time_callback(pushblock_robin.level, timed_event)
+    
+    local timed_event = {name="blooddrop_cap_spawn", check_func=global_scripts.script.check_for_night, func=spawn_blooddrop_cap, oneshot=true, enabled=true}
+    global_scripts.script.add_time_callback(pushblock_robin.level, timed_event)
+end
+
 function enterTheTrials(trigger)
     trigger:disable()
     
-    GameMode.setTimeOfDay(morning)
+    --GameMode.setTimeOfDay(morning)
     
     trials_robin_forest_sky.sky:setFogRange({1,1}) 
-    
-    local spawn_pos = global_scripts.script.findSpawnSpot(7, 9, 24, 30, 0, pushblock_robin.level, nil)
-    spawn("blooddrop_cap", pushblock_robin.level, spawn_pos.x, spawn_pos.y, spawn_pos.facing, spawn_pos.elevation)
-    
-    local timed_event = {name="blooddrop_cap_raise", check_func=global_scripts.script.check_for_morning, func=raise_robin_pedestal, oneshot=true, enabled=true}
-    global_scripts.script.add_time_callback(pushblock_robin.level, timed_event)
+       
+    startBlooddropQuest()
 end
 
 time_of_day = 1.5
 keep_time_of_day = true
 
 step = 0.05
-tick = 0.1
+default_tick = 0.1
 
 time_control_levers = {"robin_timeofday_lever_morning", "robin_timeofday_lever_noon", "robin_timeofday_lever_evening", "robin_timeofday_lever_midnight"}
 
@@ -1088,7 +1258,7 @@ end
 
 function moveTOD(time_delta, animation)
     local now = GameMode.getTimeOfDay()
-    local set_time = now + (tick * (time_delta))
+    local set_time = now + (animation.tick * (time_delta))
     GameMode.setTimeOfDay(set_time)
 end
 
@@ -1099,8 +1269,9 @@ function setTOD(time_delta, animation)
     enable_buttons()
 end
 
-function goTilMorning(lever)
+function goTilMorning(lever, tick)    
     local lever = global_scripts.script.getGO(lever)
+    tick = tick or default_tick
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -1117,8 +1288,9 @@ function goTilMorning(lever)
     global_scripts.script.add_animation(lever.level, animation)
 end
 
-function goTilNoon(lever)
+function goTilNoon(lever, tick)
     local lever = global_scripts.script.getGO(lever)
+    tick = tick or default_tick
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -1137,8 +1309,9 @@ function goTilNoon(lever)
     global_scripts.script.add_animation(lever.level, animation)
 end
 
-function goTilEvening(lever)
+function goTilEvening(lever, tick)
     local lever = global_scripts.script.getGO(lever)
+    tick = tick or default_tick
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -1157,8 +1330,9 @@ function goTilEvening(lever)
     global_scripts.script.add_animation(lever.level, animation)
 end
 
-function goTilMidnight(lever)
+function goTilMidnight(lever, tick)
     local lever = global_scripts.script.getGO(lever)
+    tick = tick or default_tick
     keep_time_of_day = false
     disable_buttons()
     local now = GameMode.getTimeOfDay()
@@ -1177,7 +1351,10 @@ function goTilMidnight(lever)
     global_scripts.script.add_animation(lever.level, animation)
 end
 
+
 function init()
     --trials_robin_forest_sky.sky:setFogRange({1,2})    
-    --trials_robin_forest_sky.sky:setFogMode("dense")
+    --trials_robin_forest_sky.sky:setFogMode("dense") 
+    
+
 end

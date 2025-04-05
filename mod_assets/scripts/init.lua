@@ -28,6 +28,21 @@ defineObject{
             onWakeUp = function(self)
                 local script_entity = findEntity("global_scripts")
                 return script_entity.script.partyOnWakeUp(self)
+            end,
+            onPickUpItem = function(self, item)
+                local script_entity = findEntity("global_scripts")
+                return script_entity.script.partyOnPickUpItem(self, item)
+            end,
+            onGetPortrait = function(self, champion)
+                if champion:hasCondition("bear_form") then
+                    return nil
+                else
+                    if champion:hasTrait("cleric_shield") then
+                        return "mod_assets/textures/portraits/omar_khayyam_shield.tga"
+                    elseif champion:hasTrait("cleric_sword") then
+                        return "mod_assets/textures/portraits/omar_khayyam_sword.tga"
+                    end
+                end
             end
         }
     }

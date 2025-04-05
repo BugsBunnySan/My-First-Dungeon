@@ -130,6 +130,11 @@ function check_for_midnight(key, callback, time_of_day)
     
     return pass
 end
+
+function check_for_night(key, callback, time_of_day)
+    return ((time_of_day > (evening + onehour)) and (time_of_day < maxtime - onehour))
+end
+
 -- global animation
 animations = {}
 
@@ -138,15 +143,29 @@ function add_animation(level, animation)
     
     animation.elapsed = 0
     animation.last_called = -1
+    
     if animations[level] == nil then
-        animations[level] = {animation}
-    else
-        table.insert(animations[level], animation)
+        animations[level] = {}
     end
+    
+    local animation_id = math.random(500000)
+    while animations[level][animation_id] ~= nil do
+        animation_id = math.random(500000)
+    end
+
+    animation.id = animation_id
+   
+    animations[level][animation_id] = animation
+    
+    return animation_id
 end
 
-function get_animations(level)
+function get_animations(level)    
     return animations[level]
+end
+
+function remove_animation(level, animation_id)
+    animations[level][animation_id] = nil
 end
 
 
@@ -175,7 +194,7 @@ function handle_animation(animation, now, tick_delta)
         if animation.delay > tick_delta then
             animation.delay = animation.delay - tick_delta
             return false
-        else
+        elseif animation.on_start ~= nil then
             animation.on_start(animation)
             animation.delay = nil
         end
@@ -205,10 +224,10 @@ function animateTick(level, now, tick_delta)
     if animations == nil then
         return
     end
-    for idx, animation in ipairs(animations) do         
+    for animation_id, animation in pairs(animations) do         
         local done = handle_animation(animation, now, tick_delta)
         if done then
-            table.remove(animations, idx)
+            animations[animation_id] = nil
         end
     end    
 end
@@ -424,7 +443,8 @@ function party_conditions(champions, add_conditions, remove_conditions)
 end
 
 party_hooks = {onWakeUp = {},
-               onCastSpell = {}}
+               onCastSpell = {},
+               onPickUpItem = {}}
 
 function register_party_hook(hook_name, script_entity_id, func_name, data)
     local hook_id = math.random(500000)
@@ -454,6 +474,17 @@ function partyOnCastSpell(party, champion, spell)
     return true
 end
 
+function partyOnPickUpItem(party, item)
+    local script_entity
+    local allow_pickup = true
+    --print("The party wakes up")
+    for k,hook in pairs(party_hooks.onPickUpItem) do
+        script_entity = findEntity(hook.script_entity_id)
+        allow_pickup = script_entity.script[hook.func_name](item, hook.data)
+    end
+    return allow_pickup
+end
+
 function partyOnWakeUp(party)
     local script_entity
     --print("The party wakes up")
@@ -464,13 +495,25 @@ function partyOnWakeUp(party)
     return true
 end
 
+function objectWorldPositionOffset(object, offset)
+    object = getGO(object)
+    local w_pos = object:getWorldPosition()
+    w_pos = w_pos + offset
+    object:setWorldPosition(w_pos)
+end
+
 function faceObject(object, facing)
     object:setPosition(object.x, object.y, facing, object.elevation, object.level)
 end
 
+function matchSubtileOffset(object, target)
+    local x, y = target:getSubtileOffset()
+    object:setSubtileOffset(x, y)
+end
+
 function moveObjectToObject(object, target)
-    local object = getGO(object)
-    local target = getGO(target)
+    object = getGO(object)
+    target = getGO(target)
     object:setPosition(target.x, target.y, target.facing, target.elevation, target.level)
 end
 
@@ -555,6 +598,16 @@ function getEmptyFacings(location, occupiers)
         end
     end        
     return empty_facings
+end
+
+function object_in_area(object, from_x, to_x, from_y, to_y, elevation, level)
+    local in_area = true
+    in_area = in_area and (object.level == level)
+    in_area = in_area and ((object.x >= from_x and object.x <= to_x))
+    in_area = in_area and ((object.y >= from_y and object.y <= to_y))
+    in_area = in_area and (object.elevation == elevation)
+    
+    return in_area
 end
 
 -- find a location amongst locations (must be an array), that are free of anything (occupiers == nil)
