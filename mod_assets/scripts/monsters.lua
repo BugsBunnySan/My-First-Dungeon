@@ -44,7 +44,12 @@ defineObject{
                 openLock = "mod_assets/animations/zarchton_attack_operate.fbx",
 				pullLever = "mod_assets/animations/zarchton_attack_operate.fbx",
 				pushLever = "mod_assets/animations/zarchton_attack_operate.fbx",
+                fish = "mod_assets/animations/zarchton_fish.fbx",
 			},
+            onAnimationEvent= function(self, event)
+                local npc_script_entity = findEntity("npc_script_entity").script
+                return npc_script_entity.onAnimationEvent(self, event)
+            end,
 			currentLevelOnly = true,
 		},
 		
@@ -54,11 +59,24 @@ defineObject{
 			sight = 5,
             onThink = function(self)
                 local npc_script_entity = findEntity("npc_script_entity").script
-                npc_script_entity.onThinkZarchtonNpc(self)
+                local ret = npc_script_entity.onThinkZarchtonNpc(self)
+                if ret == true then
+                    return ret
+                elseif ret == false then
+                    --print("onThink defaults")
+                elseif ret == nil then
+                    --print("onThink returns "..tostring(ret))
+                    ret = true
+                end
+                return ret
             end,
             onThinkSpecial = function(self)
                 local npc_script_entity = findEntity("npc_script_entity").script
-                npc_script_entity.onThinkZarchtonNpc(self)
+                local ret = npc_script_entity.onThinkZarchtonNpc(self)
+                if not ret then
+                    print("onThinkSpecial returns "..tostring(ret))
+                end
+                return ret
             end,
 		},
         {
@@ -66,12 +84,27 @@ defineObject{
 			name = "operateDevice",
 			animation = "openLock",
         },
+        {
+            class = "MonsterAttack",
+			name = "fish",
+            animation = "fish",
+			attackPower = 0,
+			accuracy = 0,
+			cooldown = 4,
+			sound = "water_hit_small"
+        },
     }
 }
 
 defineAnimationEvent{
 	animation = "mod_assets/animations/zarchton_attack_operate.fbx",
 	event = "operateDevice",
+	frame = 30,
+}
+
+defineAnimationEvent{
+	animation = "mod_assets/animations/zarchton_fish.fbx",
+	event = "fish",
 	frame = 30,
 }
 

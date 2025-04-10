@@ -1,5 +1,37 @@
 champions_last_item_used = {[1] = "", [2] = "", [3] = "", [4] = ""}
 
+-- from https://stackoverflow.com/a/16077650
+function deep_copy(object, seen)
+    seen = seen or {}
+    
+    if object == nil then 
+        return nil 
+    end
+    
+    if seen[object] then 
+        return seen[object] 
+    end
+
+    local new_object
+    
+    if type(object) == 'table' then
+        new_object = {}
+        seen[object] = new_object
+
+        --for k, v in next, object, nil do -- this causes an error in grimrock lua
+        for k, v in pairs(object) do
+            new_object[deep_copy(k, seen)] = deep_copy(v, seen)
+        end
+        
+        --setmetatable(new_object, deep_copy(getmetatable(object), seen))  -- this causes an error in grimrock lua     
+    else -- number, string, boolean, etc
+        new_object = object
+    end
+    
+    return new_object
+end
+
+
 function aim_camera(camera, target)
     local camera_w_pos = camera:getWorldPosition()
     local target_w_pos = target:getWorldPosition()
@@ -41,20 +73,58 @@ function get_time_callbacks(level)
     return time_callbacks[level]
 end
 
+timed_event_conditions = {
+    dawn = false,
+    noon = false,
+    dusk = false,
+    midnight = false
+}
+
+last_time_of_day = -1
+
 function check_timed_events(level)
     local level_time_callbacks = get_time_callbacks(level)
     if level_time_callbacks == nil then
         return
-    end
+    end       
     
     local time_of_day = GameMode.getTimeOfDay()
+    
+    if last_time_of_day == -1 then
+        last_time_of_day = time_of_day
+    end
+
+    for key, value in pairs(timed_event_conditions) do
+        timed_event_conditions[key] = false
+    end
+    
+    if last_time_of_day > time_of_day then -- rollover at 1.99999
+        timed_event_conditions["dawn"] = true
+    elseif last_time_of_day < noon and time_of_day > noon then
+        timed_event_conditions["noon"] = true
+    elseif last_time_of_day < evening and time_of_day > evening then
+        timed_event_conditions["dusk"] = true
+    elseif last_time_of_day < midnight and time_of_day > midnight then
+        timed_event_conditions["midnight"] = true
+    end
+    
+    last_time_of_day = time_of_day
+    
     --print("time of day "..tostring(time_of_day))
     
     local remove_callback_keys = {}
     
     for key,callback in pairs(level_time_callbacks) do
         --print(tostring(callback.check_func))
-        if  callback.check_func(key, callback, time_of_day) == true then
+        if callback.condition ~= nil and timed_event_conditions[callback.condition] == true then
+            if callback.enabled == true then
+                --print("calling "..key)
+                callback.func(key, callback)
+                if callback.oneshot == true then
+                    table.insert(remove_callback_keys, key)
+                end
+            end
+        elseif callback.check_func(key, callback, time_of_day) == true then
             if callback.enabled == true then
                 --print("calling "..key)
                 callback.func(key, callback)
@@ -131,8 +201,12 @@ function check_for_midnight(key, callback, time_of_day)
     return pass
 end
 
+function check_for_day(key, callback, time_of_day)
+    return ((time_of_day > morning) and (time_of_day < evening))
+end
+
 function check_for_night(key, callback, time_of_day)
-    return ((time_of_day > (evening + onehour)) and (time_of_day < maxtime - onehour))
+    return ((time_of_day > (evening + onehour)) and (time_of_day < (maxtime - onehour)))
 end
 
 -- global animation
@@ -476,8 +550,7 @@ end
 
 function partyOnPickUpItem(party, item)
     local script_entity
-    local allow_pickup = true
-    --print("The party wakes up")
+    local allow_pickup = true   
     for k,hook in pairs(party_hooks.onPickUpItem) do
         script_entity = findEntity(hook.script_entity_id)
         allow_pickup = script_entity.script[hook.func_name](item, hook.data)
@@ -583,6 +656,16 @@ west  = 3
 
 facing_names = {[0] = "north", [1] = "east", [2] = "south", [3] = "west"}
 
+function object_in_area(object, from_x, to_x, from_y, to_y, elevation, level)
+    local in_area = true
+    in_area = in_area and (object.level == level)
+    in_area = in_area and ((object.x >= from_x and object.x <= to_x))
+    in_area = in_area and ((object.y >= from_y and object.y <= to_y))
+    in_area = in_area and (object.elevation == elevation)
+    
+    return in_area
+end
+
 -- return the empty facing sports on location, free of occupation
 function getEmptyFacings(location, occupiers)
     local facings = {[north] = true, [east] = true, [south] = true, [west] = true}
@@ -600,34 +683,41 @@ function getEmptyFacings(location, occupiers)
     return empty_facings
 end
 
-function object_in_area(object, from_x, to_x, from_y, to_y, elevation, level)
-    local in_area = true
-    in_area = in_area and (object.level == level)
-    in_area = in_area and ((object.x >= from_x and object.x <= to_x))
-    in_area = in_area and ((object.y >= from_y and object.y <= to_y))
-    in_area = in_area and (object.elevation == elevation)
-    
-    return in_area
+function checkLocation(location, empty_spot)
+    if location.go ~= nil then
+        location = location.go
+    end
+    local empty_facings = getEmptyFacings(location, occupiers)        
+    if #empty_facings ~= 0 then
+        empty_spot.x = location.x
+        empty_spot.y = location.y
+        empty_spot.elevation = location.elevation
+        empty_spot.level = location.level
+        empty_spot.id = location.id
+        empty_spot.facing = empty_facings[math.random(#empty_facings)]        
+        return true
+    else
+        return false
+    end
 end
 
 -- find a location amongst locations (must be an array), that are free of anything (occupiers == nil)
 -- or free of any of the item classes listed in occupiers (which must be a table with the class names as keys)
-function findEmptySpot(locations, occupiers)
-    local empty_spot = {x = nil, y = nil, elevation = nil, level = nil, facing = nil, id = nil}
-    for _, location in ipairs(locations) do
-        if location.go ~= nil then
-            location = location.go
+function findEmptySpot(locations, occupiers, random)
+    local empty_spot = {x = nil, y = nil, elevation = nil, level = nil, facing = nil, id = nil}    
+    if not random then
+        for _, location in ipairs(locations) do
+            if checkLocation(location, empty_spot) == true then
+                break
+            end
         end
-        local empty_facings = getEmptyFacings(location, occupiers)        
-        if #empty_facings ~= 0 then
-            empty_spot.x = location.x
-            empty_spot.y = location.y
-            empty_spot.elevation = location.elevation
-            empty_spot.level = location.level
-            empty_spot.id = location.id
-            empty_spot.facing = empty_facings[math.random(#empty_facings)]
-            break
-        end
+    else
+        local found = false
+        while not found do            
+            local location_idx = math.random(#locations)
+            local location = locations[location_idx]
+            found = checkLocation(location, empty_spot)
+        end        
     end
     return empty_spot
 end
@@ -645,7 +735,7 @@ function findSpawnSpot(from_x, to_x, from_y, to_y, elevation, level, occupiers)
     while not empty do
         empty = true
         for entity in Dungeon.getMap(level):entitiesAt(x, y) do
-            if empty and (occupiers ~= nil and occupiers[entity.name] ~= nil) then
+            if empty and ((occupiers == nil) or (occupiers ~= nil and occupiers[entity.name] ~= nil)) then
                 empty = false
                 x = math.fmod((math.fmod(x-from_x+1, dx) + dx), dx) + from_x -- assure result is positive
                 y = math.fmod((math.fmod(y-from_y+1, dy) + dy), dy) + from_y -- assure result is positive                       

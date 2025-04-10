@@ -21,6 +21,7 @@ end
 
 function initGlobals()
     GameMode.setTimeOfDay(.5)
+    npc_script_entity.script.init()
     --global_scripts.script.last_tick = -1
 end
 

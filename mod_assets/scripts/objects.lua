@@ -1,3 +1,23 @@
+defineObject{
+	name = "dungeon_door_stone_sideways",
+	baseObject = "base_door",
+	components = {
+		{
+			class = "Model",
+			model = "assets/models/env/door_stone.fbx",
+            rotation = vec(00, 0, 90),
+            offset = vec(-1.3,1.4,0)
+		},
+		{
+			class = "Door",
+			openVelocity = 1.3,
+			closeVelocity = 0,
+			closeAcceleration = -10,
+			--sparse = true,
+			killPillars = false,
+		},
+	},
+}
 
 defineMaterial{
 	name = "blue_beam_wall",
