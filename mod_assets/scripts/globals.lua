@@ -62,6 +62,7 @@ function add_time_callback(level, time_callback)
     if time_callbacks[level] == nil then
         time_callbacks[level] = {}
     end
+    print("add "..time_callback.name.." for npcs on level "..tostring(time_callback.level).." to level "..tostring(level))
     time_callbacks[level][time_callback.name] = time_callback
 end
 
@@ -82,12 +83,7 @@ timed_event_conditions = {
 
 last_time_of_day = -1
 
-function check_timed_events(level)
-    local level_time_callbacks = get_time_callbacks(level)
-    if level_time_callbacks == nil then
-        return
-    end       
-    
+function set_timed_event_conditions()
     local time_of_day = GameMode.getTimeOfDay()
     
     if last_time_of_day == -1 then
@@ -99,32 +95,47 @@ function check_timed_events(level)
     end
     
     if last_time_of_day > time_of_day then -- rollover at 1.99999
+        print("it is dawn")
         timed_event_conditions["dawn"] = true
     elseif last_time_of_day < noon and time_of_day > noon then
+        print("it is noon")
         timed_event_conditions["noon"] = true
     elseif last_time_of_day < evening and time_of_day > evening then
+        print("it is dusk")
         timed_event_conditions["dusk"] = true
     elseif last_time_of_day < midnight and time_of_day > midnight then
+        print("it is midnight")
         timed_event_conditions["midnight"] = true
     end
     
     last_time_of_day = time_of_day
+end
+
+function check_timed_events(level)
+    local level_time_callbacks = get_time_callbacks(level)
+    if level_time_callbacks == nil then
+        return
+    end   
     
     --print("time of day "..tostring(time_of_day))
     
     local remove_callback_keys = {}
     
     for key,callback in pairs(level_time_callbacks) do
-        --print(tostring(callback.check_func))
+        --print(tostring(callback.check_func))        
         if callback.condition ~= nil and timed_event_conditions[callback.condition] == true then
+            print("check "..callback.condition)
             if callback.enabled == true then
-                --print("calling "..key)
-                callback.func(key, callback)
-                if callback.oneshot == true then
-                    table.insert(remove_callback_keys, key)
+                if callback.level == 0 or callback.level == party.level then
+                    print("calling "..key.." "..tostring(callback.level))
+                    callback.func(key, callback)
+                
+                    if callback.oneshot == true then
+                        table.insert(remove_callback_keys, key)
+                    end
                 end
             end
-        elseif callback.check_func(key, callback, time_of_day) == true then
+        elseif callback.check_func ~= nil and callback.check_func(key, callback, time_of_day) == true then
             if callback.enabled == true then
                 --print("calling "..key)
                 callback.func(key, callback)
@@ -326,6 +337,7 @@ function globaAnimationTick(timer)
     
     local time_callback_time_delta = now - last_time_callback_tick
     if time_callback_time_delta >= 1 then -- don't do this too often, for something that depends on time of day, every second is good
+        set_timed_event_conditions()
         check_timed_events(0)
         check_timed_events(timer.go.level)
         last_time_callback_tick = now

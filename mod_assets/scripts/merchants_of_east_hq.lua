@@ -818,7 +818,7 @@ function init()
         local blue_gem = spawn("blue_gem")
         merchants_token_sack_2.containeritem:addItem(blue_gem.item)
     end
-    local callback = {name="fire_cannons", check_func=global_scripts.script.check_for_morning, func=fireCannons, oneshot=false, enabled=true, check_for="morning"}
+    local callback = {name="fire_cannons", check_func=global_scripts.script.check_for_morning, func=fireCannons, oneshot=false, enabled=true, check_for="morning", level=merchants_script_entity.level}
     global_scripts.script.add_time_callback(merchants_script_entity.level, callback) 
     init_shop_system()
     local w_pos = tomb_torch_holder_2:getWorldPosition()

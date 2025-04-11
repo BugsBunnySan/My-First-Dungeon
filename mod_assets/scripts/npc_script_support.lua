@@ -22,22 +22,6 @@ function npc_check_party_pickup_item(item, data)
     end
 end
 
-function handle_event_time_of_day(key, callback)
-    all_handle_event(callback.condition)
-end
-
-function init()
-    pickup_item_callback_id = global_scripts.script.register_party_hook("onPickUpItem", "npc_script_entity", "npc_check_party_pickup_item", data)
-    local time_callback = {name="npc_support_dawn", condition="dawn", func=handle_event_time_of_day}
-    global_scripts.script.add_time_callback(npc_script_entity.level, time_callback)
-    time_callback = {name="npc_support_noon", condition="noon", func=handle_event_time_of_day}
-    global_scripts.script.add_time_callback(npc_script_entity.level, time_callback)
-    time_callback = {name="npc_support_dusk", condition="dusk", func=handle_event_time_of_day}
-    global_scripts.script.add_time_callback(npc_script_entity.level, time_callback)
-    time_callback = {name="npc_support_midnight", condition="midnight", func=handle_event_time_of_day}
-    global_scripts.script.add_time_callback(npc_script_entity.level, time_callback)
-end
-
 function remove_npc(npc_data)
     npc_infos[npc_data.id] = nil
 end
@@ -73,6 +57,8 @@ function add_npc(npc_data)
     for _, item_id in ipairs(npc_data.belongings_ids) do
         add_npc_belongig(item_id, npc_data.id)
     end    
+    last_current_states[npc_data.id] = {name="*"}
+    event_queue[npc_data.id] = {}
 end
 
 function add_state(npc_id, state)
@@ -83,23 +69,23 @@ function add_state(npc_id, state)
 end
 
 function parent_state(state)    
-    print("parent state of "..state.name)
+    --print("parent state of "..state.name)
     if state.parent_state == nil then
-        print("is root state")
+        --print("is root state")
         return state
     else
-        print("is "..state.parent_state.name)
+        --print("is "..state.parent_state.name)
         return state.parent_state
     end
 end
 
 function pop_state(npc_id, state)
-    state = state or npc_infos[npc_id].state
     local prev_state = nil
     if #state.state_stack  > 0 then
         prev_state = table.remove(state.state_stack)
-        if prev_state.on_close ~= nil then
-            prev_state.on_close(npc_id, prev_state)
+        if prev_state.on_close ~= nil then           
+            local npc_info = npc_infos[npc_id]
+            prev_state.on_close(npc_id, npc_info, prev_state)
         end
     end
     return prev_state
@@ -113,27 +99,36 @@ function push_state(npc_id, state, idx, parent_state)
     state.parent_state = parent_state
 end
 
-function find_tos(npc_id, state)    
-    if #state.state_stack == 0 then
+function find_tos(npc_id, state)   
+    if #state.state_stack == 0 then        
         return state
     else
         return find_tos(npc_id, tos(state.state_stack))
     end
 end
 
-function goto_next_state(npc_id)
-    local parent_state = parent_state(npc_infos[npc_id].state)
+function print_state(npc_id, state, level) 
+    level = level or 0
+    local indent = string.rep("*  ", level+1)
+    print(indent..state.name)
+    if #state.state_stack == 0 then
+        print(indent.."---")
+    else
+        print_state(npc_id, tos(state.state_stack), level+1)
+    end
+end
+
+function goto_next_state(npc_id, state)
+    local parent_state = parent_state(state)
     if #parent_state.state_stack > 0 then -- if there's sibling states, or we're the last child, this returns the next sibling or the parent
-        pop_state(npc_id, parent_state)
-        npc_infos[npc_id].state = find_tos(npc_id, parent_state)
-    else -- there's no more child states of the parent state, so we go up another level and look for the tos
+        pop_state(npc_id, parent_state)        
+    else -- there's no more child states of the parent state, so we go up another level and remove the parent_state
         local grand_parent_state = parent_state(npc_id, parent_state)
-        grand_parent_state.remove_state(npc_id, parent_state) -- this recalculates the state from root_state        
+        grand_parent_state.remove_state(npc_id, parent_state) 
     end
 end    
 
-
-function add_child_state(parent_state, child_state)
+function add_child_state(parent_state, child_state, idx)
     child_state.parent_state = parent_state
     if parent_state.state_stack == nil then
         parent_state.state_stack = {}
@@ -141,52 +136,44 @@ function add_child_state(parent_state, child_state)
     if child_state.state_stack == nil then
         child_state.state_stack = {}
     end
-    table.insert(parent_state.state_stack, child_state)
-end
-
-function add_state_tos(npc_id, state)
-    if state.state_stack == nil then
-        state.state_stack = {}
-    end
-    add_child_state(npc_infos[npc_id].state, state)    
-    
-    do_recalculate_state(npc_id, state)
-end
-
-function replace_tos(npc_id, state, up_levels)
-    up_levels = up_levels or 1
-    if state.state_stack == nil then
-        state.state_stack = {}
-    end
-    
-    local parent_state = npc_infos[npc_id].state
-    for i=1,up_levels do
-        parent_state = parent_state(parent_state)
-    end
-    local prev_state = pop_state(npc_id, parent_state)
-    push_state(npc_id, state, nil, parent_state)
-        
-    do_recalculate_state(npc_id, state)
-end
-
-function insert_state(npc_id, state, idx)
-    table.insert(npc_infos[npc_id].state.state_stack, idx, state)
-    state.parent_state = npc_infos[npc_id].state
+    idx = idx or (#parent_state.state_stack + 1)
+    table.insert(parent_state.state_stack, idx, child_state)
 end
 
 function replace_state(npc_id, state, new_state)
     local parent_state = parent_state(state)
+    
     for idx=1,#parent_state.state_stack do
         if parent_state.state_stack[idx] == state then
+            print("replace "..state.name.." with "..new_state.name)
             parent_state.state_stack[idx] = new_state
             new_state.parent_state = parent_state
-            if state.on_close ~= nil then
-                state.on_close(npc_id, state)
+            
+            if state.on_close ~= nil then                
+                local npc_info = npc_infos[npc_id]
+                state.on_close(npc_id, npc_info, state)
             end
             break
         end
     end
-    recalculate_state(npc_id)
+end
+
+function remove_state(npc_id, to_remove_state)
+    local parent_state = parent_state(to_remove_state)
+    local remove_idx = nil
+    for idx, state in ipairs(parent_state.state_stack) do
+        if state == to_remove_state then
+            remove_idx = idx
+            break
+        end
+    end
+    if remove_idx ~= nil then
+        table.remove(parent_state.state_stack, remove_idx)
+        if to_remove_state.on_close ~= nil then
+            local npc_info = npc_infos[npc_id]
+            to_remove_state.on_close(npc_id, npc_info, to_remove_state)
+        end
+    end
 end
 
 function do_find_state(start_state, state_name)    
@@ -194,7 +181,7 @@ function do_find_state(start_state, state_name)
     if start_state.name == state_name then
         found_state = start_state
     else
-        for _, state in ipairs(state.state_stack) do            
+        for _, state in ipairs(start_state.state_stack) do            
             if state.name == state_name then
                 found_state = state
                 break
@@ -209,56 +196,76 @@ function do_find_state(start_state, state_name)
     return found_state
 end
 
-function find_state(npc_id, state_name)
-    return do_find_state(npc_infos[npc_id].root_state, state_name)
+function find_state(npc_id, state_name, start_state)
+    start_state = start_state or npc_infos[npc_id].root_state 
+    return do_find_state(start_state, state_name)
 end
 
-function remove_state(npc_id, to_remove_state)
-    local parent_state = parent_state(to_remove_state)
-    local remove_idx = nil
-    for idx, state in ipairs(parent_state.state_stack) do
-        if state == to_remove_state then
-            remove_idx = idx
-            break
-        end
-    end
-    if remove_idx ~= nil then
-        table.remove(parent_state.state_stack, remove_idx)
-        if remove_state.on_close ~= nil then
-            remove_state.on_close(npc_id, remove_state)
-        end
-    end
-    recalculate_state(npc_id)
-end
 
-function do_recalculate_state(npc_id, state)
-   npc_infos[npc_id].state = find_tos(npc_id, state)
-end
+-- recalculate what state we're in
 
 function recalculate_state(npc_id)
-    do_recalculate_state(npc_id, npc_infos[npc_id].root_state)
+    --print(npc_id.." was in "..npc_infos[npc_id].state.name)
+    npc_infos[npc_id].state = find_tos(npc_id, npc_infos[npc_id].root_state)
+    --print(npc_id.." is now in "..npc_infos[npc_id].state.name)
 end
 
-function handle_event(npc_id, event, state)
-    state = state or npc_infos[npc_id].state    
-    local event_funcs = npc_infos[npc_id].state_event_funcs[state.name]
-    local event_func
-    local handled = false
+
+-- event handler infrastructure
+function npc_get_state_event_func(npc_id, state_name, event_name)
+    print(npc_id.." look for "..state_name.." "..event_name)
+    local npc_info = npc_infos[npc_id]
+    local event_funcs = npc_info.state_event_funcs[state_name]
+    local event_func = nil
     if event_funcs ~= nil then
-        event_func = event_funcs[event.name]
+        event_func = event_funcs[event_name]
+    end
+    return event_func
+end
+
+function do_npc_handle_event(npc_id, parent_state, callback)
+    local npc_info = npc_infos[npc_id]
+    local event_func
+    parent_state = parent_state or npc_info.root_state
+    for i=#parent_state.state_stack,1,-1 do        
+        local child_state = parent_state.state_stack[i]
+        
+        if #child_state.state_stack > 0 then
+            do_npc_handle_event(npc_id, child_state, callback)
+        end
+        
+        event_func = npc_get_state_event_func(npc_id, child_state.name, callback.condition)
         if event_func ~= nil then
-            handled = event_func(npc_id, state, event)
+            event_func(npc_id, npc_info, child_state, callback)
+        end
+                
+    end
+end
+
+function npc_handle_event(npc_id, parent_state, callback)
+    local npc_info = npc_infos[npc_id]
+    local event_func
+    parent_state = parent_state or npc_info.root_state
+
+    do_npc_handle_event(npc_id, parent_state, callback)
+
+    event_func = npc_get_state_event_func(npc_id, parent_state.name, callback.condition)
+    if event_func ~= nil then
+        event_func(npc_id, npc_info, parent_state, callback)
+    end
+end
+
+function all_add_event(callback)
+    for npc_id, npc_info in pairs(npc_infos) do
+        --print("check if "..tostring(callback.level).." matches npc's level "..tostring(npc_info.level))
+        if callback.level == 0 or callback.level == npc_info.level then
+            add_event(npc_id, callback)
         end
     end
-    if handled == false and state.parent_state ~= nil then -- avoid using parent_state(state) to stop processing when reaching root_state
-        handle_event(npc_id, event, state.parent_state)
-    end
 end
 
-function all_handle_event(event)
-    for npc_id, _ in pairs(npc_infos) do
-        handle_event(npc_id, event)
-    end
+function handle_event_time_of_day(key, callback)
+    all_add_event(callback)    
 end
 
 function onAnimationEvent(animation, event_name)
@@ -271,103 +278,198 @@ function onAnimationEvent(animation, event_name)
 end
     
 
+function calculate_operate(npc_brain, npc_info, state)  
+    local npc_id = npc_brain.go.id
+    if npc_info.last_operated_id ~= state.target_id then
+        npc_brain.go.move:enable()   
+        npc_brain.go.turn:enable() 
+        npc_targets[state.target_id] = npc_id
+        -- get the npc to face the thing their supposed to operate
+        return_value = npc_brain:operate(state.target_id)         
+    else
+        npc_info.last_operated_id = -1
+        goto_next_state(npc_id, state)
+        return_value = true
+    end
+    
+    return return_value
+end
+
+function calculate_turn_to_target(npc_brain, npc_info, state) 
+    local target = findEntity(state.target_id)
+    local delta_x = npc_brain.go.x - target.x
+    local delta_y = npc_brain.go.y - target.y
+    local turns
+    
+    if state.turned == false then    
+        if delta_y == 0 and delta_x == 0 then -- best guess as to what direction makes sense
+            npc_brain:turnTowardsDirection(target.facing)
+        elseif math.abs(delta_y) > math.abs(delta_x) then
+            if delta_y < 0 then -- we need to face south
+                return_value = npc_brain:turnTowardsDirection(2)
+            else -- we need to face north
+                return_value = npc_brain:turnTowardsDirection(0)
+            end
+        else -- also when both are equal, just arbitrarily use x axis first...
+            if delta_x < 0 then -- we need to face east
+                return_value = npc_brain:turnTowardsDirection(1)
+            else -- we need to face west
+                return_value = npc_brain:turnTowardsDirection(3)
+            end
+        end
+    else
+        goto_next_state(npc_id, state)
+        return_value = true
+    end
+        
+    
+    return return_value
+end
+
+function calculate_goto_target(npc_brain, npc_info, state)   
+    local npc_id = npc_brain.go.id
+    if not npc_brain:here(state.target_id) then
+        npc_brain.go.move:enable()   
+        npc_brain.go.turn:enable() 
+
+        return_value = npc_brain:goTo(state.target_id) 
+    else        
+        --print(npc_brain.go.id.." has reached their destination "..state.target_id)
+        goto_next_state(npc_id, state)
+        return_value = true  
+    end  
+
+    return return_value
+end
+
+function calculate_goto_xy(npc_brain, npc_info, state)   
+    local npc_id = npc_brain.go.id
+    --print(npc_id.." off to "..tostring(state.goto_pos.x).." "..tostring(state.goto_pos.y))
+        
+    if npc_brain.go.x ~= state.goto_pos.x or npc_brain.go.y ~= state.goto_pos.y then
+        npc_brain.go.move:enable()   
+        npc_brain.go.turn:enable() 
+        return_value = npc_brain:seek(state.goto_pos.x, state.goto_pos.y) 
+    else
+        goto_next_state(npc_id, state)
+        return_value = true
+    end  
+    
+    return return_value
+end
+
+function calculate_put_item_in_container(npc_brain, npc_info, state)   
+    local npc_id = npc_brain.go.id
+    local item
+    for _, inventory_item in npc_brain.go.monster:contents() do
+        --print(state.item_id.." =? "..inventory_item.go.id)
+        if inventory_item.go.id == state.item_id then
+            item = inventory_item.go
+            break
+        end
+    end
+    
+    local container = findEntity(state.container_id)
+    --print("take item "..item.id)
+    npc_brain.go.monster:removeItem(item.item)
+    container.surface:addItem(item.item)
+    goto_next_state(npc_id, state)
+    return true
+end
+
+function calculate_idle_wait(npc_brain, npc_info, state)  
+    npc_brain.go.move:disable() 
+    --print(npc_id.." going to wait")
+    --state_info.print_debug = true
+    return npc_brain:wait()
+end
+
+function calculate_idle_guard(npc_brain, npc_info, state)   
+    npc_brain.go.move:disable()
+    --print(npc_id.." going to wait")
+    --state_info.print_debug = true
+    return npc_brain:wait()      
+end
+
+function calculate_idle_wander(npc_brain, npc_info, state)   
+    npc_brain.go.move:enable()   
+    npc_brain.go.turn:enable()
+    --print(npc_id.." going to wander")
+    --state_info.print_debug = true
+    return npc_brain:wander()
+end
+
+default_calculate_states = {
+    operate = calculate_operate,
+    turn_to_target = calculate_turn_to_target,
+    goto_target = calculate_goto_target,
+    goto_xy = calculate_goto_xy,
+    put_item_in_container = calculate_put_item_in_container,
+    idle_wait = calculate_idle_wait,
+    idle_guard = calculate_idle_guard,
+    idle_wander = calculate_idle_wander
+}
+
+last_current_states = {}
+
+event_queue = {}
+function add_event(npc_id, event)
+    table.insert(event_queue[npc_id], event)
+end
+
+
 function onThinkZarchtonNpc(npc_brain)
     local global_scripts = findEntity("global_scripts").script
     local npc_id = npc_brain.go.id
-    local state_info = npc_infos[npc_id]     
+    local npc_info = npc_infos[npc_id]     
     
-    if state_info == nil then
+    if npc_info == nil then
         print("no info on npc "..npc_id)
         return false
     end    
-        
-    current_state = npc_infos[npc_id].state
-    
-    --print(npc_id.." onthink ".." "..current_state.name)
-    
-    if state_info.print_debug == true then
-        print(npc_id.." onthink ".." "..current_state.name)
-        state_info.print_debug = false
+   
+    while #event_queue[npc_id] > 0 do
+        local event = event_queue[npc_id][1]
+        npc_handle_event(npc_id, npc_infos[npc_id].root_state, event)
+        table.remove(event_queue[npc_id], 1)
     end
+   
+    recalculate_state(npc_id)        
+    current_state = npc_infos[npc_id].state
+   
+    if last_current_states[npc_id] ~= current_state then
+        print(npc_id.." onthink "..tostring(last_current_states[npc_id].name).." -> "..current_state.name)
+        --print_state(npc_id, npc_infos[npc_id].root_state)
+    end
+    
+    if npc_info.print_debug == true then
+        print(npc_id.." onthink ".." "..current_state.name)
+        npc_info.print_debug = false
+    end
+    
+    
+    local calculate_state_func = current_state.on_calculate or default_calculate_states[current_state.name] 
     
     local return_value
     
-    if current_state.name == "operate" then
-        if state_info.last_operated_id ~= current_state.target_id then
-            npc_targets[current_state.target_id] = npc_id
-            -- get the npc to face the thing their supposed to operate
-            return_value = npc_brain:operate(current_state.target_id)         
-        else
-            goto_next_state(npc_id)
-            return_value = true
-        end
-    elseif current_state.name == "goto_target" then
-        if npc_brain:here(current_state.target_id) then
-            --print(npc_brain.go.id.." has reached their destination "..current_state.target_id)
-            goto_next_state(npc_id)
-            return_value = true
-        else
-            npc_brain.go.move:enable()   
-            npc_brain.go.turn:enable() 
-            return_value = npc_brain:goTo(current_state.target_id)           
-        end
-    elseif current_state.name == "goto_xy" then
-    
-        --print(npc_id.." off to "..tostring(current_state.goto_pos.x).." "..tostring(current_state.goto_pos.y))
-        
-        if npc_brain.go.x == current_state.goto_pos.x and npc_brain.go.y == current_state.goto_pos.y then
-            goto_next_state(npc_id)
-            return_value = true
-        else
-            npc_brain.go.move:enable()   
-            npc_brain.go.turn:enable() 
-            npc_brain:seek(current_state.goto_pos.x, current_state.goto_pos.y)            
-            return_value = true
-        end    
-    elseif current_state.name == "put_item_in_container" then
-        local item
-        for _, inventory_item in npc_brain.go.monster:contents() do
-            --print(current_state.item_id.." =? "..inventory_item.go.id)
-            if inventory_item.go.id == current_state.item_id then
-                item = inventory_item.go
-                break
-            end
-        end
-        
-        local container = findEntity(current_state.container_id)
-        --print("take item "..item.id)
-        npc_brain.go.monster:removeItem(item.item)
-        container.surface:addItem(item.item)
-        goto_next_state(npc_id)
-        return_value = true    
-    elseif current_state.name == "idle_wait" then   
-        npc_brain.go.move:disable() 
-        print(npc_id.." going to wait")
-        state_info.print_debug = true
-        return_value = npc_brain:wait()
-    elseif current_state.name == "idle_wander" then    
-        npc_brain.go.move:enable()   
-        npc_brain.go.turn:enable()
-        print(npc_id.." going to wander")
-        state_info.print_debug = true
-        return_value = npc_brain:wander()
-    elseif current_state.name == "idle_guard" then    
-        npc_brain.go.move:disable()
-        print(npc_id.." going to wait")
-        state_info.print_debug = true
-        return_value = npc_brain:wait()  
-    elseif current_state.on_calculate ~= nil then
-        return_value = current_state.on_calculate(npc_id, current_state)
+    if calculate_state_func ~= nil then
+        return_value = calculate_state_func(npc_brain, npc_info, current_state)
     else
         return_value = true
     end
        
     if current_state.set_vars ~= nil then
-        for var_name, value in pairs(state.set_vars) do
+        for var_name, value in pairs(current_state.set_vars) do
             print(var_name.." = "..tostring(value))
-            state_info[var_name] = value
+            npc_info[var_name] = value
         end
     end
     
+    last_current_states[npc_id] = current_state
+    
     return return_value
+end
+
+function init()
+    pickup_item_callback_id = global_scripts.script.register_party_hook("onPickUpItem", "npc_script_entity", "npc_check_party_pickup_item", data)
 end
