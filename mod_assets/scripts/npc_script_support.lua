@@ -326,13 +326,39 @@ function calculate_turn_to_target(npc_brain, npc_info, state)
     return return_value
 end
 
+function get_facing_from_pos(object, target)
+    if object.x == target.x then
+        if object.y > target.y then
+            return 0
+        elseif object.y < target.y then
+            return 2
+        end
+    elseif object.y == target.y then
+        if object.x > target.x then
+            return 3
+        elseif object.x < target.x then
+            return 1
+        end
+    end
+    return nil
+end
+
 function calculate_goto_target(npc_brain, npc_info, state)   
     local npc_id = npc_brain.go.id
     if not npc_brain:here(state.target_id) then
         npc_brain.go.move:enable()   
         npc_brain.go.turn:enable() 
 
-        return_value = npc_brain:goTo(state.target_id) 
+        local destination = findEntity(state.target_id)
+        local distance_map = get_distance_map(destination)
+        local step = find_shortest_step(npc_brain.go, distance_map)
+        
+        local facing = get_facing_from_pos(npc_brain.go, step)
+        if facing ~= nil and npc_brain.go.map:checkObstacle(npc_brain.go, facing) ~= nil then
+            step = find_shortest_step(step, distance_map)
+        end
+        
+        return_value = npc_brain:seek(step.x, step.y)         
     else        
         --print(npc_brain.go.id.." has reached their destination "..state.target_id)
         goto_next_state(npc_id, state)
@@ -349,7 +375,16 @@ function calculate_goto_xy(npc_brain, npc_info, state)
     if npc_brain.go.x ~= state.goto_pos.x or npc_brain.go.y ~= state.goto_pos.y then
         npc_brain.go.move:enable()   
         npc_brain.go.turn:enable() 
-        return_value = npc_brain:seek(state.goto_pos.x, state.goto_pos.y) 
+        
+        local distance_map = get_distance_map(state.goto_pos)
+        local step = find_shortest_step(npc_brain.go, distance_map)
+        
+        local facing = get_facing_from_pos(npc_brain.go, step)
+        if facing ~= nil and npc_brain.go.map:checkObstacle(npc_brain.go, facing) ~= nil then
+            step = find_shortest_step(step, distance_map)
+        end
+        
+        return_value = npc_brain:seek(step.x, step.y)         
     else
         goto_next_state(npc_id, state)
         return_value = true
@@ -470,14 +505,10 @@ function onThinkZarchtonNpc(npc_brain)
     return return_value
 end
 
-paths = {}
+distance_maps = {}
 
 function make_pos_key(pos)
     return string.format("%02dx%02d", pos.x, pos.y)
-end
-
-function next_step(npc_id, destination)
-
 end
 
 function put_pos_into_map(pos, map, value)
@@ -487,80 +518,164 @@ function put_pos_into_map(pos, map, value)
     map[pos.x][pos.y] = value
 end
 
-function get_map_value(pos, map)
-    return map[pos.x][pos.y]
+function get_map_value(pos, map, default)
+    local value = default
+    if map[pos.x] ~= nil then
+        value = map[pos.x][pos.y] or default
+    end
+    return value
 end
-
-
-    
-
 
 function get_neighbours(level_map, pathfinding_sprite, pos, elevation, level)
     local neighbours = {}
-    local neighbour_pos = {}
+    local neighbour_pos
     pathfinding_sprite:setPosition(pos.x, pos.y, 0, elevation, level)
     for facing=0,3 do
         local obstacle_type = level_map:checkObstacle(pathfinding_sprite, facing)
-        if obstacle_type == nil then
-            if facing == 0 then
-                neighbour_pos.x = pos.x
-                neighbour_pos.y = neighbour_pos.y - 1
-            elseif facing == 1 then
-                neighbour_pos.x = pos.x + 1
-                neighbour_pos.y = neighbour_pos.y
-            elseif facing == 2 then
-                neighbour_pos.x = pos.x
-                neighbour_pos.y = neighbour_pos.y + 1
-            elseif facing == 3 then
-                neighbour_pos.x = pos.x - 1
-                neighbour_pos.y = neighbour_pos.y
-            end
-            table.insert(neighbours, neighbour_pos)
+               
+        if facing == 0 then
+            neighbour_pos = {x = pos.x, 
+                             y = pos.y - 1}
+        elseif facing == 1 then
+            neighbour_pos = {x = pos.x + 1, 
+                             y = pos.y}
+        elseif facing == 2 then
+            neighbour_pos = {x = pos.x, 
+                             y = pos.y + 1}
+        elseif facing == 3 then
+            neighbour_pos = {x = pos.x - 1, 
+                             y = pos.y}
+        end
+        if obstacle_type == nil or obstacle_type == "dynamic_obstacle" then -- and neighbour_pos.x == party.x and neighbour_pos.y == party.y) then    
+            table.insert(neighbours, neighbour_pos)        
         end
     end
+
     return neighbours
 end
 
-function do_find_path(level_map, pathfinding_sprite, destination_pos)    
+function do_make_distance_map(level_map, pathfinding_sprite, destination_pos)    
     local visited = {}
     local open = {destination_pos}
+    local in_open = {}
     local distance_map = {}
     
     put_pos_into_map(destination_pos, distance_map, 0)
+    put_pos_into_map(destination_pos, visited, true)
     
-    while #open > 0 do
+    local safety = 2000
+    while #open > 0 and safety > 0 do
+        safety = safety - 1
+        --print(tostring(safety))
         local current_pos = open[#open]
-        local current_dist = get_distance(current_pos)
+        local current_dist = get_map_value(current_pos, distance_map)
+        --print(tostring(current_pos.x).." x "..tostring(current_pos.y).." <=> "..tostring(current_dist))
         local neighbour_dist = current_dist + 1
-        local neighbours = get_neighbours(level_map, pathfinding_sprite, current_pos, destination_pos.elevation, destination_pos.level)
+        local neighbours = get_neighbours(level_map, pathfinding_sprite, current_pos, destination_pos.elevation, destination_pos.level)        
         for _, neighbour_pos in ipairs(neighbours) do
-            if get_map_value(neighbour_pos, visited) then
+            --print("    already seen? "..tostring(neighbour_pos.x).." x "..tostring(neighbour_pos.y))
+            if get_map_value(neighbour_pos, visited) == true then
+                --print("yes")
                 if neighbour_dist < get_map_value(neighbour_pos, distance_map) then
+                    --
                     put_pos_into_map(neighbour_pos, distance_map, neighbour_dist)                    
-                    table.insert(open, 1, neighbour_pos)
+                    if get_map_value(neighbour_pos, in_open) ~= true then
+                        print("    put into open again "..tostring(neighbour_pos.x).." x "..tostring(neighbour_pos.y)) 
+                        put_pos_into_map(neighbour_pos, in_open, true)
+                        table.insert(open, 1, neighbour_pos)
+                    end
                 end
             else
-                table.insert(open, 1, neighbour_pos)
+                --print("no")
+                put_pos_into_map(neighbour_pos, distance_map, neighbour_dist)                
+                if get_map_value(neighbour_pos, in_open) ~= true then
+                    --print("    put into open "..tostring(neighbour_pos.x).." x "..tostring(neighbour_pos.y))   
+                    put_pos_into_map(neighbour_pos, in_open, true)
+                    table.insert(open, 1, neighbour_pos)
+                end
             end
-        end
+        end        
         put_pos_into_map(current_pos, visited, true)
+        --print("    renove from open "..tostring(open[#open].x).." x "..tostring(open[#open].y))
         table.remove(open, #open)
+        --spawn("beach_stone_ring", destination_pos.level, current_pos.x, current_pos.y, 0, 0)
+        --print("put current pos into visited and removed from open "..tostring(#open))
     end
+    
+    return distance_map
 end
 
-function find_path(destination)
+function make_distance_map(destination)
     local destination_pos = global_scripts.script.copy_pos(destination)
-    local destination_key = make_destination_key(destination_pos)
+    local destination_key = make_pos_key(destination)
     local level_map = Dungeon.getMap(destination.level)
     
     local pathfinding_sprite = spawn("invisible_wall")
     pathfinding_sprite.obstacle:disable()
     pathfinding_sprite.projectilecollider:disable()
     
-    if paths[destination.level] == nil then
-        paths[destination.level] = {}
+    if distance_maps[destination.level] == nil then
+        distance_maps[destination.level] = {}
     end
-    paths[destination.level][destination_key] = do_find_path(level_map, pathfinding_sprite, destination_pos)
+    distance_maps[destination.level][destination_key] = do_make_distance_map(level_map, pathfinding_sprite, destination_pos)    
+end
+
+function get_distance_map(destination)
+    local destination_key = make_pos_key(destination)    
+    return distance_maps[destination.level][destination_key]
+end
+
+function find_shortest_step(pos, distance_map)
+    local check_pos = {x=pos.x, y=pos.y}
+    local dist = get_map_value(pos, distance_map, math.huge)
+    
+    local step = {}
+    
+    check_pos = {x=pos.x, y=pos.y-1}
+    local check_dist = get_map_value(check_pos, distance_map, math.huge)
+    if check_dist < dist then
+        dist = check_dist
+        step = {x=check_pos.x, y=check_pos.y}
+    end
+    check_pos = {x=pos.x+1, y=pos.y}
+    check_dist = get_map_value(check_pos, distance_map, math.huge)
+    if check_dist < dist then
+        dist = check_dist
+        step = {x=check_pos.x, y=check_pos.y}
+    end
+    check_pos = {x=pos.x, y=pos.y+1}
+    check_dist = get_map_value(check_pos, distance_map, math.huge)
+    if check_dist < dist then
+        dist = check_dist
+        step = {x=check_pos.x, y=check_pos.y}
+    end
+    check_pos = {x=pos.x-1, y=pos.y}
+    check_dist = get_map_value(check_pos, distance_map, math.huge)
+    if check_dist < dist then
+        dist = check_dist
+        step = {x=check_pos.x, y=check_pos.y}
+    end
+    
+    return step
+end
+
+function doFindPath()    
+    make_distance_map(pathfinding_target)
+    
+    local arrived = false
+    local pos = {x=party.x, y=party.y}
+    local distance_map = get_distance_map(pathfinding_target) 
+    local safety = 2000
+    
+    while not arrived and safety > 0 do
+        safety = safety - 1
+        local current_dist = debug_get_map_value(pos, distance_map)
+        print("current "..tostring(current_dist).." from target")
+        
+        pos = find_shortest_step(pos, distance_map)
+        --spawn("magic_bridge", pathfinding_target.level, pos.x, pos.y, 0, 0)
+        arrived = (pos.x == pathfinding_target.x and pos.y == pathfinding_target.y)
+    end
 end
 
 function init()

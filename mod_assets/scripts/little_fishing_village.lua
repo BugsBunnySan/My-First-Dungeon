@@ -141,6 +141,7 @@ function find_water(npc_brain, npc_info, state)
     local new_state = {name="goto_xy", goto_pos=water_pos, state_stack={}}
     --print(npc_id.." is going to find water at ")
     --global_scripts.script.print_pos(new_state.goto_pos)
+    npc_script_entity.script.make_distance_map(water_pos)    
     npc_script_entity.script.replace_state(npc_id, state, new_state)
     return true
 end
@@ -411,12 +412,12 @@ function make_zarchton_guard(npc_id, npc_info)
     return zarchton    
 end
 
-npcs = {    
+npcs = {  
+    zarchton_npc_1 = make_zarchton_fisher,   
 }
-not_npcs = {     
-    zarchton_npc_1 = make_zarchton_fisher,
+not_npcs = {   
     zarchton_npc_2 = make_zarchton_fisher,
-    zarchton_npc_3 = make_zarchton_fisher,
+    zarchton_npc_3 = make_zarchton_fisher, 
     zarchton_elder = make_zarchton_elder,
 }
 
@@ -466,6 +467,14 @@ function init()
             awake_go_to_sleep(npc_id, npc_info, state)  
         end
         local npc = findEntity(npc_info.id)
+        
+        local destination = findEntity(npc_info.home_id)
+        npc_script_entity.script.make_distance_map(destination)
+        destination = findEntity(npc_info.home_door_lever_id)
+        npc_script_entity.script.make_distance_map(destination)
+        destination = findEntity(npc_info.home_storage_pos_id)
+        npc_script_entity.script.make_distance_map(destination)        
+        
         npc.brain:enable()
     end
     

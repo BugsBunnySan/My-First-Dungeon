@@ -256,7 +256,7 @@ function doFindPath()
     local arrived = false
     local pos = {x=party.x, y=party.y}
     local distance_map = get_distance_map(pathfinding_target) 
-    local safety = 200
+    local safety = 2000
     
     while not arrived and safety > 0 do
         safety = safety - 1
