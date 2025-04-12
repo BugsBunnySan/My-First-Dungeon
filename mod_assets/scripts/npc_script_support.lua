@@ -470,6 +470,99 @@ function onThinkZarchtonNpc(npc_brain)
     return return_value
 end
 
+paths = {}
+
+function make_pos_key(pos)
+    return string.format("%02dx%02d", pos.x, pos.y)
+end
+
+function next_step(npc_id, destination)
+
+end
+
+function put_pos_into_map(pos, map, value)
+    if map[pos.x] == nil then
+        map[pos.x] = {}
+    end
+    map[pos.x][pos.y] = value
+end
+
+function get_map_value(pos, map)
+    return map[pos.x][pos.y]
+end
+
+
+    
+
+
+function get_neighbours(level_map, pathfinding_sprite, pos, elevation, level)
+    local neighbours = {}
+    local neighbour_pos = {}
+    pathfinding_sprite:setPosition(pos.x, pos.y, 0, elevation, level)
+    for facing=0,3 do
+        local obstacle_type = level_map:checkObstacle(pathfinding_sprite, facing)
+        if obstacle_type == nil then
+            if facing == 0 then
+                neighbour_pos.x = pos.x
+                neighbour_pos.y = neighbour_pos.y - 1
+            elseif facing == 1 then
+                neighbour_pos.x = pos.x + 1
+                neighbour_pos.y = neighbour_pos.y
+            elseif facing == 2 then
+                neighbour_pos.x = pos.x
+                neighbour_pos.y = neighbour_pos.y + 1
+            elseif facing == 3 then
+                neighbour_pos.x = pos.x - 1
+                neighbour_pos.y = neighbour_pos.y
+            end
+            table.insert(neighbours, neighbour_pos)
+        end
+    end
+    return neighbours
+end
+
+function do_find_path(level_map, pathfinding_sprite, destination_pos)    
+    local visited = {}
+    local open = {destination_pos}
+    local distance_map = {}
+    
+    put_pos_into_map(destination_pos, distance_map, 0)
+    
+    while #open > 0 do
+        local current_pos = open[#open]
+        local current_dist = get_distance(current_pos)
+        local neighbour_dist = current_dist + 1
+        local neighbours = get_neighbours(level_map, pathfinding_sprite, current_pos, destination_pos.elevation, destination_pos.level)
+        for _, neighbour_pos in ipairs(neighbours) do
+            if get_map_value(neighbour_pos, visited) then
+                if neighbour_dist < get_map_value(neighbour_pos, distance_map) then
+                    put_pos_into_map(neighbour_pos, distance_map, neighbour_dist)                    
+                    table.insert(open, 1, neighbour_pos)
+                end
+            else
+                table.insert(open, 1, neighbour_pos)
+            end
+        end
+        put_pos_into_map(current_pos, visited, true)
+        table.remove(open, #open)
+    end
+end
+
+function find_path(destination)
+    local destination_pos = global_scripts.script.copy_pos(destination)
+    local destination_key = make_destination_key(destination_pos)
+    local level_map = Dungeon.getMap(destination.level)
+    
+    local pathfinding_sprite = spawn("invisible_wall")
+    pathfinding_sprite.obstacle:disable()
+    pathfinding_sprite.projectilecollider:disable()
+    
+    if paths[destination.level] == nil then
+        paths[destination.level] = {}
+    end
+    paths[destination.level][destination_key] = do_find_path(level_map, pathfinding_sprite, destination_pos)
+end
+
 function init()
     pickup_item_callback_id = global_scripts.script.register_party_hook("onPickUpItem", "npc_script_entity", "npc_check_party_pickup_item", data)
 end

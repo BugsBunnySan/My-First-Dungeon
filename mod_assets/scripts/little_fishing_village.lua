@@ -411,12 +411,12 @@ function make_zarchton_guard(npc_id, npc_info)
     return zarchton    
 end
 
-npcs = {     
+npcs = {    
+}
+not_npcs = {     
     zarchton_npc_1 = make_zarchton_fisher,
     zarchton_npc_2 = make_zarchton_fisher,
-    zarchton_npc_3 = make_zarchton_fisher, 
-}
-not_npcs = {   
+    zarchton_npc_3 = make_zarchton_fisher,
     zarchton_elder = make_zarchton_elder,
 }
 

@@ -8130,6 +8130,7 @@ newMap{
 	ambientTrack = "forest",
 	tiles = {
 		"beach_ground",
+		"beach_wall",
 		"swamp_ground",
 	}
 }
@@ -8205,37 +8206,37 @@ loadLayer("ceiling_elevation", {
 })
 
 loadLayer("tiles", {
+	1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,2,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,3,3,3,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,1,2,1,1,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,1,2,1,1,1,1,2,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3,1,2,1,1,1,1,1,1,1,1,1,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,2,2,2,2,2,2,2,1,1,1,
+	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,1,1,1,
 	1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 })
 
@@ -8336,8 +8337,6 @@ pushable_block_floor_trigger_4.floortrigger:setTriggeredByItem(false)
 pushable_block_floor_trigger_4.floortrigger:setTriggeredByDigging(false)
 pushable_block_floor_trigger_4.floortrigger:setDisableSelf(false)
 pushable_block_floor_trigger_4.floortrigger:addConnector("onActivate", "forest_script_entity", "liteUpPushblockFloorAnimation")
-spawn("pushable_block_floor",13,16,3,0,"pushable_block_floor_16")
-pushable_block_floor_16.model:disable()
 spawn("invisible_wall",16,27,3,0,"spawn_test")
 spawn_test.obstacle:disable()
 spawn_test.projectilecollider:disable()
@@ -8364,6 +8363,54 @@ invisible_wall_101.projectilecollider:disable()
 spawn("lever",22,23,3,0,"lever_2")
 lever_2.lever:setDisableSelf(false)
 lever_2.lever:addConnector("onActivate", "forest_script_entity", "spawnMinePit")
+spawn("timer",0,17,0,0,"timer_5")
+timer_5.timer:setTimerInterval(0)
+timer_5.timer:setDisableSelf(true)
+timer_5.timer:setTriggerOnStart(false)
+timer_5.timer:setCurrentLevelOnly(false)
+timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
+spawn("starting_location",7,12,0,0,"starting_location_1")
+spawn("lever",12,0,0,0,"lever_4")
+lever_4.lever:setDisableSelf(false)
+lever_4.lever:addConnector("onToggle", "forest_script_entity", "printObstacles")
+spawn("forest_ruins_secret_door",13,0,3,0,"forest_ruins_secret_door_38")
+forest_ruins_secret_door_38.door:setDoorState("open")
+forest_ruins_secret_door_38.door:setPullChain(true)
+spawn("forest_ruins_secret_door",10,14,0,0,"forest_ruins_secret_door_39")
+forest_ruins_secret_door_39.door:setPullChain(true)
+spawn("forest_ruins_secret_door",11,14,0,0,"forest_ruins_secret_door_40")
+forest_ruins_secret_door_40.door:setPullChain(true)
+spawn("forest_ruins_secret_door",11,13,1,0,"forest_ruins_secret_door_41")
+forest_ruins_secret_door_41.door:setPullChain(true)
+spawn("forest_ruins_secret_door",11,12,1,0,"forest_ruins_secret_door_42")
+forest_ruins_secret_door_42.door:setPullChain(true)
+spawn("forest_ruins_secret_door",11,11,0,0,"forest_ruins_secret_door_43")
+forest_ruins_secret_door_43.door:setPullChain(true)
+spawn("forest_ruins_secret_door",11,11,1,0,"forest_ruins_secret_door_44")
+forest_ruins_secret_door_44.door:setPullChain(true)
+spawn("forest_ruins_secret_door",10,11,0,0,"forest_ruins_secret_door_45")
+forest_ruins_secret_door_45.door:setPullChain(true)
+spawn("forest_ruins_secret_door",9,11,0,0,"forest_ruins_secret_door_46")
+forest_ruins_secret_door_46.door:setPullChain(true)
+spawn("forest_ruins_secret_door",8,13,1,0,"forest_ruins_secret_door_47")
+forest_ruins_secret_door_47.door:setPullChain(true)
+spawn("forest_ruins_secret_door",8,11,1,0,"forest_ruins_secret_door_48")
+forest_ruins_secret_door_48.door:setPullChain(true)
+spawn("forest_ruins_secret_door",9,13,2,0,"forest_ruins_secret_door_49")
+forest_ruins_secret_door_49.door:setPullChain(true)
+spawn("invisible_wall",19,19,3,0,"pathfinding_target")
+pathfinding_target.obstacle:disable()
+pathfinding_target.projectilecollider:disable()
+spawn("lever",7,12,0,0,"lever_5")
+lever_5.lever:setDisableSelf(false)
+lever_5.lever:addConnector("onToggle", "forest_script_entity", "doFindPath")
+spawn("forest_ruins_ground_tile_01",13,17,0,0,"forest_ruins_ground_tile_01_1")
+spawn("forest_ruins_secret_door",11,8,1,0,"forest_ruins_secret_door_50")
+forest_ruins_secret_door_50.door:setPullChain(true)
+spawn("forest_ruins_secret_door",12,8,2,0,"forest_ruins_secret_door_51")
+forest_ruins_secret_door_51.door:setPullChain(true)
+spawn("forest_ruins_secret_door",13,8,2,0,"forest_ruins_secret_door_52")
+forest_ruins_secret_door_52.door:setPullChain(true)
 
 --- level 14 ---
 
@@ -8604,13 +8651,6 @@ spawn("compass",10,21,2,0,"compass_2")
 zarchton_altar_compass.surface:addItem(compass_2.item)
 zarchton_altar_compass.surface:addConnector("onInsertItem", "little_fishing_village_script_entity", "putItem")
 zarchton_altar_compass.surface:addConnector("onRemoveItem", "little_fishing_village_script_entity", "stealCompass")
-spawn("starting_location",18,9,1,0,"starting_location_1")
-spawn("timer",0,17,0,0,"timer_5")
-timer_5.timer:setTimerInterval(0)
-timer_5.timer:setDisableSelf(true)
-timer_5.timer:setTriggerOnStart(false)
-timer_5.timer:setCurrentLevelOnly(false)
-timer_5.timer:addConnector("onActivate", "init_dungeon", "initDungeon")
 spawn("invisible_wall",18,22,2,0,"zarchton_npc_1_home")
 zarchton_npc_1_home.obstacle:disable()
 zarchton_npc_1_home.projectilecollider:disable()
