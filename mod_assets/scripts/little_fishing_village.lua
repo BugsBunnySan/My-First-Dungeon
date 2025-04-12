@@ -118,12 +118,12 @@ function calculate_goto_next_state(npc_brain, npc_info, state)
     return true
 end
 
-function calculate_remove_state(npc_brain, npc_info, state, callback)
+function calculate_remove_state(npc_brain, npc_info, state)
     npc_script_entity.script.remove_state(npc_brain.go.id, state)
     return true
 end
 
-function calculate_true(npc_brain, npc_info, state, callback)
+function calculate_true(npc_brain, npc_info, state)
     return true
 end
 
@@ -232,14 +232,15 @@ end
 
 -- awake
 
-function send_sleep(npc_id, state)
+function send_sleep(npc_brain, npc_info, state)  
     local condition = {name="zarchton_go_to_sleep", condition="sleep"}
-    npc_script_entity.script.add_event(npc_id, condition)
+    npc_script_entity.script.add_event(npc_brain.go.id, condition)
+    calculate_remove_state(npc_brain, npc_info, state)
 end
 
 function awake_go_to_sleep(npc_id, npc_info, state)                       
-    local new_state = {name="go_to_sleep", on_calculate=calculate_remove_state, on_close=send_sleep, state_stack={}}
-                      
+    local new_state = {name="go_to_sleep", on_calculate=send_sleep, state_stack={}}
+                                           
     child_state = {name="operate", target_id=npc_info.home_door_lever_id}
     npc_script_entity.script.add_child_state(new_state, child_state)
     
@@ -247,10 +248,10 @@ function awake_go_to_sleep(npc_id, npc_info, state)
     npc_script_entity.script.add_child_state(new_state, child_state)
         
     npc_script_entity.script.add_child_state(state, new_state, 1)   
-    print(state.name.." has the following children states ")
-    for _, child_state in ipairs(state.state_stack) do
-        print("->"..child_state.name)
-    end
+    --print(state.name.." has the following children states ")
+    --for _, child_state in ipairs(state.state_stack) do
+    --    print("->"..child_state.name)
+    --end
 end
 
 function awake_handle_sleep(npc_id, npc_info, state, callback)
@@ -316,7 +317,9 @@ zarchton_npc = {
     state_event_funcs = {
         going_fishing = {caught_fish = going_fishing_handle_caught_fish,
                          day_is_over = event_remove_state
-        },        
+        },
+        go_to_sleep = {dawn = event_remove_state
+        },
         awake = {dusk = awake_handle_dusk,
                  day_is_over = awake_go_to_sleep,
                  sleep = awake_handle_sleep,
@@ -408,12 +411,12 @@ function make_zarchton_guard(npc_id, npc_info)
     return zarchton    
 end
 
-npcs = {       
+npcs = {     
     zarchton_npc_1 = make_zarchton_fisher,
-}
-not_npcs = {
     zarchton_npc_2 = make_zarchton_fisher,
-    zarchton_npc_3 = make_zarchton_fisher,  
+    zarchton_npc_3 = make_zarchton_fisher, 
+}
+not_npcs = {   
     zarchton_elder = make_zarchton_elder,
 }
 

@@ -23,3 +23,5 @@ cannon shot adapted from VOC_220925-2130_FR_CannonShots.wav by kevp888 -- https:
 door bell: Big Ben Strikes 3 o'clock for the 70th anniversary of VE Day.mp3 by TheHymnPlayer1257609753 -- https://freesound.org/s/638105/ -- License: Creative Commons 0
 
 angels choir: Gentle VOX Chillout Chord ACE.wav by voxlab -- https://freesound.org/s/521532/ -- License: Attribution NonCommercial 4.0
+
+campfire: Campfire (Position 1) by SKrafft -- https://freesound.org/s/681366/ -- License: Creative Commons 0

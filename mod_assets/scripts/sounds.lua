@@ -122,3 +122,12 @@ defineSound{
     minDistance = 12,
     maxDistance = 32   
 }
+
+defineSound{
+    name = "campfire",
+    filename = "mod_assets/sounds/campfire.wav",  
+    loop = true,
+    volume = 5,
+    minDistance = 1,
+    maxDistance = 7
+}

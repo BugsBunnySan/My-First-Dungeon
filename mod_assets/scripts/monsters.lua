@@ -56,7 +56,7 @@ defineObject{
 		{
 			class = "ZarchtonBrain",
 			name = "brain",
-			sight = 5,
+			sight = 0,
             onThink = function(self)
                 local npc_script_entity = findEntity("npc_script_entity").script
                 local ret = npc_script_entity.onThinkZarchtonNpc(self)

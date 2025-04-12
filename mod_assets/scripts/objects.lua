@@ -19,6 +19,134 @@ defineObject{
 	},
 }
 
+defineParticleSystem{
+    name = "bonfire",
+    emitters = {    
+		-- smoke
+		{
+			emissionRate = 20,
+			emissionTime = 0,
+			maxParticles = 50,
+			boxMin = {-1, 0.5, -1},
+			boxMax = { 1, 1,  1},
+			sprayAngle = {0,30},
+			velocity = {0.1,0.5},
+			texture = "assets/textures/particles/smoke_01.tga",
+			lifetime = {1,5},
+			color0 = {0, 0, 0},
+			opacity = .8,
+			fadeIn = 0.5,
+			fadeOut = 2,
+			size = {.75, 2},
+			gravity = {0,2,0},
+			airResistance = 0.1,
+			rotationSpeed = 0.6,
+			blendMode = "Translucent",
+			objectSpace = false,
+		},		
+        -- flames
+		{
+			emissionRate = 30,
+			emissionTime = 0,
+			maxParticles = 100,
+			boxMin = {-1, -0.07, -1},
+			boxMax = { 1, .1,  1},
+			sprayAngle = {0,10},
+			velocity = {0.1, 1.4},
+			texture = "assets/textures/particles/flame.tga",
+			frameRate = 45,
+			frameSize = 32,
+			frameCount = 40,
+			lifetime = {0.25, 0.85},
+			colorAnimation = false,
+			color0 = {1, 1, 1},
+			opacity = 1,
+			fadeIn = 0.15,
+			fadeOut = 0.3,
+			size = {1, 1},
+			gravity = {0,0,0},
+			airResistance = 1.0,
+			rotationSpeed = 1,
+			blendMode = "Additive",
+			depthBias = 0,
+			objectSpace = true,
+		},	
+        {
+            emissionRate = 50,
+			emissionTime = 0,
+			maxParticles = 50,
+			boxMin = {-1, 0.5, -1},
+			boxMax = { 1, 1,  1},
+			sprayAngle = {0,90},
+			velocity = {1,1.5},
+			texture = "assets/textures/particles/glitter_gold.tga",
+			lifetime = {1,15},
+			color0 = {1, 1, 1},
+			color1 = {0, 0, 0},
+            colorAnimation = true,
+			opacity = .8,
+			fadeIn = 0.5,
+			fadeOut = 2,
+			size = {.75, 1},
+			gravity = {0,3,0},
+			airResistance = 0.1,
+			rotationSpeed = 0.6,
+			blendMode = "Additive",
+			objectSpace = false,
+        },
+        -- outer glow
+		{
+			spawnBurst = true,
+			emissionRate = 1,
+			emissionTime = 0,
+			maxParticles = 1,
+			boxMin = {0,0,0},
+			boxMax = {0,0,0},
+			sprayAngle = {0,30},
+			velocity = {0,0},
+			texture = "assets/textures/particles/glow.tga",
+			lifetime = {1000000, 1000000},
+			colorAnimation = false,
+			color0 = {1, .2, 0},
+			opacity = 0.25,
+			fadeIn = 0.1,
+			fadeOut = 0.1,
+			size = {6, 6},
+			gravity = {0,0,0},
+			airResistance = 1,
+			rotationSpeed = 0,
+			blendMode = "Additive",
+			depthBias = 0.1,
+			objectSpace = true,
+		}
+    }
+}
+
+defineObject{
+    name = "bonfire",
+    baseObject = "beach_stone_ring",
+    components = {
+        {
+            class = "Particle",
+			particleSystem = "bonfire",
+        },
+		{
+			class = "Light",
+			range = 5.5,
+			color = vec(2.5, 1, 0.0),
+			brightness = 3,
+			castShadow = false,
+			--staticShadows = true,
+			--shadowMapSize = 256,
+			offset = vec(0, .2, 0),
+			onUpdate = function(self)
+				local noise = math.noise(Time.currentTime()*3 + 123) * 0.5 + 0.9
+				self:setBrightness(noise * 10)
+			end,
+		},
+    }
+}
+
 defineMaterial{
 	name = "blue_beam_wall",
 	diffuseMap = "assets/textures/effects/wall_fire.tga",
